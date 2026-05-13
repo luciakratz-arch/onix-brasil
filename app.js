@@ -493,7 +493,7 @@ function Login({ members, onLogin, config }) {
 }
 
 // ── PAINEL ────────────────────────────────────────────────────────────────────
-function Painel({ user, config }) {
+function Painel({ user, config, setTab }) {
     const { data:members, loading:lM } = useCollection("members");
     const { data:events,  loading:lE } = useCollection("events","date");
     const { data:songs,   loading:lS } = useCollection("songs");
@@ -528,7 +528,7 @@ function Painel({ user, config }) {
                         <div style={{ fontSize:14, fontWeight:700, color:"#E65100" }}>⚠️ {pendentes.length} pagamento{pendentes.length!==1?"s":""} aguardando validação</div>
                         <div style={{ fontSize:12, color:"#666", marginTop:2 }}>Acesse o módulo Financeiro → Mensalidade para validar.</div>
                     </div>
-                    <button onClick={()=>document.querySelector('[data-tab="financeiro"]')?.click()} style={{ padding:"8px 14px", background:"#E65100", color:"#fff", border:"none", borderRadius:8, fontSize:12, fontWeight:700, cursor:"pointer", fontFamily:"inherit" }}>Ver</button>
+                    <button onClick={()=>setTab("financeiro")} style={{ padding:"8px 14px", background:"#E65100", color:"#fff", border:"none", borderRadius:8, fontSize:12, fontWeight:700, cursor:"pointer", fontFamily:"inherit" }}>Ver</button>
                 </div>
             )}
             <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12, marginBottom:4 }}>
@@ -550,6 +550,8 @@ function Painel({ user, config }) {
                     </div>
                 ))}
             </div>
+
+            <RifaBanner config={config} isAdmin={true} />
 
             <div style={{ display:"flex", alignItems:"center", gap:8, margin:"20px 0 12px" }}>
                 <Icon name="calendar" size={18} color={cor} />
@@ -3388,6 +3390,8 @@ function PainelCorista({ user, config }) {
                 </div>
             </div>
 
+            <RifaBanner config={config} isAdmin={false} />
+
             {/* Avisos */}
             {avisos.length>0 && <>
                 <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:12 }}>
@@ -4622,9 +4626,8 @@ function FinanceiroCorista({ user, config, setTab }) {
         const valor = (mesalidade?.valorMensal||25).toFixed(2);
         const msgMaestro = encodeURIComponent(`Olá Paulo! Sou ${user.name} (${user.voice||"Corista"}) do Onix Brasil Vocal Internacional. Enviei o comprovante de pagamento da mensalidade de ${mesLabel} (R$ ${valor}). Por favor, valide no sistema. Obrigado! 🎵`);
         const msgLucia = encodeURIComponent(`Olá Lú! Sou ${user.name} (${user.voice||"Corista"}) do Onix Brasil Vocal Internacional. Enviei o comprovante de pagamento da mensalidade de ${mesLabel} (R$ ${valor}). Por favor, valide no sistema. Obrigado! 🎵`);
-        const escolha = window.confirm("Enviar comprovante para:\n\nOK = Maestro Paulo\nCancelar = Produtora Lucia\n\nApós enviar o WhatsApp, aguarde a validação.");
-        if (escolha) window.open(`https://wa.me/${WPP_MAESTRO}?text=${msgMaestro}`,"_blank");
-        else window.open(`https://wa.me/${WPP_LUCIA}?text=${msgLucia}`,"_blank");
+        window.open(`https://wa.me/${WPP_MAESTRO}?text=${msgMaestro}`,"_blank");
+        setTimeout(()=>window.open(`https://wa.me/${WPP_LUCIA}?text=${msgLucia}`,"_blank"), 800);
     }
 
     const statusInfo = {
@@ -4639,6 +4642,7 @@ function FinanceiroCorista({ user, config, setTab }) {
         <div>
             <div style={{ fontFamily:"'Playfair Display',serif", fontSize:22, fontWeight:700, color:cor, marginBottom:4 }}>Meu Financeiro</div>
             <div style={{ fontSize:13, color:"#AAA", marginBottom:20 }}>Acompanhe suas mensalidades</div>
+            {mesalidade?.valorMensal && <div style={{ marginBottom:20 }}><PixQRCode valor={mesalidade.valorMensal||25} descricao="Mensalidade Onix" config={config} /></div>}
 
             {!mesalidade?.dataInicio
                 ? <div style={{ ...card, textAlign:"center", color:"#CCC", padding:"32px" }}>Nenhum período de cobrança configurado.</div>
@@ -4666,7 +4670,7 @@ function FinanceiroCorista({ user, config, setTab }) {
                                             {m.status==="pendente" && (
                                                 <button onClick={()=>marcarPago(m)} disabled={salvando===m.key}
                                                     style={{ marginTop:6, padding:"7px 14px", background:cor, color:"#fff", border:"none", borderRadius:8, fontSize:12, fontWeight:700, cursor:"pointer", fontFamily:"inherit", display:"block" }}>
-                                                    {salvando===m.key?"Enviando...":"✓ Marcar como pago"}
+                                                    {salvando===m.key?"Enviando...":"Paguei ✓"}
                                                 </button>
                                             )}
                                         </div>
@@ -4687,6 +4691,155 @@ function FinanceiroCorista({ user, config, setTab }) {
 }
 
 
+// ── RIFA BANNER ───────────────────────────────────────────────────────────────
+function RifaBanner({ config, isAdmin }) {
+    const cor = config.corPrimaria||COR;
+    const [rifaUrl, setRifaUrl] = useState("https://luciakratz-arch.github.io/RIFA-ONIX/");
+    const [editando, setEditando] = useState(false);
+    const [urlTemp, setUrlTemp]   = useState("");
+
+    useEffect(()=>{
+        const unsub = db.collection("config").doc("rifa").onSnapshot(s=>{ if(s.exists&&s.data().url) setRifaUrl(s.data().url); });
+        return unsub;
+    },[]);
+
+    async function salvarUrl() {
+        await db.collection("config").doc("rifa").set({ url: urlTemp },{merge:true});
+        setEditando(false);
+    }
+
+    if (!rifaUrl) return null;
+    return (
+        <div style={{ background:`linear-gradient(135deg, ${cor}, ${cor}CC)`, borderRadius:12, padding:"14px 18px", marginBottom:16, display:"flex", alignItems:"center", gap:14 }}>
+            <div style={{ fontSize:28 }}>🎟️</div>
+            <div style={{ flex:1 }}>
+                <div style={{ fontSize:14, fontWeight:700, color:"#fff" }}>Rifa Onix Brasil</div>
+                <div style={{ fontSize:12, color:"rgba(255,255,255,0.8)" }}>Participe e concorra a prêmios!</div>
+            </div>
+            <div style={{ display:"flex", gap:8, alignItems:"center" }}>
+                {isAdmin && !editando && (
+                    <button onClick={()=>{setUrlTemp(rifaUrl);setEditando(true);}}
+                        style={{ padding:"5px 10px", background:"rgba(255,255,255,0.2)", color:"#fff", border:"1px solid rgba(255,255,255,0.3)", borderRadius:6, fontSize:11, cursor:"pointer", fontFamily:"inherit" }}>
+                        <Icon name="edit-2" size={12} color="#fff" />
+                    </button>
+                )}
+                {editando ? (
+                    <div style={{ display:"flex", gap:6 }}>
+                        <input value={urlTemp} onChange={e=>setUrlTemp(e.target.value)}
+                            style={{ padding:"6px 10px", borderRadius:6, border:"none", fontSize:12, fontFamily:"inherit", width:200 }} />
+                        <button onClick={salvarUrl} style={{ padding:"6px 10px", background:"#fff", color:cor, border:"none", borderRadius:6, fontSize:12, fontWeight:700, cursor:"pointer", fontFamily:"inherit" }}>OK</button>
+                        <button onClick={()=>setEditando(false)} style={{ padding:"6px 10px", background:"rgba(255,255,255,0.2)", color:"#fff", border:"none", borderRadius:6, fontSize:12, cursor:"pointer", fontFamily:"inherit" }}>✕</button>
+                    </div>
+                ) : (
+                    <a href={rifaUrl} target="_blank" rel="noreferrer"
+                        style={{ padding:"8px 16px", background:"#fff", color:cor, borderRadius:8, fontSize:13, fontWeight:700, textDecoration:"none", display:"flex", alignItems:"center", gap:6 }}>
+                        Acessar <Icon name="external-link" size={12} color={cor} />
+                    </a>
+                )}
+            </div>
+        </div>
+    );
+}
+
+
+// ── BLOG / NOTÍCIAS ───────────────────────────────────────────────────────────
+function Blog({ config, user }) {
+    const { data:noticias, loading } = useCollection("noticias");
+    const [modal, setModal] = useState(null);
+    const cor = config.corPrimaria||COR;
+    const isAdmin = user?.isAdmin;
+
+    if (loading) return <Spinner />;
+
+    return (
+        <div>
+            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:24 }}>
+                <div>
+                    <div style={{ fontFamily:"'Playfair Display',serif", fontSize:28, fontWeight:700, color:cor }}>Blog / Notícias</div>
+                    <div style={{ fontSize:13, color:"#AAA", marginTop:2 }}>Posts do grupo — todos podem publicar</div>
+                </div>
+                <button onClick={()=>setModal("novo")}
+                    style={{ display:"flex", alignItems:"center", gap:8, padding:"10px 20px", background:cor, border:"none", borderRadius:10, fontSize:13, fontWeight:700, color:"#fff", cursor:"pointer", fontFamily:"inherit" }}>
+                    <Icon name="plus" size={14} color="#fff" /> Novo Post
+                </button>
+            </div>
+            {noticias.length===0
+                ? <div style={{ background:"#fff", borderRadius:12, border:"1px solid #EEE8E8", padding:"40px", textAlign:"center", color:"#CCC", fontSize:14 }}>Nenhum post publicado ainda.</div>
+                : <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
+                    {noticias.map(n=>(
+                        <div key={n.id} style={{ background:"#fff", borderRadius:12, border:"1px solid #EEE8E8", overflow:"hidden", boxShadow:"0 1px 4px rgba(0,0,0,0.04)" }}>
+                            {n.imageUrl && <img src={n.imageUrl} alt="" style={{ width:"100%", height:180, objectFit:"cover" }} onError={e=>e.target.style.display="none"} />}
+                            <div style={{ padding:"16px 20px" }}>
+                                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:8 }}>
+                                    <div style={{ flex:1 }}>
+                                        <span style={{ fontSize:11, padding:"2px 8px", borderRadius:10, background:cor+"18", color:cor, fontWeight:700, marginRight:8 }}>{n.categoria||"Geral"}</span>
+                                        {n.createdAt?.seconds && <span style={{ fontSize:11, color:"#AAA" }}>{new Date(n.createdAt.seconds*1000).toLocaleDateString("pt-BR",{day:"numeric",month:"long",year:"numeric"})}</span>}
+                                    </div>
+                                    {(isAdmin || n.autorNome===user?.name) && (
+                                        <button onClick={()=>setModal(n)} style={{ background:"none", border:"none", color:cor, fontSize:12, fontWeight:600, cursor:"pointer", fontFamily:"inherit", flexShrink:0 }}>Editar</button>
+                                    )}
+                                </div>
+                                <div style={{ fontSize:16, fontWeight:700, color:"#1A1D23", marginBottom:8 }}>{n.titulo}</div>
+                                <div style={{ fontSize:14, color:"#555", lineHeight:1.6 }}>{n.texto}</div>
+                                {n.autorNome && <div style={{ fontSize:12, color:cor, fontWeight:600, marginTop:10 }}>✍️ {n.autorNome}</div>}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            }
+            {modal && <ModalNoticia noticia={modal==="novo"?null:modal} onClose={()=>setModal(null)} config={config} autorInicial={user?.name||"Gestão"} />}
+        </div>
+    );
+}
+
+// ── PIX ───────────────────────────────────────────────────────────────────────
+function PixQRCode({ valor, descricao, config }) {
+    const cor = config.corPrimaria||COR;
+    const chavePix  = "01219270750";
+    const nomePix   = "Paulo Sergio Nunes Motta";
+    const cidadePix = "Goiania";
+
+    function gerarPayloadPix(chave, nome, cidade, valor, desc) {
+        function field(id, val) { return id + String(val.length).padStart(2,"0") + val; }
+        function crc16(str) {
+            let crc = 0xFFFF;
+            for (let i=0; i<str.length; i++) {
+                crc ^= str.charCodeAt(i) << 8;
+                for (let j=0; j<8; j++) crc = (crc & 0x8000) ? (crc << 1) ^ 0x1021 : crc << 1;
+            }
+            return ((crc & 0xFFFF).toString(16).toUpperCase()).padStart(4,"0");
+        }
+        const merchantInfo = field("00","br.gov.bcb.pix") + field("01",chave) + (desc?field("02",desc.slice(0,72)):"");
+        const addInfo      = field("05", desc||"Onix Brasil");
+        const payload =
+            field("00","01") +
+            field("26", merchantInfo) +
+            field("52","0000") +
+            field("53","986") +
+            (valor > 0 ? field("54", valor.toFixed(2)) : "") +
+            field("58","BR") +
+            field("59", nome.slice(0,25)) +
+            field("60", cidade.slice(0,15)) +
+            field("62", field("05", addInfo)) +
+            "6304";
+        return payload + crc16(payload);
+    }
+
+    const payload = gerarPayloadPix(chavePix, nomePix, cidadePix, valor, descricao);
+    const qrUrl   = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(payload)}`;
+
+    return (
+        <div style={{ background:"#fff", borderRadius:12, border:`1px solid ${cor}22`, padding:"16px", textAlign:"center" }}>
+            <div style={{ fontSize:12, fontWeight:700, color:cor, textTransform:"uppercase", letterSpacing:0.5, marginBottom:8 }}>PIX — {descricao}</div>
+            <img src={qrUrl} alt="QR Code PIX" style={{ width:160, height:160, borderRadius:8 }} />
+            <div style={{ fontSize:13, fontWeight:700, color:"#1A1D23", marginTop:10 }}>R$ {valor.toFixed(2)}</div>
+            <div style={{ fontSize:11, color:"#AAA", marginTop:4 }}>{nomePix}</div>
+            <div style={{ fontSize:11, color:"#888", marginTop:6, padding:"6px 10px", background:"#F5F5F5", borderRadius:6, fontFamily:"monospace", wordBreak:"break-all" }}>{chavePix}</div>
+        </div>
+    );
+}
+
+
 // ── NAV ───────────────────────────────────────────────────────────────────────
 const NAV_ADMIN = [
     { key:"painel",       label:"Painel",            icon:"layout-dashboard" },
@@ -4700,6 +4853,7 @@ const NAV_ADMIN = [
     { key:"apresentacao", label:"Apresentação",       icon:"mic" },
     { key:"declaracao",   label:"Declaração Digital", icon:"file-text" },
     { key:"relatorios",   label:"Relatórios",         icon:"chart-bar" },
+    { key:"blog",         label:"Blog / Notícias",    icon:"newspaper" },
     { key:"config",       label:"Configurações",      icon:"settings" },
 ];
 
@@ -4708,6 +4862,7 @@ const NAV_CORISTA = [
     { key:"musicas",         label:"Músicas",          icon:"music" },
     { key:"estudos",         label:"Sala de Estudos",  icon:"graduation-cap" },
     { key:"meu_financeiro",  label:"Meu Financeiro",   icon:"dollar-sign" },
+    { key:"blog",            label:"Blog / Notícias",  icon:"newspaper" },
     { key:"declaracao",      label:"Minha Declaração", icon:"file-text" },
 ];
 
@@ -4754,7 +4909,7 @@ function App() {
     const navItems = isAdmin ? NAV_ADMIN : NAV_CORISTA;
 
     const pages = {
-        painel:       <Painel user={user} config={config} />,
+        painel:       <Painel user={user} config={config} setTab={setTab} />,
         integrantes:  <Integrantes config={config} />,
         musicas:      <Repertorio config={config} isAdmin={isAdmin} />,
         estudos:      <SalaEstudos config={config} isAdmin={isAdmin} />,
@@ -4765,6 +4920,7 @@ function App() {
         declaracao:   isAdmin ? <Declaracao config={config} /> : <MinhaDeclaracao user={user} config={config} />,
         relatorios:   <Relatorios config={config} />,
         financeiro:   <Financeiro config={config} />,
+        blog:         <Blog config={config} user={user} />,
         config:       <Configuracoes config={config} save={save} />,
         inicio:       <PainelCorista user={user} config={config} />,
         meu_financeiro: <FinanceiroCorista user={user} config={config} />,
