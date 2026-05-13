@@ -398,7 +398,7 @@ function Login({ members, onLogin, config }) {
         <div style={s.wrap}>
             <div style={{ textAlign:"center", marginBottom:28 }}>
                 <div style={{ width:90, height:90, background:"#fff", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 16px", boxShadow:"0 4px 20px rgba(0,0,0,0.1)" }}>
-                    <img src={config.logoUrl||LOGO_URL} alt="Logo" style={{ width:64, height:64, objectFit:"contain" }} onError={e=>e.target.style.display="none"} />
+                    <img src={config.logoUrl||LOGO_URL} alt="Logo" style={{ width:72, height:72, objectFit:"cover", borderRadius:12 }} onError={e=>e.target.style.display="none"} />
                 </div>
                 <div style={{ fontFamily:"'Playfair Display',serif", fontSize:26, fontWeight:700, color:cor }}>{config.nomeApp||"Onix Brasil Vocal Internacional"}</div>
                 <div style={{ fontSize:14, color:"#AAA", marginTop:4 }}>{config.subtitulo||"Portal de Gestão"}</div>
@@ -498,6 +498,12 @@ function Painel({ user, config }) {
     const { data:events,  loading:lE } = useCollection("events","date");
     const { data:songs,   loading:lS } = useCollection("songs");
     const { data:avisos,  loading:lA } = useCollection("avisos");
+    const [pendentes, setPendentes] = useState([]);
+    useEffect(()=>{
+        const unsub = db.collection("pagamentos").where("status","==","aguardando")
+            .onSnapshot(snap=>setPendentes(snap.docs.map(d=>({id:d.id,...d.data()}))));
+        return unsub;
+    },[]);
     if (lM||lE||lS||lA) return <Spinner />;
 
     const cor = config.corPrimaria||COR;
@@ -513,6 +519,18 @@ function Painel({ user, config }) {
     return (
         <div>
             <div style={{ fontFamily:"'Playfair Display',serif", fontSize:28, fontWeight:700, color:cor, marginBottom:24 }}>Painel</div>
+            {pendentes.length>0 && (
+                <div style={{ background:"#FFF3E0", border:"2px solid #E65100", borderRadius:12, padding:"14px 18px", marginBottom:20, display:"flex", alignItems:"center", gap:14, boxShadow:"0 2px 8px rgba(230,81,0,0.15)" }}>
+                    <div style={{ width:40, height:40, background:"#E65100", borderRadius:10, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
+                        <Icon name="alert-circle" size={20} color="#fff" />
+                    </div>
+                    <div style={{ flex:1 }}>
+                        <div style={{ fontSize:14, fontWeight:700, color:"#E65100" }}>⚠️ {pendentes.length} pagamento{pendentes.length!==1?"s":""} aguardando validação</div>
+                        <div style={{ fontSize:12, color:"#666", marginTop:2 }}>Acesse o módulo Financeiro → Mensalidade para validar.</div>
+                    </div>
+                    <button onClick={()=>document.querySelector('[data-tab="financeiro"]')?.click()} style={{ padding:"8px 14px", background:"#E65100", color:"#fff", border:"none", borderRadius:8, fontSize:12, fontWeight:700, cursor:"pointer", fontFamily:"inherit" }}>Ver</button>
+                </div>
+            )}
             <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12, marginBottom:4 }}>
                 {[
                     { label:"Integrantes",  value:ativos.length,       sub:`de ${members.length} no total`, icon:"users",    bc:cor },
@@ -865,10 +883,14 @@ function ModalEvento({ evento, onClose, config }) {
             for (const dt of datas) {
                 await db.collection("events").add({...d, date:dt, ...(temGrupo?{grupoId}:{}), createdAt:firebase.firestore.FieldValue.serverTimestamp()});
             }
-            // Aviso automático para o primeiro evento
+            // Aviso automático — unificado para recorrentes
+            const isRecorrente = form.recorrencia !== "Sem recorrência";
+            const avisoText = isRecorrente
+                ? `Novo evento recorrente (${form.recorrencia}): "${form.title}" a partir de ${fmtDate(form.date)}${form.local?" — "+form.local:""}. Total de ${datas.length} ocorrência${datas.length!==1?"s":""}.`
+                : `Um novo evento foi adicionado à agenda: "${form.title}" em ${fmtDate(form.date)}${form.local?" — "+form.local:""}.`;
             await db.collection("avisos").add({
-                title: `📅 Novo evento: ${form.title}`,
-                text: `Um novo evento foi adicionado à agenda: "${form.title}" em ${fmtDate(form.date)}${form.local?" — "+form.local:""}.`,
+                title: `📅 ${isRecorrente?"Evento recorrente":"Novo evento"}: ${form.title}`,
+                text: avisoText,
                 tipo: "auto_evento",
                 prioridade: "Informativo",
                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -2105,6 +2127,7 @@ function Relatorios({ config }) {
     const { data:members }     = useCollection("members");
     const { data:songs }       = useCollection("songs");
     const { data:frequencias } = useCollection("frequencias","dataHora");
+    const { data:noticias }    = useCollection("noticias");
     const cor = config.corPrimaria||COR;
 
     const [dataInicio, setDataInicio] = useState(new Date().getFullYear()+"-01-01");
@@ -2591,6 +2614,34 @@ ${textos.equipe?`<div class="bloco"><div class="bloco-titulo">Equipe de Produç�
 
             {/* Frequência de acesso */}
             <FrequenciaAcesso config={config} />
+
+            {/* Posts do período */}
+            {(() => {
+                const postsPeriodo = noticias.filter(n => {
+                    if (!n.createdAt?.seconds) return false;
+                    const d = new Date(n.createdAt.seconds*1000).toISOString().split("T")[0];
+                    return d >= dataInicio && d <= dataFim;
+                });
+                if (postsPeriodo.length===0) return null;
+                return (
+                    <div style={{ background:"#fff", borderRadius:12, border:"1px solid #EEE8E8", padding:"16px 20px", marginBottom:12, boxShadow:"0 1px 4px rgba(0,0,0,0.04)" }}>
+                        <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:14 }}>
+                            <Icon name="newspaper" size={16} color={cor} />
+                            <div style={{ fontSize:14, fontWeight:700, color:"#1A1D23" }}>Posts / Notícias do Grupo ({postsPeriodo.length})</div>
+                        </div>
+                        {postsPeriodo.map(n=>(
+                            <div key={n.id} style={{ padding:"10px 0", borderBottom:"1px solid #F5F0F0" }}>
+                                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
+                                    <div style={{ fontSize:13, fontWeight:700, color:"#1A1D23", flex:1 }}>{n.titulo}</div>
+                                    <div style={{ fontSize:11, color:"#AAA", marginLeft:12, flexShrink:0 }}>{n.createdAt?.seconds?new Date(n.createdAt.seconds*1000).toLocaleDateString("pt-BR"):""}</div>
+                                </div>
+                                {n.autorNome && <div style={{ fontSize:11, color:cor, fontWeight:600, marginTop:2 }}>✍️ {n.autorNome}</div>}
+                                <div style={{ fontSize:12, color:"#888", marginTop:4, lineHeight:1.5 }}>{n.texto?.slice(0,150)}{n.texto?.length>150?"...":""}</div>
+                            </div>
+                        ))}
+                    </div>
+                );
+            })()}
 
             {/* Lista de atividades */}
             <div style={card}>
@@ -3282,6 +3333,7 @@ function PainelCorista({ user, config }) {
     const [ano, setAno]    = useState(new Date().getFullYear());
     const [confirmacoes, setConfirmacoes] = useState({});
     const [naipeOpen, setNaipeOpen] = useState(null);
+    const [modalNoticiaCorista, setModalNoticiaCorista] = useState(false);
     const cor    = config.corPrimaria||COR;
     const naipe  = user.voice||"";
     const naipeKey = { "Soprano":"soprano","Mezzo-soprano":"mezzoSoprano","Contralto":"contralto","Tenor":"tenor","Barítono":"baritono","Baixo":"baixo" }[naipe]||"soprano";
@@ -3364,18 +3416,27 @@ function PainelCorista({ user, config }) {
             </>}
 
             {/* Notícias do Coral */}
-            {noticias.length>0 && <>
-                <div style={{ display:"flex", alignItems:"center", gap:8, margin:"20px 0 12px" }}>
+            {modalNoticiaCorista && <ModalNoticia noticia={null} onClose={()=>setModalNoticiaCorista(false)} config={config} autorInicial={user.name} />}
+            <div style={{ display:"flex", alignItems:"center", gap:8, margin:"20px 0 12px", justifyContent:"space-between" }}>
+                <div style={{ display:"flex", alignItems:"center", gap:8 }}>
                     <Icon name="newspaper" size={16} color={cor} />
                     <div style={{ fontSize:12, fontWeight:700, color:cor, textTransform:"uppercase", letterSpacing:1 }}>Galeria do Coral</div>
                 </div>
+                <button onClick={()=>setModalNoticiaCorista(true)} style={{ display:"flex", alignItems:"center", gap:6, padding:"6px 12px", background:cor, color:"#fff", border:"none", borderRadius:8, fontSize:12, fontWeight:700, cursor:"pointer", fontFamily:"inherit" }}>
+                    <Icon name="plus" size={12} color="#fff" /> Publicar
+                </button>
+            </div>
+            {noticias.length>0 && <>
                 {noticias.slice(0,3).map(n=>(
                     <div key={n.id} style={{ background:"#fff", borderRadius:12, border:"1px solid #EEE8E8", marginBottom:10, overflow:"hidden", boxShadow:"0 1px 4px rgba(0,0,0,0.04)" }}>
                         {n.imageUrl && <img src={n.imageUrl} alt="" style={{ width:"100%", height:140, objectFit:"cover" }} onError={e=>e.target.style.display="none"} />}
                         <div style={{ padding:"12px 16px" }}>
                             <div style={{ fontSize:14, fontWeight:700, color:"#1A1D23", marginBottom:4 }}>{n.titulo}</div>
                             <div style={{ fontSize:13, color:"#555", lineHeight:1.5 }}>{n.texto}</div>
-                            {n.createdAt?.seconds && <div style={{ fontSize:11, color:"#AAA", marginTop:6 }}>{new Date(n.createdAt.seconds*1000).toLocaleDateString("pt-BR",{day:"numeric",month:"long",year:"numeric"})}</div>}
+                            <div style={{ display:"flex", gap:12, marginTop:6, alignItems:"center" }}>
+                                {n.autorNome && <div style={{ fontSize:11, color:cor, fontWeight:600 }}>✍️ {n.autorNome}</div>}
+                                {n.createdAt?.seconds && <div style={{ fontSize:11, color:"#AAA" }}>{new Date(n.createdAt.seconds*1000).toLocaleDateString("pt-BR",{day:"numeric",month:"long",year:"numeric"})}</div>}
+                            </div>
                         </div>
                     </div>
                 ))}
@@ -3622,9 +3683,9 @@ function MinhaDeclaracao({ user, config }) {
 
 
 // ── NOTÍCIAS / BLOG ───────────────────────────────────────────────────────────
-function ModalNoticia({ noticia, onClose, config }) {
+function ModalNoticia({ noticia, onClose, config, autorInicial }) {
     const cor = config.corPrimaria||COR;
-    const vazio = { titulo:"", texto:"", imageUrl:"", categoria:"Geral" };
+    const vazio = { titulo:"", texto:"", imageUrl:"", categoria:"Geral", autorNome:autorInicial||"Gestão" };
     const [form, setForm]         = useState(noticia?{...vazio,...noticia}:vazio);
     const [salvando, setSalvando] = useState(false);
     const [erro, setErro]         = useState("");
@@ -3633,7 +3694,7 @@ function ModalNoticia({ noticia, onClose, config }) {
         if (!form.titulo.trim()) { setErro("Título é obrigatório."); return; }
         if (!form.texto.trim())  { setErro("Texto é obrigatório."); return; }
         setSalvando(true);
-        const d = { titulo:form.titulo, texto:form.texto, imageUrl:form.imageUrl||"", categoria:form.categoria, createdAt: noticia ? noticia.createdAt : firebase.firestore.FieldValue.serverTimestamp() };
+        const d = { titulo:form.titulo, texto:form.texto, imageUrl:form.imageUrl||"", categoria:form.categoria, autorNome:form.autorNome||"Gestão", createdAt: noticia ? noticia.createdAt : firebase.firestore.FieldValue.serverTimestamp() };
         if (noticia) await db.collection("noticias").doc(noticia.id).update({...d, updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
         else await db.collection("noticias").add(d);
         setSalvando(false);
@@ -3961,60 +4022,67 @@ function AreaRH({ config, abaInicial }) {
 
 
 // ── FINANCEIRO ────────────────────────────────────────────────────────────────
-const CATEGORIAS_GASTO = [
-    "Mensalidade (desconto/isenção)", "Transporte", "Aluguel de carro", "Pedágio",
-    "Gasolina", "Hotel", "Alimentação", "Passagem aérea", "Passagem rodoviária",
-    "Figurino", "Material de ensaio", "Gravação", "Divulgação", "Outros"
+const WPP_MAESTRO  = "5562991489893";
+const WPP_LUCIA    = "5562991546757";
+
+const CATS_GASTO_PADRAO = [
+    "Transporte","Aluguel de carro","Pedágio","Gasolina","Hotel",
+    "Alimentação","Passagem aérea","Passagem rodoviária",
+    "Figurino","Material de ensaio","Gravação","Divulgação","Outros"
 ];
-const CATEGORIAS_RECEITA = [
-    "Mensalidade", "Campanha", "Doação", "Serviço prestado", "Rifa", "Evento", "Patrocínio", "Outros"
+const CATS_RECEITA_PADRAO = [
+    "Mensalidade","Campanha","Doação","Serviço prestado","Rifa","Evento","Patrocínio","Outros"
 ];
+
+function useCatsFinanceiro() {
+    const [cats, setCats] = useState({ gasto: CATS_GASTO_PADRAO, receita: CATS_RECEITA_PADRAO });
+    useEffect(()=>{
+        const unsub = db.collection("config").doc("cats_financeiro")
+            .onSnapshot(snap=>{ if(snap.exists) setCats(d=>({...d,...snap.data()})); });
+        return unsub;
+    },[]);
+    async function addCat(tipo, nome) {
+        const nova = [...cats[tipo], nome];
+        await db.collection("config").doc("cats_financeiro").set({ [tipo]: nova }, {merge:true});
+    }
+    return { cats, addCat };
+}
 
 function ModalMensalidade({ config, onClose }) {
     const cor = config.corPrimaria||COR;
-    const [dataInicio, setDataInicio] = useState("");
-    const [dataFim, setDataFim]       = useState("");
-    const [valorMensal, setValorMensal] = useState("25.00");
-    const [salvando, setSalvando]     = useState(false);
-    const [ok, setOk]                 = useState(false);
-
+    const [cfg, setCfg] = useState({ dataInicio:"", dataFim:"", valorMensal:"25.00" });
+    const [salvando, setSalvando] = useState(false);
+    const [ok, setOk] = useState(false);
+    useEffect(()=>{
+        db.collection("config").doc("mensalidade").get().then(d=>{ if(d.exists) setCfg(x=>({...x,...d.data(), valorMensal:String(d.data().valorMensal||25)})); });
+    },[]);
     async function salvar() {
-        if (!dataInicio || !dataFim) { alert("Preencha data início e fim."); return; }
+        if (!cfg.dataInicio||!cfg.dataFim) { alert("Preencha início e fim."); return; }
         setSalvando(true);
-        await db.collection("config").doc("mensalidade").set({
-            dataInicio, dataFim, valorMensal: parseFloat(valorMensal)||25,
-            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-        }, {merge:true});
-        setSalvando(false); setOk(true);
-        setTimeout(()=>{ setOk(false); onClose(); }, 1200);
+        await db.collection("config").doc("mensalidade").set({ dataInicio:cfg.dataInicio, dataFim:cfg.dataFim, valorMensal:parseFloat(cfg.valorMensal)||25, updatedAt:firebase.firestore.FieldValue.serverTimestamp() },{merge:true});
+        setSalvando(false); setOk(true); setTimeout(()=>{ setOk(false); onClose(); },1200);
     }
-
     const inp = { width:"100%", padding:"11px 14px", border:"1px solid #E8E0E0", borderRadius:10, fontSize:14, outline:"none", fontFamily:"inherit", color:"#1A1D23", background:"#FAFAFA" };
     const lbl = { display:"block", fontSize:12, fontWeight:600, color:"#888", marginBottom:5 };
-
     return (
-        <div style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.5)", zIndex:300, display:"flex", alignItems:"flex-end", justifyContent:"center" }}
-            onClick={e=>e.target===e.currentTarget&&onClose()}>
+        <div style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.5)", zIndex:300, display:"flex", alignItems:"flex-end", justifyContent:"center" }} onClick={e=>e.target===e.currentTarget&&onClose()}>
             <div style={{ background:"#FAFAFA", borderRadius:"20px 20px 0 0", padding:"24px 20px", width:"100%", maxWidth:500, maxHeight:"90vh", overflowY:"auto" }}>
-                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:20 }}>
-                    <div style={{ fontFamily:"'Playfair Display',serif", fontSize:20, fontWeight:700, color:"#1A1D23" }}>Configurar Período de Cobrança</div>
+                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:12 }}>
+                    <div style={{ fontFamily:"'Playfair Display',serif", fontSize:20, fontWeight:700, color:"#1A1D23" }}>Período de Cobrança</div>
                     <button onClick={onClose} style={{ background:"#EEE", border:"none", borderRadius:8, width:32, height:32, cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center" }}><Icon name="x" size={16} color="#666" /></button>
                 </div>
-                <div style={{ fontSize:13, color:"#888", marginBottom:20, background:cor+"12", borderRadius:10, padding:"10px 14px" }}>
-                    Define o período em que a mensalidade será cobrada. Fora deste período, nenhuma cobrança é gerada.
+                <div style={{ fontSize:13, color:"#888", marginBottom:16, background:(config.corPrimaria||COR)+"12", borderRadius:10, padding:"10px 14px" }}>
+                    Fora do período definido nenhuma cobrança é gerada.
                 </div>
-                <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12, marginBottom:16 }}>
-                    <div><label style={lbl}>Data de início da cobrança</label><input type="date" style={inp} value={dataInicio} onChange={e=>setDataInicio(e.target.value)} /></div>
-                    <div><label style={lbl}>Data de fim da cobrança</label><input type="date" style={inp} value={dataFim} onChange={e=>setDataFim(e.target.value)} /></div>
+                <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12, marginBottom:14 }}>
+                    <div><label style={lbl}>Início da cobrança</label><input type="date" style={inp} value={cfg.dataInicio} onChange={e=>setCfg(x=>({...x,dataInicio:e.target.value}))} /></div>
+                    <div><label style={lbl}>Fim da cobrança</label><input type="date" style={inp} value={cfg.dataFim} onChange={e=>setCfg(x=>({...x,dataFim:e.target.value}))} /></div>
                 </div>
-                <div style={{ marginBottom:20 }}>
-                    <label style={lbl}>Valor da mensalidade (R$)</label>
-                    <input type="number" step="0.01" style={inp} value={valorMensal} onChange={e=>setValorMensal(e.target.value)} />
-                </div>
+                <div style={{ marginBottom:20 }}><label style={lbl}>Valor mensal (R$)</label><input type="number" step="0.01" style={inp} value={cfg.valorMensal} onChange={e=>setCfg(x=>({...x,valorMensal:e.target.value}))} /></div>
                 <div style={{ display:"flex", gap:10 }}>
                     <button onClick={onClose} style={{ flex:1, padding:"13px", background:"#F0EAE8", color:"#666", border:"none", borderRadius:10, fontSize:14, fontWeight:600, cursor:"pointer", fontFamily:"inherit" }}>Cancelar</button>
-                    <button onClick={salvar} disabled={salvando} style={{ flex:1, padding:"13px", background:cor, color:"#fff", border:"none", borderRadius:10, fontSize:14, fontWeight:700, cursor:"pointer", fontFamily:"inherit", opacity:salvando?0.7:1 }}>
-                        {ok?"✓ Salvo!":salvando?"Salvando...":"Salvar Configuração"}
+                    <button onClick={salvar} disabled={salvando} style={{ flex:1, padding:"13px", background:config.corPrimaria||COR, color:"#fff", border:"none", borderRadius:10, fontSize:14, fontWeight:700, cursor:"pointer", fontFamily:"inherit" }}>
+                        {ok?"✓ Salvo!":salvando?"Salvando...":"Salvar"}
                     </button>
                 </div>
             </div>
@@ -4028,68 +4096,102 @@ function ModalPagamento({ membro, mesalidade, config, onClose }) {
     const [salvando, setSalvando] = useState(false);
 
     useEffect(()=>{
-        if (!mesalidade?.dataInicio || !mesalidade?.dataFim) return;
-        db.collection("pagamentos")
-            .where("membroId","==",membro.id)
+        if (!mesalidade?.dataInicio||!mesalidade?.dataFim) return;
+        const unsub = db.collection("pagamentos").where("membroId","==",membro.id)
             .onSnapshot(snap=>{
                 const pagos = {};
-                snap.docs.forEach(d=>{ const p=d.data(); pagos[p.mes]=d.id; });
-                // Gerar lista de meses no período
-                const lista = [];
-                const [sy,sm] = mesalidade.dataInicio.split("-").map(Number);
-                const [ey,em] = mesalidade.dataFim.split("-").map(Number);
-                let y=sy, m=sm;
-                while (y<ey || (y===ey && m<=em)) {
-                    const key = `${y}-${String(m).padStart(2,"0")}`;
-                    lista.push({ key, label:`${MONTHS_PT[m-1]} ${y}`, pago: !!pagos[key], docId: pagos[key]||null });
+                snap.docs.forEach(d=>{ const p=d.data(); pagos[p.mes]={docId:d.id,...p}; });
+                const lista=[];
+                const [sy,sm]=mesalidade.dataInicio.split("-").map(Number);
+                const [ey,em]=mesalidade.dataFim.split("-").map(Number);
+                let y=sy,m=sm;
+                while(y<ey||(y===ey&&m<=em)){
+                    const key=`${y}-${String(m).padStart(2,"0")}`;
+                    const pag = pagos[key];
+                    lista.push({ key, label:`${MONTHS_PT[m-1]} ${y}`, status: pag?.status||"pendente", docId:pag?.docId||null });
                     m++; if(m>12){m=1;y++;}
                 }
                 setMeses(lista);
             });
-    },[membro.id, mesalidade]);
+        return unsub;
+    },[membro.id,mesalidade]);
 
-    async function togglePagamento(mes) {
+    async function marcarAguardando(mes) {
         setSalvando(true);
-        const existing = meses.find(m=>m.key===mes.key);
-        if (existing.pago && existing.docId) {
-            await db.collection("pagamentos").doc(existing.docId).delete();
+        const existing = meses.find(x=>x.key===mes.key);
+        if (existing.docId) {
+            await db.collection("pagamentos").doc(existing.docId).update({ status:"aguardando", updatedAt:firebase.firestore.FieldValue.serverTimestamp() });
         } else {
             await db.collection("pagamentos").add({
-                membroId: membro.id, membroNome: membro.name, naipe: membro.voice||"",
-                mes: mes.key, valor: mesalidade.valorMensal||25,
-                pago: true, pagoEm: firebase.firestore.FieldValue.serverTimestamp(),
-                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                membroId:membro.id, membroNome:membro.name, naipe:membro.voice||"",
+                mes:mes.key, valor:mesalidade.valorMensal||25,
+                status:"aguardando", createdAt:firebase.firestore.FieldValue.serverTimestamp()
             });
         }
+        // WhatsApp maestro e produtora
+        const msg = encodeURIComponent(`Olá! Sou ${membro.name} (${membro.voice||"Corista"}) do Onix Brasil Vocal Internacional. Segue comprovante de pagamento da mensalidade de ${mes.label}. Por favor, validar no sistema.`);
         setSalvando(false);
     }
 
+    async function validar(mes) {
+        if (!mes.docId) return;
+        setSalvando(true);
+        await db.collection("pagamentos").doc(mes.docId).update({ status:"pago", validadoEm:firebase.firestore.FieldValue.serverTimestamp() });
+        // Lançar no financeiro automaticamente
+        await db.collection("financeiro").add({
+            descricao:`Mensalidade ${mes.label} — ${membro.name}`,
+            categoria:"Mensalidade", valor:mesalidade.valorMensal||25,
+            data:`${mes.key}-01`, tipo:"receita",
+            membroId:membro.id, membroNome:membro.name,
+            origem:"mensalidade",
+            createdAt:firebase.firestore.FieldValue.serverTimestamp()
+        });
+        setSalvando(false);
+    }
+
+    async function recusar(mes) {
+        if (!mes.docId) return;
+        await db.collection("pagamentos").doc(mes.docId).update({ status:"pendente", updatedAt:firebase.firestore.FieldValue.serverTimestamp() });
+    }
+
+    const statusInfo = {
+        pendente:   { label:"Pendente",    bg:"#FFF3E0", cor:"#E65100", icon:"clock" },
+        aguardando: { label:"Aguardando",  bg:"#E3F2FD", cor:"#1565C0", icon:"send" },
+        pago:       { label:"Pago",        bg:"#E8F5E9", cor:"#2E7D32", icon:"check-circle" },
+    };
+
     return (
-        <div style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.5)", zIndex:300, display:"flex", alignItems:"flex-end", justifyContent:"center" }}
-            onClick={e=>e.target===e.currentTarget&&onClose()}>
-            <div style={{ background:"#FAFAFA", borderRadius:"20px 20px 0 0", padding:"24px 20px", width:"100%", maxWidth:500, maxHeight:"90vh", overflowY:"auto" }}>
-                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:8 }}>
+        <div style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.5)", zIndex:300, display:"flex", alignItems:"flex-end", justifyContent:"center" }} onClick={e=>e.target===e.currentTarget&&onClose()}>
+            <div style={{ background:"#FAFAFA", borderRadius:"20px 20px 0 0", padding:"24px 20px", width:"100%", maxWidth:540, maxHeight:"92vh", overflowY:"auto" }}>
+                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:6 }}>
                     <div style={{ fontFamily:"'Playfair Display',serif", fontSize:18, fontWeight:700, color:"#1A1D23" }}>Mensalidade — {membro.name}</div>
                     <button onClick={onClose} style={{ background:"#EEE", border:"none", borderRadius:8, width:32, height:32, cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center" }}><Icon name="x" size={16} color="#666" /></button>
                 </div>
                 <div style={{ fontSize:13, color:"#888", marginBottom:20 }}>{membro.voice||"Corista"} · R$ {(mesalidade?.valorMensal||25).toFixed(2)}/mês</div>
                 {meses.length===0
-                    ? <div style={{ textAlign:"center", color:"#CCC", padding:"24px", fontSize:13 }}>Nenhum período de cobrança configurado.</div>
-                    : <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8, marginBottom:16 }}>
-                        {meses.map(m=>(
-                            <button key={m.key} onClick={()=>togglePagamento(m)} disabled={salvando}
-                                style={{ padding:"12px 14px", borderRadius:10, border:`2px solid ${m.pago?cor:"#E8E0E0"}`, background:m.pago?cor+"15":"#fff", cursor:"pointer", fontFamily:"inherit", textAlign:"left", transition:"all 0.15s" }}>
-                                <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-                                    <div style={{ width:20, height:20, borderRadius:"50%", background:m.pago?cor:"#EEE", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
-                                        {m.pago && <Icon name="check" size={12} color="#fff" />}
+                    ? <div style={{ textAlign:"center", color:"#CCC", padding:"24px", fontSize:13 }}>Nenhum período configurado.</div>
+                    : <div style={{ display:"flex", flexDirection:"column", gap:8, marginBottom:16 }}>
+                        {meses.map(m=>{
+                            const si = statusInfo[m.status]||statusInfo.pendente;
+                            return (
+                                <div key={m.key} style={{ background:si.bg, borderRadius:10, border:`1px solid ${si.cor}33`, padding:"12px 16px", display:"flex", alignItems:"center", gap:12 }}>
+                                    <Icon name={si.icon} size={18} color={si.cor} />
+                                    <div style={{ flex:1 }}>
+                                        <div style={{ fontSize:13, fontWeight:700, color:"#1A1D23" }}>{m.label}</div>
+                                        <div style={{ fontSize:11, color:si.cor, fontWeight:600 }}>{si.label}</div>
                                     </div>
-                                    <div>
-                                        <div style={{ fontSize:13, fontWeight:700, color:m.pago?cor:"#1A1D23" }}>{m.label}</div>
-                                        <div style={{ fontSize:11, color:"#AAA" }}>{m.pago?"Pago":"Pendente"}</div>
-                                    </div>
+                                    {m.status==="aguardando" && (
+                                        <div style={{ display:"flex", gap:6 }}>
+                                            <button onClick={()=>validar(m)} disabled={salvando}
+                                                style={{ padding:"6px 12px", background:"#2E7D32", color:"#fff", border:"none", borderRadius:8, fontSize:12, fontWeight:700, cursor:"pointer", fontFamily:"inherit" }}>✓ Validar</button>
+                                            <button onClick={()=>recusar(m)} disabled={salvando}
+                                                style={{ padding:"6px 12px", background:"#FFF0F0", color:"#C62828", border:"1px solid #FFDADA", borderRadius:8, fontSize:12, fontWeight:600, cursor:"pointer", fontFamily:"inherit" }}>✕</button>
+                                        </div>
+                                    )}
+                                    {m.status==="pago" && <span style={{ fontSize:11, color:"#2E7D32", fontWeight:700 }}>✓ Validado</span>}
                                 </div>
-                            </button>
-                        ))}
+                            );
+                        })}
                     </div>
                 }
                 <button onClick={onClose} style={{ width:"100%", padding:"13px", background:"#F0EAE8", color:"#666", border:"none", borderRadius:10, fontSize:14, fontWeight:600, cursor:"pointer", fontFamily:"inherit" }}>Fechar</button>
@@ -4098,35 +4200,44 @@ function ModalPagamento({ membro, mesalidade, config, onClose }) {
     );
 }
 
-function ModalLancamento({ lancamento, tipo, config, onClose }) {
+function ModalLancamento({ lancamento, tipo, config, cats, addCat, onClose }) {
     const cor = config.corPrimaria||COR;
-    const categorias = tipo==="gasto" ? CATEGORIAS_GASTO : CATEGORIAS_RECEITA;
-    const vazio = { descricao:"", categoria:categorias[0], valor:"", data:todayStr(), observacao:"" };
-    const [form, setForm]         = useState(lancamento?{...vazio,...lancamento, valor:String(lancamento.valor||"")}:vazio);
+    const { data:members } = useCollection("members");
+    const categorias = tipo==="gasto" ? (cats?.gasto||CATS_GASTO_PADRAO) : (cats?.receita||CATS_RECEITA_PADRAO);
+    const vazio = { descricao:"", categoria:categorias[0]||"", valor:"", data:todayStr(), observacao:"", membroId:"", membroNome:"" };
+    const [form, setForm]       = useState(lancamento?{...vazio,...lancamento,valor:String(lancamento.valor||"")}:vazio);
     const [salvando, setSalvando] = useState(false);
-    const [erro, setErro]         = useState("");
+    const [erro, setErro]       = useState("");
+    const [novaCat, setNovaCat] = useState("");
+    const [showNovaCat, setShowNovaCat] = useState(false);
 
     async function salvar() {
-        if (!form.descricao.trim()) { setErro("Descrição é obrigatória."); return; }
-        if (!form.valor || isNaN(parseFloat(form.valor))) { setErro("Valor inválido."); return; }
+        if (!form.descricao.trim()) { setErro("Descrição obrigatória."); return; }
+        if (!form.valor||isNaN(parseFloat(form.valor))) { setErro("Valor inválido."); return; }
         setSalvando(true);
-        const d = { descricao:form.descricao, categoria:form.categoria, valor:parseFloat(form.valor), data:form.data, observacao:form.observacao||"", tipo };
+        const membro = members.find(m=>m.id===form.membroId);
+        const d = { descricao:form.descricao, categoria:form.categoria, valor:parseFloat(form.valor), data:form.data, observacao:form.observacao||"", tipo, membroId:form.membroId||"grupo", membroNome:form.membroId?(membro?.name||form.membroNome):"Onix Brasil Vocal" };
         if (lancamento) await db.collection("financeiro").doc(lancamento.id).update({...d, updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
         else await db.collection("financeiro").add({...d, createdAt:firebase.firestore.FieldValue.serverTimestamp()});
         setSalvando(false); onClose();
     }
     async function excluir() {
-        if (!window.confirm("Excluir este lançamento?")) return;
+        if (!window.confirm("Excluir lançamento?")) return;
         await db.collection("financeiro").doc(lancamento.id).delete(); onClose();
+    }
+    async function criarCategoria() {
+        if (!novaCat.trim()) return;
+        await addCat(tipo, novaCat.trim());
+        setForm(f=>({...f,categoria:novaCat.trim()}));
+        setNovaCat(""); setShowNovaCat(false);
     }
 
     const inp = { width:"100%", padding:"11px 14px", border:"1px solid #E8E0E0", borderRadius:10, fontSize:14, outline:"none", fontFamily:"inherit", color:"#1A1D23", background:"#FAFAFA" };
     const lbl = { display:"block", fontSize:12, fontWeight:600, color:"#888", marginBottom:5 };
 
     return (
-        <div style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.5)", zIndex:300, display:"flex", alignItems:"flex-end", justifyContent:"center" }}
-            onClick={e=>e.target===e.currentTarget&&onClose()}>
-            <div style={{ background:"#FAFAFA", borderRadius:"20px 20px 0 0", padding:"24px 20px", width:"100%", maxWidth:500, maxHeight:"90vh", overflowY:"auto" }}>
+        <div style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.5)", zIndex:300, display:"flex", alignItems:"flex-end", justifyContent:"center" }} onClick={e=>e.target===e.currentTarget&&onClose()}>
+            <div style={{ background:"#FAFAFA", borderRadius:"20px 20px 0 0", padding:"24px 20px", width:"100%", maxWidth:520, maxHeight:"92vh", overflowY:"auto" }}>
                 <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:20 }}>
                     <div style={{ fontFamily:"'Playfair Display',serif", fontSize:20, fontWeight:700, color:"#1A1D23" }}>
                         {lancamento?(tipo==="gasto"?"Editar Gasto":"Editar Receita"):(tipo==="gasto"?"Novo Gasto":"Nova Receita")}
@@ -4139,10 +4250,21 @@ function ModalLancamento({ lancamento, tipo, config, onClose }) {
                     {erro && <div style={{ fontSize:12, color:cor, marginTop:4 }}>{erro}</div>}
                 </div>
                 <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12, marginBottom:14 }}>
-                    <div><label style={lbl}>Categoria</label>
-                        <select style={inp} value={form.categoria} onChange={e=>setForm(f=>({...f,categoria:e.target.value}))}>
-                            {categorias.map(c=><option key={c}>{c}</option>)}
-                        </select>
+                    <div>
+                        <label style={lbl}>Categoria</label>
+                        <div style={{ display:"flex", gap:6 }}>
+                            <select style={{ ...inp, flex:1 }} value={form.categoria} onChange={e=>setForm(f=>({...f,categoria:e.target.value}))}>
+                                {categorias.map(cat=><option key={cat}>{cat}</option>)}
+                            </select>
+                            <button onClick={()=>setShowNovaCat(v=>!v)} title="Nova categoria"
+                                style={{ width:36, height:38, background:cor+"15", border:`1px solid ${cor}33`, borderRadius:8, cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
+                                <Icon name="plus" size={14} color={cor} />
+                            </button>
+                        </div>
+                        {showNovaCat && <div style={{ display:"flex", gap:6, marginTop:6 }}>
+                            <input style={{ ...inp, flex:1, padding:"8px 12px" }} value={novaCat} onChange={e=>setNovaCat(e.target.value)} placeholder="Nova categoria..." />
+                            <button onClick={criarCategoria} style={{ padding:"0 12px", background:cor, color:"#fff", border:"none", borderRadius:8, cursor:"pointer", fontFamily:"inherit", fontSize:12, fontWeight:700 }}>Criar</button>
+                        </div>}
                     </div>
                     <div><label style={lbl}>Data</label><input type="date" style={inp} value={form.data} onChange={e=>setForm(f=>({...f,data:e.target.value}))} /></div>
                 </div>
@@ -4150,14 +4272,21 @@ function ModalLancamento({ lancamento, tipo, config, onClose }) {
                     <label style={lbl}>Valor (R$) *</label>
                     <input type="number" step="0.01" style={inp} value={form.valor} onChange={e=>{setForm(f=>({...f,valor:e.target.value}));setErro("");}} placeholder="0,00" />
                 </div>
+                <div style={{ marginBottom:14 }}>
+                    <label style={lbl}>Vinculado a</label>
+                    <select style={inp} value={form.membroId} onChange={e=>setForm(f=>({...f,membroId:e.target.value}))}>
+                        <option value="">Onix Brasil Vocal (grupo)</option>
+                        {members.filter(m=>m.active).sort((a,b)=>a.name>b.name?1:-1).map(m=><option key={m.id} value={m.id}>{m.name}</option>)}
+                    </select>
+                </div>
                 <div style={{ marginBottom:20 }}>
                     <label style={lbl}>Observação</label>
-                    <textarea style={{ ...inp, minHeight:70, resize:"vertical" }} value={form.observacao||""} onChange={e=>setForm(f=>({...f,observacao:e.target.value}))} />
+                    <textarea style={{ ...inp, minHeight:60, resize:"vertical" }} value={form.observacao||""} onChange={e=>setForm(f=>({...f,observacao:e.target.value}))} />
                 </div>
                 <div style={{ display:"flex", gap:10 }}>
                     {lancamento && <button onClick={excluir} style={{ padding:"12px 16px", background:"#FFF0F0", color:"#C62828", border:"1px solid #FFDADA", borderRadius:10, fontSize:13, fontWeight:600, cursor:"pointer", fontFamily:"inherit" }}>Excluir</button>}
                     <button onClick={onClose} style={{ flex:1, padding:"13px", background:"#F0EAE8", color:"#666", border:"none", borderRadius:10, fontSize:14, fontWeight:600, cursor:"pointer", fontFamily:"inherit" }}>Cancelar</button>
-                    <button onClick={salvar} disabled={salvando} style={{ flex:1, padding:"13px", background:cor, color:"#fff", border:"none", borderRadius:10, fontSize:14, fontWeight:700, cursor:"pointer", fontFamily:"inherit", opacity:salvando?0.7:1 }}>
+                    <button onClick={salvar} disabled={salvando} style={{ flex:1, padding:"13px", background:cor, color:"#fff", border:"none", borderRadius:10, fontSize:14, fontWeight:700, cursor:"pointer", fontFamily:"inherit" }}>
                         {salvando?"Salvando...":(lancamento?"Salvar":"Adicionar")}
                     </button>
                 </div>
@@ -4169,169 +4298,250 @@ function ModalLancamento({ lancamento, tipo, config, onClose }) {
 function Financeiro({ config }) {
     const { data:members }     = useCollection("members");
     const { data:lancamentos } = useCollection("financeiro","createdAt");
+    const { cats, addCat }     = useCatsFinanceiro();
     const [aba, setAba]        = useState("resumo");
+    const [mesAtual, setMesAtual] = useState(()=>{ const d=new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`; });
     const [modalMens, setModalMens]   = useState(false);
     const [modalLanc, setModalLanc]   = useState(null);
     const [modalPag, setModalPag]     = useState(null);
     const [tipoLanc, setTipoLanc]     = useState("gasto");
     const [mesalidade, setMesalidade] = useState(null);
-    const [filtroMes, setFiltroMes]   = useState("todos");
+    const [pagamentos, setPagamentos] = useState([]);
     const cor = config.corPrimaria||COR;
 
     useEffect(()=>{
-        const unsub = db.collection("config").doc("mensalidade").onSnapshot(snap=>{ if(snap.exists) setMesalidade(snap.data()); });
-        return unsub;
+        const u1 = db.collection("config").doc("mensalidade").onSnapshot(s=>{ if(s.exists) setMesalidade(s.data()); });
+        const u2 = db.collection("pagamentos").onSnapshot(s=>setPagamentos(s.docs.map(d=>({id:d.id,...d.data()}))));
+        return ()=>{ u1(); u2(); };
     },[]);
 
-    const gastos   = lancamentos.filter(l=>l.tipo==="gasto");
-    const receitas = lancamentos.filter(l=>l.tipo==="receita");
-    const totalGastos   = gastos.reduce((s,l)=>s+(l.valor||0),0);
-    const totalReceitas = receitas.reduce((s,l)=>s+(l.valor||0),0);
-    const saldo = totalReceitas - totalGastos;
-
-    // Filtro por mês
-    const mesesDisponiveis = ["todos", ...Array.from(new Set(lancamentos.map(l=>l.data?.slice(0,7)).filter(Boolean))).sort().reverse()];
-    const lancFiltrados = filtroMes==="todos" ? lancamentos : lancamentos.filter(l=>l.data?.startsWith(filtroMes));
-
-    const card = { background:"#fff", borderRadius:12, border:"1px solid #EEE8E8", padding:"16px 20px", boxShadow:"0 1px 4px rgba(0,0,0,0.04)" };
-
-    // Inadimplência
-    const [pagamentos, setPagamentos] = useState([]);
-    useEffect(()=>{
-        const unsub = db.collection("pagamentos").onSnapshot(snap=>setPagamentos(snap.docs.map(d=>({id:d.id,...d.data()}))));
-        return unsub;
-    },[]);
-
-    function statusMensalidade(membroId) {
-        if (!mesalidade?.dataInicio || !mesalidade?.dataFim) return null;
-        const [sy,sm] = mesalidade.dataInicio.split("-").map(Number);
-        const [ey,em] = mesalidade.dataFim.split("-").map(Number);
-        const hoje = new Date(); const ym = hoje.getFullYear(); const mm = hoje.getMonth()+1;
-        let total=0, pagos=0, y=sy, m=sm;
-        const limite = ym*100+mm;
-        while (y<ey || (y===ey && m<=em)) {
-            if (y*100+m <= limite) {
-                total++;
-                const key=`${y}-${String(m).padStart(2,"0")}`;
-                if (pagamentos.some(p=>p.membroId===membroId&&p.mes===key)) pagos++;
-            }
-            m++; if(m>12){m=1;y++;}
-        }
-        return { total, pagos, pendente: total-pagos };
+    function navMes(dir) {
+        const [y,m] = mesAtual.split("-").map(Number);
+        let nm=m+dir, ny=y;
+        if(nm>12){nm=1;ny++;} if(nm<0){nm=12;ny--;}
+        setMesAtual(`${ny}-${String(nm).padStart(2,"0")}`);
     }
+
+    const lancMes = lancamentos.filter(l=>l.data?.startsWith(mesAtual));
+    const todoGastos   = lancamentos.filter(l=>l.tipo==="gasto");
+    const todoReceitas = lancamentos.filter(l=>l.tipo==="receita");
+    const totalG = todoGastos.reduce((s,l)=>s+(l.valor||0),0);
+    const totalR = todoReceitas.reduce((s,l)=>s+(l.valor||0),0);
+    const saldo  = totalR - totalG;
+    const gastosM   = lancMes.filter(l=>l.tipo==="gasto");
+    const receitasM = lancMes.filter(l=>l.tipo==="receita");
+    const totalGM = gastosM.reduce((s,l)=>s+(l.valor||0),0);
+    const totalRM = receitasM.reduce((s,l)=>s+(l.valor||0),0);
+
+    const pendentes = pagamentos.filter(p=>p.status==="aguardando");
 
     const membrosAtivos = members.filter(m=>m.active).sort((a,b)=>a.name>b.name?1:-1);
 
+    function statusMens(membroId) {
+        if (!mesalidade?.dataInicio||!mesalidade?.dataFim) return null;
+        const [sy,sm]=mesalidade.dataInicio.split("-").map(Number);
+        const [ey,em]=mesalidade.dataFim.split("-").map(Number);
+        const hoje=new Date(); const ym=hoje.getFullYear(); const mm=hoje.getMonth()+1;
+        let total=0,pagos=0,aguard=0,y=sy,m=sm;
+        while(y<ey||(y===ey&&m<=em)){
+            if(y*100+m<=ym*100+mm){ total++;
+                const key=`${y}-${String(m).padStart(2,"0")}`;
+                const p=pagamentos.find(x=>x.membroId===membroId&&x.mes===key);
+                if(p?.status==="pago") pagos++;
+                else if(p?.status==="aguardando") aguard++;
+            }
+            m++; if(m>12){m=1;y++;}
+        }
+        return { total, pagos, aguard, pendente:total-pagos-aguard };
+    }
+
+    // Gráfico barras simples por mês (últimos 6)
+    function ultimos6Meses() {
+        const meses=[];
+        let d=new Date();
+        for(let i=5;i>=0;i--){
+            const nd=new Date(d.getFullYear(),d.getMonth()-i,1);
+            const key=`${nd.getFullYear()}-${String(nd.getMonth()+1).padStart(2,"0")}`;
+            const r=lancamentos.filter(l=>l.tipo==="receita"&&l.data?.startsWith(key)).reduce((s,l)=>s+(l.valor||0),0);
+            const g=lancamentos.filter(l=>l.tipo==="gasto"&&l.data?.startsWith(key)).reduce((s,l)=>s+(l.valor||0),0);
+            meses.push({ key, label:MONTHS_SHORT[nd.getMonth()], receita:r, gasto:g });
+        }
+        return meses;
+    }
+    const meses6 = ultimos6Meses();
+    const maxVal  = Math.max(...meses6.map(m=>Math.max(m.receita,m.gasto)),1);
+
+    const card = { background:"#fff", borderRadius:12, border:"1px solid #EEE8E8", padding:"16px 20px", boxShadow:"0 1px 4px rgba(0,0,0,0.04)" };
+
     return (
         <div>
-            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:24, flexWrap:"wrap", gap:12 }}>
+            {/* Header */}
+            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:20, flexWrap:"wrap", gap:12 }}>
                 <div style={{ fontFamily:"'Playfair Display',serif", fontSize:28, fontWeight:700, color:cor }}>Financeiro</div>
                 <div style={{ display:"flex", gap:8, flexWrap:"wrap" }}>
                     <button onClick={()=>setModalMens(true)}
-                        style={{ display:"flex", alignItems:"center", gap:8, padding:"9px 14px", background:"#fff", border:`1px solid ${cor}`, borderRadius:10, fontSize:13, fontWeight:600, color:cor, cursor:"pointer", fontFamily:"inherit" }}>
-                        <Icon name="settings" size={14} color={cor} /> Período de cobrança
+                        style={{ display:"flex", alignItems:"center", gap:6, padding:"9px 14px", background:"#fff", border:`1px solid ${cor}`, borderRadius:10, fontSize:13, fontWeight:600, color:cor, cursor:"pointer", fontFamily:"inherit" }}>
+                        <Icon name="settings" size={14} color={cor} /> Período
                     </button>
                     <button onClick={()=>{setTipoLanc("receita");setModalLanc("novo");}}
-                        style={{ display:"flex", alignItems:"center", gap:8, padding:"9px 14px", background:"#E8F5E9", border:"1px solid #A5D6A7", borderRadius:10, fontSize:13, fontWeight:700, color:"#2E7D32", cursor:"pointer", fontFamily:"inherit" }}>
+                        style={{ display:"flex", alignItems:"center", gap:6, padding:"9px 14px", background:"#E8F5E9", border:"1px solid #A5D6A7", borderRadius:10, fontSize:13, fontWeight:700, color:"#2E7D32", cursor:"pointer", fontFamily:"inherit" }}>
                         <Icon name="plus" size={14} color="#2E7D32" /> Receita
                     </button>
                     <button onClick={()=>{setTipoLanc("gasto");setModalLanc("novo");}}
-                        style={{ display:"flex", alignItems:"center", gap:8, padding:"9px 14px", background:"#FFF3E0", border:"1px solid #FFCC80", borderRadius:10, fontSize:13, fontWeight:700, color:"#E65100", cursor:"pointer", fontFamily:"inherit" }}>
+                        style={{ display:"flex", alignItems:"center", gap:6, padding:"9px 14px", background:"#FFF3E0", border:"1px solid #FFCC80", borderRadius:10, fontSize:13, fontWeight:700, color:"#E65100", cursor:"pointer", fontFamily:"inherit" }}>
                         <Icon name="minus" size={14} color="#E65100" /> Gasto
                     </button>
                 </div>
             </div>
 
-            {/* Cards de resumo */}
+            {/* Alerta pendentes */}
+            {pendentes.length>0 && (
+                <div style={{ background:"#FFF3E0", border:"2px solid #E65100", borderRadius:12, padding:"12px 16px", marginBottom:16, display:"flex", alignItems:"center", gap:12 }}>
+                    <Icon name="alert-circle" size={18} color="#E65100" />
+                    <div style={{ flex:1, fontSize:13, fontWeight:700, color:"#E65100" }}>
+                        {pendentes.length} pagamento{pendentes.length!==1?"s":""} aguardando validação
+                    </div>
+                    <button onClick={()=>setAba("mensalidade")} style={{ padding:"6px 12px", background:"#E65100", color:"#fff", border:"none", borderRadius:8, fontSize:12, fontWeight:700, cursor:"pointer", fontFamily:"inherit" }}>Ver</button>
+                </div>
+            )}
+
+            {/* Cards de saldo total */}
             <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:12, marginBottom:20 }}>
                 {[
-                    { label:"Receitas",    valor:totalReceitas, cor:"#2E7D32", bg:"#E8F5E9", icon:"trending-up" },
-                    { label:"Gastos",      valor:totalGastos,   cor:"#E65100", bg:"#FFF3E0", icon:"trending-down" },
-                    { label:"Saldo",       valor:saldo,         cor:saldo>=0?"#1565C0":"#C62828", bg:saldo>=0?"#E3F2FD":"#FFEBEE", icon:"dollar-sign" },
+                    { label:"Total Receitas", valor:totalR, cor:"#2E7D32", bg:"#E8F5E9", icon:"trending-up" },
+                    { label:"Total Gastos",   valor:totalG, cor:"#E65100", bg:"#FFF3E0", icon:"trending-down" },
+                    { label:"Saldo Geral",    valor:saldo,  cor:saldo>=0?"#1565C0":"#C62828", bg:saldo>=0?"#E3F2FD":"#FFEBEE", icon:"dollar-sign" },
                 ].map(m=>(
                     <div key={m.label} style={{ ...card, background:m.bg, border:`1px solid ${m.cor}22` }}>
-                        <div style={{ fontSize:12, color:m.cor, fontWeight:700, marginBottom:6 }}>{m.label}</div>
-                        <div style={{ fontSize:22, fontWeight:700, color:m.cor }}>R$ {Math.abs(m.valor).toFixed(2)}</div>
-                        {m.label==="Saldo" && saldo<0 && <div style={{ fontSize:11, color:m.cor, marginTop:2 }}>deficit</div>}
+                        <div style={{ fontSize:11, color:m.cor, fontWeight:700, marginBottom:4, textTransform:"uppercase" }}>{m.label}</div>
+                        <div style={{ fontSize:20, fontWeight:700, color:m.cor }}>R$ {Math.abs(m.valor).toFixed(2)}</div>
                     </div>
                 ))}
             </div>
 
             {/* Abas */}
-            <div style={{ display:"flex", gap:4, marginBottom:20, background:"#fff", borderRadius:12, padding:6, border:"1px solid #EEE8E8", width:"fit-content" }}>
-                {[{key:"resumo",label:"Resumo"},{key:"mensalidade",label:"Mensalidade"},{key:"lancamentos",label:"Lançamentos"}].map(a=>(
+            <div style={{ display:"flex", gap:4, marginBottom:20, background:"#fff", borderRadius:12, padding:5, border:"1px solid #EEE8E8", width:"fit-content", flexWrap:"wrap" }}>
+                {[{key:"resumo",label:"Resumo"},{key:"lancamentos",label:"Lançamentos"},{key:"mensalidade",label:"Mensalidade"}].map(a=>(
                     <button key={a.key} onClick={()=>setAba(a.key)}
-                        style={{ padding:"8px 18px", borderRadius:8, border:"none", background:aba===a.key?cor:"none", color:aba===a.key?"#fff":"#888", fontSize:13, fontWeight:700, cursor:"pointer", fontFamily:"inherit" }}>
-                        {a.label}
+                        style={{ padding:"8px 16px", borderRadius:8, border:"none", background:aba===a.key?cor:"none", color:aba===a.key?"#fff":"#888", fontSize:13, fontWeight:700, cursor:"pointer", fontFamily:"inherit" }}>
+                        {a.label}{a.key==="mensalidade"&&pendentes.length>0?` (${pendentes.length})` :""}
                     </button>
                 ))}
             </div>
 
             {/* ABA RESUMO */}
             {aba==="resumo" && <div>
-                {/* Por categoria de gasto */}
-                {gastos.length>0 && <div style={{ ...card, marginBottom:14 }}>
-                    <div style={{ fontSize:13, fontWeight:700, color:"#E65100", marginBottom:14, display:"flex", alignItems:"center", gap:6 }}>
-                        <Icon name="trending-down" size={14} color="#E65100" /> Gastos por categoria
+                {/* Gráfico barras últimos 6 meses */}
+                <div style={{ ...card, marginBottom:14 }}>
+                    <div style={{ fontSize:13, fontWeight:700, color:"#1A1D23", marginBottom:16 }}>Receitas × Gastos — últimos 6 meses</div>
+                    <div style={{ display:"flex", gap:8, alignItems:"flex-end", height:120 }}>
+                        {meses6.map(m=>(
+                            <div key={m.key} style={{ flex:1, display:"flex", flexDirection:"column", alignItems:"center", gap:4 }}>
+                                <div style={{ width:"100%", display:"flex", gap:2, alignItems:"flex-end", height:90 }}>
+                                    <div style={{ flex:1, background:"#2E7D32", borderRadius:"3px 3px 0 0", height:`${(m.receita/maxVal)*90}px`, minHeight:m.receita>0?4:0, transition:"height 0.3s" }} title={`Receita: R$ ${m.receita.toFixed(2)}`} />
+                                    <div style={{ flex:1, background:"#E65100", borderRadius:"3px 3px 0 0", height:`${(m.gasto/maxVal)*90}px`, minHeight:m.gasto>0?4:0, transition:"height 0.3s" }} title={`Gasto: R$ ${m.gasto.toFixed(2)}`} />
+                                </div>
+                                <div style={{ fontSize:10, color:"#AAA", fontWeight:700 }}>{m.label}</div>
+                            </div>
+                        ))}
                     </div>
-                    {Object.entries(gastos.reduce((acc,l)=>{ acc[l.categoria]=(acc[l.categoria]||0)+l.valor; return acc; },{}))
-                        .sort((a,b)=>b[1]-a[1]).map(([cat,val])=>(
-                        <div key={cat} style={{ display:"flex", justifyContent:"space-between", padding:"8px 0", borderBottom:"1px solid #F5F5F5" }}>
-                            <div style={{ fontSize:13, color:"#555" }}>{cat}</div>
-                            <div style={{ fontSize:13, fontWeight:700, color:"#E65100" }}>R$ {val.toFixed(2)}</div>
+                    <div style={{ display:"flex", gap:16, marginTop:8, justifyContent:"center" }}>
+                        <div style={{ display:"flex", alignItems:"center", gap:5, fontSize:11, color:"#555" }}><div style={{ width:10, height:10, background:"#2E7D32", borderRadius:2 }} /> Receitas</div>
+                        <div style={{ display:"flex", alignItems:"center", gap:5, fontSize:11, color:"#555" }}><div style={{ width:10, height:10, background:"#E65100", borderRadius:2 }} /> Gastos</div>
+                    </div>
+                </div>
+                {/* Por categoria */}
+                <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12, marginBottom:14 }}>
+                    {[{tipo:"receita",label:"Receitas por categoria",cor:"#2E7D32",lista:todoReceitas},{tipo:"gasto",label:"Gastos por categoria",cor:"#E65100",lista:todoGastos}].map(({tipo,label,cor:c,lista})=>(
+                        <div key={tipo} style={card}>
+                            <div style={{ fontSize:12, fontWeight:700, color:c, marginBottom:12, textTransform:"uppercase", letterSpacing:0.5 }}>{label}</div>
+                            {lista.length===0
+                                ? <div style={{ fontSize:12, color:"#CCC", textAlign:"center", padding:"12px 0" }}>Nenhum</div>
+                                : Object.entries(lista.reduce((acc,l)=>{ acc[l.categoria]=(acc[l.categoria]||0)+l.valor; return acc; },{}))
+                                    .sort((a,b)=>b[1]-a[1]).slice(0,5).map(([cat,val])=>(
+                                    <div key={cat} style={{ display:"flex", justifyContent:"space-between", padding:"6px 0", borderBottom:"1px solid #F5F5F5" }}>
+                                        <div style={{ fontSize:12, color:"#555" }}>{cat}</div>
+                                        <div style={{ fontSize:12, fontWeight:700, color:c }}>R$ {val.toFixed(2)}</div>
+                                    </div>
+                                ))
+                            }
                         </div>
                     ))}
-                </div>}
-                {/* Por categoria de receita */}
-                {receitas.length>0 && <div style={{ ...card, marginBottom:14 }}>
-                    <div style={{ fontSize:13, fontWeight:700, color:"#2E7D32", marginBottom:14, display:"flex", alignItems:"center", gap:6 }}>
-                        <Icon name="trending-up" size={14} color="#2E7D32" /> Receitas por categoria
-                    </div>
-                    {Object.entries(receitas.reduce((acc,l)=>{ acc[l.categoria]=(acc[l.categoria]||0)+l.valor; return acc; },{}))
-                        .sort((a,b)=>b[1]-a[1]).map(([cat,val])=>(
-                        <div key={cat} style={{ display:"flex", justifyContent:"space-between", padding:"8px 0", borderBottom:"1px solid #F5F5F5" }}>
-                            <div style={{ fontSize:13, color:"#555" }}>{cat}</div>
-                            <div style={{ fontSize:13, fontWeight:700, color:"#2E7D32" }}>R$ {val.toFixed(2)}</div>
+                </div>
+            </div>}
+
+            {/* ABA LANÇAMENTOS com seta mensal */}
+            {aba==="lancamentos" && <div>
+                <div style={{ ...card, padding:0, overflow:"hidden", marginBottom:14 }}>
+                    <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"12px 20px", borderBottom:"1px solid #EEE8E8" }}>
+                        <button onClick={()=>navMes(-1)} style={{ width:32,height:32,border:"1px solid #EEE",borderRadius:8,background:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center" }}>
+                            <Icon name="chevron-left" size={16} color="#666" />
+                        </button>
+                        <div style={{ textAlign:"center" }}>
+                            <div style={{ fontFamily:"'Playfair Display',serif", fontSize:16, fontWeight:700, color:"#1A1D23" }}>
+                                {MONTHS_PT[parseInt(mesAtual.split("-")[1])-1]?.charAt(0).toUpperCase()+MONTHS_PT[parseInt(mesAtual.split("-")[1])-1]?.slice(1)} {mesAtual.split("-")[0]}
+                            </div>
+                            <div style={{ fontSize:12, color:"#AAA" }}>Receitas: R$ {totalRM.toFixed(2)} · Gastos: R$ {totalGM.toFixed(2)} · Saldo: <span style={{ color:(totalRM-totalGM)>=0?"#2E7D32":"#C62828", fontWeight:700 }}>R$ {(totalRM-totalGM).toFixed(2)}</span></div>
                         </div>
-                    ))}
-                </div>}
-                {lancamentos.length===0 && <div style={{ ...card, textAlign:"center", color:"#CCC", padding:"32px" }}>Nenhum lançamento registrado.</div>}
+                        <button onClick={()=>navMes(1)} style={{ width:32,height:32,border:"1px solid #EEE",borderRadius:8,background:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center" }}>
+                            <Icon name="chevron-right" size={16} color="#666" />
+                        </button>
+                    </div>
+                    {lancMes.length===0
+                        ? <div style={{ textAlign:"center", padding:"32px", color:"#CCC", fontSize:13 }}>Nenhum lançamento neste mês.</div>
+                        : lancMes.sort((a,b)=>a.data<b.data?1:-1).map((l,i)=>(
+                            <div key={l.id} style={{ display:"flex", alignItems:"center", gap:12, padding:"13px 16px", borderBottom:i<lancMes.length-1?"1px solid #F5F5F5":"none", background:i%2===0?"#fff":"#FDFBFB" }}>
+                                <div style={{ width:8, height:8, borderRadius:"50%", background:l.tipo==="receita"?"#2E7D32":"#E65100", flexShrink:0 }} />
+                                <div style={{ flex:1 }}>
+                                    <div style={{ fontSize:13, fontWeight:600, color:"#1A1D23" }}>{l.descricao}</div>
+                                    <div style={{ fontSize:11, color:"#AAA" }}>{l.categoria}{l.membroNome&&l.membroNome!=="Onix Brasil Vocal"?` · ${l.membroNome}`:""}</div>
+                                </div>
+                                <div style={{ textAlign:"right" }}>
+                                    <div style={{ fontSize:13, fontWeight:700, color:l.tipo==="receita"?"#2E7D32":"#E65100" }}>
+                                        {l.tipo==="receita"?"+":"-"}R$ {(l.valor||0).toFixed(2)}
+                                    </div>
+                                    <div style={{ fontSize:11, color:"#AAA" }}>{l.data?new Date(l.data+"T12:00:00").toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit"}):""}</div>
+                                </div>
+                                <button onClick={()=>{setTipoLanc(l.tipo);setModalLanc(l);}} style={{ background:"none", border:"none", color:cor, fontSize:12, fontWeight:600, cursor:"pointer", fontFamily:"inherit", padding:"4px 8px" }}>Editar</button>
+                            </div>
+                        ))
+                    }
+                </div>
             </div>}
 
             {/* ABA MENSALIDADE */}
             {aba==="mensalidade" && <div>
                 {!mesalidade?.dataInicio
-                    ? <div style={{ ...card, textAlign:"center", color:"#AAA", padding:"32px" }}>
+                    ? <div style={{ ...card, textAlign:"center", color:"#AAA", padding:"40px" }}>
                         <Icon name="calendar" size={32} color="#DDD" />
-                        <div style={{ marginTop:12, fontSize:14 }}>Nenhum período de cobrança configurado.</div>
-                        <button onClick={()=>setModalMens(true)} style={{ marginTop:16, padding:"10px 20px", background:cor, color:"#fff", border:"none", borderRadius:10, fontSize:13, fontWeight:700, cursor:"pointer", fontFamily:"inherit" }}>
-                            Configurar agora
-                        </button>
+                        <div style={{ marginTop:12, fontSize:14 }}>Nenhum período configurado.</div>
+                        <button onClick={()=>setModalMens(true)} style={{ marginTop:16, padding:"10px 20px", background:cor, color:"#fff", border:"none", borderRadius:10, fontSize:13, fontWeight:700, cursor:"pointer", fontFamily:"inherit" }}>Configurar agora</button>
                     </div>
                     : <>
-                        <div style={{ ...card, marginBottom:14, display:"flex", gap:16, alignItems:"center" }}>
-                            <Icon name="calendar" size={20} color={cor} />
+                        <div style={{ ...card, marginBottom:14, display:"flex", gap:12, alignItems:"center" }}>
+                            <Icon name="calendar" size={18} color={cor} />
                             <div>
-                                <div style={{ fontSize:13, fontWeight:700, color:"#1A1D23" }}>Período de cobrança ativo</div>
-                                <div style={{ fontSize:13, color:"#888" }}>{fmtDate(mesalidade.dataInicio)} até {fmtDate(mesalidade.dataFim)} · R$ {(mesalidade.valorMensal||25).toFixed(2)}/mês</div>
+                                <div style={{ fontSize:13, fontWeight:700, color:"#1A1D23" }}>Período ativo</div>
+                                <div style={{ fontSize:12, color:"#888" }}>{fmtDate(mesalidade.dataInicio)} até {fmtDate(mesalidade.dataFim)} · R$ {(mesalidade.valorMensal||25).toFixed(2)}/mês</div>
                             </div>
                         </div>
                         <div style={{ ...card, padding:0, overflow:"hidden" }}>
-                            <div style={{ display:"grid", gridTemplateColumns:"2fr 1fr 1fr 80px", padding:"10px 16px", background:"#FAFAFA", borderBottom:"1px solid #EEE" }}>
-                                {["Corista","Pagos","Pendentes","Ação"].map(h=><div key={h} style={{ fontSize:12, fontWeight:700, color:cor }}>{h}</div>)}
+                            <div style={{ display:"grid", gridTemplateColumns:"2fr 60px 60px 70px 80px", padding:"10px 16px", background:"#FAFAFA", borderBottom:"1px solid #EEE" }}>
+                                {["Corista","Pagos","Aguard.","Pend.","Ação"].map(h=><div key={h} style={{ fontSize:11, fontWeight:700, color:cor }}>{h}</div>)}
                             </div>
-                            {membrosAtivos.length===0 && <div style={{ textAlign:"center", padding:"24px", color:"#CCC", fontSize:13 }}>Nenhum integrante ativo.</div>}
                             {membrosAtivos.map((m,i)=>{
-                                const st = statusMensalidade(m.id);
+                                const st=statusMens(m.id);
+                                const temAguard = pagamentos.some(p=>p.membroId===m.id&&p.status==="aguardando");
                                 return (
-                                    <div key={m.id} style={{ display:"grid", gridTemplateColumns:"2fr 1fr 1fr 80px", padding:"13px 16px", borderBottom:i<membrosAtivos.length-1?"1px solid #F5F5F5":"none", alignItems:"center", background:i%2===0?"#fff":"#FDFBFB" }}>
+                                    <div key={m.id} style={{ display:"grid", gridTemplateColumns:"2fr 60px 60px 70px 80px", padding:"12px 16px", borderBottom:i<membrosAtivos.length-1?"1px solid #F5F5F5":"none", alignItems:"center", background:temAguard?"#FFF8E1":i%2===0?"#fff":"#FDFBFB" }}>
                                         <div>
-                                            <div style={{ fontSize:14, fontWeight:600, color:"#1A1D23" }}>{m.name}</div>
-                                            <div style={{ fontSize:12, color:"#AAA" }}>{m.voice||"Corista"}</div>
+                                            <div style={{ fontSize:13, fontWeight:600, color:"#1A1D23" }}>{m.name}{temAguard&&<span style={{ marginLeft:6, fontSize:10, background:"#E65100", color:"#fff", borderRadius:10, padding:"1px 6px", fontWeight:700 }}>!</span>}</div>
+                                            <div style={{ fontSize:11, color:"#AAA" }}>{m.voice||"Corista"}</div>
                                         </div>
-                                        <div><span style={{ fontSize:13, fontWeight:700, color:"#2E7D32" }}>{st?.pagos||0}</span></div>
-                                        <div><span style={{ fontSize:13, fontWeight:700, color:st?.pendente>0?"#E65100":"#2E7D32" }}>{st?.pendente||0}</span></div>
-                                        <div><button onClick={()=>setModalPag(m)} style={{ padding:"7px 14px", background:cor+"15", color:cor, border:`1px solid ${cor}33`, borderRadius:8, fontSize:12, fontWeight:700, cursor:"pointer", fontFamily:"inherit" }}>Ver</button></div>
+                                        <div style={{ fontSize:13, fontWeight:700, color:"#2E7D32" }}>{st?.pagos||0}</div>
+                                        <div style={{ fontSize:13, fontWeight:700, color:"#1565C0" }}>{st?.aguard||0}</div>
+                                        <div style={{ fontSize:13, fontWeight:700, color:st?.pendente>0?"#E65100":"#2E7D32" }}>{st?.pendente||0}</div>
+                                        <div><button onClick={()=>setModalPag(m)} style={{ padding:"6px 12px", background:cor+"15", color:cor, border:`1px solid ${cor}33`, borderRadius:8, fontSize:12, fontWeight:700, cursor:"pointer", fontFamily:"inherit" }}>Ver</button></div>
                                     </div>
                                 );
                             })}
@@ -4340,43 +4550,143 @@ function Financeiro({ config }) {
                 }
             </div>}
 
-            {/* ABA LANÇAMENTOS */}
-            {aba==="lancamentos" && <div>
-                <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:16, flexWrap:"wrap" }}>
-                    <Icon name="filter" size={14} color="#AAA" />
-                    <select value={filtroMes} onChange={e=>setFiltroMes(e.target.value)}
-                        style={{ padding:"8px 14px", border:"1px solid #EEE", borderRadius:8, fontSize:13, fontFamily:"inherit", outline:"none", background:"#fff", cursor:"pointer" }}>
-                        {mesesDisponiveis.map(m=><option key={m} value={m}>{m==="todos"?"Todos os períodos":fmtMonthYear(m+"-01")}</option>)}
-                    </select>
-                    <div style={{ fontSize:12, color:"#AAA" }}>{lancFiltrados.length} lançamento{lancFiltrados.length!==1?"s":""}</div>
-                </div>
-                {lancFiltrados.length===0
-                    ? <div style={{ ...card, textAlign:"center", color:"#CCC", padding:"32px" }}>Nenhum lançamento encontrado.</div>
-                    : <div style={{ ...card, padding:0, overflow:"hidden" }}>
-                        <div style={{ display:"grid", gridTemplateColumns:"1fr 100px 80px 90px 60px", padding:"10px 16px", background:"#FAFAFA", borderBottom:"1px solid #EEE" }}>
-                            {["Descrição","Categoria","Data","Valor",""].map(h=><div key={h} style={{ fontSize:11, fontWeight:700, color:cor }}>{h}</div>)}
-                        </div>
-                        {lancFiltrados.sort((a,b)=>a.data<b.data?1:-1).map((l,i)=>(
-                            <div key={l.id} style={{ display:"grid", gridTemplateColumns:"1fr 100px 80px 90px 60px", padding:"12px 16px", borderBottom:i<lancFiltrados.length-1?"1px solid #F5F5F5":"none", alignItems:"center", background:i%2===0?"#fff":"#FDFBFB" }}>
-                                <div>
-                                    <div style={{ fontSize:13, fontWeight:600, color:"#1A1D23" }}>{l.descricao}</div>
-                                    {l.observacao && <div style={{ fontSize:11, color:"#AAA" }}>{l.observacao}</div>}
-                                </div>
-                                <div style={{ fontSize:12, color:"#888" }}>{l.categoria}</div>
-                                <div style={{ fontSize:12, color:"#AAA" }}>{l.data?new Date(l.data+"T12:00:00").toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit"}):""}</div>
-                                <div style={{ fontSize:13, fontWeight:700, color:l.tipo==="receita"?"#2E7D32":"#E65100" }}>
-                                    {l.tipo==="receita"?"+":"-"}R$ {(l.valor||0).toFixed(2)}
-                                </div>
-                                <div><button onClick={()=>{setTipoLanc(l.tipo);setModalLanc(l);}} style={{ background:"none", border:"none", color:cor, fontSize:12, fontWeight:600, cursor:"pointer", fontFamily:"inherit" }}>Editar</button></div>
-                            </div>
-                        ))}
-                    </div>
-                }
-            </div>}
-
             {modalMens && <ModalMensalidade config={config} onClose={()=>setModalMens(false)} />}
-            {modalLanc && <ModalLancamento lancamento={modalLanc==="novo"?null:modalLanc} tipo={tipoLanc} config={config} onClose={()=>setModalLanc(null)} />}
+            {modalLanc && <ModalLancamento lancamento={modalLanc==="novo"?null:modalLanc} tipo={tipoLanc} config={config} cats={cats} addCat={addCat} onClose={()=>setModalLanc(null)} />}
             {modalPag && <ModalPagamento membro={modalPag} mesalidade={mesalidade} config={config} onClose={()=>setModalPag(null)} />}
+        </div>
+    );
+}
+
+// ── FINANCEIRO CORISTA ────────────────────────────────────────────────────────
+function FinanceiroCorista({ user, config, setTab }) {
+    const cor = config.corPrimaria||COR;
+    const [mesalidade, setMesalidade] = useState(null);
+    const [pagamentos, setPagamentos] = useState([]);
+    const [salvando, setSalvando]     = useState(null);
+    const [meses, setMeses]           = useState([]);
+
+    useEffect(()=>{
+        const u1 = db.collection("config").doc("mensalidade").onSnapshot(s=>{ if(s.exists) setMesalidade(s.data()); });
+        const u2 = db.collection("pagamentos").where("membroId","==",user.memberId||"")
+            .onSnapshot(s=>setPagamentos(s.docs.map(d=>({id:d.id,...d.data()}))));
+        return ()=>{ u1(); u2(); };
+    },[user.memberId]);
+
+    // Buscar memberId do corista pelo nome
+    const [memberId, setMemberId] = useState(null);
+    useEffect(()=>{
+        if (!user.name) return;
+        db.collection("members").where("name","==",user.name).get().then(s=>{
+            if (!s.empty) setMemberId(s.docs[0].id);
+        });
+    },[user.name]);
+
+    useEffect(()=>{
+        if (!mesalidade?.dataInicio||!mesalidade?.dataFim||!memberId) return;
+        db.collection("pagamentos").where("membroId","==",memberId)
+            .onSnapshot(snap=>{
+                const pagos = {};
+                snap.docs.forEach(d=>{ const p=d.data(); pagos[p.mes]={docId:d.id,...p}; });
+                const lista=[];
+                const [sy,sm]=mesalidade.dataInicio.split("-").map(Number);
+                const [ey,em]=mesalidade.dataFim.split("-").map(Number);
+                let y=sy,m=sm;
+                const hoje=new Date(); const ym=hoje.getFullYear(); const mm=hoje.getMonth()+1;
+                while(y<ey||(y===ey&&m<=em)){
+                    if(y*100+m<=ym*100+mm){
+                        const key=`${y}-${String(m).padStart(2,"0")}`;
+                        const pag=pagos[key];
+                        lista.push({ key, label:`${MONTHS_PT[m-1]} ${y}`, status:pag?.status||"pendente", docId:pag?.docId||null });
+                    }
+                    m++; if(m>12){m=1;y++;}
+                }
+                setMeses(lista.reverse());
+            });
+    },[mesalidade, memberId]);
+
+    async function marcarPago(mes) {
+        if (!memberId) return;
+        setSalvando(mes.key);
+        if (mes.docId) {
+            await db.collection("pagamentos").doc(mes.docId).update({ status:"aguardando", updatedAt:firebase.firestore.FieldValue.serverTimestamp() });
+        } else {
+            await db.collection("pagamentos").add({
+                membroId:memberId, membroNome:user.name, naipe:user.voice||"",
+                mes:mes.key, valor:mesalidade?.valorMensal||25,
+                status:"aguardando", createdAt:firebase.firestore.FieldValue.serverTimestamp()
+            });
+        }
+        setSalvando(null);
+        // Abrir WhatsApp
+        const mesLabel = mes.label;
+        const valor = (mesalidade?.valorMensal||25).toFixed(2);
+        const msgMaestro = encodeURIComponent(`Olá Paulo! Sou ${user.name} (${user.voice||"Corista"}) do Onix Brasil Vocal Internacional. Enviei o comprovante de pagamento da mensalidade de ${mesLabel} (R$ ${valor}). Por favor, valide no sistema. Obrigado! 🎵`);
+        const msgLucia = encodeURIComponent(`Olá Lú! Sou ${user.name} (${user.voice||"Corista"}) do Onix Brasil Vocal Internacional. Enviei o comprovante de pagamento da mensalidade de ${mesLabel} (R$ ${valor}). Por favor, valide no sistema. Obrigado! 🎵`);
+        const escolha = window.confirm("Enviar comprovante para:
+
+OK = Maestro Paulo
+Cancelar = Produtora Lucia
+
+Após enviar o WhatsApp, aguarde a validação.");
+        if (escolha) window.open(`https://wa.me/${WPP_MAESTRO}?text=${msgMaestro}`,"_blank");
+        else window.open(`https://wa.me/${WPP_LUCIA}?text=${msgLucia}`,"_blank");
+    }
+
+    const statusInfo = {
+        pendente:   { label:"Pendente",           bg:"#FFF3E0", cor:"#E65100", icon:"clock" },
+        aguardando: { label:"Aguardando validação",bg:"#E3F2FD", cor:"#1565C0", icon:"send" },
+        pago:       { label:"Confirmado ✓",        bg:"#E8F5E9", cor:"#2E7D32", icon:"check-circle" },
+    };
+
+    const card = { background:"#fff", borderRadius:12, border:"1px solid #EEE8E8", padding:"16px 20px", marginBottom:12, boxShadow:"0 1px 4px rgba(0,0,0,0.04)" };
+
+    return (
+        <div>
+            <div style={{ fontFamily:"'Playfair Display',serif", fontSize:22, fontWeight:700, color:cor, marginBottom:4 }}>Meu Financeiro</div>
+            <div style={{ fontSize:13, color:"#AAA", marginBottom:20 }}>Acompanhe suas mensalidades</div>
+
+            {!mesalidade?.dataInicio
+                ? <div style={{ ...card, textAlign:"center", color:"#CCC", padding:"32px" }}>Nenhum período de cobrança configurado.</div>
+                : <>
+                    <div style={{ ...card, marginBottom:14, display:"flex", gap:12, alignItems:"center" }}>
+                        <Icon name="info" size={16} color={cor} />
+                        <div style={{ fontSize:13, color:"#555" }}>
+                            Valor mensal: <strong>R$ {(mesalidade.valorMensal||25).toFixed(2)}</strong> · Período: {fmtDate(mesalidade.dataInicio)} até {fmtDate(mesalidade.dataFim)}
+                        </div>
+                    </div>
+                    {meses.length===0
+                        ? <div style={{ ...card, textAlign:"center", color:"#CCC", padding:"24px" }}>Nenhuma mensalidade no período atual.</div>
+                        : meses.map(m=>{
+                            const si=statusInfo[m.status]||statusInfo.pendente;
+                            return (
+                                <div key={m.key} style={{ ...card, background:si.bg, border:`1px solid ${si.cor}33`, padding:"14px 16px" }}>
+                                    <div style={{ display:"flex", alignItems:"center", gap:12 }}>
+                                        <Icon name={si.icon} size={20} color={si.cor} />
+                                        <div style={{ flex:1 }}>
+                                            <div style={{ fontSize:14, fontWeight:700, color:"#1A1D23" }}>{m.label}</div>
+                                            <div style={{ fontSize:12, color:si.cor, fontWeight:600 }}>{si.label}</div>
+                                        </div>
+                                        <div style={{ textAlign:"right" }}>
+                                            <div style={{ fontSize:14, fontWeight:700, color:"#1A1D23" }}>R$ {(mesalidade.valorMensal||25).toFixed(2)}</div>
+                                            {m.status==="pendente" && (
+                                                <button onClick={()=>marcarPago(m)} disabled={salvando===m.key}
+                                                    style={{ marginTop:6, padding:"7px 14px", background:cor, color:"#fff", border:"none", borderRadius:8, fontSize:12, fontWeight:700, cursor:"pointer", fontFamily:"inherit", display:"block" }}>
+                                                    {salvando===m.key?"Enviando...":"✓ Marcar como pago"}
+                                                </button>
+                                            )}
+                                        </div>
+                                    </div>
+                                    {m.status==="aguardando" && (
+                                        <div style={{ marginTop:10, padding:"8px 12px", background:"rgba(21,101,192,0.08)", borderRadius:8, fontSize:12, color:"#1565C0" }}>
+                                            💬 Comprovante enviado. Aguarde confirmação do maestro ou produtora.
+                                        </div>
+                                    )}
+                                </div>
+                            );
+                        })
+                    }
+                </>
+            }
         </div>
     );
 }
@@ -4399,10 +4709,11 @@ const NAV_ADMIN = [
 ];
 
 const NAV_CORISTA = [
-    { key:"inicio",     label:"Início",          icon:"home" },
-    { key:"musicas",    label:"Músicas",          icon:"music" },
-    { key:"estudos",    label:"Sala de Estudos",  icon:"graduation-cap" },
-    { key:"declaracao", label:"Minha Declaração", icon:"file-text" },
+    { key:"inicio",          label:"Início",          icon:"home" },
+    { key:"musicas",         label:"Músicas",          icon:"music" },
+    { key:"estudos",         label:"Sala de Estudos",  icon:"graduation-cap" },
+    { key:"meu_financeiro",  label:"Meu Financeiro",   icon:"dollar-sign" },
+    { key:"declaracao",      label:"Minha Declaração", icon:"file-text" },
 ];
 
 // ── APP ───────────────────────────────────────────────────────────────────────
@@ -4461,6 +4772,7 @@ function App() {
         financeiro:   <Financeiro config={config} />,
         config:       <Configuracoes config={config} save={save} />,
         inicio:       <PainelCorista user={user} config={config} />,
+        meu_financeiro: <FinanceiroCorista user={user} config={config} />,
     };
 
     const mobileNav = isAdmin
@@ -4473,7 +4785,7 @@ function App() {
                 <div style={{ padding:"20px 20px 16px", borderBottom:"1px solid #F3EEF9" }}>
                     <div style={{ display:"flex", alignItems:"center", gap:12 }}>
                         <div style={{ width:40, height:40, background:fundo, borderRadius:10, display:"flex", alignItems:"center", justifyContent:"center" }}>
-                            <img src={config.logoUrl||LOGO_URL} alt="" style={{ width:28, height:28, objectFit:"contain" }} onError={e=>e.target.style.display="none"} />
+                            <img src={config.logoUrl||LOGO_URL} alt="" style={{ width:36, height:36, objectFit:"cover", borderRadius:8 }} onError={e=>e.target.style.display="none"} />
                         </div>
                         <div>
                             <div style={{ fontFamily:"'Playfair Display',serif", fontSize:15, fontWeight:700, color:cor, lineHeight:1.2 }}>{config.nomeApp||"Onix Brasil Vocal Internacional"}</div>
@@ -4501,7 +4813,7 @@ function App() {
                 <div style={{ background:cor, padding:"12px 16px", display:"flex", justifyContent:"space-between", alignItems:"center", position:"sticky", top:0, zIndex:100 }} className="header-mobile">
                     <div style={{ display:"flex", alignItems:"center", gap:10 }}>
                         <div style={{ width:32, height:32, background:"rgba(255,255,255,0.15)", borderRadius:8, display:"flex", alignItems:"center", justifyContent:"center" }}>
-                            <img src={config.logoUrl||LOGO_URL} alt="" style={{ width:22, height:22, objectFit:"contain" }} onError={e=>e.target.style.display="none"} />
+                            <img src={config.logoUrl||LOGO_URL} alt="" style={{ width:28, height:28, objectFit:"cover", borderRadius:6 }} onError={e=>e.target.style.display="none"} />
                         </div>
                         <div style={{ fontFamily:"'Playfair Display',serif", color:"#fff", fontSize:15, fontWeight:700 }}>{config.nomeApp||"Onix Brasil Vocal Internacional"}</div>
                     </div>
