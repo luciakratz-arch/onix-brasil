@@ -101,7 +101,7 @@ function CadastroPublico({ config }) {
     return (
         <div style={{ minHeight:"100vh", background:fundo, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"32px 20px" }}>
             <div style={{ textAlign:"center", marginBottom:24 }}>
-                <div style={{ width:80, height:80, background:"#fff", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 14px", boxShadow:"0 4px 20px rgba(0,0,0,0.1)" }}>
+                <div style={{ width:80, height:80, background:"#fff", borderRadius:14, display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 14px", boxShadow:"0 4px 20px rgba(0,0,0,0.1)" }}>
                     <img src={config.logoUrl||LOGO_URL} alt="" style={{ width:56, height:56, objectFit:"contain" }} onError={e=>e.target.style.display="none"} />
                 </div>
                 <div style={{ fontFamily:"'Playfair Display',serif", fontSize:22, fontWeight:700, color:cor }}>{config.nomeApp||"Onix Brasil Vocal Internacional"}</div>
@@ -397,8 +397,8 @@ function Login({ members, onLogin, config }) {
     return (
         <div style={s.wrap}>
             <div style={{ textAlign:"center", marginBottom:28 }}>
-                <div style={{ width:90, height:90, background:"#fff", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 16px", boxShadow:"0 4px 20px rgba(0,0,0,0.1)" }}>
-                    <img src={config.logoUrl||LOGO_URL} alt="Logo" style={{ width:72, height:72, objectFit:"cover", borderRadius:12 }} onError={e=>e.target.style.display="none"} />
+                <div style={{ width:90, height:90, background:"#fff", borderRadius:16, display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 16px", boxShadow:"0 4px 20px rgba(0,0,0,0.1)" }}>
+                    <img src={config.logoUrl||LOGO_URL} alt="Logo" style={{ width:80, height:80, objectFit:"cover", borderRadius:14 }} onError={e=>e.target.style.display="none"} />
                 </div>
                 <div style={{ fontFamily:"'Playfair Display',serif", fontSize:26, fontWeight:700, color:cor }}>{config.nomeApp||"Onix Brasil Vocal Internacional"}</div>
                 <div style={{ fontSize:14, color:"#AAA", marginTop:4 }}>{config.subtitulo||"Portal de Gestão"}</div>
@@ -830,7 +830,7 @@ function Configuracoes({ config, save }) {
                 </div>
                 <div style={{ marginTop:16, background:form.corFundo||COR_FUNDO, borderRadius:10, padding:16, textAlign:"center" }}>
                     <div style={{ fontSize:11, color:"#AAA", marginBottom:8 }}>PREVIEW</div>
-                    <div style={{ width:52, height:52, background:"#fff", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 10px", boxShadow:"0 2px 8px rgba(0,0,0,0.1)" }}>
+                    <div style={{ width:52, height:52, background:"#fff", borderRadius:10, display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 10px", boxShadow:"0 2px 8px rgba(0,0,0,0.1)" }}>
                         <img src={form.logoUrl||LOGO_URL} style={{ width:36, height:36, objectFit:"contain" }} onError={e=>e.target.style.display="none"} />
                     </div>
                     <div style={{ fontFamily:"'Playfair Display',serif", fontSize:20, fontWeight:700, color:form.corPrimaria||COR }}>{form.nomeApp||"Onix Brasil Vocal Internacional"}</div>
@@ -2782,7 +2782,7 @@ function CheckinPublico({ sessaoId, config }) {
     return (
         <div style={wrap}>
             <div style={{ textAlign:"center", marginBottom:24 }}>
-                <div style={{ width:64, height:64, background:"#fff", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 12px", boxShadow:"0 2px 12px rgba(0,0,0,0.1)" }}>
+                <div style={{ width:64, height:64, background:"#fff", borderRadius:12, display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 12px", boxShadow:"0 2px 12px rgba(0,0,0,0.1)" }}>
                     <img src={config.logoUrl||LOGO_URL} alt="" style={{ width:44, height:44, objectFit:"contain" }} onError={e=>e.target.style.display="none"} />
                 </div>
                 <div style={{ fontFamily:"'Playfair Display',serif", fontSize:20, fontWeight:700, color:cor }}>{config.nomeApp||"Onix Brasil Vocal Internacional"}</div>
