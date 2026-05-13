@@ -4622,12 +4622,7 @@ function FinanceiroCorista({ user, config, setTab }) {
         const valor = (mesalidade?.valorMensal||25).toFixed(2);
         const msgMaestro = encodeURIComponent(`Olá Paulo! Sou ${user.name} (${user.voice||"Corista"}) do Onix Brasil Vocal Internacional. Enviei o comprovante de pagamento da mensalidade de ${mesLabel} (R$ ${valor}). Por favor, valide no sistema. Obrigado! 🎵`);
         const msgLucia = encodeURIComponent(`Olá Lú! Sou ${user.name} (${user.voice||"Corista"}) do Onix Brasil Vocal Internacional. Enviei o comprovante de pagamento da mensalidade de ${mesLabel} (R$ ${valor}). Por favor, valide no sistema. Obrigado! 🎵`);
-        const escolha = window.confirm("Enviar comprovante para:
-
-OK = Maestro Paulo
-Cancelar = Produtora Lucia
-
-Após enviar o WhatsApp, aguarde a validação.");
+        const escolha = window.confirm("Enviar comprovante para:\n\nOK = Maestro Paulo\nCancelar = Produtora Lucia\n\nApós enviar o WhatsApp, aguarde a validação.");
         if (escolha) window.open(`https://wa.me/${WPP_MAESTRO}?text=${msgMaestro}`,"_blank");
         else window.open(`https://wa.me/${WPP_LUCIA}?text=${msgLucia}`,"_blank");
     }
