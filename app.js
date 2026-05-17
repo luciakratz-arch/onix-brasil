@@ -13139,7 +13139,7 @@ function Financeiro(_ref58) {
         var p = pagamentos.find(function (x) {
           return x.membroId === membroId && x.mes === key;
         });
-        if ((p === null || p === void 0 ? void 0 : p.status) === "pago") pagos++;else if ((p === null || p === void 0 ? void 0 : p.status) === "aguardando") aguard++;
+        if ((p === null || p === void 0 ? void 0 : p.status) === "pago") pagos++;else if ((p === null || p === void 0 ? void 0 : p.status) === "aguardando") aguard++;else if ((p === null || p === void 0 ? void 0 : p.status) === "isento") isentos++;
       }
       m++;
       if (m > 12) {
@@ -13154,7 +13154,8 @@ function Financeiro(_ref58) {
       total: total,
       pagos: pagos,
       aguard: aguard,
-      pendente: total - pagos - aguard
+      isentos: isentos,
+      pendente: total - pagos - aguard - isentos
     };
   }
 
@@ -13795,12 +13796,12 @@ function Financeiro(_ref58) {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       display: "grid",
-      gridTemplateColumns: "2fr 60px 60px 70px 80px",
+      gridTemplateColumns: "2fr 60px 60px 60px 70px 80px",
       padding: "10px 16px",
       background: "#FAFAFA",
       borderBottom: "1px solid #EEE"
     }
-  }, ["Corista", "Pagos", "Aguard.", "Pend.", "Ação"].map(function (h) {
+  }, ["Corista", "Pagos", "Aguard.", "Isento", "Pend.", "Ação"].map(function (h) {
     return /*#__PURE__*/React.createElement("div", {
       key: h,
       style: {
@@ -13818,7 +13819,7 @@ function Financeiro(_ref58) {
       key: m.id,
       style: {
         display: "grid",
-        gridTemplateColumns: "2fr 60px 60px 70px 80px",
+        gridTemplateColumns: "2fr 60px 60px 60px 70px 80px",
         padding: "12px 16px",
         borderBottom: i < membrosAtivos.length - 1 ? "1px solid #F5F5F5" : "none",
         alignItems: "center",
@@ -13858,6 +13859,12 @@ function Financeiro(_ref58) {
         color: "#1565C0"
       }
     }, (st === null || st === void 0 ? void 0 : st.aguard) || 0), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 13,
+        fontWeight: 700,
+        color: "#888"
+      }
+    }, (st === null || st === void 0 ? void 0 : st.isentos) || 0), /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 13,
         fontWeight: 700,
