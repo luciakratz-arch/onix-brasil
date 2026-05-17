@@ -6448,10 +6448,10 @@ function Apresentacao(_ref21) {
     var plano = planos[s.id] || "A";
     var url = plano === "B" ? s.playbackB || s.playback || s.audioOriginal : s.playback || s.audioOriginal;
     if (!url) return null;
-    var dr = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
-    if (dr) return "https://drive.google.com/file/d/".concat(dr[1], "/preview");
+    var dr = url.match(/\/d\/([a-zA-Z0-9_-]+)/) || url.match(/id=([a-zA-Z0-9_-]+)/);
+    if (dr) return "https://docs.google.com/uc?export=open&id=" + dr[1];
     var yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
-    if (yt) return "https://www.youtube.com/embed/".concat(yt[1], "?autoplay=1");
+    if (yt) return "https://www.youtube.com/embed/" + yt[1] + "?autoplay=1";
     return url;
   }
   var proximos = events.filter(function (e) {
