@@ -1826,12 +1826,11 @@ function SalaEstudos({ config, isAdmin }) {
 // ── APRESENTAÇÃO ──────────────────────────────────────────────────────────────
 function Apresentacao({ config }) {
     const { data:events }         = useCollection("onix_events","date");
-    const { data:songs }          = useCollection("onix_songs");
     const [eventoSel, setEventoSel] = useState(null);
     const [setlist, setSetlist]   = useState([]);
     const [tocando, setTocando]   = useState(null);
     const [dragIdx, setDragIdx]   = useState(null);
-    const [planos, setPlanos]     = useState({}); // { [musicaId]: "A" | "B" }
+    const [planos, setPlanos]     = useState({});
     const cor = config.corPrimaria||COR;
     const today = todayStr();
 
@@ -1847,10 +1846,8 @@ function Apresentacao({ config }) {
     }
 
     function getUrlParaTocar(s) {
-        // Busca dados atualizados da música no Firebase
-        const songAtual = songs.find(sg => sg.id === s.id) || s;
         const plano = planos[s.id] || "A";
-        const url = plano==="B" ? (songAtual.playbackB||songAtual.playback||songAtual.audioOriginal) : (songAtual.playback||songAtual.audioOriginal);
+        const url = plano==="B" ? (s.playbackB||s.playback||s.audioOriginal) : (s.playback||s.audioOriginal);
         if (!url) return null;
         const dr = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
         if (dr) return `https://drive.google.com/file/d/${dr[1]}/preview`;
@@ -1949,8 +1946,23 @@ function Apresentacao({ config }) {
                             <div style={{ fontSize:12, color:"#AAA" }}>({setlist.length} música{setlist.length!==1?"s":""})</div>
                             <div style={{ fontSize:11, color:"#CCC", marginLeft:"auto" }}>↑↓ para reordenar</div>
                         </div>
-                        {setlist.map((s,i)=>(
-                            <div key={i} onClick={()=>setTocando(s)}
+                        {setlist.map((s,i)=>{
+                            const urlA = (()=>{ const u=s.playback||s.audioOriginal; if(!u) return null; const dr=u.match(/\/d\/([a-zA-Z0-9_-]+)/); if(dr) return `https://drive.google.com/file/d/${dr[1]}/preview`; const yt=u.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/); if(yt) return `https://www.youtube.com/embed/${yt[1]}?autoplay=1`; return u; })();
+                            const urlB = (()=>{ const u=s.playbackB; if(!u) return urlA; const dr=u.match(/\/d\/([a-zA-Z0-9_-]+)/); if(dr) return `https://drive.google.com/file/d/${dr[1]}/preview`; const yt=u.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/); if(yt) return `https://www.youtube.com/embed/${yt[1]}?autoplay=1`; return u; })();
+                            return (
+                            <div key={i}
+                                onClick={()=>{
+                                    setTocando(s);
+                                    // Força update do iframe diretamente
+                                    setTimeout(()=>{
+                                        const iframe = document.getElementById("player-iframe");
+                                        const titulo = document.getElementById("player-titulo");
+                                        const plano = planos[s.id]||"A";
+                                        const url = plano==="B" ? urlB : urlA;
+                                        if(titulo) titulo.textContent = s.title;
+                                        if(iframe && url) iframe.src = url;
+                                    }, 50);
+                                }}
                                 style={{ display:"flex", alignItems:"center", gap:10, padding:"10px 12px", borderRadius:8, marginBottom:6, cursor:"pointer", background: tocando?.id===s.id ? cor+"15" : "#F9F5F5", border: tocando?.id===s.id ? `1px solid ${cor}33` : "1px solid transparent", transition:"background 0.15s" }}>
                                 <span style={{ fontSize:13, color:cor, fontWeight:700, minWidth:22, textAlign:"center" }}>{i+1}</span>
                                 <div style={{ flex:1 }}>
@@ -1958,23 +1970,23 @@ function Apresentacao({ config }) {
                                     {s.compositor && <div style={{ fontSize:11, color:"#AAA" }}>{s.compositor}</div>}
                                 </div>
                                 {/* Botão Plano A/B */}
-                                <button onClick={e=>{ e.stopPropagation(); togglePlano(s.id); }}
-                                    title={(planos[s.id]||"A")==="A" ? "Usando Plano A — clique para Plano B" : "Usando Plano B — clique para Plano A"}
+                                <button onClick={e=>{ e.stopPropagation(); togglePlano(s.id); setTimeout(()=>{ if(tocando?.id===s.id){ const iframe=document.getElementById("player-iframe"); const novoPlano=(planos[s.id]||"A")==="B"?"A":"B"; const url=novoPlano==="B"?urlB:urlA; if(iframe&&url) iframe.src=url; }},50); }}
                                     style={{ padding:"3px 8px", borderRadius:6, border:`1.5px solid ${(planos[s.id]||"A")==="B"?"#E65100":cor}`, background:(planos[s.id]||"A")==="B"?"#E65100":cor, color:"#fff", fontSize:11, fontWeight:700, cursor:"pointer", fontFamily:"inherit", minWidth:32, transition:"all 0.15s" }}>
                                     {(planos[s.id]||"A")==="B" ? "B" : "A"}
                                 </button>
                                 <div style={{ display:"flex", flexDirection:"column", gap:2 }}>
                                     <button onClick={e=>{e.stopPropagation();moverCima(i);}}
-                                        style={{ background:"none", border:"none", cursor:"pointer", padding:2, color: i===0?"#EEE":"#888" }}>
+                                        style={{ background:"none", border:"none", cursor:"pointer", padding:2 }}>
                                         <Icon name="chevron-up" size={14} color={i===0?"#EEE":"#888"} />
                                     </button>
                                     <button onClick={e=>{e.stopPropagation();moverBaixo(i);}}
-                                        style={{ background:"none", border:"none", cursor:"pointer", padding:2, color: i===setlist.length-1?"#EEE":"#888" }}>
+                                        style={{ background:"none", border:"none", cursor:"pointer", padding:2 }}>
                                         <Icon name="chevron-down" size={14} color={i===setlist.length-1?"#EEE":"#888"} />
                                     </button>
                                 </div>
                             </div>
-                        ))}
+                            );
+                        })}
                     </div>
 
                     {/* Player */}
@@ -1990,15 +2002,13 @@ function Apresentacao({ config }) {
                               </div>
                             : <div>
                                 <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:4 }}>
-                                    <div style={{ fontSize:14, fontWeight:700, color:"#1A1D23", flex:1 }}>{tocando.title}</div>
-                                    {/* Indicador do plano ativo */}
+                                    <div id="player-titulo" style={{ fontSize:14, fontWeight:700, color:"#1A1D23", flex:1 }}>{tocando.title}</div>
                                     <span style={{ padding:"3px 10px", borderRadius:6, border:`1.5px solid ${(planos[tocando.id]||"A")==="B"?"#E65100":cor}`, background:(planos[tocando.id]||"A")==="B"?"#E65100":cor, color:"#fff", fontSize:11, fontWeight:700 }}>
                                         Plano {planos[tocando.id]||"A"}
                                     </span>
                                 </div>
                                 {tocando.compositor && <div style={{ fontSize:12, color:"#AAA", marginBottom:12 }}>{tocando.compositor}</div>}
-                                {getUrlParaTocar(tocando)
-                                    ? <iframe key={`${tocando.id}-${planos[tocando.id]||"A"}`} src={getUrlParaTocar(tocando)} style={{ width:"100%", height:200, border:"none", borderRadius:8 }} allow="autoplay; fullscreen" title={tocando.title} />
+                                <iframe id="player-iframe" src={getUrlParaTocar(tocando)||""} style={{ width:"100%", height:200, border:"none", borderRadius:8, display: getUrlParaTocar(tocando)?"block":"none" }} allow="autoplay; fullscreen" title={tocando.title} />
                                     : <div style={{ padding:"20px", background:"#F5F5F5", borderRadius:8, textAlign:"center", color:"#AAA", fontSize:13 }}>
                                         Esta música não tem Playback Plano {planos[tocando.id]||"A"} cadastrado.
                                       </div>
