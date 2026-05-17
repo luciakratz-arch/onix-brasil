@@ -126,10 +126,15 @@ var Icon = function Icon(_ref) {
     _ref$size = _ref.size,
     size = _ref$size === void 0 ? 16 : _ref$size,
     color = _ref.color;
+  var ref = React.useRef(null);
   useEffect(function () {
-    if (window.lucide) window.lucide.createIcons();
+    if (window.lucide && ref.current) window.lucide.createIcons({
+      icons: {},
+      rootNode: ref.current.parentNode || document.body
+    });
   }, [name]);
   return /*#__PURE__*/React.createElement("i", {
+    ref: ref,
     "data-lucide": name,
     style: {
       width: size,
