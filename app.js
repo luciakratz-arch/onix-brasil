@@ -1850,6 +1850,13 @@ function Apresentacao({ config }) {
     function getUrlParaTocar(s) {
         const plano = planos[s.id] || "A";
         const url = plano==="B" ? (s.playbackB||s.playback||s.audioOriginal) : (s.playback||s.audioOriginal);
+        if (!url) return null;
+        // Normaliza link do Drive
+        const dr = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+        if (dr) return `https://drive.google.com/file/d/${dr[1]}/preview`;
+        // Normaliza YouTube
+        const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
+        if (yt) return `https://www.youtube.com/embed/${yt[1]}?autoplay=1`;
         return url;
     }
 
@@ -1992,14 +1999,7 @@ function Apresentacao({ config }) {
                                 </div>
                                 {tocando.compositor && <div style={{ fontSize:12, color:"#AAA", marginBottom:12 }}>{tocando.compositor}</div>}
                                 {getUrlParaTocar(tocando)
-                                    ? <iframe key={`${tocando.id}-${planos[tocando.id]||"A"}`} src={(()=>{
-                                        const url = getUrlParaTocar(tocando);
-                                        const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
-                                        if (yt) return `https://www.youtube.com/embed/${yt[1]}?autoplay=1`;
-                                        const dr = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
-                                        if (dr) return `https://drive.google.com/file/d/${dr[1]}/preview`;
-                                        return url;
-                                      })()} style={{ width:"100%", height:200, border:"none", borderRadius:8 }} allow="autoplay; fullscreen" title={tocando.title} />
+                                    ? <iframe key={`${tocando.id}-${planos[tocando.id]||"A"}`} src={getUrlParaTocar(tocando)} style={{ width:"100%", height:200, border:"none", borderRadius:8 }} allow="autoplay; fullscreen" title={tocando.title} />
                                     : <div style={{ padding:"20px", background:"#F5F5F5", borderRadius:8, textAlign:"center", color:"#AAA", fontSize:13 }}>
                                         Esta música não tem Playback Plano {planos[tocando.id]||"A"} cadastrado.
                                       </div>
