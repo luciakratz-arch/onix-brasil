@@ -494,10 +494,10 @@ function Login({ members, onLogin, config }) {
 
 // ── PAINEL ────────────────────────────────────────────────────────────────────
 function Painel({ user, config, setTab }) {
-    const { data:members, loading:lM } = useCollection("members");
-    const { data:events,  loading:lE } = useCollection("events","date");
-    const { data:songs,   loading:lS } = useCollection("songs");
-    const { data:avisos,  loading:lA } = useCollection("avisos");
+    const { data:members, loading:lM } = useCollection("onix_members");
+    const { data:events,  loading:lE } = useCollection("onix_events","date");
+    const { data:songs,   loading:lS } = useCollection("onix_songs");
+    const { data:avisos,  loading:lA } = useCollection("onix_avisos");
     const [pendentes, setPendentes] = useState([]);
     useEffect(()=>{
         const unsub = db.collection("onix_pagamentos").where("status","==","aguardando")
@@ -706,7 +706,7 @@ function ModalIntegrante({ membro, onClose, config }) {
 
 // ── INTEGRANTES ───────────────────────────────────────────────────────────────
 function Integrantes({ config }) {
-    const { data:members, loading } = useCollection("members");
+    const { data:members, loading } = useCollection("onix_members");
     const [busca, setBusca]   = useState("");
     const [filtro, setFiltro] = useState("Todos");
     const [letraFiltro, setLetraFiltro] = useState("");
@@ -880,7 +880,7 @@ const STATUS_COLORS  = { Planejada:"#1565C0", Confirmado:"#2E7D32", Cancelado:"#
 
 function ModalEvento({ evento, onClose, config }) {
     const cor = config.corPrimaria||COR;
-    const { data:songs } = useCollection("songs");
+    const { data:songs } = useCollection("onix_songs");
     const vazio = { title:"", date:todayStr(), tipo:"Ensaio", status:"Planejada", timeChegada:"", timeApresentacao:"", local:"", mapsUrl:"", notes:"", recorrencia:"Sem recorrência", setlist:[] };
     const [form, setForm]         = useState(evento?{...vazio,...evento, setlist:evento.setlist||[]}:vazio);
     const [salvando, setSalvando] = useState(false);
@@ -1107,7 +1107,7 @@ function ModalExcluirEvento({ evento, onClose }) {
 }
 
 function Agenda({ config, isAdmin }) {
-    const { data:events, loading } = useCollection("events","date");
+    const { data:events, loading } = useCollection("onix_events","date");
     const [mes, setMes]         = useState(new Date().getMonth());
     const [ano, setAno]         = useState(new Date().getFullYear());
     const [modal, setModal]     = useState(null);
@@ -1289,8 +1289,8 @@ function ModalAviso({ aviso, onClose, config }) {
 }
 
 function Avisos({ config, isAdmin }) {
-    const { data:avisos, loading:lA } = useCollection("avisos");
-    const { data:members }            = useCollection("members");
+    const { data:avisos, loading:lA } = useCollection("onix_avisos");
+    const { data:members }            = useCollection("onix_members");
     const [showModal, setShowModal]   = useState(false);
     const [editAviso, setEditAviso]   = useState(null);
     const cor = config.corPrimaria||COR;
@@ -1532,7 +1532,7 @@ function ModalMusica({ musica, onClose, config }) {
 }
 
 function Repertorio({ config, isAdmin }) {
-    const { data:songs, loading } = useCollection("songs");
+    const { data:songs, loading } = useCollection("onix_songs");
     const [busca, setBusca]       = useState("");
     const [filtro, setFiltro]     = useState("Todas as Categorias");
     const [modal, setModal]       = useState(null);
@@ -1729,7 +1729,7 @@ function ModalEstudo({ estudo, onClose, config }) {
 }
 
 function SalaEstudos({ config, isAdmin }) {
-    const { data:estudos, loading } = useCollection("estudos");
+    const { data:estudos, loading } = useCollection("onix_estudos");
     const [filtro, setFiltro]       = useState("Todos");
     const [modal, setModal]         = useState(null);
     const [player, setPlayer]       = useState(null);
@@ -1825,7 +1825,7 @@ function SalaEstudos({ config, isAdmin }) {
 
 // ── APRESENTAÇÃO ──────────────────────────────────────────────────────────────
 function Apresentacao({ config }) {
-    const { data:events }         = useCollection("events","date");
+    const { data:events }         = useCollection("onix_events","date");
     const [eventoSel, setEventoSel] = useState(null);
     const [setlist, setSetlist]   = useState([]);
     const [tocando, setTocando]   = useState(null);
@@ -2151,11 +2151,11 @@ function FrequenciaAcesso({ config }) {
 
 // ── RELATÓRIOS ────────────────────────────────────────────────────────────────
 function Relatorios({ config }) {
-    const { data:events }      = useCollection("events","date");
-    const { data:members }     = useCollection("members");
-    const { data:songs }       = useCollection("songs");
-    const { data:frequencias } = useCollection("frequencias","dataHora");
-    const { data:noticias }    = useCollection("noticias");
+    const { data:events }      = useCollection("onix_events","date");
+    const { data:members }     = useCollection("onix_members");
+    const { data:songs }       = useCollection("onix_songs");
+    const { data:frequencias } = useCollection("onix_frequencias","dataHora");
+    const { data:noticias }    = useCollection("onix_noticias");
     const cor = config.corPrimaria||COR;
 
     const [dataInicio, setDataInicio] = useState(new Date().getFullYear()+"-01-01");
@@ -2836,7 +2836,7 @@ function CheckinPublico({ sessaoId, config }) {
 }
 
 function Frequencia({ config }) {
-    const { data:events } = useCollection("events","date");
+    const { data:events } = useCollection("onix_events","date");
     const [eventoSel, setEventoSel]   = useState("");
     const [sessaoAtiva, setSessaoAtiva] = useState(null);
     const [frequencias, setFrequencias] = useState([]);
@@ -3027,9 +3027,9 @@ function Frequencia({ config }) {
 
 // ── DECLARAÇÃO DIGITAL ────────────────────────────────────────────────────────
 function Declaracao({ config }) {
-    const { data:events }      = useCollection("events","date");
-    const { data:members }     = useCollection("members");
-    const { data:frequencias } = useCollection("frequencias","dataHora");
+    const { data:events }      = useCollection("onix_events","date");
+    const { data:members }     = useCollection("onix_members");
+    const { data:frequencias } = useCollection("onix_frequencias","dataHora");
     const [tipo, setTipo]          = useState("evento"); // 'evento' | 'corista'
     const [eventoSel, setEventoSel] = useState("");
     const [coristaId, setCoristaId] = useState("");
@@ -3353,10 +3353,10 @@ function EmBreve({ label, icon }) {
 
 // ── PAINEL DO CORISTA ─────────────────────────────────────────────────────────
 function PainelCorista({ user, config }) {
-    const { data:avisos }  = useCollection("avisos");
-    const { data:events }  = useCollection("events","date");
-    const { data:songs }   = useCollection("songs");
-    const { data:noticias } = useCollection("noticias");
+    const { data:avisos }  = useCollection("onix_avisos");
+    const { data:events }  = useCollection("onix_events","date");
+    const { data:songs }   = useCollection("onix_songs");
+    const { data:noticias } = useCollection("onix_noticias");
     const [mes, setMes]    = useState(new Date().getMonth());
     const [ano, setAno]    = useState(new Date().getFullYear());
     const [confirmacoes, setConfirmacoes] = useState({});
@@ -3583,7 +3583,7 @@ function PainelCorista({ user, config }) {
 
 // ── MINHA DECLARAÇÃO (corista) ────────────────────────────────────────────────
 function MinhaDeclaracao({ user, config }) {
-    const { data:frequencias } = useCollection("frequencias","dataHora");
+    const { data:frequencias } = useCollection("onix_frequencias","dataHora");
     const [dataInicio, setDataInicio] = useState(new Date().getFullYear()+"-01-01");
     const [dataFim, setDataFim]       = useState(todayStr());
     const [textos, setTextos]         = useState({});
@@ -3783,11 +3783,11 @@ function ModalNoticia({ noticia, onClose, config, autorInicial }) {
 
 // ── ÁREA DO RH ────────────────────────────────────────────────────────────────
 function AreaRH({ config, abaInicial }) {
-    const { data:members }     = useCollection("members");
-    const { data:events }      = useCollection("events","date");
-    const { data:frequencias } = useCollection("frequencias","dataHora");
-    const { data:noticias }    = useCollection("noticias");
-    const { data:relatorios }  = useCollection("relatorios_historico");
+    const { data:members }     = useCollection("onix_members");
+    const { data:events }      = useCollection("onix_events","date");
+    const { data:frequencias } = useCollection("onix_frequencias","dataHora");
+    const { data:noticias }    = useCollection("onix_noticias");
+    const { data:relatorios }  = useCollection("onix_relatorios_historico");
     const [aba, setAba]        = useState(abaInicial||"dashboard");
     useEffect(()=>{ if(abaInicial) setAba(abaInicial); },[abaInicial]);
     const [modalNoticia, setModalNoticia] = useState(null);
@@ -4232,7 +4232,7 @@ function ModalPagamento({ membro, mesalidade, config, onClose }) {
 
 function ModalLancamento({ lancamento, tipo, config, cats, addCat, onClose }) {
     const cor = config.corPrimaria||COR;
-    const { data:members } = useCollection("members");
+    const { data:members } = useCollection("onix_members");
     const categorias = tipo==="gasto" ? (cats?.gasto||CATS_GASTO_PADRAO) : (cats?.receita||CATS_RECEITA_PADRAO);
     const vazio = { descricao:"", categoria:categorias[0]||"", valor:"", data:todayStr(), observacao:"", membroId:"", membroNome:"" };
     const [form, setForm]       = useState(lancamento?{...vazio,...lancamento,valor:String(lancamento.valor||"")}:vazio);
@@ -4326,8 +4326,8 @@ function ModalLancamento({ lancamento, tipo, config, cats, addCat, onClose }) {
 }
 
 function Financeiro({ config }) {
-    const { data:members }     = useCollection("members");
-    const { data:lancamentos } = useCollection("financeiro","createdAt");
+    const { data:members }     = useCollection("onix_members");
+    const { data:lancamentos } = useCollection("onix_financeiro","createdAt");
     const { cats, addCat }     = useCatsFinanceiro();
     const [aba, setAba]        = useState("resumo");
     const [mesAtual, setMesAtual] = useState(()=>{ const d=new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`; });
@@ -4770,7 +4770,7 @@ function RifaBanner({ config, isAdmin }) {
 
 // ── BLOG / NOTÍCIAS ───────────────────────────────────────────────────────────
 function Blog({ config, user }) {
-    const { data:noticias, loading } = useCollection("noticias");
+    const { data:noticias, loading } = useCollection("onix_noticias");
     const [modal, setModal] = useState(null);
     const cor = config.corPrimaria||COR;
     const isAdmin = user?.isAdmin;
