@@ -12327,6 +12327,25 @@ function ModalPagamento(_ref56) {
     }));
     return _recusar.apply(this, arguments);
   }
+  function marcarPago(mes) {
+    var val = mesalidade.valorMensal || 25;
+    if (!mes.docId) {
+      db.collection("onix_pagamentos").add({ membroId: membro.id, membroNome: membro.name, mes: mes.key, status: "pago", validadoEm: firebase.firestore.FieldValue.serverTimestamp(), createdAt: firebase.firestore.FieldValue.serverTimestamp() }).then(function() {
+        db.collection("onix_financeiro").add({ descricao: "Mensalidade " + mes.label + " — " + membro.name, categoria: "Mensalidade", valor: val, data: mes.key + "-01", tipo: "receita", membroId: membro.id, membroNome: membro.name, origem: "mensalidade", createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+      });
+    } else {
+      db.collection("onix_pagamentos").doc(mes.docId).update({ status: "pago", validadoEm: firebase.firestore.FieldValue.serverTimestamp() }).then(function() {
+        db.collection("onix_financeiro").add({ descricao: "Mensalidade " + mes.label + " — " + membro.name, categoria: "Mensalidade", valor: val, data: mes.key + "-01", tipo: "receita", membroId: membro.id, membroNome: membro.name, origem: "mensalidade", createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+      });
+    }
+  }
+  function marcarIsento(mes) {
+    if (!mes.docId) {
+      db.collection("onix_pagamentos").add({ membroId: membro.id, membroNome: membro.name, mes: mes.key, status: "isento", createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+    } else {
+      db.collection("onix_pagamentos").doc(mes.docId).update({ status: "isento", updatedAt: firebase.firestore.FieldValue.serverTimestamp() });
+    }
+  }
   var statusInfo = {
     pendente: {
       label: "Pendente",
@@ -12345,6 +12364,12 @@ function ModalPagamento(_ref56) {
       bg: "#E8F5E9",
       cor: "#2E7D32",
       icon: "check-circle"
+    },
+    isento: {
+      label: "Isento",
+      bg: "#F5F5F5",
+      cor: "#888",
+      icon: "minus-circle"
     }
   };
   return /*#__PURE__*/React.createElement("div", {
@@ -12454,44 +12479,36 @@ function ModalPagamento(_ref56) {
         color: si.cor,
         fontWeight: 600
       }
-    }, si.label)), m.status === "aguardando" && /*#__PURE__*/React.createElement("div", {
+    }, si.label)), (m.status === "aguardando" || m.status === "pendente") && /*#__PURE__*/React.createElement("div", {
       style: {
         display: "flex",
-        gap: 6
+        gap: 6,
+        flexWrap: "wrap"
       }
-    }, /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick() {
-        return validar(m);
-      },
+    }, m.status === "aguardando" && /*#__PURE__*/React.createElement("button", {
+      onClick: function onClick() { return validar(m); },
       disabled: salvando,
-      style: {
-        padding: "6px 12px",
-        background: "#2E7D32",
-        color: "#fff",
-        border: "none",
-        borderRadius: 8,
-        fontSize: 12,
-        fontWeight: 700,
-        cursor: "pointer",
-        fontFamily: "inherit"
-      }
-    }, "\u2713 Validar"), /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick() {
-        return recusar(m);
-      },
+      style: { padding: "6px 12px", background: "#2E7D32", color: "#fff", border: "none", borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "inherit" }
+    }, "\u2713 Validar"), m.status === "aguardando" && /*#__PURE__*/React.createElement("button", {
+      onClick: function onClick() { return recusar(m); },
       disabled: salvando,
-      style: {
-        padding: "6px 12px",
-        background: "#FFF0F0",
-        color: "#C62828",
-        border: "1px solid #FFDADA",
-        borderRadius: 8,
-        fontSize: 12,
-        fontWeight: 600,
-        cursor: "pointer",
-        fontFamily: "inherit"
-      }
-    }, "\u2715")), m.status === "pago" && /*#__PURE__*/React.createElement("span", {
+      style: { padding: "6px 12px", background: "#FFF0F0", color: "#C62828", border: "1px solid #FFDADA", borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "inherit" }
+    }, "\u2715"),
+    m.status === "pendente" && /*#__PURE__*/React.createElement("button", {
+      onClick: function onClick() { return marcarPago(m); },
+      disabled: salvando,
+      style: { padding: "6px 12px", background: "#2E7D32", color: "#fff", border: "none", borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "inherit" }
+    }, "\u2713 Marcar pago"),
+    m.status === "pendente" && /*#__PURE__*/React.createElement("button", {
+      onClick: function onClick() { return marcarIsento(m); },
+      disabled: salvando,
+      style: { padding: "6px 12px", background: "#F5F5F5", color: "#888", border: "1px solid #DDD", borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "inherit" }
+    }, "Isentar"),
+    m.status === "isento" && /*#__PURE__*/React.createElement("button", {
+      onClick: function onClick() { return recusar(m); },
+      disabled: salvando,
+      style: { padding: "6px 12px", background: "#FFF3E0", color: "#E65100", border: "1px solid #FFE0B2", borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "inherit" }
+    }, "Remover isenção")), m.status === "pago" && /*#__PURE__*/React.createElement("span", {
       style: {
         fontSize: 11,
         color: "#2E7D32",
