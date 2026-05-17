@@ -6489,14 +6489,10 @@ function Apresentacao(_ref21) {
     _useState122 = _slicedToArray(_useState121, 2),
     tocando = _useState122[0],
     setTocando = _useState122[1];
-  var _useState123 = useState(null),
+  var _useState123 = useState({}),
     _useState124 = _slicedToArray(_useState123, 2),
-    dragIdx = _useState124[0],
-    setDragIdx = _useState124[1];
-  var _useState125 = useState({}),
-    _useState126 = _slicedToArray(_useState125, 2),
-    planos = _useState126[0],
-    setPlanos = _useState126[1];
+    planos = _useState124[0],
+    setPlanos = _useState124[1];
   var cor = config.corPrimaria || COR;
   var today = todayStr();
   useEffect(function () {
@@ -6509,14 +6505,14 @@ function Apresentacao(_ref21) {
       return _objectSpread(_objectSpread({}, p), {}, _defineProperty({}, id, p[id] === "B" ? "A" : "B"));
     });
   }
-  function getUrlParaTocar(s) {
+  function getUrl(s) {
     var plano = planos[s.id] || "A";
     var url = plano === "B" ? s.playbackB || s.playback || s.audioOriginal : s.playback || s.audioOriginal;
     if (!url) return null;
     var dr = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
-    if (dr) return "https://drive.google.com/file/d/".concat(dr[1], "/preview");
+    if (dr) return "https://drive.google.com/file/d/" + dr[1] + "/preview";
     var yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
-    if (yt) return "https://www.youtube.com/embed/".concat(yt[1], "?autoplay=1");
+    if (yt) return "https://www.youtube.com/embed/" + yt[1] + "?autoplay=1";
     return url;
   }
   var proximos = events.filter(function (e) {
@@ -6560,21 +6556,21 @@ function Apresentacao(_ref21) {
   }
   function moverCima(idx) {
     if (idx === 0) return;
-    var nova = _toConsumableArray(setlist);
-    var _ref22 = [nova[idx], nova[idx - 1]];
-    nova[idx - 1] = _ref22[0];
-    nova[idx] = _ref22[1];
-    salvarOrdem(nova);
+    var n = _toConsumableArray(setlist);
+    var _ref22 = [n[idx], n[idx - 1]];
+    n[idx - 1] = _ref22[0];
+    n[idx] = _ref22[1];
+    salvarOrdem(n);
   }
   function moverBaixo(idx) {
     if (idx === setlist.length - 1) return;
-    var nova = _toConsumableArray(setlist);
-    var _ref23 = [nova[idx + 1], nova[idx]];
-    nova[idx] = _ref23[0];
-    nova[idx + 1] = _ref23[1];
-    salvarOrdem(nova);
+    var n = _toConsumableArray(setlist);
+    var _ref23 = [n[idx + 1], n[idx]];
+    n[idx] = _ref23[0];
+    n[idx + 1] = _ref23[1];
+    salvarOrdem(n);
   }
-  var mesaUrl = eventoSel ? "".concat(window.location.origin).concat(window.location.pathname, "?mesa=").concat(eventoSel.id) : "";
+  var mesaUrl = eventoSel ? window.location.origin + window.location.pathname + "?mesa=" + eventoSel.id : "";
   var card = {
     background: "#fff",
     borderRadius: 12,
@@ -6621,17 +6617,9 @@ function Apresentacao(_ref21) {
       color: "#1A1D23",
       marginBottom: 12
     }
-  }, "Selecionar Evento"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 10,
-      alignItems: "center",
-      flexWrap: "wrap"
-    }
-  }, /*#__PURE__*/React.createElement("select", {
+  }, "Selecionar Evento"), /*#__PURE__*/React.createElement("select", {
     style: _objectSpread(_objectSpread({}, inp), {}, {
-      flex: 1,
-      minWidth: 200
+      width: "100%"
     }),
     value: (eventoSel === null || eventoSel === void 0 ? void 0 : eventoSel.id) || "",
     onChange: function onChange(e) {
@@ -6656,13 +6644,13 @@ function Apresentacao(_ref21) {
       key: e.id,
       value: e.id
     }, e.date, " \u2014 ", e.title);
-  })))), eventoSel && setlist.length === 0 && /*#__PURE__*/React.createElement("div", {
+  }))), eventoSel && setlist.length === 0 && /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: 12,
       color: "#E65100",
       marginTop: 8
     }
-  }, "Este evento n\xE3o tem m\xFAsicas no repert\xF3rio. Adicione pelo m\xF3dulo Agenda \u2192 editar evento.")), eventoSel && mesaUrl && /*#__PURE__*/React.createElement("div", {
+  }, "Este evento n\xE3o tem m\xFAsicas. Adicione pelo m\xF3dulo Agenda.")), eventoSel && mesaUrl && /*#__PURE__*/React.createElement("div", {
     style: {
       background: "#1A1D23",
       borderRadius: 12,
@@ -6671,28 +6659,18 @@ function Apresentacao(_ref21) {
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 8,
-      marginBottom: 6
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "monitor-speaker",
-    size: 16,
-    color: "#AAA"
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
       fontSize: 14,
       fontWeight: 700,
-      color: "#fff"
+      color: "#fff",
+      marginBottom: 6
     }
-  }, "Mesa de Som \u2014 Painel do Sonoplasta")), /*#__PURE__*/React.createElement("div", {
+  }, "Mesa de Som \u2014 Painel do Sonoplasta"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: 12,
       color: "#888",
       marginBottom: 10
     }
-  }, "Acesso p\xFAblico sem senha \u2014 envie este link para o sonoplasta no dia da apresenta\xE7\xE3o."), /*#__PURE__*/React.createElement("div", {
+  }, "Envie este link para o sonoplasta no dia da apresenta\xE7\xE3o."), /*#__PURE__*/React.createElement("div", {
     style: {
       display: "flex",
       gap: 8,
@@ -6753,17 +6731,13 @@ function Apresentacao(_ref21) {
       gap: 8,
       marginBottom: 12
     }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "music",
-    size: 16,
-    color: cor
-  }), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: 14,
       fontWeight: 700,
       color: cor
     }
-  }, "Setlist"), /*#__PURE__*/React.createElement("div", {
+  }, "\uD83C\uDFB5 Setlist"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: 12,
       color: "#AAA"
@@ -6774,7 +6748,7 @@ function Apresentacao(_ref21) {
       color: "#CCC",
       marginLeft: "auto"
     }
-  }, "\u2191\u2193 para reordenar")), setlist.map(function (s, i) {
+  }, "\u2191\u2193 reordenar")), setlist.map(function (s, i) {
     return /*#__PURE__*/React.createElement("div", {
       key: s.id || i,
       onClick: function onClick() {
@@ -6789,7 +6763,7 @@ function Apresentacao(_ref21) {
         marginBottom: 6,
         cursor: "pointer",
         background: (tocando === null || tocando === void 0 ? void 0 : tocando.id) === s.id ? cor + "15" : "#F9F5F5",
-        border: (tocando === null || tocando === void 0 ? void 0 : tocando.id) === s.id ? "1px solid ".concat(cor, "33") : "1px solid transparent",
+        border: (tocando === null || tocando === void 0 ? void 0 : tocando.id) === s.id ? "1px solid " + cor + "33" : "1px solid transparent",
         transition: "background 0.15s"
       }
     }, /*#__PURE__*/React.createElement("span", {
@@ -6823,17 +6797,16 @@ function Apresentacao(_ref21) {
       style: {
         padding: "3px 8px",
         borderRadius: 6,
-        border: "1.5px solid ".concat((planos[s.id] || "A") === "B" ? "#E65100" : cor),
-        background: (planos[s.id] || "A") === "B" ? "#E65100" : cor,
+        border: "1.5px solid " + (planos[s.id] === "B" ? "#E65100" : cor),
+        background: planos[s.id] === "B" ? "#E65100" : cor,
         color: "#fff",
         fontSize: 11,
         fontWeight: 700,
         cursor: "pointer",
         fontFamily: "inherit",
-        minWidth: 32,
-        transition: "all 0.15s"
+        minWidth: 32
       }
-    }, (planos[s.id] || "A") === "B" ? "B" : "A"), /*#__PURE__*/React.createElement("div", {
+    }, planos[s.id] === "B" ? "B" : "A"), /*#__PURE__*/React.createElement("div", {
       style: {
         display: "flex",
         flexDirection: "column",
@@ -6848,13 +6821,11 @@ function Apresentacao(_ref21) {
         background: "none",
         border: "none",
         cursor: "pointer",
-        padding: 2
+        padding: 2,
+        fontSize: 12,
+        color: i === 0 ? "#DDD" : "#888"
       }
-    }, /*#__PURE__*/React.createElement(Icon, {
-      name: "chevron-up",
-      size: 14,
-      color: i === 0 ? "#EEE" : "#888"
-    })), /*#__PURE__*/React.createElement("button", {
+    }, "\u25B2"), /*#__PURE__*/React.createElement("button", {
       onClick: function onClick(e) {
         e.stopPropagation();
         moverBaixo(i);
@@ -6863,47 +6834,32 @@ function Apresentacao(_ref21) {
         background: "none",
         border: "none",
         cursor: "pointer",
-        padding: 2
+        padding: 2,
+        fontSize: 12,
+        color: i === setlist.length - 1 ? "#DDD" : "#888"
       }
-    }, /*#__PURE__*/React.createElement(Icon, {
-      name: "chevron-down",
-      size: 14,
-      color: i === setlist.length - 1 ? "#EEE" : "#888"
-    }))));
+    }, "\u25BC")));
   })), /*#__PURE__*/React.createElement("div", {
     style: card
   }, /*#__PURE__*/React.createElement("div", {
     style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 8,
-      marginBottom: 12
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "volume-2",
-    size: 16,
-    color: cor
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
       fontSize: 14,
       fontWeight: 700,
-      color: cor
+      color: cor,
+      marginBottom: 12
     }
-  }, "Player")), !tocando ? /*#__PURE__*/React.createElement("div", {
+  }, "\uD83D\uDD0A Player"), !tocando ? /*#__PURE__*/React.createElement("div", {
     style: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
+      textAlign: "center",
       padding: "40px 20px",
-      color: "#CCC",
-      gap: 12
+      color: "#CCC"
     }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "music",
-    size: 40,
-    color: "#EEE"
-  }), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 32,
+      marginBottom: 8
+    }
+  }, "\uD83C\uDFB5"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: 13
     }
@@ -6912,7 +6868,7 @@ function Apresentacao(_ref21) {
       display: "flex",
       alignItems: "center",
       gap: 8,
-      marginBottom: 4
+      marginBottom: 8
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -6925,7 +6881,7 @@ function Apresentacao(_ref21) {
     style: {
       padding: "3px 10px",
       borderRadius: 6,
-      background: (planos[tocando.id] || "A") === "B" ? "#E65100" : cor,
+      background: planos[tocando.id] === "B" ? "#E65100" : cor,
       color: "#fff",
       fontSize: 11,
       fontWeight: 700
@@ -6934,37 +6890,29 @@ function Apresentacao(_ref21) {
     style: {
       fontSize: 12,
       color: "#AAA",
-      marginBottom: 12
+      marginBottom: 8
     }
-  }, tocando.compositor), getUrlParaTocar(tocando) ? /*#__PURE__*/React.createElement("iframe", {
-    key: tocando.id + (planos[tocando.id] || "A"),
-    src: getUrlParaTocar(tocando),
+  }, tocando.compositor), getUrl(tocando) ? /*#__PURE__*/React.createElement("iframe", {
+    key: tocando.id + "-" + (planos[tocando.id] || "A"),
+    src: getUrl(tocando),
     style: {
       width: "100%",
       height: 80,
-      border: "none"
+      border: "none",
+      borderRadius: 8
     },
     allow: "autoplay",
     title: tocando.title
   }) : /*#__PURE__*/React.createElement("div", {
     style: {
-      padding: "20px",
+      padding: 20,
       background: "#F5F5F5",
       borderRadius: 8,
       textAlign: "center",
       color: "#AAA",
       fontSize: 13
     }
-  }, "Esta m\xFAsica n\xE3o tem Playback Plano ", planos[tocando.id] || "A", " cadastrado."), ": ", /*#__PURE__*/React.createElement("div", {
-    style: {
-      padding: "20px",
-      background: "#F5F5F5",
-      borderRadius: 8,
-      textAlign: "center",
-      color: "#AAA",
-      fontSize: 13
-    }
-  }, "Esta m\xFAsica n\xE3o tem Playback Plano ", planos[tocando.id] || "A", " cadastrado."), "}", setlist[setlist.findIndex(function (s) {
+  }, "Sem playback Plano ", planos[tocando.id] || "A", " cadastrado."), setlist[setlist.findIndex(function (s) {
     return s.id === tocando.id;
   }) + 1] && /*#__PURE__*/React.createElement("div", {
     style: {
@@ -6976,21 +6924,13 @@ function Apresentacao(_ref21) {
       alignItems: "center",
       gap: 8
     }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "skip-forward",
-    size: 13,
-    color: "#AAA"
-  }), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: 12,
-      color: "#AAA"
+      color: "#AAA",
+      flex: 1
     }
-  }, "A seguir: ", /*#__PURE__*/React.createElement("span", {
-    style: {
-      color: "#1A1D23",
-      fontWeight: 600
-    }
-  }, setlist[setlist.findIndex(function (s) {
+  }, "A seguir: ", /*#__PURE__*/React.createElement("strong", null, setlist[setlist.findIndex(function (s) {
     return s.id === tocando.id;
   }) + 1].title)), /*#__PURE__*/React.createElement("button", {
     onClick: function onClick() {
@@ -6999,7 +6939,6 @@ function Apresentacao(_ref21) {
       }) + 1]);
     },
     style: {
-      marginLeft: "auto",
       padding: "4px 10px",
       background: cor,
       color: "#fff",
@@ -7016,23 +6955,22 @@ function Apresentacao(_ref21) {
       padding: "48px 20px",
       color: "#CCC"
     })
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "qr-code",
-    size: 48,
-    color: "#EEE"
-  }), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     style: {
-      marginTop: 12,
+      fontSize: 48,
+      marginBottom: 12
+    }
+  }, "\uD83D\uDCCB"), /*#__PURE__*/React.createElement("div", {
+    style: {
       fontSize: 15,
-      fontWeight: 600,
-      color: "#CCC"
+      fontWeight: 600
     }
   }, "Selecione um evento acima"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: 13,
       marginTop: 4
     }
-  }, "Para gerenciar o setlist e playbacks da apresenta\xE7\xE3o")));
+  }, "Para gerenciar o setlist e playbacks")));
 }
 
 // ── FREQUÊNCIA POR EVENTOS (usado no Relatório) ───────────────────────────────
@@ -7139,10 +7077,10 @@ function FrequenciaEventos(_ref24) {
 // ── FREQUÊNCIA DE ACESSO ──────────────────────────────────────────────────────
 function FrequenciaAcesso(_ref25) {
   var config = _ref25.config;
-  var _useState127 = useState([]),
-    _useState128 = _slicedToArray(_useState127, 2),
-    acessos = _useState128[0],
-    setAcessos = _useState128[1];
+  var _useState125 = useState([]),
+    _useState126 = _slicedToArray(_useState125, 2),
+    acessos = _useState126[0],
+    setAcessos = _useState126[1];
   var cor = config.corPrimaria || COR;
   useEffect(function () {
     db.collection("onix_acessos").onSnapshot(function (snap) {
@@ -7424,34 +7362,34 @@ function Relatorios(_ref32) {
   var _useCollection15 = useCollection("onix_noticias"),
     noticias = _useCollection15.data;
   var cor = config.corPrimaria || COR;
-  var _useState129 = useState(new Date().getFullYear() + "-01-01"),
+  var _useState127 = useState(new Date().getFullYear() + "-01-01"),
+    _useState128 = _slicedToArray(_useState127, 2),
+    dataInicio = _useState128[0],
+    setDataInicio = _useState128[1];
+  var _useState129 = useState(todayStr()),
     _useState130 = _slicedToArray(_useState129, 2),
-    dataInicio = _useState130[0],
-    setDataInicio = _useState130[1];
-  var _useState131 = useState(todayStr()),
+    dataFim = _useState130[0],
+    setDataFim = _useState130[1];
+  var _useState131 = useState("todos"),
     _useState132 = _slicedToArray(_useState131, 2),
-    dataFim = _useState132[0],
-    setDataFim = _useState132[1];
-  var _useState133 = useState("todos"),
+    eventoFiltro = _useState132[0],
+    setEventoFiltro = _useState132[1];
+  var _useState133 = useState({}),
     _useState134 = _slicedToArray(_useState133, 2),
-    eventoFiltro = _useState134[0],
-    setEventoFiltro = _useState134[1];
-  var _useState135 = useState({}),
+    textos = _useState134[0],
+    setTextos = _useState134[1];
+  var _useState135 = useState(false),
     _useState136 = _slicedToArray(_useState135, 2),
-    textos = _useState136[0],
-    setTextos = _useState136[1];
-  var _useState137 = useState(false),
+    editTextos = _useState136[0],
+    setEditTextos = _useState136[1];
+  var _useState137 = useState({}),
     _useState138 = _slicedToArray(_useState137, 2),
-    editTextos = _useState138[0],
-    setEditTextos = _useState138[1];
-  var _useState139 = useState({}),
+    formTextos = _useState138[0],
+    setFormTextos = _useState138[1];
+  var _useState139 = useState(false),
     _useState140 = _slicedToArray(_useState139, 2),
-    formTextos = _useState140[0],
-    setFormTextos = _useState140[1];
-  var _useState141 = useState(false),
-    _useState142 = _slicedToArray(_useState141, 2),
-    salvandoTextos = _useState142[0],
-    setSalvandoTextos = _useState142[1];
+    salvandoTextos = _useState140[0],
+    setSalvandoTextos = _useState140[1];
 
   // Carregar textos qualitativos do Firebase
   useEffect(function () {
@@ -8495,34 +8433,34 @@ function Relatorios(_ref32) {
 function CheckinPublico(_ref41) {
   var sessaoId = _ref41.sessaoId,
     config = _ref41.config;
+  var _useState141 = useState(null),
+    _useState142 = _slicedToArray(_useState141, 2),
+    sessao = _useState142[0],
+    setSessao = _useState142[1];
   var _useState143 = useState(null),
     _useState144 = _slicedToArray(_useState143, 2),
-    sessao = _useState144[0],
-    setSessao = _useState144[1];
-  var _useState145 = useState(null),
+    membro = _useState144[0],
+    setMembro = _useState144[1];
+  var _useState145 = useState([]),
     _useState146 = _slicedToArray(_useState145, 2),
-    membro = _useState146[0],
-    setMembro = _useState146[1];
-  var _useState147 = useState([]),
+    members = _useState146[0],
+    setMembers = _useState146[1];
+  var _useState147 = useState(""),
     _useState148 = _slicedToArray(_useState147, 2),
-    members = _useState148[0],
-    setMembers = _useState148[1];
-  var _useState149 = useState(""),
+    busca = _useState148[0],
+    setBusca = _useState148[1];
+  var _useState149 = useState([]),
     _useState150 = _slicedToArray(_useState149, 2),
-    busca = _useState150[0],
-    setBusca = _useState150[1];
-  var _useState151 = useState([]),
+    sugestoes = _useState150[0],
+    setSugestoes = _useState150[1];
+  var _useState151 = useState(null),
     _useState152 = _slicedToArray(_useState151, 2),
-    sugestoes = _useState152[0],
-    setSugestoes = _useState152[1];
-  var _useState153 = useState(null),
+    status = _useState152[0],
+    setStatus = _useState152[1]; // null | 'ok' | 'erro' | 'expirado'
+  var _useState153 = useState(true),
     _useState154 = _slicedToArray(_useState153, 2),
-    status = _useState154[0],
-    setStatus = _useState154[1]; // null | 'ok' | 'erro' | 'expirado'
-  var _useState155 = useState(true),
-    _useState156 = _slicedToArray(_useState155, 2),
-    loading = _useState156[0],
-    setLoading = _useState156[1];
+    loading = _useState154[0],
+    setLoading = _useState154[1];
   var cor = config.corPrimaria || COR;
   useEffect(function () {
     // Carregar sessão
@@ -8895,30 +8833,30 @@ function Frequencia(_ref42) {
   var config = _ref42.config;
   var _useCollection16 = useCollection("onix_events", "date"),
     events = _useCollection16.data;
-  var _useState157 = useState(""),
+  var _useState155 = useState(""),
+    _useState156 = _slicedToArray(_useState155, 2),
+    eventoSel = _useState156[0],
+    setEventoSel = _useState156[1];
+  var _useState157 = useState(null),
     _useState158 = _slicedToArray(_useState157, 2),
-    eventoSel = _useState158[0],
-    setEventoSel = _useState158[1];
-  var _useState159 = useState(null),
+    sessaoAtiva = _useState158[0],
+    setSessaoAtiva = _useState158[1];
+  var _useState159 = useState([]),
     _useState160 = _slicedToArray(_useState159, 2),
-    sessaoAtiva = _useState160[0],
-    setSessaoAtiva = _useState160[1];
-  var _useState161 = useState([]),
+    frequencias = _useState160[0],
+    setFrequencias = _useState160[1];
+  var _useState161 = useState(""),
     _useState162 = _slicedToArray(_useState161, 2),
-    frequencias = _useState162[0],
-    setFrequencias = _useState162[1];
-  var _useState163 = useState(""),
+    qrUrl = _useState162[0],
+    setQrUrl = _useState162[1];
+  var _useState163 = useState(false),
     _useState164 = _slicedToArray(_useState163, 2),
-    qrUrl = _useState164[0],
-    setQrUrl = _useState164[1];
+    gerando = _useState164[0],
+    setGerando = _useState164[1];
   var _useState165 = useState(false),
     _useState166 = _slicedToArray(_useState165, 2),
-    gerando = _useState166[0],
-    setGerando = _useState166[1];
-  var _useState167 = useState(false),
-    _useState168 = _slicedToArray(_useState167, 2),
-    showQR = _useState168[0],
-    setShowQR = _useState168[1];
+    showQR = _useState166[0],
+    setShowQR = _useState166[1];
   var cor = config.corPrimaria || COR;
   var today = todayStr();
 
@@ -9431,30 +9369,30 @@ function Declaracao(_ref43) {
     members = _useCollection18.data;
   var _useCollection19 = useCollection("onix_frequencias", "dataHora"),
     frequencias = _useCollection19.data;
-  var _useState169 = useState("evento"),
+  var _useState167 = useState("evento"),
+    _useState168 = _slicedToArray(_useState167, 2),
+    tipo = _useState168[0],
+    setTipo = _useState168[1]; // 'evento' | 'corista'
+  var _useState169 = useState(""),
     _useState170 = _slicedToArray(_useState169, 2),
-    tipo = _useState170[0],
-    setTipo = _useState170[1]; // 'evento' | 'corista'
+    eventoSel = _useState170[0],
+    setEventoSel = _useState170[1];
   var _useState171 = useState(""),
     _useState172 = _slicedToArray(_useState171, 2),
-    eventoSel = _useState172[0],
-    setEventoSel = _useState172[1];
-  var _useState173 = useState(""),
+    coristaId = _useState172[0],
+    setCoristaId = _useState172[1];
+  var _useState173 = useState(new Date().getFullYear() + "-01-01"),
     _useState174 = _slicedToArray(_useState173, 2),
-    coristaId = _useState174[0],
-    setCoristaId = _useState174[1];
-  var _useState175 = useState(new Date().getFullYear() + "-01-01"),
+    dataInicio = _useState174[0],
+    setDataInicio = _useState174[1];
+  var _useState175 = useState(todayStr()),
     _useState176 = _slicedToArray(_useState175, 2),
-    dataInicio = _useState176[0],
-    setDataInicio = _useState176[1];
-  var _useState177 = useState(todayStr()),
+    dataFim = _useState176[0],
+    setDataFim = _useState176[1];
+  var _useState177 = useState({}),
     _useState178 = _slicedToArray(_useState177, 2),
-    dataFim = _useState178[0],
-    setDataFim = _useState178[1];
-  var _useState179 = useState({}),
-    _useState180 = _slicedToArray(_useState179, 2),
-    textos = _useState180[0],
-    setTextos = _useState180[1];
+    textos = _useState178[0],
+    setTextos = _useState178[1];
   var cor = config.corPrimaria || COR;
   useEffect(function () {
     db.collection("onix_config").doc("relatorio").get().then(function (doc) {
@@ -9905,26 +9843,26 @@ function PainelCorista(_ref45) {
     songs = _useCollection22.data;
   var _useCollection23 = useCollection("onix_noticias"),
     noticias = _useCollection23.data;
-  var _useState181 = useState(new Date().getMonth()),
+  var _useState179 = useState(new Date().getMonth()),
+    _useState180 = _slicedToArray(_useState179, 2),
+    mes = _useState180[0],
+    setMes = _useState180[1];
+  var _useState181 = useState(new Date().getFullYear()),
     _useState182 = _slicedToArray(_useState181, 2),
-    mes = _useState182[0],
-    setMes = _useState182[1];
-  var _useState183 = useState(new Date().getFullYear()),
+    ano = _useState182[0],
+    setAno = _useState182[1];
+  var _useState183 = useState({}),
     _useState184 = _slicedToArray(_useState183, 2),
-    ano = _useState184[0],
-    setAno = _useState184[1];
-  var _useState185 = useState({}),
+    confirmacoes = _useState184[0],
+    setConfirmacoes = _useState184[1];
+  var _useState185 = useState(null),
     _useState186 = _slicedToArray(_useState185, 2),
-    confirmacoes = _useState186[0],
-    setConfirmacoes = _useState186[1];
-  var _useState187 = useState(null),
+    naipeOpen = _useState186[0],
+    setNaipeOpen = _useState186[1];
+  var _useState187 = useState(false),
     _useState188 = _slicedToArray(_useState187, 2),
-    naipeOpen = _useState188[0],
-    setNaipeOpen = _useState188[1];
-  var _useState189 = useState(false),
-    _useState190 = _slicedToArray(_useState189, 2),
-    modalNoticiaCorista = _useState190[0],
-    setModalNoticiaCorista = _useState190[1];
+    modalNoticiaCorista = _useState188[0],
+    setModalNoticiaCorista = _useState188[1];
   var cor = config.corPrimaria || COR;
   var naipe = user.voice || "";
   var naipeKey = {
@@ -10576,18 +10514,18 @@ function MinhaDeclaracao(_ref46) {
     config = _ref46.config;
   var _useCollection24 = useCollection("onix_frequencias", "dataHora"),
     frequencias = _useCollection24.data;
-  var _useState191 = useState(new Date().getFullYear() + "-01-01"),
+  var _useState189 = useState(new Date().getFullYear() + "-01-01"),
+    _useState190 = _slicedToArray(_useState189, 2),
+    dataInicio = _useState190[0],
+    setDataInicio = _useState190[1];
+  var _useState191 = useState(todayStr()),
     _useState192 = _slicedToArray(_useState191, 2),
-    dataInicio = _useState192[0],
-    setDataInicio = _useState192[1];
-  var _useState193 = useState(todayStr()),
+    dataFim = _useState192[0],
+    setDataFim = _useState192[1];
+  var _useState193 = useState({}),
     _useState194 = _slicedToArray(_useState193, 2),
-    dataFim = _useState194[0],
-    setDataFim = _useState194[1];
-  var _useState195 = useState({}),
-    _useState196 = _slicedToArray(_useState195, 2),
-    textos = _useState196[0],
-    setTextos = _useState196[1];
+    textos = _useState194[0],
+    setTextos = _useState194[1];
   var cor = config.corPrimaria || COR;
   useEffect(function () {
     db.collection("onix_config").doc("relatorio").get().then(function (doc) {
@@ -10778,18 +10716,18 @@ function ModalNoticia(_ref47) {
     categoria: "Geral",
     autorNome: autorInicial || "Gestão"
   };
-  var _useState197 = useState(noticia ? _objectSpread(_objectSpread({}, vazio), noticia) : vazio),
+  var _useState195 = useState(noticia ? _objectSpread(_objectSpread({}, vazio), noticia) : vazio),
+    _useState196 = _slicedToArray(_useState195, 2),
+    form = _useState196[0],
+    setForm = _useState196[1];
+  var _useState197 = useState(false),
     _useState198 = _slicedToArray(_useState197, 2),
-    form = _useState198[0],
-    setForm = _useState198[1];
-  var _useState199 = useState(false),
+    salvando = _useState198[0],
+    setSalvando = _useState198[1];
+  var _useState199 = useState(""),
     _useState200 = _slicedToArray(_useState199, 2),
-    salvando = _useState200[0],
-    setSalvando = _useState200[1];
-  var _useState201 = useState(""),
-    _useState202 = _slicedToArray(_useState201, 2),
-    erro = _useState202[0],
-    setErro = _useState202[1];
+    erro = _useState200[0],
+    setErro = _useState200[1];
   function salvar() {
     return _salvar7.apply(this, arguments);
   }
@@ -11089,21 +11027,21 @@ function AreaRH(_ref48) {
     noticias = _useCollection28.data;
   var _useCollection29 = useCollection("onix_relatorios_historico"),
     relatorios = _useCollection29.data;
-  var _useState203 = useState(abaInicial || "dashboard"),
-    _useState204 = _slicedToArray(_useState203, 2),
-    aba = _useState204[0],
-    setAba = _useState204[1];
+  var _useState201 = useState(abaInicial || "dashboard"),
+    _useState202 = _slicedToArray(_useState201, 2),
+    aba = _useState202[0],
+    setAba = _useState202[1];
   useEffect(function () {
     if (abaInicial) setAba(abaInicial);
   }, [abaInicial]);
-  var _useState205 = useState(null),
+  var _useState203 = useState(null),
+    _useState204 = _slicedToArray(_useState203, 2),
+    modalNoticia = _useState204[0],
+    setModalNoticia = _useState204[1];
+  var _useState205 = useState({}),
     _useState206 = _slicedToArray(_useState205, 2),
-    modalNoticia = _useState206[0],
-    setModalNoticia = _useState206[1];
-  var _useState207 = useState({}),
-    _useState208 = _slicedToArray(_useState207, 2),
-    textos = _useState208[0],
-    setTextos = _useState208[1];
+    textos = _useState206[0],
+    setTextos = _useState206[1];
   var cor = config.corPrimaria || COR;
   var today = todayStr();
   useEffect(function () {
@@ -11162,10 +11100,10 @@ function AreaRH(_ref48) {
   })).concat([1]));
 
   // Confirmações
-  var _useState209 = useState([]),
-    _useState210 = _slicedToArray(_useState209, 2),
-    confirmacoes = _useState210[0],
-    setConfirmacoes = _useState210[1];
+  var _useState207 = useState([]),
+    _useState208 = _slicedToArray(_useState207, 2),
+    confirmacoes = _useState208[0],
+    setConfirmacoes = _useState208[1];
   useEffect(function () {
     db.collection("onix_confirmacoes").onSnapshot(function (snap) {
       return setConfirmacoes(snap.docs.map(function (d) {
@@ -11208,18 +11146,18 @@ function AreaRH(_ref48) {
   }];
 
   // ── DECLARAÇÕES POR CORISTA ──
-  var _useState211 = useState(""),
+  var _useState209 = useState(""),
+    _useState210 = _slicedToArray(_useState209, 2),
+    coristaDecl = _useState210[0],
+    setCoristaDecl = _useState210[1];
+  var _useState211 = useState(new Date().getFullYear() + "-01-01"),
     _useState212 = _slicedToArray(_useState211, 2),
-    coristaDecl = _useState212[0],
-    setCoristaDecl = _useState212[1];
-  var _useState213 = useState(new Date().getFullYear() + "-01-01"),
+    dataInicio = _useState212[0],
+    setDataInicio = _useState212[1];
+  var _useState213 = useState(todayStr()),
     _useState214 = _slicedToArray(_useState213, 2),
-    dataInicio = _useState214[0],
-    setDataInicio = _useState214[1];
-  var _useState215 = useState(todayStr()),
-    _useState216 = _slicedToArray(_useState215, 2),
-    dataFim = _useState216[0],
-    setDataFim = _useState216[1];
+    dataFim = _useState214[0],
+    setDataFim = _useState214[1];
   var coristaAtual = members.find(function (m) {
     return m.id === coristaDecl;
   });
@@ -11863,13 +11801,13 @@ var WPP_LUCIA = "5562991546757";
 var CATS_GASTO_PADRAO = ["Transporte", "Aluguel de carro", "Pedágio", "Gasolina", "Hotel", "Alimentação", "Passagem aérea", "Passagem rodoviária", "Figurino", "Material de ensaio", "Gravação", "Divulgação", "Outros"];
 var CATS_RECEITA_PADRAO = ["Mensalidade", "Campanha", "Doação", "Serviço prestado", "Rifa", "Evento", "Patrocínio", "Outros"];
 function useCatsFinanceiro() {
-  var _useState217 = useState({
+  var _useState215 = useState({
       gasto: CATS_GASTO_PADRAO,
       receita: CATS_RECEITA_PADRAO
     }),
-    _useState218 = _slicedToArray(_useState217, 2),
-    cats = _useState218[0],
-    setCats = _useState218[1];
+    _useState216 = _slicedToArray(_useState215, 2),
+    cats = _useState216[0],
+    setCats = _useState216[1];
   useEffect(function () {
     var unsub = db.collection("onix_config").doc("cats_financeiro").onSnapshot(function (snap) {
       if (snap.exists) setCats(function (d) {
@@ -11908,22 +11846,22 @@ function ModalMensalidade(_ref55) {
   var config = _ref55.config,
     onClose = _ref55.onClose;
   var cor = config.corPrimaria || COR;
-  var _useState219 = useState({
+  var _useState217 = useState({
       dataInicio: "",
       dataFim: "",
       valorMensal: "25.00"
     }),
+    _useState218 = _slicedToArray(_useState217, 2),
+    cfg = _useState218[0],
+    setCfg = _useState218[1];
+  var _useState219 = useState(false),
     _useState220 = _slicedToArray(_useState219, 2),
-    cfg = _useState220[0],
-    setCfg = _useState220[1];
+    salvando = _useState220[0],
+    setSalvando = _useState220[1];
   var _useState221 = useState(false),
     _useState222 = _slicedToArray(_useState221, 2),
-    salvando = _useState222[0],
-    setSalvando = _useState222[1];
-  var _useState223 = useState(false),
-    _useState224 = _slicedToArray(_useState223, 2),
-    ok = _useState224[0],
-    setOk = _useState224[1];
+    ok = _useState222[0],
+    setOk = _useState222[1];
   useEffect(function () {
     db.collection("onix_config").doc("mensalidade").get().then(function (d) {
       if (d.exists) setCfg(function (x) {
@@ -12146,14 +12084,14 @@ function ModalPagamento(_ref56) {
     config = _ref56.config,
     onClose = _ref56.onClose;
   var cor = config.corPrimaria || COR;
-  var _useState225 = useState([]),
+  var _useState223 = useState([]),
+    _useState224 = _slicedToArray(_useState223, 2),
+    meses = _useState224[0],
+    setMeses = _useState224[1];
+  var _useState225 = useState(false),
     _useState226 = _slicedToArray(_useState225, 2),
-    meses = _useState226[0],
-    setMeses = _useState226[1];
-  var _useState227 = useState(false),
-    _useState228 = _slicedToArray(_useState227, 2),
-    salvando = _useState228[0],
-    setSalvando = _useState228[1];
+    salvando = _useState226[0],
+    setSalvando = _useState226[1];
   useEffect(function () {
     if (!(mesalidade !== null && mesalidade !== void 0 && mesalidade.dataInicio) || !(mesalidade !== null && mesalidade !== void 0 && mesalidade.dataFim)) return;
     var unsub = db.collection("onix_pagamentos").where("membroId", "==", membro.id).onSnapshot(function (snap) {
@@ -12516,28 +12454,28 @@ function ModalLancamento(_ref57) {
     membroId: "",
     membroNome: ""
   };
-  var _useState229 = useState(lancamento ? _objectSpread(_objectSpread(_objectSpread({}, vazio), lancamento), {}, {
+  var _useState227 = useState(lancamento ? _objectSpread(_objectSpread(_objectSpread({}, vazio), lancamento), {}, {
       valor: String(lancamento.valor || "")
     }) : vazio),
+    _useState228 = _slicedToArray(_useState227, 2),
+    form = _useState228[0],
+    setForm = _useState228[1];
+  var _useState229 = useState(false),
     _useState230 = _slicedToArray(_useState229, 2),
-    form = _useState230[0],
-    setForm = _useState230[1];
-  var _useState231 = useState(false),
+    salvando = _useState230[0],
+    setSalvando = _useState230[1];
+  var _useState231 = useState(""),
     _useState232 = _slicedToArray(_useState231, 2),
-    salvando = _useState232[0],
-    setSalvando = _useState232[1];
+    erro = _useState232[0],
+    setErro = _useState232[1];
   var _useState233 = useState(""),
     _useState234 = _slicedToArray(_useState233, 2),
-    erro = _useState234[0],
-    setErro = _useState234[1];
-  var _useState235 = useState(""),
+    novaCat = _useState234[0],
+    setNovaCat = _useState234[1];
+  var _useState235 = useState(false),
     _useState236 = _slicedToArray(_useState235, 2),
-    novaCat = _useState236[0],
-    setNovaCat = _useState236[1];
-  var _useState237 = useState(false),
-    _useState238 = _slicedToArray(_useState237, 2),
-    showNovaCat = _useState238[0],
-    setShowNovaCat = _useState238[1];
+    showNovaCat = _useState236[0],
+    setShowNovaCat = _useState236[1];
   function salvar() {
     return _salvar9.apply(this, arguments);
   }
@@ -12973,41 +12911,41 @@ function Financeiro(_ref58) {
   var _useCatsFinanceiro = useCatsFinanceiro(),
     cats = _useCatsFinanceiro.cats,
     addCat = _useCatsFinanceiro.addCat;
-  var _useState239 = useState("resumo"),
-    _useState240 = _slicedToArray(_useState239, 2),
-    aba = _useState240[0],
-    setAba = _useState240[1];
-  var _useState241 = useState(function () {
+  var _useState237 = useState("resumo"),
+    _useState238 = _slicedToArray(_useState237, 2),
+    aba = _useState238[0],
+    setAba = _useState238[1];
+  var _useState239 = useState(function () {
       var d = new Date();
       return "".concat(d.getFullYear(), "-").concat(String(d.getMonth() + 1).padStart(2, "0"));
     }),
+    _useState240 = _slicedToArray(_useState239, 2),
+    mesAtual = _useState240[0],
+    setMesAtual = _useState240[1];
+  var _useState241 = useState(false),
     _useState242 = _slicedToArray(_useState241, 2),
-    mesAtual = _useState242[0],
-    setMesAtual = _useState242[1];
-  var _useState243 = useState(false),
+    modalMens = _useState242[0],
+    setModalMens = _useState242[1];
+  var _useState243 = useState(null),
     _useState244 = _slicedToArray(_useState243, 2),
-    modalMens = _useState244[0],
-    setModalMens = _useState244[1];
+    modalLanc = _useState244[0],
+    setModalLanc = _useState244[1];
   var _useState245 = useState(null),
     _useState246 = _slicedToArray(_useState245, 2),
-    modalLanc = _useState246[0],
-    setModalLanc = _useState246[1];
-  var _useState247 = useState(null),
+    modalPag = _useState246[0],
+    setModalPag = _useState246[1];
+  var _useState247 = useState("gasto"),
     _useState248 = _slicedToArray(_useState247, 2),
-    modalPag = _useState248[0],
-    setModalPag = _useState248[1];
-  var _useState249 = useState("gasto"),
+    tipoLanc = _useState248[0],
+    setTipoLanc = _useState248[1];
+  var _useState249 = useState(null),
     _useState250 = _slicedToArray(_useState249, 2),
-    tipoLanc = _useState250[0],
-    setTipoLanc = _useState250[1];
-  var _useState251 = useState(null),
+    mesalidade = _useState250[0],
+    setMesalidade = _useState250[1];
+  var _useState251 = useState([]),
     _useState252 = _slicedToArray(_useState251, 2),
-    mesalidade = _useState252[0],
-    setMesalidade = _useState252[1];
-  var _useState253 = useState([]),
-    _useState254 = _slicedToArray(_useState253, 2),
-    pagamentos = _useState254[0],
-    setPagamentos = _useState254[1];
+    pagamentos = _useState252[0],
+    setPagamentos = _useState252[1];
   var cor = config.corPrimaria || COR;
   useEffect(function () {
     var u1 = db.collection("onix_config").doc("mensalidade").onSnapshot(function (s) {
@@ -13874,22 +13812,22 @@ function FinanceiroCorista(_ref62) {
     config = _ref62.config,
     setTab = _ref62.setTab;
   var cor = config.corPrimaria || COR;
-  var _useState255 = useState(null),
+  var _useState253 = useState(null),
+    _useState254 = _slicedToArray(_useState253, 2),
+    mesalidade = _useState254[0],
+    setMesalidade = _useState254[1];
+  var _useState255 = useState([]),
     _useState256 = _slicedToArray(_useState255, 2),
-    mesalidade = _useState256[0],
-    setMesalidade = _useState256[1];
-  var _useState257 = useState([]),
+    pagamentos = _useState256[0],
+    setPagamentos = _useState256[1];
+  var _useState257 = useState(null),
     _useState258 = _slicedToArray(_useState257, 2),
-    pagamentos = _useState258[0],
-    setPagamentos = _useState258[1];
-  var _useState259 = useState(null),
+    salvando = _useState258[0],
+    setSalvando = _useState258[1];
+  var _useState259 = useState([]),
     _useState260 = _slicedToArray(_useState259, 2),
-    salvando = _useState260[0],
-    setSalvando = _useState260[1];
-  var _useState261 = useState([]),
-    _useState262 = _slicedToArray(_useState261, 2),
-    meses = _useState262[0],
-    setMeses = _useState262[1];
+    meses = _useState260[0],
+    setMeses = _useState260[1];
   useEffect(function () {
     var u1 = db.collection("onix_config").doc("mensalidade").onSnapshot(function (s) {
       if (s.exists) setMesalidade(s.data());
@@ -13908,10 +13846,10 @@ function FinanceiroCorista(_ref62) {
   }, [user.memberId]);
 
   // Buscar memberId do corista pelo nome
-  var _useState263 = useState(null),
-    _useState264 = _slicedToArray(_useState263, 2),
-    memberId = _useState264[0],
-    setMemberId = _useState264[1];
+  var _useState261 = useState(null),
+    _useState262 = _slicedToArray(_useState261, 2),
+    memberId = _useState262[0],
+    setMemberId = _useState262[1];
   useEffect(function () {
     if (!user.name) return;
     db.collection("onix_members").where("name", "==", user.name).get().then(function (s) {
@@ -14178,18 +14116,18 @@ function RifaBanner(_ref63) {
   var config = _ref63.config,
     isAdmin = _ref63.isAdmin;
   var cor = config.corPrimaria || COR;
-  var _useState265 = useState("https://luciakratz-arch.github.io/RIFA-ONIX/"),
+  var _useState263 = useState("https://luciakratz-arch.github.io/RIFA-ONIX/"),
+    _useState264 = _slicedToArray(_useState263, 2),
+    rifaUrl = _useState264[0],
+    setRifaUrl = _useState264[1];
+  var _useState265 = useState(false),
     _useState266 = _slicedToArray(_useState265, 2),
-    rifaUrl = _useState266[0],
-    setRifaUrl = _useState266[1];
-  var _useState267 = useState(false),
+    editando = _useState266[0],
+    setEditando = _useState266[1];
+  var _useState267 = useState(""),
     _useState268 = _slicedToArray(_useState267, 2),
-    editando = _useState268[0],
-    setEditando = _useState268[1];
-  var _useState269 = useState(""),
-    _useState270 = _slicedToArray(_useState269, 2),
-    urlTemp = _useState270[0],
-    setUrlTemp = _useState270[1];
+    urlTemp = _useState268[0],
+    setUrlTemp = _useState268[1];
   useEffect(function () {
     var unsub = db.collection("onix_config").doc("rifa").onSnapshot(function (s) {
       if (s.exists && s.data().url) setRifaUrl(s.data().url);
@@ -14349,10 +14287,10 @@ function Blog(_ref64) {
   var _useCollection33 = useCollection("onix_noticias"),
     noticias = _useCollection33.data,
     loading = _useCollection33.loading;
-  var _useState271 = useState(null),
-    _useState272 = _slicedToArray(_useState271, 2),
-    modal = _useState272[0],
-    setModal = _useState272[1];
+  var _useState269 = useState(null),
+    _useState270 = _slicedToArray(_useState269, 2),
+    modal = _useState270[0],
+    setModal = _useState270[1];
   var cor = config.corPrimaria || COR;
   var isAdmin = user === null || user === void 0 ? void 0 : user.isAdmin;
   if (loading) return /*#__PURE__*/React.createElement(Spinner, null);
@@ -14677,24 +14615,24 @@ var NAV_CORISTA = [{
 
 // ── APP ───────────────────────────────────────────────────────────────────────
 function App() {
-  var _useState273 = useState(function () {
+  var _useState271 = useState(function () {
       try {
         return JSON.parse(localStorage.getItem("onix_user"));
       } catch (_unused) {
         return null;
       }
     }),
+    _useState272 = _slicedToArray(_useState271, 2),
+    user = _useState272[0],
+    setUser = _useState272[1];
+  var _useState273 = useState([]),
     _useState274 = _slicedToArray(_useState273, 2),
-    user = _useState274[0],
-    setUser = _useState274[1];
-  var _useState275 = useState([]),
+    members = _useState274[0],
+    setMembers = _useState274[1];
+  var _useState275 = useState("painel"),
     _useState276 = _slicedToArray(_useState275, 2),
-    members = _useState276[0],
-    setMembers = _useState276[1];
-  var _useState277 = useState("painel"),
-    _useState278 = _slicedToArray(_useState277, 2),
-    tab = _useState278[0],
-    setTab = _useState278[1];
+    tab = _useState276[0],
+    setTab = _useState276[1];
   var _useConfig = useConfig(),
     config = _useConfig.config,
     save = _useConfig.save;
