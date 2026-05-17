@@ -1,15109 +1,3921 @@
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t.return || t.return(); } finally { if (u) throw o; } } }; }
-function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
-function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
-function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i.return) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
-function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
-function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
-function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-var _React = React,
-  useState = _React.useState,
-  useEffect = _React.useEffect;
-var firebaseConfig = {
-  apiKey: "AIzaSyDcLsndRbDPeUru_Di-h3w8RP_Ung-YSUo",
-  authDomain: "flamboyant-coral.firebaseapp.com",
-  projectId: "flamboyant-coral",
-  storageBucket: "flamboyant-coral.firebasestorage.app",
-  messagingSenderId: "15022873086",
-  appId: "1:15022873086:web:6c4f72edc08e4624d108af"
+// ═══════════════════════════════════════════════════════
+//  ÁREA ADMINISTRATIVA — DRA. LUCIA KRATZ  
+//  app.js — Etapa 2: Cadastro completo de pacientes
+// ═══════════════════════════════════════════════════════
+
+const { useState, useEffect, useCallback, useRef } = React;
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDnrgaY8R0Zetkr18uHQJAZXIUa4EwDnv4",
+  authDomain: "entrevista-inicial.firebaseapp.com",
+  projectId: "entrevista-inicial",
+  storageBucket: "entrevista-inicial.firebasestorage.app",
+  messagingSenderId: "437375609844",
+  appId: "1:437375609844:web:2ed0e16a7da5d46c2e27a1"
 };
 if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-var db = firebase.firestore();
-var COR = "#5B2D8E";
-var COR_FUNDO = "#F3EEF9";
-var LOGO_URL = "https://raw.githubusercontent.com/luciakratz-arch/onix-brasil/main/onix-logo.png";
-var MONTHS_PT = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
-var MONTHS_SHORT = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
-var NAIPES = ["Soprano", "Contralto", "Mezzo-soprano", "Alto", "Tenor", "Barítono", "Baixo"];
-var FUNCOES = ["Corista", "Solista", "Regente", "Pianista", "Produtora", "Auxiliar"];
-function todayStr() {
-  return new Date().toISOString().split("T")[0];
-}
-function fmtDate(d) {
-  if (!d) return "";
-  var _d$split = d.split("-"),
-    _d$split2 = _slicedToArray(_d$split, 3),
-    y = _d$split2[0],
-    m = _d$split2[1],
-    dd = _d$split2[2];
-  return "".concat(parseInt(dd), " de ").concat(MONTHS_PT[parseInt(m) - 1], " de ").concat(y);
-}
-function fmtMonthYear(d) {
-  if (!d) return "—";
-  var _d$split3 = d.split("-"),
-    _d$split4 = _slicedToArray(_d$split3, 2),
-    y = _d$split4[0],
-    m = _d$split4[1];
-  return "".concat(MONTHS_SHORT[parseInt(m) - 1], " ").concat(y);
-}
-function useCollection(col) {
-  var orderField = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "createdAt";
-  var _useState = useState([]),
-    _useState2 = _slicedToArray(_useState, 2),
-    data = _useState2[0],
-    setData = _useState2[1];
-  var _useState3 = useState(true),
-    _useState4 = _slicedToArray(_useState3, 2),
-    loading = _useState4[0],
-    setLoading = _useState4[1];
-  useEffect(function () {
-    var unsub = db.collection(col).onSnapshot(function (snap) {
-      var docs = snap.docs.map(function (d) {
-        return _objectSpread({
-          id: d.id
-        }, d.data());
-      });
-      docs.sort(function (a, b) {
-        var _a$orderField, _b$orderField;
-        var av = ((_a$orderField = a[orderField]) === null || _a$orderField === void 0 ? void 0 : _a$orderField.seconds) || a[orderField] || "";
-        var bv = ((_b$orderField = b[orderField]) === null || _b$orderField === void 0 ? void 0 : _b$orderField.seconds) || b[orderField] || "";
+const db = firebase.firestore();
+
+const LOGO_URL = "../logo-transparente.png";
+const SENHA_ADMIN = "1234";
+const SENHA_PAULO = "paulo123";
+const SITE_URL = "https://luciakratz-arch.github.io/clinica-dra.LuciaKratz";
+
+const PERFIS = [
+  { id:"psicologa",  nome:"Sou Psicologa",  desc:"Acesso ao painel clinico completo", icon:"stethoscope", cor:"#7B00C4" },
+  { id:"secretaria", nome:"Sou Secretaria",  desc:"Cadastro de pacientes e financeiro da clinica", icon:"clipboard-list", cor:"#0891b2" },
+  { id:"paulo",      nome:"Paulo Sergio",    desc:"Visualizacao do financeiro familiar", icon:"bar-chart-2", cor:"#16a34a" },
+];
+
+const MODULOS = [
+  { id:"tcc",    nome:"TCC — Pensamentos Automaticos", desc:"tcc" },
+  { id:"humor",  nome:"Registro de Humor",             desc:"humor" },
+  { id:"diario", nome:"Diario Terapeutico",            desc:"diario" },
+  { id:"metas",  nome:"Metas Terapeuticas",            desc:"metas" },
+  { id:"reflexoes", nome:"Reflexoes Cognitivas",       desc:"reflexoes" },
+  { id:"musico", nome:"Musicoterapia",                 desc:"musicoterapia" },
+];
+
+const FERRAMENTAS = [
+  { id:"arvore",      nome:"Arvore da Decisao",         desc:"Tecnica da TCC para transformar preocupacoes em acoes concretas." },
+  { id:"ansiedade",   nome:"Gestao da Ansiedade",       desc:"Acompanhe nivel de estresse, tracking e roda da vida." },
+  { id:"entrevista",  nome:"Entrevista Clinica Inicial",desc:"Instrumento de avaliacao clinica inicial com DSM-5." },
+  { id:"anamnese",    nome:"Anamnese — Marcos do Desenvolvimento", desc:"Formulario completo de anamnese." },
+  { id:"alimentacao", nome:"Rastreamento Emocional da Alimentacao", desc:"Consciencia sobre relacao entre emocoes e alimentacao." },
+];
+
+function useCollection(col, orderField="createdAt") {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const unsub = db.collection(col).onSnapshot(snap => {
+      const docs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      docs.sort((a, b) => {
+        const av = a[orderField]?.seconds || a[orderField] || "";
+        const bv = b[orderField]?.seconds || b[orderField] || "";
         return bv > av ? 1 : -1;
       });
-      setData(docs);
-      setLoading(false);
-    }, function () {
-      return setLoading(false);
-    });
+      setData(docs); setLoading(false);
+    }, () => setLoading(false));
     return unsub;
   }, [col]);
-  return {
-    data: data,
-    loading: loading
-  };
+  return { data, loading };
 }
-function useConfig() {
-  var _useState5 = useState({
-      nomeApp: "Onix Brasil Vocal Internacional",
-      subtitulo: "Portal de Gestão",
-      logoUrl: LOGO_URL,
-      corPrimaria: COR,
-      corFundo: COR_FUNDO
-    }),
-    _useState6 = _slicedToArray(_useState5, 2),
-    config = _useState6[0],
-    setConfig = _useState6[1];
-  useEffect(function () {
-    var unsub = db.collection("onix_config").doc("app").onSnapshot(function (snap) {
-      if (snap.exists) setConfig(function (c) {
-        return _objectSpread(_objectSpread({}, c), snap.data());
-      });
-    });
+
+function Icon({ name, size=18 }) {
+  const ref = useRef(null);
+  useEffect(() => {
+    try {
+      if (!ref.current || !window.lucide) return;
+      ref.current.innerHTML = "";
+      const n = name.replace(/-([a-z])/g,(_, l)=>l.toUpperCase()).replace(/^./,s=>s.toUpperCase());
+      const fn = lucide[n];
+      if (!fn) return;
+      const ic = lucide.createElement(fn);
+      if (ic) {
+        ic.setAttribute("width", size);
+        ic.setAttribute("height", size);
+        ic.setAttribute("stroke-width", "1.8");
+        ref.current.appendChild(ic);
+      }
+    } catch(e) {}
+  }, [name, size]);
+  return <span ref={ref} style={{display:"inline-flex",alignItems:"center"}} />;
+}
+
+function Spinner() { return <div className="spinner-wrap"><div className="spinner"/></div>; }
+function EmBreve({ titulo, subtitulo }) {
+  return (
+    <div className="em-breve">
+      <Icon name="wrench" size={48}/>
+      <div className="em-breve-title">{titulo}</div>
+      <div className="em-breve-sub">{subtitulo||"Modulo em construcao."}</div>
+    </div>
+  );
+}
+
+// LOGIN
+function Login({ onLogin }) {
+  const [etapa, setEtapa] = useState("perfil");
+  const [senha, setSenha] = useState("");
+  const [email, setEmail] = useState("");
+  const [erro, setErro] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [perfilSel, setPerfilSel] = useState(null);
+
+  async function handleLogin(e) {
+    e.preventDefault(); setErro(""); setLoading(true);
+    try {
+      if (perfilSel === "psicologa") {
+        if (senha === SENHA_ADMIN) onLogin({ tipo:"psicologa", nome:"Dra. Lucia Kratz", crp:"CRP 09/20590" });
+        else setErro("Senha incorreta.");
+      } else if (perfilSel === "paulo") {
+        if (senha === SENHA_PAULO) onLogin({ tipo:"paulo", nome:"Paulo Sergio" });
+        else setErro("Senha incorreta.");
+      } else if (perfilSel === "secretaria") {
+        const snap = await db.collection("clinica_secretarias").where("email","==",email.toLowerCase().trim()).get();
+        if (snap.empty) { setErro("Usuario nao encontrado."); setLoading(false); return; }
+        const sec = { id:snap.docs[0].id, ...snap.docs[0].data() };
+        if (sec.senha !== senha) { setErro("Senha incorreta."); setLoading(false); return; }
+        onLogin({ tipo:"secretaria", ...sec });
+      }
+    } catch(e) { setErro("Erro ao conectar."); }
+    setLoading(false);
+  }
+
+  const perfil = PERFIS.find(p => p.id === perfilSel);
+
+  return (
+    <div className="login-page">
+      <div className="login-left">
+        <div className="login-logo">
+          <img src={LOGO_URL} alt="Lucia Kratz" style={{width:140,height:140,objectFit:"contain"}}/>
+        </div>
+        <div className="login-name">Dra. Lucia Kratz</div>
+        <div className="login-subtitle">Sistema Administrativo</div>
+        <div className="login-crp">Psicologa Doutora · CRP 09/20590</div>
+        <div className="login-left-btns">
+          {PERFIS.map(p=>(
+            <button key={p.id} onClick={()=>{setPerfilSel(p.id);setEtapa("senha");setErro("");setSenha("");setEmail("");}}>
+              {p.nome.replace("Sou ","")}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="login-right">
+        {etapa === "perfil" && (
+          <>
+            <div style={{width:"100%"}}>
+              <div className="login-right-title">Area Administrativa</div>
+              <div className="login-right-sub">Selecione seu perfil de acesso.</div>
+            </div>
+            <div className="profile-cards">
+              {PERFIS.map(p=>(
+                <button key={p.id} className="profile-card" onClick={()=>{setPerfilSel(p.id);setEtapa("senha");setErro("");}}>
+                  <div className="profile-card-icon" style={{background:p.cor}}><Icon name={p.icon} size={22}/></div>
+                  <div className="profile-card-text">
+                    <div className="profile-card-name">{p.nome}</div>
+                    <div className="profile-card-desc">{p.desc}</div>
+                  </div>
+                  <div className="profile-card-arrow"><Icon name="chevron-right" size={18}/></div>
+                </button>
+              ))}
+            </div>
+            <div className="login-footer"><a href="../" style={{color:"var(--gray-400)",fontSize:12}}>Voltar ao site</a></div>
+          </>
+        )}
+        {etapa === "senha" && perfil && (
+          <>
+            <button className="login-right-back" onClick={()=>{setEtapa("perfil");setErro("");}}>
+              <Icon name="arrow-left" size={14}/> Voltar
+            </button>
+            <form className="login-form" onSubmit={handleLogin}>
+              <div>
+                <div className="login-form-title">{perfil.nome}</div>
+                <div className="login-form-sub">{perfil.desc}</div>
+              </div>
+              {erro && <div className="login-error">{erro}</div>}
+              {perfilSel === "secretaria" && (
+                <div className="form-group">
+                  <label className="form-label">E-mail</label>
+                  <input className="form-input" type="email" value={email} onChange={e=>setEmail(e.target.value)} autoFocus/>
+                </div>
+              )}
+              <div className="form-group">
+                <label className="form-label">Senha</label>
+                <input className="form-input" type="password" value={senha} onChange={e=>setSenha(e.target.value)} autoFocus={perfilSel!=="secretaria"}/>
+              </div>
+              <button className="btn-primary" type="submit" disabled={loading}>{loading?"Entrando...":"Entrar"}</button>
+            </form>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// NAV
+const NAV_PSICOLOGA = [
+  {id:"dashboard",   label:"Dashboard",         icon:"layout-dashboard"},
+  {id:"pacientes",   label:"Pacientes",          icon:"users"},
+  {id:"alunos",      label:"Alunos",             icon:"graduation-cap"},
+  {id:"casais",      label:"Terapia de Casais",  icon:"heart"},
+  {id:"recursos",    label:"Recursos Terapeuticos", icon:"wrench"},
+  {id:"laudos",      label:"Laudos",             icon:"file-text"},
+  {id:"agenda",      label:"Agenda",             icon:"calendar"},
+  {id:"fin-clinica", label:"Fin. Clinica",       icon:"dollar-sign"},
+  {id:"fin-pessoal", label:"Fin. Pessoal",       icon:"home"},
+  {id:"config",      label:"Configuracoes",      icon:"settings"},
+];
+const NAV_SECRETARIA = [
+  {id:"pacientes",   label:"Pacientes",  icon:"users"},
+  {id:"agenda",      label:"Agenda",     icon:"calendar"},
+  {id:"fin-clinica", label:"Financeiro", icon:"dollar-sign"},
+];
+const NAV_PAULO = [{id:"fin-pessoal", label:"Financeiro Familiar", icon:"home"}];
+
+// SIDEBAR
+function Sidebar({ user, tab, setTab, onLogout }) {
+  const nav = user.tipo==="secretaria"?NAV_SECRETARIA:user.tipo==="paulo"?NAV_PAULO:NAV_PSICOLOGA;
+  const titulo = user.tipo==="secretaria"?"Area da Secretaria":user.tipo==="paulo"?"Financeiro Familiar":"Area Administrativa";
+  const initials = (user.nome||"U").split(" ").map(w=>w[0]).slice(0,2).join("").toUpperCase();
+  return (
+    <div className="sidebar-desktop">
+      <div className="sidebar-header">
+        <div className="sidebar-logo">
+          <img src={LOGO_URL} alt="LK" style={{width:44,height:44,objectFit:"contain"}} onError={e=>{e.target.style.display="none";e.target.nextSibling.style.display="block";}}/>
+          <span className="sidebar-logo-placeholder" style={{display:"none"}}>LK</span>
+        </div>
+        <div>
+          <div className="sidebar-title">Dra. Lucia Kratz</div>
+          <div className="sidebar-role">{titulo}</div>
+        </div>
+      </div>
+      <nav className="sidebar-nav">
+        {nav.map(item=>(
+          <button key={item.id} className={"nav-item "+(tab===item.id?"active":"")} onClick={()=>setTab(item.id)}>
+            <Icon name={item.icon} size={18}/>{item.label}
+          </button>
+        ))}
+      </nav>
+      <div className="sidebar-footer">
+        <div className="sidebar-user">
+          <div className="sidebar-avatar">{initials}</div>
+          <div>
+            <div className="sidebar-user-name">{user.nome}</div>
+            {user.crp && <div className="sidebar-user-crp">{user.crp}</div>}
+          </div>
+        </div>
+        <a href="../" className="nav-item" style={{color:"rgba(255,255,255,0.6)"}}>
+          <Icon name="globe" size={18}/> Site
+        </a>
+        <button className="nav-item nav-item-danger" onClick={onLogout}>
+          <Icon name="log-out" size={18}/> Sair
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// DASHBOARD
+function DashboardAdmin({ user }) {
+  const { data:pacientes } = useCollection("clinica_pacientes","nome");
+  const ativos = pacientes.filter(p=>p.status==="ativo").length;
+  const hoje = new Date().toLocaleDateString("pt-BR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+  return (
+    <div>
+      <div className="page-header">
+        <div className="page-title">Dashboard Clinico</div>
+        <div className="page-subtitle" style={{textTransform:"capitalize"}}>{hoje}</div>
+      </div>
+      <div className="metrics-grid">
+        <div className="metric-card"><div className="metric-icon"><Icon name="users" size={20}/></div><div className="metric-label">Total de Pacientes</div><div className="metric-value">{pacientes.length}</div><div className="metric-sub">{ativos} ativos</div></div>
+        <div className="metric-card"><div className="metric-icon"><Icon name="calendar" size={20}/></div><div className="metric-label">Sessoes este Mes</div><div className="metric-value">0</div></div>
+        <div className="metric-card"><div className="metric-icon"><Icon name="file-text" size={20}/></div><div className="metric-label">Laudos</div><div className="metric-value">0</div></div>
+        <div className="metric-card"><div className="metric-icon"><Icon name="heart" size={20}/></div><div className="metric-label">Humor Medio</div><div className="metric-value">—</div></div>
+      </div>
+      <div className="card">
+        <div style={{fontWeight:600,marginBottom:12}}>Bem-vinda, {user.nome} 🦋</div>
+        <p style={{fontSize:14,color:"var(--text-muted)",lineHeight:1.7}}>Sistema administrativo em construcao progressiva.</p>
+        <div style={{marginTop:16}}><a href="../clinica/" style={{fontSize:13,color:"var(--purple)",display:"flex",alignItems:"center",gap:6,width:"fit-content"}}><Icon name="external-link" size={14}/> Portal do Paciente</a></div>
+      </div>
+    </div>
+  );
+}
+
+// ABA PERFIL
+function AbaPerfil({ paciente, pacientes }) {
+  const [form, setForm] = useState({...paciente});
+  const [salvando, setSalvando] = useState(false);
+  const [copiado, setCopiado] = useState(false);
+
+  async function salvar() {
+    setSalvando(true);
+    const { id, ...dados } = form;
+    await db.collection("clinica_pacientes").doc(paciente.id).update(dados);
+    setSalvando(false);
+    alert("Salvo!");
+  }
+
+  async function redefinirSenha() {
+    await db.collection("clinica_pacientes").doc(paciente.id).update({ senha:"1234" });
+    alert("Senha redefinida para 1234.");
+  }
+
+  const msgAcesso = "Ola, "+paciente.nome+"! Butterfly\n\nSeu acesso ao portal terapeutico da Dra. Lucia Kratz esta pronto.\n\nLink: "+SITE_URL+"/clinica/\n\nEmail: "+paciente.email+"\nSenha: 1234\n\nDra. Lucia Kratz - CRP 09/20590";
+
+  function copiarMsg() {
+    const msg = "Ola, "+paciente.nome+"!\n\nSeu acesso ao portal terapeutico da Dra. Lucia Kratz esta pronto.\n\nLink de acesso: "+SITE_URL+"/clinica/\n\nEmail: "+paciente.email+"\nSenha: 1234\n\nAo entrar pela primeira vez, recomendo trocar a senha em Minha Conta.\n\nQualquer duvida, estou a disposicao!\nDra. Lucia Kratz - CRP 09/20590";
+    navigator.clipboard.writeText(msg);
+    setCopiado(true);
+    setTimeout(()=>setCopiado(false),2000);
+  }
+
+  return (
+    <div style={{display:"flex",flexDirection:"column",gap:20}}>
+      <div className="card">
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
+          <div className="form-group" style={{gridColumn:"span 2"}}>
+            <label className="form-label">Nome completo</label>
+            <input className="form-input" value={form.nome||""} onChange={e=>setForm({...form,nome:e.target.value})}/>
+          </div>
+          <div className="form-group">
+            <label className="form-label">E-mail</label>
+            <input className="form-input" type="email" value={form.email||""} onChange={e=>setForm({...form,email:e.target.value})}/>
+          </div>
+          <div className="form-group">
+            <label className="form-label">Telefone</label>
+            <input className="form-input" value={form.telefone||""} onChange={e=>setForm({...form,telefone:e.target.value})}/>
+          </div>
+          <div className="form-group">
+            <label className="form-label">Data de Nascimento</label>
+            <input className="form-input" type="date" value={form.dataNasc||""} onChange={e=>setForm({...form,dataNasc:e.target.value})}/>
+          </div>
+          <div className="form-group">
+            <label className="form-label">CPF</label>
+            <input className="form-input" value={form.cpf||""} onChange={e=>setForm({...form,cpf:e.target.value})}/>
+          </div>
+          <div className="form-group">
+            <label className="form-label">Genero</label>
+            <select className="form-input" value={form.genero||""} onChange={e=>setForm({...form,genero:e.target.value})}>
+              <option value="">Selecione</option>
+              <option>Feminino</option><option>Masculino</option><option>Nao-binario</option><option>Nao informar</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label className="form-label">Status</label>
+            <div style={{display:"flex",gap:8,marginTop:4}}>
+              {[["ativo","Ativo","var(--success)"],["inativo","Inativo","var(--danger)"],["alta","Alta","var(--gray-400)"]].map(([s,l,c])=>(
+                <button key={s} onClick={()=>setForm({...form,status:s})} style={{
+                  padding:"7px 14px",borderRadius:20,border:"1.5px solid "+c,cursor:"pointer",fontSize:13,
+                  fontFamily:"var(--font-body)",background:form.status===s?c:"white",color:form.status===s?"white":c
+                }}>{l}</button>
+              ))}
+            </div>
+          </div>
+          <div className="form-group" style={{gridColumn:"span 2"}}>
+            <label className="form-label">Objetivos Terapeuticos</label>
+            <textarea className="form-input" rows={3} value={form.objetivos||""} onChange={e=>setForm({...form,objetivos:e.target.value})} placeholder="Descreva os objetivos da terapia..."/>
+          </div>
+        </div>
+        <div style={{display:"flex",gap:10,marginTop:16}}>
+          <button className="btn btn-purple" onClick={salvar} disabled={salvando}>{salvando?"Salvando...":"Salvar alteracoes"}</button>
+        </div>
+      </div>
+      <div className="card">
+        <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12}}><Icon name="key" size={18}/><div style={{fontWeight:600}}>Credenciais de Acesso</div></div>
+        <p style={{fontSize:13,color:"var(--text-muted)",marginBottom:16}}>Copie o texto abaixo e envie para o paciente. A senha padrao e <strong>1234</strong>.</p>
+        <div style={{background:"var(--gray-50)",border:"1px solid var(--gray-200)",borderRadius:10,padding:16,fontSize:13,lineHeight:1.8,color:"var(--text-muted)"}}>
+          {"Ola, "+paciente.nome+"!\n\nSeu acesso ao portal terapeutico da Dra. Lucia Kratz esta pronto.\nLink: "+SITE_URL+"/clinica/\nEmail: "+paciente.email+"\nSenha: 1234\n\nDra. Lucia Kratz - CRP 09/20590"}
+        </div>
+        <div style={{display:"flex",gap:10,marginTop:12}}>
+          <button className="btn btn-outline" onClick={copiarMsg}><Icon name="copy" size={15}/> {copiado?"Copiado!":"Copiar mensagem"}</button>
+          <button className="btn btn-ghost" onClick={redefinirSenha}><Icon name="key" size={15}/> Redefinir senha para 1234</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ABA MODULOS
+function AbaModulos({ paciente }) {
+  const [modulos, setModulos] = useState(paciente.modulosAtivos||[]);
+  async function toggle(id) {
+    const novos = modulos.includes(id)?modulos.filter(m=>m!==id):[...modulos,id];
+    setModulos(novos);
+    await db.collection("clinica_pacientes").doc(paciente.id).update({modulosAtivos:novos});
+  }
+  return (
+    <div className="card">
+      <div style={{fontWeight:600,marginBottom:4}}>Modulos Ativos</div>
+      <p style={{fontSize:13,color:"var(--text-muted)",marginBottom:20}}>Ative ou desative modulos para personalizar a experiencia terapeutica deste paciente.</p>
+      {MODULOS.map(m=>(
+        <div key={m.id} style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"16px 0",borderBottom:"1px solid var(--gray-100)"}}>
+          <div><div style={{fontWeight:500,fontSize:14}}>{m.nome}</div><div style={{fontSize:12,color:"var(--text-muted)"}}>{m.desc}</div></div>
+          <button onClick={()=>toggle(m.id)} style={{width:44,height:24,borderRadius:12,border:"none",cursor:"pointer",background:modulos.includes(m.id)?"var(--purple)":"var(--gray-200)",position:"relative",transition:"background .2s",flexShrink:0}}>
+            <span style={{position:"absolute",top:2,left:modulos.includes(m.id)?"22px":"2px",width:20,height:20,borderRadius:"50%",background:"white",transition:"left .2s",boxShadow:"0 1px 3px rgba(0,0,0,0.2)"}}/>
+          </button>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ABA FERRAMENTAS
+function AbaFerramentas({ paciente }) {
+  const [ferramentas, setFerramentas] = useState(paciente.ferramentasAtivas||[]);
+  async function toggle(id) {
+    const novas = ferramentas.includes(id)?ferramentas.filter(f=>f!==id):[...ferramentas,id];
+    setFerramentas(novas);
+    await db.collection("clinica_pacientes").doc(paciente.id).update({ferramentasAtivas:novas});
+  }
+  return (
+    <div className="card">
+      <div style={{fontWeight:600,marginBottom:4}}>Ferramentas Terapeuticas</div>
+      <p style={{fontSize:13,color:"var(--text-muted)",marginBottom:20}}>Selecione as ferramentas disponiveis para este paciente no portal.</p>
+      <div style={{display:"flex",flexDirection:"column",gap:12}}>
+        {FERRAMENTAS.map(f=>(
+          <div key={f.id} style={{display:"flex",alignItems:"center",gap:14,padding:16,borderRadius:10,border:"1.5px solid",borderColor:ferramentas.includes(f.id)?"var(--purple)":"var(--gray-200)",background:ferramentas.includes(f.id)?"var(--purple-bg)":"white",cursor:"pointer",transition:"all .2s"}} onClick={()=>toggle(f.id)}>
+            <div style={{flex:1}}><div style={{fontWeight:500,fontSize:14}}>{f.nome}</div><div style={{fontSize:12,color:"var(--text-muted)",marginTop:2}}>{f.desc}</div></div>
+            <button style={{width:44,height:24,borderRadius:12,border:"none",cursor:"pointer",background:ferramentas.includes(f.id)?"var(--purple)":"var(--gray-200)",position:"relative",flexShrink:0}}>
+              <span style={{position:"absolute",top:2,left:ferramentas.includes(f.id)?"22px":"2px",width:20,height:20,borderRadius:"50%",background:"white",boxShadow:"0 1px 3px rgba(0,0,0,0.2)"}}/>
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ABA METAS
+function AbaMetas({ paciente }) {
+  const [metas, setMetas] = useState([]);
+  const [modal, setModal] = useState(false);
+  const [form, setForm] = useState({titulo:"",categoria:"Emocional",progresso:0});
+
+  useEffect(()=>{
+    const unsub = db.collection("clinica_pacientes").doc(paciente.id).collection("metas").onSnapshot(snap=>{
+      setMetas(snap.docs.map(d=>({id:d.id,...d.data()})));
+    },()=>{});
     return unsub;
-  }, []);
-  return {
-    config: config,
-    save: function save(d) {
-      return db.collection("onix_config").doc("app").set(d, {
-        merge: true
-      });
-    }
-  };
-}
-var Icon = function Icon(_ref) {
-  var name = _ref.name,
-    _ref$size = _ref.size,
-    size = _ref$size === void 0 ? 16 : _ref$size,
-    color = _ref.color;
-  useEffect(function () {
-    if (window.lucide) {
-      try {
-        window.lucide.createIcons();
-      } catch (e) {}
-    }
-  }, [name]);
-  return /*#__PURE__*/React.createElement("i", {
-    "data-lucide": name,
-    style: {
-      width: size,
-      height: size,
-      color: color || "inherit",
-      display: "inline-block",
-      flexShrink: 0
-    }
-  });
-};
-function Spinner() {
-  return /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      justifyContent: "center",
-      padding: 48
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: 28,
-      height: 28,
-      border: "3px solid ".concat(COR),
-      borderTopColor: "transparent",
-      borderRadius: "50%",
-      animation: "spin 0.8s linear infinite"
-    }
-  }));
-}
+  },[paciente.id]);
 
-// ── CADASTRO PÚBLICO ──────────────────────────────────────────────────────────
-function CadastroPublico(_ref2) {
-  var config = _ref2.config;
-  var cor = config.corPrimaria || COR;
-  var fundo = config.corFundo || COR_FUNDO;
-  var _useState7 = useState({
-      name: "",
-      funcao: "Corista",
-      voice: "Soprano",
-      email: "",
-      phone: "",
-      birthday: "",
-      notes: ""
-    }),
-    _useState8 = _slicedToArray(_useState7, 2),
-    form = _useState8[0],
-    setForm = _useState8[1];
-  var _useState9 = useState(false),
-    _useState0 = _slicedToArray(_useState9, 2),
-    salvando = _useState0[0],
-    setSalvando = _useState0[1];
-  var _useState1 = useState(false),
-    _useState10 = _slicedToArray(_useState1, 2),
-    ok = _useState10[0],
-    setOk = _useState10[1];
-  var _useState11 = useState(""),
-    _useState12 = _slicedToArray(_useState11, 2),
-    erro = _useState12[0],
-    setErro = _useState12[1];
-  function salvar() {
-    return _salvar.apply(this, arguments);
+  async function salvar() {
+    if(!form.titulo){alert("Titulo obrigatorio.");return;}
+    await db.collection("clinica_pacientes").doc(paciente.id).collection("metas").add({...form,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    setModal(false); setForm({titulo:"",categoria:"Emocional",progresso:0});
   }
-  function _salvar() {
-    _salvar = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
-      return _regenerator().w(function (_context) {
-        while (1) switch (_context.n) {
-          case 0:
-            if (form.name.trim()) {
-              _context.n = 1;
-              break;
-            }
-            setErro("Nome é obrigatório.");
-            return _context.a(2);
-          case 1:
-            if (form.phone.trim()) {
-              _context.n = 2;
-              break;
-            }
-            setErro("Telefone é obrigatório.");
-            return _context.a(2);
-          case 2:
-            setSalvando(true);
-            _context.n = 3;
-            return db.collection("onix_members").add(_objectSpread(_objectSpread({}, form), {}, {
-              active: true,
-              startDate: todayStr(),
-              createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            }));
-          case 3:
-            setSalvando(false);
-            setOk(true);
-          case 4:
-            return _context.a(2);
-        }
-      }, _callee);
-    }));
-    return _salvar.apply(this, arguments);
-  }
-  var inp = {
-    width: "100%",
-    padding: "12px 14px",
-    border: "1px solid #E8E0E0",
-    borderRadius: 10,
-    fontSize: 14,
-    outline: "none",
-    fontFamily: "inherit",
-    color: "#1A1D23",
-    background: "#fff"
-  };
-  var lbl = {
-    display: "block",
-    fontSize: 12,
-    fontWeight: 600,
-    color: "#888",
-    marginBottom: 5
-  };
-  var g2 = {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gap: 12,
-    marginBottom: 16
-  };
-  if (ok) return /*#__PURE__*/React.createElement("div", {
-    style: {
-      minHeight: "100vh",
-      background: fundo,
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      padding: 24
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: 80,
-      height: 80,
-      background: "#E8F5E9",
-      borderRadius: "50%",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      margin: "0 auto 20px"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "check",
-    size: 36,
-    color: "#2E7D32"
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 24,
-      fontWeight: 700,
-      color: "#1A1D23",
-      marginBottom: 8,
-      textAlign: "center"
-    }
-  }, "Cadastro realizado!"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 15,
-      color: "#888",
-      textAlign: "center",
-      maxWidth: 320
-    }
-  }, "Obrigado, ", form.name.split(" ")[0], "! Seu cadastro foi enviado e ser\xE1 revisado pela gest\xE3o."));
-  return /*#__PURE__*/React.createElement("div", {
-    style: {
-      minHeight: "100vh",
-      background: fundo,
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      padding: "32px 20px"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      textAlign: "center",
-      marginBottom: 24
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: 80,
-      height: 80,
-      background: "#fff",
-      borderRadius: 14,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      margin: "0 auto 14px",
-      boxShadow: "0 4px 20px rgba(0,0,0,0.1)"
-    }
-  }, /*#__PURE__*/React.createElement("img", {
-    src: config.logoUrl || LOGO_URL,
-    alt: "",
-    style: {
-      width: 56,
-      height: 56,
-      objectFit: "contain"
-    },
-    onError: function onError(e) {
-      return e.target.style.display = "none";
-    }
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 22,
-      fontWeight: 700,
-      color: cor
-    }
-  }, config.nomeApp || "Onix Brasil Vocal Internacional"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#AAA",
-      marginTop: 4
-    }
-  }, "Cadastro de Corista")), /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#fff",
-      borderRadius: 16,
-      border: "1px solid #EEE0E0",
-      padding: "24px 20px",
-      width: "100%",
-      maxWidth: 480,
-      boxShadow: "0 4px 24px rgba(0,0,0,0.07)"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 16
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Nome Completo *"), /*#__PURE__*/React.createElement("input", {
-    style: inp,
-    value: form.name,
-    onChange: function onChange(e) {
-      setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          name: e.target.value
-        });
-      });
-      setErro("");
-    },
-    autoFocus: true
-  })), /*#__PURE__*/React.createElement("div", {
-    style: g2
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Fun\xE7\xE3o"), /*#__PURE__*/React.createElement("select", {
-    style: inp,
-    value: form.funcao,
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          funcao: e.target.value
-        });
-      });
-    }
-  }, FUNCOES.map(function (f) {
-    return /*#__PURE__*/React.createElement("option", {
-      key: f
-    }, f);
-  }))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Naipe"), /*#__PURE__*/React.createElement("select", {
-    style: inp,
-    value: form.voice,
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          voice: e.target.value
-        });
-      });
-    }
-  }, NAIPES.map(function (n) {
-    return /*#__PURE__*/React.createElement("option", {
-      key: n
-    }, n);
-  })))), /*#__PURE__*/React.createElement("div", {
-    style: g2
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Telefone *"), /*#__PURE__*/React.createElement("input", {
-    style: inp,
-    value: form.phone || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          phone: e.target.value
-        });
-      });
-    },
-    placeholder: "(00) 9 0000-0000"
-  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "E-mail"), /*#__PURE__*/React.createElement("input", {
-    style: inp,
-    type: "email",
-    value: form.email || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          email: e.target.value
-        });
-      });
-    }
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 16
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Data de Nascimento"), /*#__PURE__*/React.createElement("input", {
-    type: "date",
-    style: inp,
-    value: form.birthday || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          birthday: e.target.value
-        });
-      });
-    }
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 20
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Observa\xE7\xF5es"), /*#__PURE__*/React.createElement("textarea", {
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      minHeight: 70,
-      resize: "vertical"
-    }),
-    value: form.notes || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          notes: e.target.value
-        });
-      });
-    }
-  })), erro && /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: cor,
-      marginBottom: 12
-    }
-  }, erro), /*#__PURE__*/React.createElement("button", {
-    onClick: salvar,
-    disabled: salvando,
-    style: {
-      width: "100%",
-      padding: "14px",
-      background: cor,
-      color: "#fff",
-      border: "none",
-      borderRadius: 10,
-      fontSize: 15,
-      fontWeight: 700,
-      cursor: "pointer",
-      fontFamily: "inherit",
-      opacity: salvando ? 0.7 : 1
-    }
-  }, salvando ? "Enviando..." : "Enviar Cadastro")), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginTop: 24,
-      fontSize: 11,
-      color: "#CCC"
-    }
-  }, config.nomeApp || "Onix Brasil Vocal Internacional", " \xB7 Portal de Gest\xE3o"));
+  async function excluir(id){if(!confirm("Excluir meta?"))return;await db.collection("clinica_pacientes").doc(paciente.id).collection("metas").doc(id).delete();}
+  async function atualizarProgresso(id,val){await db.collection("clinica_pacientes").doc(paciente.id).collection("metas").doc(id).update({progresso:val});}
+
+  return (
+    <div>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20}}>
+        <div style={{fontWeight:600}}>Metas Terapeuticas</div>
+        <button className="btn btn-purple" onClick={()=>setModal(true)}><Icon name="plus" size={16}/> Nova Meta</button>
+      </div>
+      {metas.length===0?(
+        <div className="card" style={{textAlign:"center",padding:48,color:"var(--text-muted)"}}><Icon name="target" size={40}/><div style={{marginTop:12}}>Nenhuma meta cadastrada.</div></div>
+      ):(
+        <div style={{display:"flex",flexDirection:"column",gap:14}}>
+          {metas.map(m=>(
+            <div key={m.id} className="card">
+              <div style={{display:"flex",justifyContent:"space-between",marginBottom:12}}>
+                <div><div style={{fontWeight:500}}>{m.titulo}</div><span className="badge badge-purple" style={{marginTop:4}}>{m.categoria}</span></div>
+                <button className="btn btn-ghost" style={{padding:"4px 8px"}} onClick={()=>excluir(m.id)}><Icon name="trash-2" size={14}/></button>
+              </div>
+              <div style={{display:"flex",alignItems:"center",gap:12}}>
+                <div style={{flex:1,background:"var(--gray-100)",borderRadius:20,height:8,overflow:"hidden"}}>
+                  <div style={{width:(m.progresso||0)+"%",height:"100%",background:"var(--purple)",borderRadius:20}}/>
+                </div>
+                <span style={{fontSize:13,fontWeight:600,color:"var(--purple)",minWidth:36}}>{m.progresso||0}%</span>
+              </div>
+              <div style={{display:"flex",gap:8,marginTop:10}}>
+                <button className="btn btn-ghost" style={{fontSize:12,padding:"4px 10px"}} onClick={()=>atualizarProgresso(m.id,Math.max(0,(m.progresso||0)-10))}>-10%</button>
+                <button className="btn btn-ghost" style={{fontSize:12,padding:"4px 10px"}} onClick={()=>atualizarProgresso(m.id,Math.min(100,(m.progresso||0)+10))}>+10%</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+      {modal&&(
+        <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.4)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:500,padding:20}} onClick={()=>setModal(false)}>
+          <div style={{background:"white",borderRadius:16,padding:28,width:"100%",maxWidth:440}} onClick={e=>e.stopPropagation()}>
+            <div style={{fontFamily:"var(--font-display)",fontSize:20,fontWeight:600,marginBottom:20}}>Nova Meta</div>
+            <div className="form-group" style={{marginBottom:14}}>
+              <label className="form-label">Titulo da Meta</label>
+              <input className="form-input" value={form.titulo} onChange={e=>setForm({...form,titulo:e.target.value})} placeholder="Ex: Praticar mindfulness diariamente"/>
+            </div>
+            <div className="form-group" style={{marginBottom:20}}>
+              <label className="form-label">Categoria</label>
+              <select className="form-input" value={form.categoria} onChange={e=>setForm({...form,categoria:e.target.value})}>
+                {["Emocional","Saude","Pessoal","Profissional","Relacionamento","Outro"].map(c=><option key={c}>{c}</option>)}
+              </select>
+            </div>
+            <div style={{display:"flex",gap:10,justifyContent:"flex-end"}}>
+              <button className="btn btn-ghost" onClick={()=>setModal(false)}>Cancelar</button>
+              <button className="btn btn-purple" onClick={salvar}>Salvar</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 
-// ── PLAYER MODAL UNIVERSAL ────────────────────────────────────────────────────
-function PlayerModal(_ref3) {
-  var url = _ref3.url,
-    title = _ref3.title,
-    onClose = _ref3.onClose,
-    letra = _ref3.letra,
-    naipes = _ref3.naipes;
-  if (!url) return null;
-  function getEmbedUrl(url) {
-    // YouTube
-    var ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
-    if (ytMatch) return {
-      type: "youtube",
-      embed: "https://www.youtube.com/embed/".concat(ytMatch[1], "?autoplay=1")
-    };
-
-    // Google Drive — vídeo/áudio/pdf
-    var driveMatch = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
-    if (driveMatch) {
-      var id = driveMatch[1];
-      if (url.includes("export=view") || url.match(/\.(jpg|jpeg|png|gif|webp)/i)) return {
-        type: "image",
-        embed: "https://drive.google.com/uc?export=view&id=".concat(id)
-      };
-      if (url.match(/\.(mp3|wav|ogg|m4a)/i)) return {
-        type: "audio",
-        embed: "https://drive.google.com/file/d/".concat(id, "/preview")
-      };
-      // PDF ou vídeo do Drive
-      return {
-        type: "iframe",
-        embed: "https://drive.google.com/file/d/".concat(id, "/preview")
-      };
-    }
-
-    // Link direto de áudio
-    if (url.match(/\.(mp3|wav|ogg|m4a)/i)) return {
-      type: "audio",
-      embed: url
-    };
-
-    // Link direto de PDF
-    if (url.match(/\.pdf/i)) return {
-      type: "pdf",
-      embed: url
-    };
-
-    // Link direto de imagem
-    if (url.match(/\.(jpg|jpeg|png|gif|webp)/i)) return {
-      type: "image",
-      embed: url
-    };
-
-    // Qualquer outro link — iframe genérico
-    return {
-      type: "iframe",
-      embed: url
-    };
-  }
-  var _getEmbedUrl = getEmbedUrl(url),
-    type = _getEmbedUrl.type,
-    embed = _getEmbedUrl.embed;
-  return /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: "fixed",
-      inset: 0,
-      background: "rgba(0,0,0,0.85)",
-      zIndex: 500,
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      padding: 16
-    },
-    onClick: function onClick(e) {
-      return e.target === e.currentTarget && onClose();
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: "100%",
-      maxWidth: 800,
-      background: "#1A1D23",
-      borderRadius: 16,
-      overflow: "hidden",
-      boxShadow: "0 20px 60px rgba(0,0,0,0.5)"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      padding: "14px 18px",
-      borderBottom: "1px solid #333"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 14,
-      fontWeight: 600,
-      color: "#fff",
-      flex: 1,
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-      whiteSpace: "nowrap",
-      paddingRight: 12
-    }
-  }, title || "Reproduzindo"), /*#__PURE__*/React.createElement("button", {
-    onClick: onClose,
-    style: {
-      background: "rgba(255,255,255,0.1)",
-      border: "none",
-      borderRadius: 8,
-      width: 32,
-      height: 32,
-      cursor: "pointer",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      flexShrink: 0
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "x",
-    size: 16,
-    color: "#fff"
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#000"
-    }
-  }, (type === "youtube" || type === "iframe") && url !== "letra" && /*#__PURE__*/React.createElement("iframe", {
-    src: embed,
-    style: {
-      width: "100%",
-      height: window.innerWidth < 600 ? 220 : 450,
-      border: "none",
-      display: "block"
-    },
-    allow: "autoplay; fullscreen",
-    allowFullScreen: true,
-    title: title
-  }), type === "audio" && /*#__PURE__*/React.createElement("div", {
-    style: {
-      padding: "32px 24px",
-      textAlign: "center",
-      background: "#1A1D23"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "music",
-    size: 48,
-    color: "#555"
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginTop: 16
-    }
-  }, /*#__PURE__*/React.createElement("iframe", {
-    src: embed,
-    style: {
-      width: "100%",
-      height: 80,
-      border: "none"
-    },
-    allow: "autoplay",
-    title: title
-  }))), type === "image" && /*#__PURE__*/React.createElement("div", {
-    style: {
-      padding: 16,
-      textAlign: "center",
-      background: "#111"
-    }
-  }, /*#__PURE__*/React.createElement("img", {
-    src: embed,
-    alt: title,
-    style: {
-      maxWidth: "100%",
-      maxHeight: 500,
-      objectFit: "contain",
-      borderRadius: 8
-    }
-  })), type === "pdf" && /*#__PURE__*/React.createElement("iframe", {
-    src: embed,
-    style: {
-      width: "100%",
-      height: window.innerWidth < 600 ? 400 : 600,
-      border: "none",
-      display: "block"
-    },
-    title: title
-  })), letra && /*#__PURE__*/React.createElement("div", {
-    style: {
-      padding: "20px 24px",
-      background: "#1A1D23",
-      maxHeight: 400,
-      overflowY: "auto"
-    }
-  }, /*#__PURE__*/React.createElement("pre", {
-    style: {
-      fontSize: 14,
-      color: "#EEE",
-      lineHeight: 1.8,
-      fontFamily: "inherit",
-      whiteSpace: "pre-wrap",
-      margin: 0
-    }
-  }, letra)), naipes && /*#__PURE__*/React.createElement("div", {
-    style: {
-      padding: "16px 18px",
-      background: "#1A1D23"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      color: "#AAA",
-      marginBottom: 12,
-      textTransform: "uppercase",
-      letterSpacing: 1
-    }
-  }, "\xC1udios por naipe"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "grid",
-      gridTemplateColumns: "1fr 1fr",
-      gap: 8
-    }
-  }, [["soprano", "Soprano"], ["mezzoSoprano", "Mezzo-soprano"], ["contralto", "Contralto"], ["tenor", "Tenor"], ["baritono", "Barítono"], ["baixo", "Baixo"]].map(function (_ref4) {
-    var _ref5 = _slicedToArray(_ref4, 2),
-      key = _ref5[0],
-      label = _ref5[1];
-    return naipes[key] ? /*#__PURE__*/React.createElement("button", {
-      key: key,
-      onClick: function onClick() {
-        return window.open(naipes[key], "_blank");
-      },
-      style: {
-        padding: "8px 12px",
-        background: "rgba(255,255,255,0.08)",
-        border: "1px solid rgba(255,255,255,0.1)",
-        borderRadius: 8,
-        color: "#EEE",
-        fontSize: 12,
-        fontWeight: 600,
-        cursor: "pointer",
-        fontFamily: "inherit",
-        textAlign: "left",
-        display: "flex",
-        alignItems: "center",
-        gap: 6
-      }
-    }, /*#__PURE__*/React.createElement(Icon, {
-      name: "play-circle",
-      size: 14,
-      color: "#AAA"
-    }), " ", label) : null;
-  }))), url && url !== "letra" && /*#__PURE__*/React.createElement("div", {
-    style: {
-      padding: "10px 18px",
-      textAlign: "right",
-      borderTop: "1px solid #333"
-    }
-  }, /*#__PURE__*/React.createElement("a", {
-    href: url,
-    target: "_blank",
-    rel: "noreferrer",
-    style: {
-      fontSize: 12,
-      color: "#AAA",
-      textDecoration: "none",
-      display: "inline-flex",
-      alignItems: "center",
-      gap: 5
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "external-link",
-    size: 12,
-    color: "#AAA"
-  }), " Abrir em nova aba"))));
-}
-
-// ── MESA DE SOM (página pública para sonoplasta) ──────────────────────────────
-function MesaSom(_ref6) {
-  var eventoId = _ref6.eventoId,
-    config = _ref6.config;
-  var _useState13 = useState(null),
-    _useState14 = _slicedToArray(_useState13, 2),
-    evento = _useState14[0],
-    setEvento = _useState14[1];
-  var _useState15 = useState(null),
-    _useState16 = _slicedToArray(_useState15, 2),
-    tocando = _useState16[0],
-    setTocando = _useState16[1];
-  var _useState17 = useState(true),
-    _useState18 = _slicedToArray(_useState17, 2),
-    loading = _useState18[0],
-    setLoading = _useState18[1];
-  var cor = config.corPrimaria || COR;
-  useEffect(function () {
-    db.collection("onix_events").doc(eventoId).get().then(function (doc) {
-      if (doc.exists) setEvento(_objectSpread({
-        id: doc.id
-      }, doc.data()));
-      setLoading(false);
-    });
-  }, [eventoId]);
-  if (loading) return /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      height: "100vh",
-      background: "#111"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: 32,
-      height: 32,
-      border: "3px solid ".concat(cor),
-      borderTopColor: "transparent",
-      borderRadius: "50%",
-      animation: "spin 0.8s linear infinite"
-    }
-  }));
-  if (!evento) return /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      height: "100vh",
-      background: "#111",
-      color: "#AAA",
-      fontSize: 16
-    }
-  }, "Evento n\xE3o encontrado.");
-  var setlist = evento.setlist || [];
-  function getEmbed(url) {
-    if (!url) return null;
-    var yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
-    if (yt) return "https://www.youtube.com/embed/".concat(yt[1], "?autoplay=1");
-    var dr = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
-    if (dr) return "https://drive.google.com/file/d/".concat(dr[1], "/preview");
-    return url;
-  }
-  return /*#__PURE__*/React.createElement("div", {
-    style: {
-      minHeight: "100vh",
-      background: "#111",
-      color: "#fff",
-      fontFamily: "'Inter',sans-serif"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#1A1D23",
-      padding: "16px 24px",
-      borderBottom: "1px solid #333",
-      display: "flex",
-      alignItems: "center",
-      gap: 12
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: 36,
-      height: 36,
-      background: cor,
-      borderRadius: 8,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    }
-  }, /*#__PURE__*/React.createElement("img", {
-    src: config.logoUrl || LOGO_URL,
-    alt: "",
-    style: {
-      width: 24,
-      height: 24,
-      objectFit: "contain"
-    },
-    onError: function onError(e) {
-      return e.target.style.display = "none";
-    }
-  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 16,
-      fontWeight: 700,
-      color: "#fff"
-    }
-  }, config.nomeApp || "Onix Brasil Vocal Internacional"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      color: "#AAA"
-    }
-  }, "Mesa de Som \u2014 ", evento.title, " \xB7 ", evento.date))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "grid",
-      gridTemplateColumns: "300px 1fr",
-      minHeight: "calc(100vh - 68px)"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#1A1D23",
-      borderRight: "1px solid #333",
-      overflowY: "auto"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      padding: "14px 16px",
-      borderBottom: "1px solid #333",
-      fontSize: 11,
-      fontWeight: 700,
-      color: "#AAA",
-      textTransform: "uppercase",
-      letterSpacing: 1
-    }
-  }, "Setlist \u2014 ", setlist.length, " m\xFAsica", setlist.length !== 1 ? "s" : ""), setlist.length === 0 && /*#__PURE__*/React.createElement("div", {
-    style: {
-      padding: "24px 16px",
-      textAlign: "center",
-      color: "#555",
-      fontSize: 13
-    }
-  }, "Nenhuma m\xFAsica no setlist."), setlist.map(function (s, i) {
-    return /*#__PURE__*/React.createElement("div", {
-      key: i,
-      onClick: function onClick() {
-        return setTocando(s);
-      },
-      style: {
-        padding: "12px 16px",
-        borderBottom: "1px solid #222",
-        cursor: "pointer",
-        background: (tocando === null || tocando === void 0 ? void 0 : tocando.id) === s.id ? cor + "30" : "transparent",
-        borderLeft: (tocando === null || tocando === void 0 ? void 0 : tocando.id) === s.id ? "3px solid ".concat(cor) : "3px solid transparent",
-        transition: "background 0.15s"
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        alignItems: "center",
-        gap: 10
-      }
-    }, /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 13,
-        color: (tocando === null || tocando === void 0 ? void 0 : tocando.id) === s.id ? cor : "#555",
-        fontWeight: 700,
-        minWidth: 22
-      }
-    }, i + 1), /*#__PURE__*/React.createElement("div", {
-      style: {
-        flex: 1
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 13,
-        fontWeight: 600,
-        color: (tocando === null || tocando === void 0 ? void 0 : tocando.id) === s.id ? "#fff" : "#CCC"
-      }
-    }, s.title), s.compositor && /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 11,
-        color: "#555"
-      }
-    }, s.compositor)), (s.playback || s.audioOriginal) && /*#__PURE__*/React.createElement(Icon, {
-      name: "play-circle",
-      size: 14,
-      color: (tocando === null || tocando === void 0 ? void 0 : tocando.id) === s.id ? cor : "#444"
-    })));
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      padding: 32
-    }
-  }, !tocando ? /*#__PURE__*/React.createElement("div", {
-    style: {
-      textAlign: "center",
-      color: "#444"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "music",
-    size: 64,
-    color: "#333"
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginTop: 16,
-      fontSize: 18,
-      fontWeight: 600,
-      color: "#555"
-    }
-  }, "Clique em uma m\xFAsica para reproduzir")) : /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: "100%",
-      maxWidth: 700
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 16,
-      textAlign: "center"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 24,
-      fontWeight: 700,
-      color: "#fff"
-    }
-  }, tocando.title), tocando.compositor && /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 14,
-      color: "#AAA",
-      marginTop: 4
-    }
-  }, tocando.compositor)), tocando.playback || tocando.audioOriginal ? /*#__PURE__*/React.createElement("iframe", {
-    src: getEmbed(tocando.playback || tocando.audioOriginal),
-    style: {
-      width: "100%",
-      height: 400,
-      border: "none",
-      borderRadius: 12
-    },
-    allow: "autoplay; fullscreen",
-    allowFullScreen: true,
-    title: tocando.title
-  }) : /*#__PURE__*/React.createElement("div", {
-    style: {
-      padding: "48px 24px",
-      background: "#1A1D23",
-      borderRadius: 12,
-      textAlign: "center",
-      color: "#555",
-      fontSize: 14
-    }
-  }, "Sem playback cadastrado para esta m\xFAsica."), setlist[setlist.findIndex(function (s) {
-    return s.id === tocando.id;
-  }) + 1] && /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginTop: 16,
-      padding: "12px 16px",
-      background: "#1A1D23",
-      borderRadius: 10,
-      display: "flex",
-      alignItems: "center",
-      gap: 10
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "skip-forward",
-    size: 16,
-    color: "#AAA"
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      flex: 1
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 11,
-      color: "#555"
-    }
-  }, "A seguir"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 14,
-      color: "#CCC",
-      fontWeight: 600
-    }
-  }, setlist[setlist.findIndex(function (s) {
-    return s.id === tocando.id;
-  }) + 1].title)), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return setTocando(setlist[setlist.findIndex(function (s) {
-        return s.id === tocando.id;
-      }) + 1]);
-    },
-    style: {
-      padding: "8px 16px",
-      background: cor,
-      color: "#fff",
-      border: "none",
-      borderRadius: 8,
-      fontSize: 13,
-      fontWeight: 700,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, "Pr\xF3xima \u2192"))))));
-}
-
-// ── LOGIN ─────────────────────────────────────────────────────────────────────
-function Login(_ref7) {
-  var members = _ref7.members,
-    onLogin = _ref7.onLogin,
-    config = _ref7.config;
-  var _useState19 = useState(null),
-    _useState20 = _slicedToArray(_useState19, 2),
-    tela = _useState20[0],
-    setTela = _useState20[1];
-  var _useState21 = useState(""),
-    _useState22 = _slicedToArray(_useState21, 2),
-    senha = _useState22[0],
-    setSenha = _useState22[1];
-  var _useState23 = useState(false),
-    _useState24 = _slicedToArray(_useState23, 2),
-    mostrar = _useState24[0],
-    setMostrar = _useState24[1];
-  var _useState25 = useState(""),
-    _useState26 = _slicedToArray(_useState25, 2),
-    busca = _useState26[0],
-    setBusca = _useState26[1];
-  var _useState27 = useState([]),
-    _useState28 = _slicedToArray(_useState27, 2),
-    sugestoes = _useState28[0],
-    setSugestoes = _useState28[1];
-  var _useState29 = useState(""),
-    _useState30 = _slicedToArray(_useState29, 2),
-    erro = _useState30[0],
-    setErro = _useState30[1];
-  var cor = config.corPrimaria || COR;
-  useEffect(function () {
-    if (busca.length < 3) {
-      setSugestoes([]);
-      return;
-    }
-    var t = busca.toLowerCase();
-    setSugestoes(members.filter(function (m) {
-      return m.active && m.name.toLowerCase().includes(t);
-    }).slice(0, 6));
-  }, [busca, members]);
-  function entrarAdmin() {
-    if (senha === "1234") onLogin({
-      name: "Gestor",
-      isAdmin: true,
-      role: "admin"
-    });else setErro("Senha incorreta.");
-  }
-  function entrarCorista(m) {
-    onLogin({
-      name: m.name,
-      isAdmin: false,
-      role: "corista",
-      voice: m.voice
-    });
-  }
-  var s = {
-    wrap: {
-      minHeight: "100vh",
-      background: config.corFundo || COR_FUNDO,
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      padding: "32px 20px"
-    },
-    card: {
-      background: "#fff",
-      borderRadius: 16,
-      border: "1px solid #EEE0E0",
-      padding: "24px 20px",
-      width: "100%",
-      maxWidth: 420,
-      boxShadow: "0 4px 24px rgba(0,0,0,0.07)"
-    },
-    inp: {
-      width: "100%",
-      padding: "12px 16px",
-      border: "1px solid #E8E0E0",
-      borderRadius: 10,
-      fontSize: 15,
-      outline: "none",
-      fontFamily: "inherit",
-      color: "#1A1D23",
-      background: "#fff"
-    },
-    btnSec: {
-      flex: 1,
-      padding: "13px",
-      background: "#F3EEF9",
-      color: cor,
-      border: "none",
-      borderRadius: 10,
-      fontSize: 14,
-      fontWeight: 700,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    },
-    btnPri: {
-      flex: 1,
-      padding: "13px",
-      background: cor,
-      color: "#fff",
-      border: "none",
-      borderRadius: 10,
-      fontSize: 14,
-      fontWeight: 700,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  };
-  return /*#__PURE__*/React.createElement("div", {
-    style: s.wrap
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      textAlign: "center",
-      marginBottom: 28
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: 90,
-      height: 90,
-      background: "#fff",
-      borderRadius: 16,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      margin: "0 auto 16px",
-      boxShadow: "0 4px 20px rgba(0,0,0,0.1)"
-    }
-  }, /*#__PURE__*/React.createElement("img", {
-    src: config.logoUrl || LOGO_URL,
-    alt: "Logo",
-    style: {
-      width: 80,
-      height: 80,
-      objectFit: "cover",
-      borderRadius: 14
-    },
-    onError: function onError(e) {
-      return e.target.style.display = "none";
-    }
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 26,
-      fontWeight: 700,
-      color: cor
-    }
-  }, config.nomeApp || "Onix Brasil Vocal Internacional"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 14,
-      color: "#AAA",
-      marginTop: 4
-    }
-  }, config.subtitulo || "Portal de Gestão")), !tela && /*#__PURE__*/React.createElement("div", {
-    style: s.card
-  }, [{
-    id: "admin",
-    icon: "shield",
-    label: "Acesso Administrativo",
-    sub: "Gestão completa do coral",
-    cor: COR,
-    bg: "rgba(91,45,142,0.08)"
-  }, {
-    id: "corista",
-    icon: "users",
-    label: "Sou Corista",
-    sub: "Acesso às músicas e agenda",
-    cor: "#2E7D32",
-    bg: "rgba(46,125,50,0.08)"
-  }].map(function (p) {
-    return /*#__PURE__*/React.createElement("button", {
-      key: p.id,
-      onClick: function onClick() {
-        setTela(p.id);
-        setErro("");
-        setSenha("");
-        setBusca("");
-        setSugestoes([]);
-      },
-      style: {
-        display: "flex",
-        alignItems: "center",
-        gap: 14,
-        background: p.bg,
-        border: "1px solid ".concat(p.cor, "22"),
-        borderRadius: 12,
-        padding: "16px",
-        width: "100%",
-        marginBottom: 10,
-        cursor: "pointer",
-        textAlign: "left",
-        fontFamily: "inherit"
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        width: 40,
-        height: 40,
-        borderRadius: 10,
-        background: "#fff",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        boxShadow: "0 1px 4px rgba(0,0,0,0.08)"
-      }
-    }, /*#__PURE__*/React.createElement(Icon, {
-      name: p.icon,
-      size: 18,
-      color: p.cor
-    })), /*#__PURE__*/React.createElement("div", {
-      style: {
-        flex: 1
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontWeight: 700,
-        fontSize: 15,
-        color: "#1A1D23"
-      }
-    }, p.label), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 12,
-        color: "#AAA",
-        marginTop: 2
-      }
-    }, p.sub)), /*#__PURE__*/React.createElement(Icon, {
-      name: "chevron-right",
-      size: 16,
-      color: "#CCC"
-    }));
-  })), tela === "admin" && /*#__PURE__*/React.createElement("div", {
-    style: s.card
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 10,
-      marginBottom: 20
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: 36,
-      height: 36,
-      background: "rgba(180,16,32,0.08)",
-      borderRadius: 8,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "shield",
-    size: 17,
-    color: cor
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 18,
-      fontWeight: 700,
-      color: "#1A1D23"
-    }
-  }, "Acesso Administrativo")), /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: "relative",
-      marginBottom: 12
-    }
-  }, /*#__PURE__*/React.createElement("input", {
-    style: _objectSpread(_objectSpread({}, s.inp), {}, {
-      paddingRight: 44
-    }),
-    type: mostrar ? "text" : "password",
-    placeholder: "Senha de gestor",
-    value: senha,
-    onChange: function onChange(e) {
-      setSenha(e.target.value);
-      setErro("");
-    },
-    onKeyDown: function onKeyDown(e) {
-      return e.key === "Enter" && entrarAdmin();
-    },
-    autoFocus: true
-  }), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return setMostrar(function (v) {
-        return !v;
-      });
-    },
-    style: {
-      position: "absolute",
-      right: 12,
-      top: "50%",
-      transform: "translateY(-50%)",
-      background: "none",
-      border: "none",
-      cursor: "pointer"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: mostrar ? "eye-off" : "eye",
-    size: 16,
-    color: "#AAA"
-  }))), erro && /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: cor,
-      marginBottom: 10
-    }
-  }, erro), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 10
-    }
-  }, /*#__PURE__*/React.createElement("button", {
-    style: s.btnSec,
-    onClick: function onClick() {
-      setTela(null);
-      setErro("");
-    }
-  }, "Voltar"), /*#__PURE__*/React.createElement("button", {
-    style: s.btnPri,
-    onClick: entrarAdmin
-  }, "Entrar"))), tela === "rh" && /*#__PURE__*/React.createElement("div", {
-    style: s.card
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 10,
-      marginBottom: 20
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: 36,
-      height: 36,
-      background: "rgba(21,101,192,0.08)",
-      borderRadius: 8,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "briefcase",
-    size: 17,
-    color: "#1565C0"
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 18,
-      fontWeight: 700,
-      color: "#1A1D23"
-    }
-  }, "RH \u2014 Pessoas e Cultura")), /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: "relative",
-      marginBottom: 12
-    }
-  }, /*#__PURE__*/React.createElement("input", {
-    style: _objectSpread(_objectSpread({}, s.inp), {}, {
-      paddingRight: 44
-    }),
-    type: mostrar ? "text" : "password",
-    placeholder: "Senha de acesso",
-    value: senha,
-    onChange: function onChange(e) {
-      setSenha(e.target.value);
-      setErro("");
-    },
-    onKeyDown: function onKeyDown(e) {
-      return e.key === "Enter" && entrarRH();
-    },
-    autoFocus: true
-  }), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return setMostrar(function (v) {
-        return !v;
-      });
-    },
-    style: {
-      position: "absolute",
-      right: 12,
-      top: "50%",
-      transform: "translateY(-50%)",
-      background: "none",
-      border: "none",
-      cursor: "pointer"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: mostrar ? "eye-off" : "eye",
-    size: 16,
-    color: "#AAA"
-  }))), erro && /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: cor,
-      marginBottom: 10
-    }
-  }, erro), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 10
-    }
-  }, /*#__PURE__*/React.createElement("button", {
-    style: s.btnSec,
-    onClick: function onClick() {
-      setTela(null);
-      setErro("");
-    }
-  }, "Voltar"), /*#__PURE__*/React.createElement("button", {
-    style: _objectSpread(_objectSpread({}, s.btnPri), {}, {
-      background: "#1565C0"
-    }),
-    onClick: entrarRH
-  }, "Entrar"))), tela === "corista" && /*#__PURE__*/React.createElement("div", {
-    style: s.card
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 10,
-      marginBottom: 20
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: 36,
-      height: 36,
-      background: "rgba(46,125,50,0.08)",
-      borderRadius: 8,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "users",
-    size: 17,
-    color: "#2E7D32"
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 18,
-      fontWeight: 700,
-      color: "#1A1D23"
-    }
-  }, "Sou Corista")), /*#__PURE__*/React.createElement("input", {
-    style: _objectSpread(_objectSpread({}, s.inp), {}, {
-      marginBottom: 8
-    }),
-    type: "text",
-    placeholder: "Digite seu nome (m\xEDn. 3 letras)",
-    value: busca,
-    onChange: function onChange(e) {
-      setBusca(e.target.value);
-      setErro("");
-    },
-    autoFocus: true
-  }), sugestoes.length > 0 && /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#fff",
-      border: "1px solid #EEE",
-      borderRadius: 10,
-      overflow: "hidden",
-      marginBottom: 10
-    }
-  }, sugestoes.map(function (m) {
-    return /*#__PURE__*/React.createElement("button", {
-      key: m.id,
-      onClick: function onClick() {
-        return entrarCorista(m);
-      },
-      style: {
-        display: "block",
-        width: "100%",
-        padding: "12px 16px",
-        background: "none",
-        border: "none",
-        textAlign: "left",
-        cursor: "pointer",
-        fontSize: 14,
-        borderBottom: "1px solid #F5F5F5",
-        fontFamily: "inherit",
-        color: "#1A1D23"
-      }
-    }, m.name, " ", /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 12,
-        color: "#AAA",
-        marginLeft: 8
-      }
-    }, m.voice));
-  })), busca.length > 0 && busca.length < 3 && /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      color: "#AAA",
-      marginBottom: 8
-    }
-  }, "Digite mais ", 3 - busca.length, " letra(s)..."), busca.length >= 3 && sugestoes.length === 0 && /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: cor,
-      marginBottom: 8
-    }
-  }, "Nenhum corista encontrado."), /*#__PURE__*/React.createElement("button", {
-    style: _objectSpread(_objectSpread({}, s.btnSec), {}, {
-      width: "100%",
-      marginTop: 4
-    }),
-    onClick: function onClick() {
-      setTela(null);
-      setErro("");
-    }
-  }, "Voltar")), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginTop: 32,
-      fontSize: 11,
-      color: "#CCC"
-    }
-  }, config.nomeApp || "Onix Brasil Vocal Internacional", " \xB7 Portal de Gest\xE3o"));
-}
-
-// ── PAINEL ────────────────────────────────────────────────────────────────────
-function Painel(_ref8) {
-  var user = _ref8.user,
-    config = _ref8.config,
-    setTab = _ref8.setTab;
-  var _useCollection = useCollection("onix_members"),
-    members = _useCollection.data,
-    lM = _useCollection.loading;
-  var _useCollection2 = useCollection("onix_events", "date"),
-    events = _useCollection2.data,
-    lE = _useCollection2.loading;
-  var _useCollection3 = useCollection("onix_songs"),
-    songs = _useCollection3.data,
-    lS = _useCollection3.loading;
-  var _useCollection4 = useCollection("onix_avisos"),
-    avisos = _useCollection4.data,
-    lA = _useCollection4.loading;
-  var _useState31 = useState([]),
-    _useState32 = _slicedToArray(_useState31, 2),
-    pendentes = _useState32[0],
-    setPendentes = _useState32[1];
-  useEffect(function () {
-    var unsub = db.collection("onix_pagamentos").where("status", "==", "aguardando").onSnapshot(function (snap) {
-      return setPendentes(snap.docs.map(function (d) {
-        return _objectSpread({
-          id: d.id
-        }, d.data());
-      }));
-    });
+// ABA EVOLUCAO
+function AbaEvolucao({ paciente }) {
+  const [humor, setHumor] = useState([]);
+  useEffect(()=>{
+    const unsub = db.collection("clinica_pacientes").doc(paciente.id).collection("humor")
+      .orderBy("data","desc").limit(30).onSnapshot(snap=>{setHumor(snap.docs.map(d=>({id:d.id,...d.data()})));},()=>{});
     return unsub;
-  }, []);
-  if (lM || lE || lS || lA) return /*#__PURE__*/React.createElement(Spinner, null);
-  var cor = config.corPrimaria || COR;
-  var today = todayStr();
-  var ativos = members.filter(function (m) {
-    return m.active;
-  });
-  var proxEventos = events.filter(function (e) {
-    return e.date >= today;
-  }).sort(function (a, b) {
-    return a.date > b.date ? 1 : -1;
-  }).slice(0, 3);
-  var currentMonth = new Date().getMonth() + 1;
-  var aniversarios = ativos.filter(function (m) {
-    return m.birthday && parseInt(m.birthday.split("-")[1]) === currentMonth;
-  }).sort(function (a, b) {
-    return parseInt(a.birthday.split("-")[2]) - parseInt(b.birthday.split("-")[2]);
-  });
-  var card = function card(bc) {
-    return {
-      background: "#fff",
-      borderRadius: 12,
-      padding: "16px 20px",
-      border: "1px solid #EEE8E8",
-      borderLeft: "3px solid ".concat(bc || "#EEE8E8"),
-      marginBottom: 12,
-      boxShadow: "0 1px 4px rgba(0,0,0,0.04)"
+  },[paciente.id]);
+  const media = humor.length?(humor.reduce((a,h)=>a+(h.valor||0),0)/humor.length).toFixed(1):"—";
+  return (
+    <div>
+      <div className="metrics-grid" style={{marginBottom:20}}>
+        {[{label:"Sessoes recentes",value:0,icon:"calendar"},{label:"Registros TCC",value:0,icon:"brain"},{label:"Entradas no diario",value:0,icon:"book-open"},{label:"Metas ativas",value:0,icon:"target"}].map(m=>(
+          <div key={m.label} className="metric-card"><div className="metric-icon"><Icon name={m.icon} size={20}/></div><div className="metric-label">{m.label}</div><div className="metric-value">{m.value}</div></div>
+        ))}
+      </div>
+      <div className="card">
+        <div style={{fontWeight:600,marginBottom:16,display:"flex",justifyContent:"space-between"}}>
+          <span>Evolucao do Humor</span>
+          {humor.length>0&&<span style={{fontSize:13,color:"var(--text-muted)"}}>Media: <strong style={{color:"var(--purple)"}}>{media}/10</strong></span>}
+        </div>
+        {humor.length===0?(
+          <div style={{textAlign:"center",padding:40,color:"var(--text-muted)"}}><Icon name="heart" size={40}/><div style={{marginTop:12}}>Sem dados de humor para este paciente.</div></div>
+        ):(
+          humor.slice(0,10).map(h=>(
+            <div key={h.id} style={{display:"flex",alignItems:"center",gap:12,padding:"8px 0",borderBottom:"1px solid var(--gray-100)"}}>
+              <div style={{fontWeight:600,color:"var(--purple)",minWidth:40}}>{h.valor}/10</div>
+              <div style={{flex:1,background:"var(--gray-100)",borderRadius:20,height:6}}><div style={{width:((h.valor/10)*100)+"%",height:"100%",background:"var(--purple)",borderRadius:20}}/></div>
+              <div style={{fontSize:12,color:"var(--text-muted)"}}>{h.data}</div>
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ABA CASAL
+function AbaCasal({ paciente, pacientes }) {
+  const [casalId, setCasalId] = useState(paciente.casalId||"");
+  const [salvando, setSalvando] = useState(false);
+  const parceiro = pacientes.find(p=>p.id===paciente.casalId);
+  const outros = pacientes.filter(p=>p.id!==paciente.id&&p.status==="ativo");
+
+  async function vincular() {
+    if(!casalId){alert("Selecione o parceiro(a).");return;}
+    setSalvando(true);
+    await db.collection("clinica_pacientes").doc(paciente.id).update({casalId});
+    await db.collection("clinica_pacientes").doc(casalId).update({casalId:paciente.id});
+    setSalvando(false); alert("Casal vinculado!");
+  }
+  async function desvincular() {
+    if(!confirm("Desvincular casal?"))return;
+    setSalvando(true);
+    if(paciente.casalId) await db.collection("clinica_pacientes").doc(paciente.casalId).update({casalId:""});
+    await db.collection("clinica_pacientes").doc(paciente.id).update({casalId:""});
+    setCasalId(""); setSalvando(false);
+  }
+
+  return (
+    <div className="card">
+      <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:16}}><Icon name="heart" size={18}/><div style={{fontWeight:600}}>Vinculo de Casal</div></div>
+      {paciente.casalId&&parceiro?(
+        <div>
+          <div style={{background:"var(--purple-bg)",borderRadius:10,padding:16,marginBottom:16}}>
+            <div style={{fontSize:13,color:"var(--text-muted)",marginBottom:4}}>Parceiro(a) vinculado(a):</div>
+            <div style={{fontWeight:600,fontSize:16}}>{parceiro.nome}</div>
+            <div style={{fontSize:13,color:"var(--text-muted)"}}>{parceiro.email}</div>
+          </div>
+          <button className="btn btn-danger" onClick={desvincular} disabled={salvando}><Icon name="x" size={15}/> Desvincular casal</button>
+        </div>
+      ):(
+        <div>
+          <p style={{fontSize:13,color:"var(--text-muted)",marginBottom:16}}>Este paciente nao esta vinculado a um casal em terapia.</p>
+          <div className="form-group" style={{marginBottom:16}}>
+            <label className="form-label">Selecionar Parceiro(a)</label>
+            <select className="form-input" value={casalId} onChange={e=>setCasalId(e.target.value)}>
+              <option value="">Selecione um paciente...</option>
+              {outros.map(p=><option key={p.id} value={p.id}>{p.nome}</option>)}
+            </select>
+          </div>
+          <button className="btn btn-purple" onClick={vincular} disabled={salvando}><Icon name="heart" size={15}/> Associar como Casal</button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// PERFIL COMPLETO
+function PerfilPaciente({ paciente, onVoltar, pacientes }) {
+  const [aba, setAba] = useState("perfil");
+  const ABAS = [
+    {id:"perfil",label:"Perfil",icon:"user"},
+    {id:"modulos",label:"Modulos",icon:"toggle-right"},
+    {id:"ferramentas",label:"Ferramentas",icon:"wrench"},
+    {id:"metas",label:"Metas",icon:"target"},
+    {id:"laudos",label:"Laudos",icon:"file-text"},
+    {id:"evolucao",label:"Evolucao",icon:"trending-up"},
+    {id:"casal",label:"Terapia de Casal",icon:"heart"},
+  ];
+  return (
+    <div>
+      <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:20}}>
+        <button className="btn btn-ghost" onClick={onVoltar} style={{padding:"8px 12px"}}><Icon name="arrow-left" size={16}/></button>
+        <div style={{flex:1}}>
+          <div className="page-title" style={{fontSize:24}}>{paciente.nome}</div>
+          <div className="page-subtitle">Perfil clinico completo</div>
+        </div>
+        <button className="btn btn-danger" onClick={async()=>{if(!confirm("Excluir paciente?"))return;await db.collection("clinica_pacientes").doc(paciente.id).delete();onVoltar();}}>
+          <Icon name="trash-2" size={15}/> Excluir paciente
+        </button>
+      </div>
+      <div style={{display:"flex",gap:4,marginBottom:24,flexWrap:"wrap",borderBottom:"1px solid var(--gray-200)"}}>
+        {ABAS.map(a=>(
+          <button key={a.id} onClick={()=>setAba(a.id)} style={{display:"flex",alignItems:"center",gap:6,padding:"10px 16px",border:"none",background:"none",fontSize:14,cursor:"pointer",fontFamily:"var(--font-body)",color:aba===a.id?"var(--purple)":"var(--gray-600)",borderBottom:aba===a.id?"2px solid var(--purple)":"2px solid transparent",fontWeight:aba===a.id?500:400,transition:"all .2s",marginBottom:-1}}>
+            <Icon name={a.icon} size={15}/>{a.label}
+          </button>
+        ))}
+      </div>
+      {aba==="perfil"     &&<AbaPerfil      paciente={paciente} pacientes={pacientes}/>}
+      {aba==="modulos"    &&<AbaModulos     paciente={paciente}/>}
+      {aba==="ferramentas"&&<AbaFerramentas paciente={paciente}/>}
+      {aba==="metas"      &&<AbaMetas       paciente={paciente}/>}
+      {aba==="laudos"     &&<EmBreve titulo="Laudos" subtitulo="Etapa 10"/>}
+      {aba==="evolucao"   &&<AbaEvolucao    paciente={paciente}/>}
+      {aba==="casal"      &&<AbaCasal       paciente={paciente} pacientes={pacientes}/>}
+    </div>
+  );
+}
+
+// LISTA PACIENTES
+function Pacientes({ user }) {
+  const { data:pacientes, loading } = useCollection("clinica_pacientes","nome");
+  const [busca, setBusca] = useState("");
+  const [filtro, setFiltro] = useState("todos");
+  const [modal, setModal] = useState(false);
+  const [modalImport, setModalImport] = useState(false);
+  const [form, setForm] = useState({});
+  const [salvando, setSalvando] = useState(false);
+  const [perfilAberto, setPerfilAberto] = useState(null);
+  const [importLog, setImportLog] = useState([]);
+  const [importando, setImportando] = useState(false);
+
+  async function processarExcel(e){
+    const file=e.target.files[0];
+    if(!file)return;
+    setImportando(true);setImportLog([{tipo:"info",msg:"Lendo arquivo..."}]);
+    const reader=new FileReader();
+    reader.onload=async(ev)=>{
+      try{
+        const text=ev.target.result;
+        const linhas=text.split(/\r?\n/).filter(l=>l.trim());
+        if(linhas.length<2){setImportLog([{tipo:"err",msg:"Arquivo vazio ou sem dados."}]);setImportando(false);return;}
+        const header=linhas[0].split(/[,;\t]/).map(h=>h.trim().toLowerCase().replace(/[^a-z]/g,""));
+        const idx={
+          nome:    header.findIndex(h=>h.includes("nome")),
+          email:   header.findIndex(h=>h.includes("email")||h.includes("mail")),
+          telefone:header.findIndex(h=>h.includes("tel")||h.includes("fone")||h.includes("celular")),
+          cpf:     header.findIndex(h=>h.includes("cpf")||h.includes("documento")),
+          nasc:    header.findIndex(h=>h.includes("nasc")||h.includes("data")),
+          genero:  header.findIndex(h=>h.includes("gen")||h.includes("sexo")),
+        };
+        const log=[];let ok=0,err=0;
+        for(let i=1;i<linhas.length;i++){
+          const cols=linhas[i].split(/[,;\t]/);
+          const nome=idx.nome>=0?cols[idx.nome]?.trim():"";
+          if(!nome)continue;
+          try{
+            const email=idx.email>=0?(cols[idx.email]?.trim()||`sem-email-${Date.now()}@interno.local`):`sem-email-${Date.now()}@interno.local`;
+            await db.collection("clinica_pacientes").add({
+              nome,email,
+              telefone:idx.telefone>=0?cols[idx.telefone]?.trim()||"":"",
+              cpf:idx.cpf>=0?cols[idx.cpf]?.trim()||"":"",
+              dataNascimento:idx.nasc>=0?cols[idx.nasc]?.trim()||"":"",
+              genero:idx.genero>=0?cols[idx.genero]?.trim()||"Não informar":"Não informar",
+              status:"ativo",senha:"",objetivosTerapeuticos:"",observacoesClinicas:"",
+              origem:"importacao-excel",
+              createdAt:firebase.firestore.FieldValue.serverTimestamp()
+            });
+            ok++;log.push({tipo:"ok",msg:`✓ ${nome}`});
+          }catch(er){err++;log.push({tipo:"err",msg:`✗ ${nome}: ${er.message}`});}
+        }
+        log.unshift({tipo:"info",msg:`Concluído: ${ok} importados · ${err} erro(s)`});
+        setImportLog(log);
+      }catch(er){setImportLog([{tipo:"err",msg:"Erro ao ler arquivo: "+er.message}]);}
+      finally{setImportando(false);}
     };
-  };
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 28,
-      fontWeight: 700,
-      color: cor,
-      marginBottom: 24
-    }
-  }, "Painel"), pendentes.length > 0 && /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#FFF3E0",
-      border: "2px solid #E65100",
-      borderRadius: 12,
-      padding: "14px 18px",
-      marginBottom: 20,
-      display: "flex",
-      alignItems: "center",
-      gap: 14,
-      boxShadow: "0 2px 8px rgba(230,81,0,0.15)"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: 40,
-      height: 40,
-      background: "#E65100",
-      borderRadius: 10,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      flexShrink: 0
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "alert-circle",
-    size: 20,
-    color: "#fff"
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      flex: 1
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 14,
-      fontWeight: 700,
-      color: "#E65100"
-    }
-  }, "\u26A0\uFE0F ", pendentes.length, " pagamento", pendentes.length !== 1 ? "s" : "", " aguardando valida\xE7\xE3o"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      color: "#666",
-      marginTop: 2
-    }
-  }, "Acesse o m\xF3dulo Financeiro \u2192 Mensalidade para validar.")), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return setTab("financeiro");
-    },
-    style: {
-      padding: "8px 14px",
-      background: "#E65100",
-      color: "#fff",
-      border: "none",
-      borderRadius: 8,
-      fontSize: 12,
-      fontWeight: 700,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, "Ver")), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "grid",
-      gridTemplateColumns: "1fr 1fr",
-      gap: 12,
-      marginBottom: 4
-    }
-  }, [{
-    label: "Integrantes",
-    value: ativos.length,
-    sub: "de ".concat(members.length, " no total"),
-    icon: "users",
-    bc: cor
-  }, {
-    label: "Repertório",
-    value: songs.length,
-    sub: "músicas no total",
-    icon: "music",
-    bc: "#2E7D32"
-  }, {
-    label: "Eventos",
-    value: events.length,
-    sub: "na agenda",
-    icon: "calendar",
-    bc: cor
-  }, {
-    label: "Aniversários",
-    value: aniversarios.length,
-    sub: "este mês",
-    icon: "cake",
-    bc: "#E65100"
-  }].map(function (m) {
-    return /*#__PURE__*/React.createElement("div", {
-      key: m.label,
-      style: card(m.bc)
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "flex-start"
-      }
-    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 13,
-        color: "#666",
-        fontWeight: 600,
-        marginBottom: 8
-      }
-    }, m.label), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 32,
-        fontWeight: 700,
-        color: "#1A1D23",
-        lineHeight: 1
-      }
-    }, m.value), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 13,
-        color: "#AAA",
-        marginTop: 4
-      }
-    }, m.sub)), /*#__PURE__*/React.createElement(Icon, {
-      name: m.icon,
-      size: 20,
-      color: m.bc
-    })));
-  })), /*#__PURE__*/React.createElement(RifaBanner, {
-    config: config,
-    isAdmin: true
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 8,
-      margin: "20px 0 12px"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "calendar",
-    size: 18,
-    color: cor
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 18,
-      fontWeight: 700,
-      color: "#1A1D23"
-    }
-  }, "Pr\xF3ximos Eventos")), proxEventos.length === 0 ? /*#__PURE__*/React.createElement("div", {
-    style: _objectSpread(_objectSpread({}, card()), {}, {
-      textAlign: "center",
-      color: "#CCC",
-      padding: "24px"
-    })
-  }, "Nenhum evento cadastrado") : proxEventos.map(function (e) {
-    return /*#__PURE__*/React.createElement("div", {
-      key: e.id,
-      style: card()
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "flex-start"
-      }
-    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 15,
-        fontWeight: 700,
-        color: "#1A1D23"
-      }
-    }, e.title), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 13,
-        color: "#AAA",
-        marginTop: 3
-      }
-    }, fmtDate(e.date), e.tipo ? " \u2014 ".concat(e.tipo) : "")), e.timeChegada && /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 13,
-        color: "#AAA"
-      }
-    }, "Chegada: ", e.timeChegada)));
-  }), aniversarios.length > 0 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 8,
-      margin: "20px 0 12px"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "cake",
-    size: 18,
-    color: cor
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 18,
-      fontWeight: 700,
-      color: "#1A1D23"
-    }
-  }, "Aniversariantes do M\xEAs")), aniversarios.map(function (m) {
-    var _m$birthday$split = m.birthday.split("-"),
-      _m$birthday$split2 = _slicedToArray(_m$birthday$split, 3),
-      mm = _m$birthday$split2[1],
-      dd = _m$birthday$split2[2];
-    var isToday = m.birthday.slice(5) === today.slice(5);
-    return /*#__PURE__*/React.createElement("div", {
-      key: m.id,
-      style: _objectSpread(_objectSpread({}, card(isToday ? cor : "")), {}, {
-        display: "flex",
-        alignItems: "center",
-        gap: 12,
-        padding: "12px 16px"
-      })
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        width: 38,
-        height: 38,
-        background: "rgba(180,16,32,0.08)",
-        borderRadius: 10,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
-      }
-    }, /*#__PURE__*/React.createElement(Icon, {
-      name: "cake",
-      size: 16,
-      color: cor
-    })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 14,
-        fontWeight: isToday ? 700 : 600,
-        color: "#1A1D23"
-      }
-    }, isToday ? "🎉 " : "", m.name), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 12,
-        color: "#AAA",
-        marginTop: 2
-      }
-    }, "dia ", parseInt(dd), " de ", MONTHS_SHORT[parseInt(mm) - 1], isToday ? " · hoje!" : "")));
-  })), avisos.length > 0 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 8,
-      margin: "20px 0 12px"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "megaphone",
-    size: 18,
-    color: cor
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 18,
-      fontWeight: 700,
-      color: "#1A1D23"
-    }
-  }, "Avisos Recentes")), avisos.slice(0, 3).map(function (a) {
-    var _a$createdAt;
-    return /*#__PURE__*/React.createElement("div", {
-      key: a.id,
-      style: _objectSpread(_objectSpread({}, card(a.urgente ? cor : "")), {}, {
-        background: a.urgente ? "#FFF5F5" : "#fff"
-      })
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "flex-start",
-        marginBottom: 6
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 15,
-        fontWeight: 700,
-        color: "#1A1D23"
-      }
-    }, a.title || a.titulo), ((_a$createdAt = a.createdAt) === null || _a$createdAt === void 0 ? void 0 : _a$createdAt.seconds) && /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 12,
-        color: "#AAA",
-        marginLeft: 12
-      }
-    }, new Date(a.createdAt.seconds * 1000).toLocaleDateString("pt-BR", {
-      day: "numeric",
-      month: "short"
-    }))), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 14,
-        color: "#555",
-        lineHeight: 1.5
-      }
-    }, a.text || a.texto));
-  })));
+    reader.readAsText(file,"UTF-8");
+  }
+
+  function baixarTemplate(){
+    const csv="Nome,Email,Telefone,CPF,DataNascimento,Genero\nJoão Silva,joao@email.com,(62) 99999-0000,000.000.000-00,01/01/1990,Masculino\n";
+    const blob=new Blob([csv],{type:"text/csv;charset=utf-8;"});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");a.href=url;a.download="template-pacientes.csv";a.click();
+  }
+
+  if(perfilAberto) {
+    const pac = pacientes.find(p=>p.id===perfilAberto);
+    if(pac) return <PerfilPaciente paciente={pac} onVoltar={()=>setPerfilAberto(null)} pacientes={pacientes}/>;
+  }
+
+  const filtrados = pacientes.filter(p=>{
+    const ok=filtro==="todos"||p.status===filtro;
+    const bk=!busca||p.nome?.toLowerCase().includes(busca.toLowerCase())||p.email?.toLowerCase().includes(busca.toLowerCase());
+    return ok&&bk;
+  }).sort((a,b)=>(a.nome||"").localeCompare(b.nome||"","pt-BR"));
+
+  function abrirNovo(){setForm({nome:"",email:"",telefone:"",status:"ativo",genero:"",dataNasc:"",cpf:"",objetivos:""});setModal(true);}
+  async function salvar(){
+    if(!form.nome||!form.email){alert("Nome e e-mail obrigatorios.");return;}
+    setSalvando(true);
+    await db.collection("clinica_pacientes").add({...form,senha:"1234",createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    setModal(false);setSalvando(false);
+  }
+
+  if(loading) return <Spinner/>;
+
+  return (
+    <div>
+      <div className="page-header" style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
+        <div>
+          <div className="page-title">Pacientes</div>
+          <div className="page-subtitle">{pacientes.filter(p=>p.status==="ativo").length} ativos · {pacientes.filter(p=>p.status==="alta").length} com alta · {pacientes.filter(p=>p.status==="inativo").length} inativos</div>
+        </div>
+        <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+          <button className="btn btn-ghost" style={{fontSize:13}} onClick={()=>setModalImport(true)}><Icon name="upload" size={15}/> Importar Excel</button>
+          <button className="btn btn-ghost" style={{fontSize:13}} onClick={()=>{
+            const url=window.location.origin+window.location.pathname.replace("admin/index.html","").replace("admin/","")+"clinica/cadastro.html";
+            navigator.clipboard.writeText(url).then(()=>alert("Link copiado!\n\n"+url)).catch(()=>prompt("Copie o link:",url));
+          }}><Icon name="link" size={15}/> Link de Cadastro</button>
+          <button className="btn btn-purple" onClick={abrirNovo}><Icon name="user-plus" size={16}/> Novo Paciente</button>
+        </div>
+      </div>
+      <div style={{display:"flex",gap:12,marginBottom:20,flexWrap:"wrap"}}>
+        <input className="form-input" style={{flex:1,minWidth:200}} placeholder="Buscar por nome ou e-mail..." value={busca} onChange={e=>setBusca(e.target.value)}/>
+        {[["todos","Todos"],["ativo","Em atendimento"],["alta","Alta"],["inativo","Inativos"]].map(([f,l])=>(
+          <button key={f} className={"btn "+(filtro===f?"btn-purple":"btn-ghost")} onClick={()=>setFiltro(f)}>{l}</button>
+        ))}
+      </div>
+      {["ativo","alta","inativo"].map(st=>{
+        const grupo=filtrados.filter(p=>p.status===st);
+        if(grupo.length===0)return null;
+        return(
+          <div key={st} style={{marginBottom:24}}>
+            <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12}}>
+              <div style={{width:8,height:8,borderRadius:"50%",background:st==="ativo"?"var(--success)":st==="alta"?"var(--gray-400)":"var(--danger)"}}/>
+              <div style={{fontSize:12,fontWeight:700,color:"var(--text-muted)",textTransform:"uppercase",letterSpacing:"0.8px"}}>
+                {st==="ativo"?"Em Atendimento":st==="alta"?"Alta":"Inativos"} ({grupo.length})
+              </div>
+            </div>
+            <div className="card" style={{padding:0}}>
+              {grupo.map(p=>(
+                <div key={p.id} style={{display:"flex",alignItems:"center",gap:14,padding:"14px 20px",borderBottom:"1px solid var(--gray-100)",cursor:"pointer",transition:"background .15s"}}
+                  onClick={()=>setPerfilAberto(p.id)}
+                  onMouseEnter={e=>e.currentTarget.style.background="#fafafa"}
+                  onMouseLeave={e=>e.currentTarget.style.background="white"}>
+                  <div style={{width:38,height:38,borderRadius:"50%",background:"var(--purple-soft)",display:"flex",alignItems:"center",justifyContent:"center",fontWeight:600,color:"var(--purple)",flexShrink:0}}>{(p.nome||"?")[0].toUpperCase()}</div>
+                  <div style={{flex:1}}><div style={{fontWeight:500}}>{p.nome}</div><div style={{fontSize:13,color:"var(--text-muted)"}}>{p.email}</div></div>
+                  <Icon name="chevron-right" size={16}/>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+      {filtrados.length===0&&<div className="card" style={{textAlign:"center",padding:48,color:"var(--text-muted)"}}>Nenhum paciente encontrado.</div>}
+      {modal&&(
+        <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.4)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:500,padding:20}} onClick={()=>setModal(false)}>
+          <div style={{background:"white",borderRadius:16,padding:28,width:"100%",maxWidth:560,maxHeight:"90vh",overflowY:"auto"}} onClick={e=>e.stopPropagation()}>
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20}}>
+              <div style={{fontFamily:"var(--font-display)",fontSize:20,fontWeight:600}}>Novo Paciente</div>
+              <button onClick={()=>setModal(false)} style={{background:"none",border:"none",cursor:"pointer",color:"var(--gray-400)"}}><Icon name="x" size={20}/></button>
+            </div>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14}}>
+              <div className="form-group" style={{gridColumn:"span 2"}}><label className="form-label">Nome completo</label><input className="form-input" value={form.nome||""} onChange={e=>setForm({...form,nome:e.target.value})}/></div>
+              <div className="form-group"><label className="form-label">E-mail</label><input className="form-input" type="email" value={form.email||""} onChange={e=>setForm({...form,email:e.target.value})}/></div>
+              <div className="form-group"><label className="form-label">Telefone</label><input className="form-input" value={form.telefone||""} onChange={e=>setForm({...form,telefone:e.target.value})}/></div>
+              <div className="form-group"><label className="form-label">Genero</label><select className="form-input" value={form.genero||""} onChange={e=>setForm({...form,genero:e.target.value})}><option value="">Selecione</option><option>Feminino</option><option>Masculino</option><option>Nao-binario</option><option>Nao informar</option></select></div>
+              <div className="form-group"><label className="form-label">Status</label><select className="form-input" value={form.status||"ativo"} onChange={e=>setForm({...form,status:e.target.value})}><option value="ativo">Ativo</option><option value="inativo">Inativo</option><option value="alta">Alta</option></select></div>
+              <div className="form-group" style={{gridColumn:"span 2"}}><label className="form-label">Objetivos Terapeuticos</label><textarea className="form-input" rows={3} value={form.objetivos||""} onChange={e=>setForm({...form,objetivos:e.target.value})} placeholder="Descreva os objetivos..."/></div>
+            </div>
+            <div style={{display:"flex",gap:10,marginTop:20,justifyContent:"flex-end"}}>
+              <button className="btn btn-ghost" onClick={()=>setModal(false)}>Cancelar</button>
+              <button className="btn btn-purple" onClick={salvar} disabled={salvando}>{salvando?"Salvando...":"Salvar"}</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Importar Excel */}
+      {modalImport&&(
+        <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.4)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:500,padding:20}} onClick={()=>{setModalImport(false);setImportLog([]);}}>
+          <div style={{background:"white",borderRadius:16,padding:28,width:"100%",maxWidth:520}} onClick={e=>e.stopPropagation()}>
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:16}}>
+              <div style={{fontFamily:"var(--font-display)",fontSize:20,fontWeight:600}}>Importar Pacientes (Excel/CSV)</div>
+              <button onClick={()=>{setModalImport(false);setImportLog([]);}} style={{background:"none",border:"none",cursor:"pointer",color:"var(--gray-400)"}}><Icon name="x" size={20}/></button>
+            </div>
+            <div style={{background:"#f9f5ff",border:"1px solid #e9d5ff",borderRadius:10,padding:14,marginBottom:16,fontSize:13,lineHeight:1.7}}>
+              <strong>Colunas aceitas:</strong> Nome, Email, Telefone, CPF, DataNascimento, Genero<br/>
+              <strong>Formatos:</strong> .csv ou .txt com separador vírgula, ponto-e-vírgula ou tab<br/>
+              <strong>Encoding:</strong> UTF-8
+            </div>
+            <div style={{display:"flex",gap:10,marginBottom:16}}>
+              <button className="btn btn-outline" style={{flex:1,fontSize:13}} onClick={baixarTemplate}>
+                <Icon name="download" size={14}/> Baixar template CSV
+              </button>
+              <label style={{flex:1,display:"flex",alignItems:"center",justifyContent:"center",gap:8,padding:"10px",borderRadius:10,border:"1.5px solid var(--purple)",background:"var(--purple)",color:"white",cursor:"pointer",fontSize:13,fontWeight:600}}>
+                <Icon name="upload" size={14}/> Selecionar arquivo
+                <input type="file" accept=".csv,.txt,.xls,.xlsx" style={{display:"none"}} onChange={processarExcel}/>
+              </label>
+            </div>
+            {importLog.length>0&&(
+              <div style={{background:"#f9fafb",borderRadius:10,padding:14,maxHeight:240,overflowY:"auto",fontSize:12,lineHeight:2,border:"1px solid #e5e7eb"}}>
+                {importLog.map((l,i)=>(
+                  <div key={i} style={{color:l.tipo==="ok"?"#059669":l.tipo==="err"?"#dc2626":"#7B00C4",fontWeight:l.tipo==="info"?600:400}}>{l.msg}</div>
+                ))}
+              </div>
+            )}
+            {importando&&<div style={{textAlign:"center",padding:12,color:"var(--purple)",fontSize:13}}>Importando... aguarde</div>}
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 
-// ── MODAL INTEGRANTE ──────────────────────────────────────────────────────────
-function ModalIntegrante(_ref9) {
-  var membro = _ref9.membro,
-    onClose = _ref9.onClose,
-    config = _ref9.config;
-  var cor = config.corPrimaria || COR;
-  var vazio = {
-    name: "",
-    funcao: "Corista",
-    voice: "Soprano",
-    email: "",
-    phone: "",
-    cpf: "",
-    rg: "",
-    birthday: "",
-    startDate: todayStr(),
-    notes: "",
-    active: true
-  };
-  var _useState33 = useState(membro ? _objectSpread(_objectSpread({}, vazio), membro) : vazio),
-    _useState34 = _slicedToArray(_useState33, 2),
-    form = _useState34[0],
-    setForm = _useState34[1];
-  var _useState35 = useState(false),
-    _useState36 = _slicedToArray(_useState35, 2),
-    salvando = _useState36[0],
-    setSalvando = _useState36[1];
-  var _useState37 = useState(""),
-    _useState38 = _slicedToArray(_useState37, 2),
-    erro = _useState38[0],
-    setErro = _useState38[1];
-  function salvar() {
-    return _salvar2.apply(this, arguments);
-  }
-  function _salvar2() {
-    _salvar2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
-      var d;
-      return _regenerator().w(function (_context2) {
-        while (1) switch (_context2.n) {
-          case 0:
-            if (form.name.trim()) {
-              _context2.n = 1;
-              break;
-            }
-            setErro("Nome é obrigatório.");
-            return _context2.a(2);
-          case 1:
-            setSalvando(true);
-            d = {
-              name: form.name,
-              funcao: form.funcao,
-              voice: form.voice,
-              email: form.email || "",
-              phone: form.phone || "",
-              cpf: form.cpf || "",
-              rg: form.rg || "",
-              birthday: form.birthday || "",
-              startDate: form.startDate || "",
-              notes: form.notes || "",
-              active: form.active
-            };
-            if (!membro) {
-              _context2.n = 3;
-              break;
-            }
-            _context2.n = 2;
-            return db.collection("onix_members").doc(membro.id).update(_objectSpread(_objectSpread({}, d), {}, {
-              updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-            }));
-          case 2:
-            _context2.n = 4;
-            break;
-          case 3:
-            _context2.n = 4;
-            return db.collection("onix_members").add(_objectSpread(_objectSpread({}, d), {}, {
-              createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            }));
-          case 4:
-            setSalvando(false);
-            onClose();
-          case 5:
-            return _context2.a(2);
-        }
-      }, _callee2);
-    }));
-    return _salvar2.apply(this, arguments);
-  }
-  function excluir() {
-    return _excluir.apply(this, arguments);
-  }
-  function _excluir() {
-    _excluir = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3() {
-      return _regenerator().w(function (_context3) {
-        while (1) switch (_context3.n) {
-          case 0:
-            if (window.confirm("Excluir este integrante permanentemente?")) {
-              _context3.n = 1;
-              break;
-            }
-            return _context3.a(2);
-          case 1:
-            _context3.n = 2;
-            return db.collection("onix_members").doc(membro.id).delete();
-          case 2:
-            onClose();
-          case 3:
-            return _context3.a(2);
-        }
-      }, _callee3);
-    }));
-    return _excluir.apply(this, arguments);
-  }
-  var inp = {
-    width: "100%",
-    padding: "11px 14px",
-    border: "1px solid #E8E0E0",
-    borderRadius: 10,
-    fontSize: 14,
-    outline: "none",
-    fontFamily: "inherit",
-    color: "#1A1D23",
-    background: "#FAFAFA"
-  };
-  var lbl = {
-    display: "block",
-    fontSize: 12,
-    fontWeight: 600,
-    color: "#888",
-    marginBottom: 5
-  };
-  var g2 = {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gap: 12,
-    marginBottom: 16
-  };
-  return /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: "fixed",
-      inset: 0,
-      background: "rgba(0,0,0,0.5)",
-      zIndex: 300,
-      display: "flex",
-      alignItems: "flex-end",
-      justifyContent: "center"
-    },
-    onClick: function onClick(e) {
-      return e.target === e.currentTarget && onClose();
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#FAFAFA",
-      borderRadius: "20px 20px 0 0",
-      padding: "24px 20px",
-      width: "100%",
-      maxWidth: 640,
-      maxHeight: "92vh",
-      overflowY: "auto"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginBottom: 24
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 20,
-      fontWeight: 700,
-      color: "#1A1D23"
-    }
-  }, membro ? "Editar Integrante" : "Adicionar Integrante"), /*#__PURE__*/React.createElement("button", {
-    onClick: onClose,
-    style: {
-      background: "#EEE",
-      border: "none",
-      borderRadius: 8,
-      width: 32,
-      height: 32,
-      cursor: "pointer",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "x",
-    size: 16,
-    color: "#666"
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 16
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Nome Completo *"), /*#__PURE__*/React.createElement("input", {
-    style: inp,
-    value: form.name,
-    onChange: function onChange(e) {
-      setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          name: e.target.value
-        });
-      });
-      setErro("");
-    },
-    autoFocus: true
-  }), erro && /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      color: cor,
-      marginTop: 4
-    }
-  }, erro)), /*#__PURE__*/React.createElement("div", {
-    style: g2
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Fun\xE7\xE3o"), /*#__PURE__*/React.createElement("select", {
-    style: inp,
-    value: form.funcao,
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          funcao: e.target.value
-        });
-      });
-    }
-  }, FUNCOES.map(function (f) {
-    return /*#__PURE__*/React.createElement("option", {
-      key: f
-    }, f);
-  }))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Naipe"), /*#__PURE__*/React.createElement("select", {
-    style: inp,
-    value: form.voice,
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          voice: e.target.value
-        });
-      });
-    }
-  }, NAIPES.map(function (n) {
-    return /*#__PURE__*/React.createElement("option", {
-      key: n
-    }, n);
-  })))), /*#__PURE__*/React.createElement("div", {
-    style: g2
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "E-mail"), /*#__PURE__*/React.createElement("input", {
-    style: inp,
-    type: "email",
-    value: form.email || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          email: e.target.value
-        });
-      });
-    }
-  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Telefone"), /*#__PURE__*/React.createElement("input", {
-    style: inp,
-    value: form.phone || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          phone: e.target.value
-        });
-      });
-    },
-    placeholder: "(00) 9 0000-0000"
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: g2
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "CPF"), /*#__PURE__*/React.createElement("input", {
-    style: inp,
-    value: form.cpf || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          cpf: e.target.value
-        });
-      });
-    },
-    placeholder: "000.000.000-00"
-  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "RG (CI)"), /*#__PURE__*/React.createElement("input", {
-    style: inp,
-    value: form.rg || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          rg: e.target.value
-        });
-      });
-    }
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: g2
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Nascimento"), /*#__PURE__*/React.createElement("input", {
-    type: "date",
-    style: inp,
-    value: form.birthday || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          birthday: e.target.value
-        });
-      });
-    }
-  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Data de Admiss\xE3o"), /*#__PURE__*/React.createElement("input", {
-    type: "date",
-    style: inp,
-    value: form.startDate || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          startDate: e.target.value
-        });
-      });
-    }
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 16
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Status"), /*#__PURE__*/React.createElement("select", {
-    style: inp,
-    value: form.active ? "ativo" : "inativo",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          active: e.target.value === "ativo"
-        });
-      });
-    }
-  }, /*#__PURE__*/React.createElement("option", {
-    value: "ativo"
-  }, "Ativo"), /*#__PURE__*/React.createElement("option", {
-    value: "inativo"
-  }, "Inativo"))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 20
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Observa\xE7\xF5es"), /*#__PURE__*/React.createElement("textarea", {
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      minHeight: 80,
-      resize: "vertical"
-    }),
-    value: form.notes || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          notes: e.target.value
-        });
-      });
-    }
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 10
-    }
-  }, membro && /*#__PURE__*/React.createElement("button", {
-    onClick: excluir,
-    style: {
-      padding: "12px 16px",
-      background: "#FFF0F0",
-      color: "#5B2D8E",
-      border: "1px solid #F5DADA",
-      borderRadius: 10,
-      fontSize: 13,
-      fontWeight: 600,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, "Excluir"), /*#__PURE__*/React.createElement("button", {
-    onClick: onClose,
-    style: {
-      flex: 1,
-      padding: "13px",
-      background: "#F0EAE8",
-      color: "#666",
-      border: "none",
-      borderRadius: 10,
-      fontSize: 14,
-      fontWeight: 600,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, "Cancelar"), /*#__PURE__*/React.createElement("button", {
-    onClick: salvar,
-    disabled: salvando,
-    style: {
-      flex: 1,
-      padding: "13px",
-      background: cor,
-      color: "#fff",
-      border: "none",
-      borderRadius: 10,
-      fontSize: 14,
-      fontWeight: 700,
-      cursor: "pointer",
-      fontFamily: "inherit",
-      opacity: salvando ? 0.7 : 1
-    }
-  }, salvando ? "Salvando..." : membro ? "Salvar" : "Adicionar"))));
-}
+// FINANCEIRO CLINICA
+function FinanceiroClinica() {
+  const { data:pacientes } = useCollection("clinica_pacientes","nome");
+  const [lancamentos, setLancamentos] = useState([]);
+  const [pacotes, setPacotes] = useState([]);
+  const [sessoes, setSessoes] = useState([]);
+  const [mesFiltro, setMesFiltro] = useState(new Date().toISOString().slice(0,7));
+  const [modal, setModal] = useState(false); // false | "avulso" | "pacote"
+  const [editando, setEditando] = useState(null);
+  const [salvando, setSalvando] = useState(false);
+  const [pacoteSelecionado, setPacoteSelecionado] = useState(null);
+  const [modalExcluir, setModalExcluir] = useState(null);
+  const [aba, setAba] = useState("lancamentos");
 
-// ── INTEGRANTES ───────────────────────────────────────────────────────────────
-function Integrantes(_ref0) {
-  var config = _ref0.config;
-  var _useCollection5 = useCollection("onix_members"),
-    members = _useCollection5.data,
-    loading = _useCollection5.loading;
-  var _useState39 = useState(""),
-    _useState40 = _slicedToArray(_useState39, 2),
-    busca = _useState40[0],
-    setBusca = _useState40[1];
-  var _useState41 = useState("Todos"),
-    _useState42 = _slicedToArray(_useState41, 2),
-    filtro = _useState42[0],
-    setFiltro = _useState42[1];
-  var _useState43 = useState(""),
-    _useState44 = _slicedToArray(_useState43, 2),
-    letraFiltro = _useState44[0],
-    setLetraFiltro = _useState44[1];
-  var _useState45 = useState(null),
-    _useState46 = _slicedToArray(_useState45, 2),
-    modal = _useState46[0],
-    setModal = _useState46[1];
-  var cor = config.corPrimaria || COR;
-  if (loading) return /*#__PURE__*/React.createElement(Spinner, null);
+  const FORMAS = ["PIX","Cartão de Crédito","Cartão de Débito","Dinheiro","Depósito","Transferência","Outro"];
+  const RECORRENCIAS = ["Semanal (1x/semana)","2x por semana","3x por semana","Quinzenal","Mensal","Sessão única"];
+  const DIAS_LABEL = {0:"Dom",1:"Seg",2:"Ter",3:"Qua",4:"Qui",5:"Sex",6:"Sáb"};
 
-  // Ordenar sempre alfabeticamente
-  var membersOrdenados = _toConsumableArray(members).sort(function (a, b) {
-    return (a.name || "").localeCompare(b.name || "", "pt-BR");
-  });
-  var filtrados = membersOrdenados.filter(function (m) {
-    var q = busca.toLowerCase();
-    var ok = !busca || m.name.toLowerCase().includes(q) || (m.voice || "").toLowerCase().includes(q) || (m.funcao || "").toLowerCase().includes(q);
-    var of = filtro === "Todos" || (filtro === "Ativos" ? m.active : filtro === "Inativos" ? !m.active : m.voice === filtro);
-    var ol = !letraFiltro || (m.name || "").toUpperCase().startsWith(letraFiltro);
-    return ok && of && ol;
-  });
+  const [formAvulso, setFormAvulso] = useState({pacienteId:"",tipo:"Consulta",valor:"",data:new Date().toISOString().slice(0,10),formaPag:"PIX",status:"pendente",obs:""});
+  const [formPacote, setFormPacote] = useState({pacienteId:"",totalSessoes:"",valorSessao:"",recorrencia:"Semanal (1x/semana)",dataInicio:"",horario:"09:00",diasSemana:[],horariosPorDia:{},obs:""});
 
-  // Letras disponíveis entre os membros filtrados por status/naipe (sem filtro de letra)
-  var membrosParaLetras = membersOrdenados.filter(function (m) {
-    var of = filtro === "Todos" || (filtro === "Ativos" ? m.active : filtro === "Inativos" ? !m.active : m.voice === filtro);
-    return of;
-  });
-  var letrasDisponiveis = _toConsumableArray(new Set(membrosParaLetras.map(function (m) {
-    return (m.name || "").toUpperCase().charAt(0);
-  }).filter(Boolean))).sort();
-  var naipeColor = {
-    Soprano: COR,
-    Contralto: "#7B1FA2",
-    "Mezzo-soprano": "#9C27B0",
-    Alto: "#E8A020",
-    Tenor: "#1565C0",
-    Barítono: "#4527A0",
-    Baixo: "#1B5E20"
-  };
-  function copiarLink() {
-    var url = "".concat(window.location.origin).concat(window.location.pathname, "?cadastro=1");
-    navigator.clipboard.writeText(url).then(function () {
-      return alert("Link copiado!");
-    });
-  }
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginBottom: 24,
-      flexWrap: "wrap",
-      gap: 12
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 28,
-      fontWeight: 700,
-      color: cor
-    }
-  }, "Integrantes"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 10,
-      flexWrap: "wrap"
-    }
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: copiarLink,
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 8,
-      padding: "10px 16px",
-      background: "#fff",
-      border: "1px solid ".concat(cor),
-      borderRadius: 10,
-      fontSize: 13,
-      fontWeight: 600,
-      color: cor,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "link",
-    size: 14,
-    color: cor
-  }), " Copiar link de cadastro"), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return setModal("novo");
-    },
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 8,
-      padding: "10px 16px",
-      background: cor,
-      border: "none",
-      borderRadius: 10,
-      fontSize: 13,
-      fontWeight: 700,
-      color: "#fff",
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "plus",
-    size: 14,
-    color: "#fff"
-  }), " Adicionar Integrante"))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#fff",
-      borderRadius: 12,
-      border: "1px solid #EEE8E8",
-      padding: "12px 16px",
-      marginBottom: 10,
-      display: "flex",
-      gap: 12,
-      alignItems: "center",
-      boxShadow: "0 1px 4px rgba(0,0,0,0.04)"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "search",
-    size: 16,
-    color: "#AAA"
-  }), /*#__PURE__*/React.createElement("input", {
-    value: busca,
-    onChange: function onChange(e) {
-      setBusca(e.target.value);
-      setLetraFiltro("");
-    },
-    placeholder: "Buscar por nome, naipe ou fun\xE7\xE3o...",
-    style: {
-      flex: 1,
-      border: "none",
-      outline: "none",
-      fontSize: 14,
-      fontFamily: "inherit",
-      color: "#1A1D23",
-      background: "none"
-    }
-  }), /*#__PURE__*/React.createElement("select", {
-    value: filtro,
-    onChange: function onChange(e) {
-      setFiltro(e.target.value);
-      setLetraFiltro("");
-    },
-    style: {
-      border: "1px solid #EEE8E8",
-      borderRadius: 8,
-      padding: "7px 12px",
-      fontSize: 13,
-      fontFamily: "inherit",
-      color: "#1A1D23",
-      outline: "none",
-      background: "#fff",
-      cursor: "pointer"
-    }
-  }, ["Todos", "Ativos", "Inativos"].concat(NAIPES).map(function (f) {
-    return /*#__PURE__*/React.createElement("option", {
-      key: f
-    }, f);
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      flexWrap: "wrap",
-      gap: 4,
-      marginBottom: 16,
-      alignItems: "center"
-    }
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return setLetraFiltro("");
-    },
-    style: {
-      padding: "4px 10px",
-      borderRadius: 20,
-      border: "1px solid ".concat(letraFiltro === "" ? cor : "#DDD"),
-      background: letraFiltro === "" ? cor : "#fff",
-      color: letraFiltro === "" ? "#fff" : "#666",
-      fontSize: 11,
-      fontWeight: 700,
-      cursor: "pointer",
-      fontFamily: "inherit",
-      transition: "all 0.15s"
-    }
-  }, "Todas"), letrasDisponiveis.map(function (letra) {
-    return /*#__PURE__*/React.createElement("button", {
-      key: letra,
-      onClick: function onClick() {
-        return setLetraFiltro(letraFiltro === letra ? "" : letra);
-      },
-      style: {
-        width: 30,
-        height: 30,
-        borderRadius: 8,
-        border: "1px solid ".concat(letraFiltro === letra ? cor : "#DDD"),
-        background: letraFiltro === letra ? cor : "#fff",
-        color: letraFiltro === letra ? "#fff" : "#555",
-        fontSize: 12,
-        fontWeight: 700,
-        cursor: "pointer",
-        fontFamily: "inherit",
-        transition: "all 0.15s",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
-      }
-    }, letra);
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#fff",
-      borderRadius: 12,
-      border: "1px solid #EEE8E8",
-      overflow: "hidden",
-      boxShadow: "0 1px 4px rgba(0,0,0,0.04)"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "grid",
-      gridTemplateColumns: "2fr 1fr 1fr 90px 90px 80px",
-      padding: "10px 16px",
-      borderBottom: "1px solid #F3EEF9",
-      background: "#FAFAFA"
-    }
-  }, ["Nome", "Função", "Naipe", "Status", "Entrada", "Ações"].map(function (h) {
-    return /*#__PURE__*/React.createElement("div", {
-      key: h,
-      style: {
-        fontSize: 12,
-        fontWeight: 700,
-        color: cor,
-        letterSpacing: 0.5
-      }
-    }, h);
-  })), filtrados.length === 0 && /*#__PURE__*/React.createElement("div", {
-    style: {
-      textAlign: "center",
-      padding: "32px",
-      color: "#CCC",
-      fontSize: 14
-    }
-  }, "Nenhum integrante encontrado."), filtrados.map(function (m, i) {
-    return /*#__PURE__*/React.createElement("div", {
-      key: m.id,
-      style: {
-        display: "grid",
-        gridTemplateColumns: "2fr 1fr 1fr 90px 90px 80px",
-        padding: "13px 16px",
-        borderBottom: i < filtrados.length - 1 ? "1px solid #F9F5F5" : "none",
-        alignItems: "center",
-        background: i % 2 === 0 ? "#fff" : "#FDFBFB"
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 14,
-        fontWeight: 600,
-        color: "#1A1D23"
-      }
-    }, m.name), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 13,
-        color: "#888"
-      }
-    }, m.funcao || "Corista"), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 13,
-        color: naipeColor[m.voice] || "#888",
-        fontWeight: 500
-      }
-    }, m.voice || "—"), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", {
-      style: {
-        display: "inline-block",
-        padding: "3px 10px",
-        borderRadius: 20,
-        fontSize: 11,
-        fontWeight: 700,
-        background: m.active ? "#E8F5E9" : "#FFF3E0",
-        color: m.active ? "#2E7D32" : "#E65100"
-      }
-    }, m.active ? "Ativo" : "Inativo")), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 13,
-        color: "#AAA"
-      }
-    }, fmtMonthYear(m.startDate)), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick() {
-        return setModal(m);
-      },
-      style: {
-        background: "none",
-        border: "none",
-        color: cor,
-        fontSize: 13,
-        fontWeight: 600,
-        cursor: "pointer",
-        fontFamily: "inherit",
-        padding: 0
-      }
-    }, "Ver / Editar")));
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      color: "#AAA",
-      marginTop: 10,
-      textAlign: "right"
-    }
-  }, filtrados.length, " integrante", filtrados.length !== 1 ? "s" : "", " \xB7 ", members.filter(function (m) {
-    return m.active;
-  }).length, " ativo", members.filter(function (m) {
-    return m.active;
-  }).length !== 1 ? "s" : ""), modal && /*#__PURE__*/React.createElement(ModalIntegrante, {
-    membro: modal === "novo" ? null : modal,
-    onClose: function onClose() {
-      return setModal(null);
-    },
-    config: config
-  }));
-}
+  useEffect(()=>{
+    const u1=db.collection("clinica_lancamentos").orderBy("data","desc").onSnapshot(s=>setLancamentos(s.docs.map(d=>({id:d.id,...d.data()}))),()=>{});
+    const u2=db.collection("clinica_pacotes").orderBy("createdAt","desc").onSnapshot(s=>setPacotes(s.docs.map(d=>({id:d.id,...d.data()}))),()=>{});
+    const u3=db.collection("clinica_sessoes").orderBy("data").onSnapshot(s=>setSessoes(s.docs.map(d=>({id:d.id,...d.data()}))),()=>{});
+    return()=>{u1();u2();u3();};
+  },[]);
 
-// ── CONFIGURAÇÕES ─────────────────────────────────────────────────────────────
-function Configuracoes(_ref1) {
-  var config = _ref1.config,
-    save = _ref1.save;
-  var _useState47 = useState(_objectSpread({}, config)),
-    _useState48 = _slicedToArray(_useState47, 2),
-    form = _useState48[0],
-    setForm = _useState48[1];
-  var _useState49 = useState(false),
-    _useState50 = _slicedToArray(_useState49, 2),
-    salvando = _useState50[0],
-    setSalvando = _useState50[1];
-  var _useState51 = useState(false),
-    _useState52 = _slicedToArray(_useState51, 2),
-    ok = _useState52[0],
-    setOk = _useState52[1];
-  useEffect(function () {
-    setForm(_objectSpread({}, config));
-  }, [config]);
-  function salvar() {
-    return _salvar3.apply(this, arguments);
-  }
-  function _salvar3() {
-    _salvar3 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4() {
-      return _regenerator().w(function (_context4) {
-        while (1) switch (_context4.n) {
-          case 0:
-            setSalvando(true);
-            _context4.n = 1;
-            return save(form);
-          case 1:
-            setSalvando(false);
-            setOk(true);
-            setTimeout(function () {
-              return setOk(false);
-            }, 2500);
-          case 2:
-            return _context4.a(2);
-        }
-      }, _callee4);
-    }));
-    return _salvar3.apply(this, arguments);
-  }
-  var cor = config.corPrimaria || COR;
-  var inp = {
-    width: "100%",
-    padding: "11px 14px",
-    border: "1px solid #E8E0E0",
-    borderRadius: 10,
-    fontSize: 14,
-    outline: "none",
-    fontFamily: "inherit",
-    color: "#1A1D23",
-    background: "#fff"
-  };
-  var lbl = {
-    display: "block",
-    fontSize: 11,
-    fontWeight: 700,
-    color: "#888",
-    marginBottom: 6,
-    textTransform: "uppercase",
-    letterSpacing: 1
-  };
-  var box = {
-    background: "#fff",
-    borderRadius: 12,
-    border: "1px solid #EEE8E8",
-    padding: "20px",
-    marginBottom: 16,
-    boxShadow: "0 1px 4px rgba(0,0,0,0.04)"
-  };
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 28,
-      fontWeight: 700,
-      color: cor,
-      marginBottom: 24
-    }
-  }, "Configura\xE7\xF5es"), /*#__PURE__*/React.createElement("div", {
-    style: box
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      fontWeight: 700,
-      color: "#888",
-      textTransform: "uppercase",
-      letterSpacing: 1,
-      marginBottom: 16
-    }
-  }, "Identidade do Coral"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 16
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Nome do Coral"), /*#__PURE__*/React.createElement("input", {
-    style: inp,
-    value: form.nomeApp || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          nomeApp: e.target.value
-        });
-      });
-    }
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 16
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Subt\xEDtulo"), /*#__PURE__*/React.createElement("input", {
-    style: inp,
-    value: form.subtitulo || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          subtitulo: e.target.value
-        });
-      });
-    }
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 4
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "URL da Logo"), /*#__PURE__*/React.createElement("input", {
-    style: inp,
-    value: form.logoUrl || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          logoUrl: e.target.value
-        });
-      });
-    },
-    placeholder: "https://..."
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 11,
-      color: "#AAA",
-      marginTop: 5
-    }
-  }, "Link direto para PNG com fundo transparente"), form.logoUrl && /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginTop: 12,
-      background: "#F5F0F0",
-      borderRadius: 10,
-      padding: 12,
-      textAlign: "center"
-    }
-  }, /*#__PURE__*/React.createElement("img", {
-    src: form.logoUrl,
-    alt: "",
-    style: {
-      maxHeight: 64,
-      objectFit: "contain"
-    },
-    onError: function onError(e) {
-      return e.target.style.display = "none";
-    }
-  })))), /*#__PURE__*/React.createElement("div", {
-    style: box
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      fontWeight: 700,
-      color: "#888",
-      textTransform: "uppercase",
-      letterSpacing: 1,
-      marginBottom: 16
-    }
-  }, "Cores"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 16
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      flex: 1
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Cor principal"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 10,
-      alignItems: "center"
-    }
-  }, /*#__PURE__*/React.createElement("input", {
-    type: "color",
-    value: form.corPrimaria || COR,
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          corPrimaria: e.target.value
-        });
-      });
-    },
-    style: {
-      width: 44,
-      height: 40,
-      border: "none",
-      borderRadius: 8,
-      cursor: "pointer",
-      padding: 2
-    }
-  }), /*#__PURE__*/React.createElement("input", {
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      flex: 1
-    }),
-    value: form.corPrimaria || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          corPrimaria: e.target.value
-        });
-      });
-    }
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      flex: 1
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Fundo"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 10,
-      alignItems: "center"
-    }
-  }, /*#__PURE__*/React.createElement("input", {
-    type: "color",
-    value: form.corFundo || COR_FUNDO,
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          corFundo: e.target.value
-        });
-      });
-    },
-    style: {
-      width: 44,
-      height: 40,
-      border: "none",
-      borderRadius: 8,
-      cursor: "pointer",
-      padding: 2
-    }
-  }), /*#__PURE__*/React.createElement("input", {
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      flex: 1
-    }),
-    value: form.corFundo || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          corFundo: e.target.value
-        });
-      });
-    }
-  })))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginTop: 16,
-      background: form.corFundo || COR_FUNDO,
-      borderRadius: 10,
-      padding: 16,
-      textAlign: "center"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 11,
-      color: "#AAA",
-      marginBottom: 8
-    }
-  }, "PREVIEW"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: 52,
-      height: 52,
-      background: "#fff",
-      borderRadius: 10,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      margin: "0 auto 10px",
-      boxShadow: "0 2px 8px rgba(0,0,0,0.1)"
-    }
-  }, /*#__PURE__*/React.createElement("img", {
-    src: form.logoUrl || LOGO_URL,
-    style: {
-      width: 36,
-      height: 36,
-      objectFit: "contain"
-    },
-    onError: function onError(e) {
-      return e.target.style.display = "none";
-    }
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 20,
-      fontWeight: 700,
-      color: form.corPrimaria || COR
-    }
-  }, form.nomeApp || "Onix Brasil Vocal Internacional"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#AAA",
-      marginTop: 4
-    }
-  }, form.subtitulo || "Portal de Gestão"))), /*#__PURE__*/React.createElement("button", {
-    onClick: salvar,
-    disabled: salvando,
-    style: {
-      width: "100%",
-      padding: "14px",
-      background: cor,
-      color: "#fff",
-      border: "none",
-      borderRadius: 12,
-      fontSize: 15,
-      fontWeight: 700,
-      cursor: "pointer",
-      fontFamily: "inherit",
-      opacity: salvando ? 0.7 : 1
-    }
-  }, ok ? "✓ Salvo!" : salvando ? "Salvando..." : "Salvar Configurações"));
-}
+  const getPacNome = id=>pacientes.find(p=>p.id===id)?.nome||"—";
 
-// ── AGENDA ────────────────────────────────────────────────────────────────────
-var TIPOS_EVENTO = ["Ensaio", "Apresentação", "Reunião", "Gravação", "Feriado Nacional", "Feriado Local", "Outro"];
-var STATUS_EVENTO = ["Planejada", "Confirmado", "Cancelado", "Reagendado", "Suspenso"];
-var RECORRENCIAS = ["Sem recorrência", "Semanal", "Quinzenal", "Mensal", "Indeterminada"];
-var WEEKDAYS_PT = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
-var STATUS_COLORS = {
-  Planejada: "#1565C0",
-  Confirmado: "#2E7D32",
-  Cancelado: "#5B2D8E",
-  Reagendado: "#E65100",
-  Suspenso: "#7B1FA2"
-};
-function ModalEvento(_ref10) {
-  var evento = _ref10.evento,
-    onClose = _ref10.onClose,
-    config = _ref10.config;
-  var cor = config.corPrimaria || COR;
-  var _useCollection6 = useCollection("onix_songs"),
-    songs = _useCollection6.data;
-  var vazio = {
-    title: "",
-    date: todayStr(),
-    tipo: "Ensaio",
-    status: "Planejada",
-    timeChegada: "",
-    timeApresentacao: "",
-    local: "",
-    mapsUrl: "",
-    notes: "",
-    recorrencia: "Sem recorrência",
-    setlist: []
-  };
-  var _useState53 = useState(evento ? _objectSpread(_objectSpread(_objectSpread({}, vazio), evento), {}, {
-      setlist: evento.setlist || []
-    }) : vazio),
-    _useState54 = _slicedToArray(_useState53, 2),
-    form = _useState54[0],
-    setForm = _useState54[1];
-  var _useState55 = useState(false),
-    _useState56 = _slicedToArray(_useState55, 2),
-    salvando = _useState56[0],
-    setSalvando = _useState56[1];
-  var _useState57 = useState(""),
-    _useState58 = _slicedToArray(_useState57, 2),
-    erro = _useState58[0],
-    setErro = _useState58[1];
-  function salvar() {
-    return _salvar4.apply(this, arguments);
-  }
-  function _salvar4() {
-    _salvar4 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5() {
-      var grupoId, d, datas, base, dias, total, intervalo, i, nova, temGrupo, _i, _datas, dt, isRecorrente, avisoText;
-      return _regenerator().w(function (_context5) {
-        while (1) switch (_context5.n) {
-          case 0:
-            if (form.title.trim()) {
-              _context5.n = 1;
-              break;
-            }
-            setErro("Título é obrigatório.");
-            return _context5.a(2);
-          case 1:
-            if (form.date) {
-              _context5.n = 2;
-              break;
-            }
-            setErro("Data é obrigatória.");
-            return _context5.a(2);
-          case 2:
-            setSalvando(true);
-            grupoId = Date.now().toString(36) + Math.random().toString(36).substr(2);
-            d = {
-              title: form.title,
-              date: form.date,
-              tipo: form.tipo,
-              status: form.status,
-              timeChegada: form.timeChegada || "",
-              timeApresentacao: form.timeApresentacao || "",
-              local: form.local || "",
-              mapsUrl: form.mapsUrl || "",
-              notes: form.notes || "",
-              recorrencia: form.recorrencia,
-              setlist: form.setlist || []
-            };
-            if (!evento) {
-              _context5.n = 4;
-              break;
-            }
-            _context5.n = 3;
-            return db.collection("onix_events").doc(evento.id).update(_objectSpread(_objectSpread({}, d), {}, {
-              updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-            }));
-          case 3:
-            _context5.n = 8;
-            break;
-          case 4:
-            datas = [form.date];
-            if (form.recorrencia !== "Sem recorrência" && form.date) {
-              base = new Date(form.date + "T12:00:00");
-              dias = form.recorrencia === "Semanal" ? 7 : form.recorrencia === "Quinzenal" ? 14 : 30;
-              total = form.recorrencia === "Indeterminada" ? 52 : 11;
-              intervalo = form.recorrencia === "Indeterminada" ? 7 : dias;
-              for (i = 1; i <= total; i++) {
-                nova = new Date(base);
-                nova.setDate(nova.getDate() + intervalo * i);
-                datas.push(nova.toISOString().split("T")[0]);
-              }
-            }
-            temGrupo = datas.length > 1;
-            _i = 0, _datas = datas;
-          case 5:
-            if (!(_i < _datas.length)) {
-              _context5.n = 7;
-              break;
-            }
-            dt = _datas[_i];
-            _context5.n = 6;
-            return db.collection("onix_events").add(_objectSpread(_objectSpread(_objectSpread({}, d), {}, {
-              date: dt
-            }, temGrupo ? {
-              grupoId: grupoId
-            } : {}), {}, {
-              createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            }));
-          case 6:
-            _i++;
-            _context5.n = 5;
-            break;
-          case 7:
-            // Aviso automático — unificado para recorrentes
-            isRecorrente = form.recorrencia !== "Sem recorrência";
-            avisoText = isRecorrente ? "Novo evento recorrente (".concat(form.recorrencia, "): \"").concat(form.title, "\" a partir de ").concat(fmtDate(form.date)).concat(form.local ? " — " + form.local : "", ". Total de ").concat(datas.length, " ocorr\xEAncia").concat(datas.length !== 1 ? "s" : "", ".") : "Um novo evento foi adicionado \xE0 agenda: \"".concat(form.title, "\" em ").concat(fmtDate(form.date)).concat(form.local ? " — " + form.local : "", ".");
-            _context5.n = 8;
-            return db.collection("onix_avisos").add({
-              title: "\uD83D\uDCC5 ".concat(isRecorrente ? "Evento recorrente" : "Novo evento", ": ").concat(form.title),
-              text: avisoText,
-              tipo: "auto_evento",
-              prioridade: "Informativo",
-              createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            });
-          case 8:
-            setSalvando(false);
-            onClose();
-          case 9:
-            return _context5.a(2);
-        }
-      }, _callee5);
-    }));
-    return _salvar4.apply(this, arguments);
-  }
-  function excluir() {
-    return _excluir2.apply(this, arguments);
-  }
-  function _excluir2() {
-    _excluir2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee6() {
-      var opcao, snap, batch;
-      return _regenerator().w(function (_context6) {
-        while (1) switch (_context6.n) {
-          case 0:
-            if (evento.grupoId) {
-              _context6.n = 3;
-              break;
-            }
-            if (window.confirm("Excluir este evento?")) {
-              _context6.n = 1;
-              break;
-            }
-            return _context6.a(2);
-          case 1:
-            _context6.n = 2;
-            return db.collection("onix_events").doc(evento.id).delete();
-          case 2:
-            _context6.n = 8;
-            break;
-          case 3:
-            opcao = window.confirm("Clique OK para excluir ESTE E OS FUTUROS eventos da série.\nClique Cancelar para excluir SÓ ESTE evento.");
-            if (!(opcao === null)) {
-              _context6.n = 4;
-              break;
-            }
-            return _context6.a(2);
-          case 4:
-            if (!opcao) {
-              _context6.n = 7;
-              break;
-            }
-            _context6.n = 5;
-            return db.collection("onix_events").where("grupoId", "==", evento.grupoId).get();
-          case 5:
-            snap = _context6.v;
-            batch = db.batch();
-            snap.docs.forEach(function (doc) {
-              if (doc.data().date >= evento.date) batch.delete(doc.ref);
-            });
-            _context6.n = 6;
-            return batch.commit();
-          case 6:
-            _context6.n = 8;
-            break;
-          case 7:
-            _context6.n = 8;
-            return db.collection("onix_events").doc(evento.id).delete();
-          case 8:
-            onClose();
-          case 9:
-            return _context6.a(2);
-        }
-      }, _callee6);
-    }));
-    return _excluir2.apply(this, arguments);
-  }
-  var inp = {
-    width: "100%",
-    padding: "11px 14px",
-    border: "1px solid #E8E0E0",
-    borderRadius: 10,
-    fontSize: 14,
-    outline: "none",
-    fontFamily: "inherit",
-    color: "#1A1D23",
-    background: "#FAFAFA"
-  };
-  var lbl = {
-    display: "block",
-    fontSize: 12,
-    fontWeight: 600,
-    color: "#888",
-    marginBottom: 5
-  };
-  var g2 = {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gap: 12,
-    marginBottom: 16
-  };
-  return /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: "fixed",
-      inset: 0,
-      background: "rgba(0,0,0,0.5)",
-      zIndex: 300,
-      display: "flex",
-      alignItems: "flex-end",
-      justifyContent: "center"
-    },
-    onClick: function onClick(e) {
-      return e.target === e.currentTarget && onClose();
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#FAFAFA",
-      borderRadius: "20px 20px 0 0",
-      padding: "24px 20px",
-      width: "100%",
-      maxWidth: 640,
-      maxHeight: "92vh",
-      overflowY: "auto"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginBottom: 20
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 20,
-      fontWeight: 700,
-      color: "#1A1D23"
-    }
-  }, evento ? "Editar Evento" : "Adicionar Evento"), /*#__PURE__*/React.createElement("button", {
-    onClick: onClose,
-    style: {
-      background: "#EEE",
-      border: "none",
-      borderRadius: 8,
-      width: 32,
-      height: 32,
-      cursor: "pointer",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "x",
-    size: 16,
-    color: "#666"
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 16
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "T\xEDtulo *"), /*#__PURE__*/React.createElement("input", {
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      borderColor: erro && !form.title ? cor : "#E8E0E0"
-    }),
-    value: form.title,
-    onChange: function onChange(e) {
-      setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          title: e.target.value
-        });
-      });
-      setErro("");
-    },
-    autoFocus: true
-  }), erro && /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      color: cor,
-      marginTop: 4
-    }
-  }, erro)), /*#__PURE__*/React.createElement("div", {
-    style: g2
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Data *"), /*#__PURE__*/React.createElement("input", {
-    type: "date",
-    style: inp,
-    value: form.date,
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          date: e.target.value
-        });
-      });
-    }
-  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Tipo"), /*#__PURE__*/React.createElement("select", {
-    style: inp,
-    value: form.tipo,
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          tipo: e.target.value
-        });
-      });
-    }
-  }, TIPOS_EVENTO.map(function (t) {
-    return /*#__PURE__*/React.createElement("option", {
-      key: t
-    }, t);
-  })))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 16
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Status de Planejamento"), /*#__PURE__*/React.createElement("select", {
-    style: inp,
-    value: form.status,
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          status: e.target.value
-        });
-      });
-    }
-  }, STATUS_EVENTO.map(function (s) {
-    return /*#__PURE__*/React.createElement("option", {
-      key: s
-    }, s);
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: g2
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Hor\xE1rio de Chegada"), /*#__PURE__*/React.createElement("input", {
-    type: "time",
-    style: inp,
-    value: form.timeChegada || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          timeChegada: e.target.value
-        });
-      });
-    }
-  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Hor\xE1rio Apresenta\xE7\xE3o"), /*#__PURE__*/React.createElement("input", {
-    type: "time",
-    style: inp,
-    value: form.timeApresentacao || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          timeApresentacao: e.target.value
-        });
-      });
-    }
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 16
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Local"), /*#__PURE__*/React.createElement("input", {
-    style: inp,
-    value: form.local || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          local: e.target.value
-        });
-      });
-    }
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 16
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Link Google Maps"), /*#__PURE__*/React.createElement("input", {
-    style: inp,
-    value: form.mapsUrl || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          mapsUrl: e.target.value
-        });
-      });
-    },
-    placeholder: "https://maps.google.com/..."
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 16
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Observa\xE7\xF5es"), /*#__PURE__*/React.createElement("textarea", {
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      minHeight: 80,
-      resize: "vertical"
-    }),
-    value: form.notes || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          notes: e.target.value
-        });
-      });
-    },
-    placeholder: "Informa\xE7\xF5es adicionais..."
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 16,
-      paddingTop: 16,
-      borderTop: "1px solid #EEE"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 11,
-      fontWeight: 700,
-      color: cor,
-      textTransform: "uppercase",
-      letterSpacing: 1,
-      marginBottom: 10
-    }
-  }, "Repert\xF3rio do Evento"), (form.setlist || []).length > 0 && /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 10
-    }
-  }, form.setlist.map(function (s, i) {
-    return /*#__PURE__*/React.createElement("div", {
-      key: i,
-      style: {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        padding: "8px 12px",
-        background: "#F9F5F5",
-        borderRadius: 8,
-        marginBottom: 6
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        alignItems: "center",
-        gap: 10
-      }
-    }, /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 12,
-        color: cor,
-        fontWeight: 700,
-        minWidth: 20
-      }
-    }, i + 1), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 13,
-        fontWeight: 600,
-        color: "#1A1D23"
-      }
-    }, s.title), s.compositor && /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 11,
-        color: "#AAA"
-      }
-    }, s.compositor))), /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick() {
-        return setForm(function (f) {
-          return _objectSpread(_objectSpread({}, f), {}, {
-            setlist: f.setlist.filter(function (_, j) {
-              return j !== i;
-            })
-          });
-        });
-      },
-      style: {
-        background: "none",
-        border: "none",
-        cursor: "pointer",
-        color: "#CCC",
-        padding: 4
-      }
-    }, /*#__PURE__*/React.createElement(Icon, {
-      name: "x",
-      size: 14,
-      color: "#CCC"
-    })));
-  })), /*#__PURE__*/React.createElement("select", {
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      color: "#888"
-    }),
-    onChange: function onChange(e) {
-      var song = songs.find(function (s) {
-        return s.id === e.target.value;
-      });
-      if (song && !(form.setlist || []).find(function (s) {
-        return s.id === song.id;
-      })) {
-        setForm(function (f) {
-          return _objectSpread(_objectSpread({}, f), {}, {
-            setlist: [].concat(_toConsumableArray(f.setlist || []), [{
-              id: song.id,
-              title: song.title,
-              compositor: song.compositor || "",
-              playback: song.playback || "",
-              playbackB: song.playbackB || "",
-              audioOriginal: song.audioOriginal || "",
-              plano: "A"
-            }])
-          });
-        });
-      }
-      e.target.value = "";
-    }
-  }, /*#__PURE__*/React.createElement("option", {
-    value: ""
-  }, "+ Adicionar m\xFAsica ao repert\xF3rio..."), songs.filter(function (s) {
-    return !(form.setlist || []).find(function (sl) {
-      return sl.id === s.id;
-    });
-  }).map(function (s) {
-    return /*#__PURE__*/React.createElement("option", {
-      key: s.id,
-      value: s.id
-    }, s.title, s.compositor ? " — " + s.compositor : "");
-  }))), !evento && /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 20,
-      paddingTop: 16,
-      borderTop: "1px solid #EEE"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 11,
-      fontWeight: 700,
-      color: cor,
-      textTransform: "uppercase",
-      letterSpacing: 1,
-      marginBottom: 12
-    }
-  }, "Recorr\xEAncia"), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Repetir evento"), /*#__PURE__*/React.createElement("select", {
-    style: inp,
-    value: form.recorrencia,
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          recorrencia: e.target.value
-        });
-      });
-    }
-  }, RECORRENCIAS.map(function (r) {
-    return /*#__PURE__*/React.createElement("option", {
-      key: r
-    }, r);
-  }))), form.recorrencia !== "Sem recorrência" && /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      color: "#AAA",
-      marginTop: 6
-    }
-  }, form.recorrencia === "Indeterminada" ? "Serão criados eventos semanais por 1 ano (editável depois)." : "Serão criados 12 eventos a partir desta data.")), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 10
-    }
-  }, evento && /*#__PURE__*/React.createElement("button", {
-    onClick: excluir,
-    style: {
-      padding: "12px 16px",
-      background: "#FFF0F0",
-      color: "#5B2D8E",
-      border: "1px solid #F5DADA",
-      borderRadius: 10,
-      fontSize: 13,
-      fontWeight: 600,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, "Excluir"), /*#__PURE__*/React.createElement("button", {
-    onClick: onClose,
-    style: {
-      flex: 1,
-      padding: "13px",
-      background: "#F0EAE8",
-      color: "#666",
-      border: "none",
-      borderRadius: 10,
-      fontSize: 14,
-      fontWeight: 600,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, "Cancelar"), /*#__PURE__*/React.createElement("button", {
-    onClick: salvar,
-    disabled: salvando,
-    style: {
-      flex: 1,
-      padding: "13px",
-      background: cor,
-      color: "#fff",
-      border: "none",
-      borderRadius: 10,
-      fontSize: 14,
-      fontWeight: 700,
-      cursor: "pointer",
-      fontFamily: "inherit",
-      opacity: salvando ? 0.7 : 1
-    }
-  }, salvando ? "Salvando..." : evento ? "Salvar" : "Adicionar"))));
-}
-function ModalExcluirEvento(_ref11) {
-  var evento = _ref11.evento,
-    onClose = _ref11.onClose;
-  var _useState59 = useState(false),
-    _useState60 = _slicedToArray(_useState59, 2),
-    excluindo = _useState60[0],
-    setExcluindo = _useState60[1];
-  function excluirSoEste() {
-    return _excluirSoEste.apply(this, arguments);
-  }
-  function _excluirSoEste() {
-    _excluirSoEste = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee7() {
-      return _regenerator().w(function (_context7) {
-        while (1) switch (_context7.n) {
-          case 0:
-            setExcluindo(true);
-            _context7.n = 1;
-            return db.collection("onix_events").doc(evento.id).delete();
-          case 1:
-            onClose();
-          case 2:
-            return _context7.a(2);
-        }
-      }, _callee7);
-    }));
-    return _excluirSoEste.apply(this, arguments);
-  }
-  function excluirFuturos() {
-    return _excluirFuturos.apply(this, arguments);
-  }
-  function _excluirFuturos() {
-    _excluirFuturos = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee8() {
-      var snap, batch;
-      return _regenerator().w(function (_context8) {
-        while (1) switch (_context8.n) {
-          case 0:
-            setExcluindo(true);
-            _context8.n = 1;
-            return db.collection("onix_events").where("grupoId", "==", evento.grupoId).get();
-          case 1:
-            snap = _context8.v;
-            batch = db.batch();
-            snap.docs.forEach(function (doc) {
-              if (doc.data().date >= evento.date) batch.delete(doc.ref);
-            });
-            _context8.n = 2;
-            return batch.commit();
-          case 2:
-            onClose();
-          case 3:
-            return _context8.a(2);
-        }
-      }, _callee8);
-    }));
-    return _excluirFuturos.apply(this, arguments);
-  }
-  function excluirTodos() {
-    return _excluirTodos.apply(this, arguments);
-  }
-  function _excluirTodos() {
-    _excluirTodos = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee9() {
-      var snap, batch;
-      return _regenerator().w(function (_context9) {
-        while (1) switch (_context9.n) {
-          case 0:
-            setExcluindo(true);
-            _context9.n = 1;
-            return db.collection("onix_events").where("grupoId", "==", evento.grupoId).get();
-          case 1:
-            snap = _context9.v;
-            batch = db.batch();
-            snap.docs.forEach(function (doc) {
-              return batch.delete(doc.ref);
-            });
-            _context9.n = 2;
-            return batch.commit();
-          case 2:
-            onClose();
-          case 3:
-            return _context9.a(2);
-        }
-      }, _callee9);
-    }));
-    return _excluirTodos.apply(this, arguments);
-  }
-  var btnBase = {
-    width: "100%",
-    padding: "13px",
-    border: "none",
-    borderRadius: 10,
-    fontSize: 14,
-    fontWeight: 600,
-    cursor: "pointer",
-    fontFamily: "inherit",
-    marginBottom: 8,
-    opacity: excluindo ? 0.6 : 1
-  };
-  return /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: "fixed",
-      inset: 0,
-      background: "rgba(0,0,0,0.5)",
-      zIndex: 400,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      padding: 20
-    },
-    onClick: function onClick(e) {
-      return e.target === e.currentTarget && onClose();
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#fff",
-      borderRadius: 16,
-      padding: "24px 20px",
-      width: "100%",
-      maxWidth: 360,
-      boxShadow: "0 8px 32px rgba(0,0,0,0.15)"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 18,
-      fontWeight: 700,
-      color: "#1A1D23",
-      marginBottom: 8
-    }
-  }, "Excluir evento"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#888",
-      marginBottom: 20
-    }
-  }, "\"", evento.title, "\" faz parte de uma s\xE9rie. O que deseja excluir?"), /*#__PURE__*/React.createElement("button", {
-    onClick: excluirSoEste,
-    disabled: excluindo,
-    style: _objectSpread(_objectSpread({}, btnBase), {}, {
-      background: "#F3EEF9",
-      color: "#5B2D8E"
-    })
-  }, "S\xF3 este evento"), /*#__PURE__*/React.createElement("button", {
-    onClick: excluirFuturos,
-    disabled: excluindo,
-    style: _objectSpread(_objectSpread({}, btnBase), {}, {
-      background: "#FFF3E0",
-      color: "#E65100"
-    })
-  }, "Este e os futuros"), /*#__PURE__*/React.createElement("button", {
-    onClick: excluirTodos,
-    disabled: excluindo,
-    style: _objectSpread(_objectSpread({}, btnBase), {}, {
-      background: "#5B2D8E",
-      color: "#fff"
-    })
-  }, "Excluir toda a s\xE9rie"), /*#__PURE__*/React.createElement("button", {
-    onClick: onClose,
-    disabled: excluindo,
-    style: _objectSpread(_objectSpread({}, btnBase), {}, {
-      background: "#F0F0F0",
-      color: "#666",
-      marginBottom: 0
-    })
-  }, "Cancelar")));
-}
-function Agenda(_ref12) {
-  var config = _ref12.config,
-    isAdmin = _ref12.isAdmin;
-  var _useCollection7 = useCollection("onix_events", "date"),
-    events = _useCollection7.data,
-    loading = _useCollection7.loading;
-  var _useState61 = useState(new Date().getMonth()),
-    _useState62 = _slicedToArray(_useState61, 2),
-    mes = _useState62[0],
-    setMes = _useState62[1];
-  var _useState63 = useState(new Date().getFullYear()),
-    _useState64 = _slicedToArray(_useState63, 2),
-    ano = _useState64[0],
-    setAno = _useState64[1];
-  var _useState65 = useState(null),
-    _useState66 = _slicedToArray(_useState65, 2),
-    modal = _useState66[0],
-    setModal = _useState66[1];
-  var _useState67 = useState(null),
-    _useState68 = _slicedToArray(_useState67, 2),
-    detalhe = _useState68[0],
-    setDetalhe = _useState68[1];
-  var _useState69 = useState(null),
-    _useState70 = _slicedToArray(_useState69, 2),
-    excluirEvento = _useState70[0],
-    setExcluirEvento = _useState70[1];
-  var cor = config.corPrimaria || COR;
-  if (loading) return /*#__PURE__*/React.createElement(Spinner, null);
-  function navMes(dir) {
-    var nm = mes + dir,
-      na = ano;
-    if (nm > 11) {
-      nm = 0;
-      na++;
-    }
-    if (nm < 0) {
-      nm = 11;
-      na--;
-    }
-    setMes(nm);
-    setAno(na);
-  }
-  var eventosMes = events.filter(function (e) {
-    if (!e.date) return false;
-    var _e$date$split = e.date.split("-"),
-      _e$date$split2 = _slicedToArray(_e$date$split, 2),
-      y = _e$date$split2[0],
-      m = _e$date$split2[1];
-    return parseInt(m) - 1 === mes && parseInt(y) === ano;
-  }).sort(function (a, b) {
-    return a.date > b.date ? 1 : -1;
-  });
-  var isFeriado = function isFeriado(e) {
-    return e.tipo === "Feriado Nacional" || e.tipo === "Feriado Local";
-  };
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginBottom: 24
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 28,
-      fontWeight: 700,
-      color: cor
-    }
-  }, "Agenda"), isAdmin && /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return setModal("novo");
-    },
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 8,
-      padding: "10px 20px",
-      background: cor,
-      border: "none",
-      borderRadius: 10,
-      fontSize: 13,
-      fontWeight: 700,
-      color: "#fff",
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "plus",
-    size: 14,
-    color: "#fff"
-  }), " Adicionar Evento")), /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#fff",
-      borderRadius: 12,
-      border: "1px solid #EEE8E8",
-      padding: "14px 20px",
-      marginBottom: 16,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-between",
-      boxShadow: "0 1px 4px rgba(0,0,0,0.04)"
-    }
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return navMes(-1);
-    },
-    style: {
-      width: 36,
-      height: 36,
-      border: "1px solid #EEE",
-      borderRadius: 8,
-      background: "none",
-      cursor: "pointer",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "chevron-left",
-    size: 16,
-    color: "#666"
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 18,
-      fontWeight: 700,
-      color: "#1A1D23"
-    }
-  }, MONTHS_PT[mes].charAt(0).toUpperCase() + MONTHS_PT[mes].slice(1), " ", ano), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return navMes(1);
-    },
-    style: {
-      width: 36,
-      height: 36,
-      border: "1px solid #EEE",
-      borderRadius: 8,
-      background: "none",
-      cursor: "pointer",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "chevron-right",
-    size: 16,
-    color: "#666"
-  }))), eventosMes.length === 0 ? /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#fff",
-      borderRadius: 12,
-      border: "1px solid #EEE8E8",
-      padding: "32px",
-      textAlign: "center",
-      color: "#CCC",
-      fontSize: 14,
-      boxShadow: "0 1px 4px rgba(0,0,0,0.04)"
-    }
-  }, "Nenhum evento em ", MONTHS_PT[mes], ".") : eventosMes.map(function (e) {
-    var dt = new Date(e.date + "T12:00:00");
-    var dia = dt.getDate();
-    var semana = WEEKDAYS_PT[dt.getDay()];
-    var feriado = isFeriado(e);
-    var stColor = STATUS_COLORS[e.status] || "#888";
-    return /*#__PURE__*/React.createElement("div", {
-      key: e.id,
-      style: {
-        background: "#fff",
-        borderRadius: 12,
-        border: "1px solid #EEE8E8",
-        padding: "16px",
-        marginBottom: 10,
-        boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
-        display: "flex",
-        gap: 16,
-        alignItems: "flex-start"
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        minWidth: 52,
-        textAlign: "center",
-        borderRight: "1px solid #F0EAEA",
-        paddingRight: 16
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 11,
-        fontWeight: 700,
-        color: feriado ? "#1565C0" : cor,
-        textTransform: "uppercase",
-        letterSpacing: 0.8
-      }
-    }, MONTHS_SHORT[mes]), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 28,
-        fontWeight: 700,
-        color: feriado ? "#1565C0" : cor,
-        lineHeight: 1.1
-      }
-    }, dia), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 11,
-        color: "#AAA",
-        marginTop: 2
-      }
-    }, semana)), /*#__PURE__*/React.createElement("div", {
-      style: {
-        flex: 1
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        alignItems: "center",
-        gap: 8,
-        flexWrap: "wrap",
-        marginBottom: feriado ? 0 : 8
-      }
-    }, feriado && /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 16
-      }
-    }, "\uD83C\uDF89"), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 15,
-        fontWeight: 700,
-        color: "#1A1D23"
-      }
-    }, e.title), e.tipo && /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 11,
-        padding: "2px 8px",
-        borderRadius: 10,
-        background: "#F0EAE8",
-        color: "#888",
-        fontWeight: 600
-      }
-    }, e.tipo), !feriado && e.status && /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 11,
-        padding: "2px 8px",
-        borderRadius: 10,
-        background: stColor + "18",
-        color: stColor,
-        fontWeight: 700
-      }
-    }, e.status)), !feriado && /*#__PURE__*/React.createElement(React.Fragment, null, e.timeChegada && /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        alignItems: "center",
-        gap: 6,
-        fontSize: 13,
-        color: "#666",
-        marginBottom: 4
-      }
-    }, /*#__PURE__*/React.createElement(Icon, {
-      name: "clock",
-      size: 13,
-      color: "#AAA"
-    }), " Chegada: ", e.timeChegada, e.timeApresentacao && " \xB7 Apresenta\xE7\xE3o: ".concat(e.timeApresentacao)), e.local && /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        alignItems: "center",
-        gap: 6,
-        fontSize: 13,
-        color: "#666",
-        marginBottom: 4
-      }
-    }, /*#__PURE__*/React.createElement(Icon, {
-      name: "map-pin",
-      size: 13,
-      color: "#AAA"
-    }), e.mapsUrl ? /*#__PURE__*/React.createElement("a", {
-      href: e.mapsUrl,
-      target: "_blank",
-      rel: "noreferrer",
-      style: {
-        color: cor,
-        textDecoration: "none"
-      }
-    }, e.local) : e.local), e.notes && /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 12,
-        color: "#AAA",
-        marginTop: 4,
-        fontStyle: "italic"
-      }
-    }, e.notes))), isAdmin && !feriado && /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        gap: 8,
-        alignItems: "center",
-        flexShrink: 0
-      }
-    }, /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick() {
-        return setModal(e);
-      },
-      style: {
-        padding: "7px 14px",
-        background: cor,
-        color: "#fff",
-        border: "none",
-        borderRadius: 8,
-        fontSize: 12,
-        fontWeight: 700,
-        cursor: "pointer",
-        fontFamily: "inherit"
-      }
-    }, "Detalhes"), /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick() {
-        e.grupoId ? setExcluirEvento(e) : window.confirm("Excluir este evento?") && db.collection("onix_events").doc(e.id).delete();
-      },
-      style: {
-        width: 32,
-        height: 32,
-        background: "#FFF0F0",
-        border: "1px solid #F5DADA",
-        borderRadius: 8,
-        cursor: "pointer",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
-      }
-    }, /*#__PURE__*/React.createElement(Icon, {
-      name: "trash-2",
-      size: 14,
-      color: "#5B2D8E"
-    }))));
-  }), modal && /*#__PURE__*/React.createElement(ModalEvento, {
-    evento: modal === "novo" ? null : modal,
-    onClose: function onClose() {
-      return setModal(null);
-    },
-    config: config
-  }), excluirEvento && /*#__PURE__*/React.createElement(ModalExcluirEvento, {
-    evento: excluirEvento,
-    onClose: function onClose() {
-      return setExcluirEvento(null);
-    }
-  }));
-}
+  // Agrupa lançamentos por mês
+  const mesesDisp = [...new Set(lancamentos.map(l=>l.data?.slice(0,7)).filter(Boolean))].sort().reverse();
+  if(!mesesDisp.includes(mesFiltro)) mesesDisp.unshift(mesFiltro);
+  const lancMes = lancamentos.filter(l=>l.data?.startsWith(mesFiltro));
+  const totalRecebidoMes = lancMes.filter(l=>l.status==="recebido").reduce((a,l)=>a+(parseFloat(l.valor)||0),0);
+  const totalPendente = lancamentos.filter(l=>l.status==="pendente").reduce((a,l)=>a+(parseFloat(l.valor)||0),0);
 
-// ── AVISOS ────────────────────────────────────────────────────────────────────
-function ModalAviso(_ref13) {
-  var aviso = _ref13.aviso,
-    onClose = _ref13.onClose,
-    config = _ref13.config;
-  var cor = config.corPrimaria || COR;
-  var _useState71 = useState(aviso ? {
-      title: aviso.title,
-      prioridade: aviso.prioridade || "Normal",
-      text: aviso.text
-    } : {
-      title: "",
-      prioridade: "Normal",
-      text: ""
-    }),
-    _useState72 = _slicedToArray(_useState71, 2),
-    form = _useState72[0],
-    setForm = _useState72[1];
-  var _useState73 = useState(false),
-    _useState74 = _slicedToArray(_useState73, 2),
-    salvando = _useState74[0],
-    setSalvando = _useState74[1];
-  var _useState75 = useState(""),
-    _useState76 = _slicedToArray(_useState75, 2),
-    erro = _useState76[0],
-    setErro = _useState76[1];
-  function publicar() {
-    return _publicar.apply(this, arguments);
-  }
-  function _publicar() {
-    _publicar = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee0() {
-      return _regenerator().w(function (_context0) {
-        while (1) switch (_context0.n) {
-          case 0:
-            if (form.title.trim()) {
-              _context0.n = 1;
-              break;
-            }
-            setErro("Título é obrigatório.");
-            return _context0.a(2);
-          case 1:
-            if (form.text.trim()) {
-              _context0.n = 2;
-              break;
-            }
-            setErro("Mensagem é obrigatória.");
-            return _context0.a(2);
-          case 2:
-            setSalvando(true);
-            if (!aviso) {
-              _context0.n = 4;
-              break;
-            }
-            _context0.n = 3;
-            return db.collection("onix_avisos").doc(aviso.id).update({
-              title: form.title,
-              prioridade: form.prioridade,
-              text: form.text,
-              updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-            });
-          case 3:
-            _context0.n = 5;
-            break;
-          case 4:
-            _context0.n = 5;
-            return db.collection("onix_avisos").add({
-              title: form.title,
-              prioridade: form.prioridade,
-              text: form.text,
-              tipo: "manual",
-              createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            });
-          case 5:
-            setSalvando(false);
-            onClose();
-          case 6:
-            return _context0.a(2);
-        }
-      }, _callee0);
-    }));
-    return _publicar.apply(this, arguments);
-  }
-  var inp = {
-    width: "100%",
-    padding: "11px 14px",
-    border: "1px solid #E8E0E0",
-    borderRadius: 10,
-    fontSize: 14,
-    outline: "none",
-    fontFamily: "inherit",
-    color: "#1A1D23",
-    background: "#FAFAFA"
-  };
-  var lbl = {
-    display: "block",
-    fontSize: 12,
-    fontWeight: 600,
-    color: "#888",
-    marginBottom: 5
-  };
-  return /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: "fixed",
-      inset: 0,
-      background: "rgba(0,0,0,0.5)",
-      zIndex: 300,
-      display: "flex",
-      alignItems: "flex-end",
-      justifyContent: "center"
-    },
-    onClick: function onClick(e) {
-      return e.target === e.currentTarget && onClose();
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#fff",
-      borderRadius: "20px 20px 0 0",
-      padding: "24px 20px",
-      width: "100%",
-      maxWidth: 640,
-      maxHeight: "90vh",
-      overflowY: "auto"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginBottom: 20
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 20,
-      fontWeight: 700,
-      color: "#1A1D23"
-    }
-  }, aviso ? "Editar Aviso" : "Novo Aviso"), /*#__PURE__*/React.createElement("button", {
-    onClick: onClose,
-    style: {
-      background: "#EEE",
-      border: "none",
-      borderRadius: 8,
-      width: 32,
-      height: 32,
-      cursor: "pointer",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "x",
-    size: 16,
-    color: "#666"
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 16
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "T\xEDtulo"), /*#__PURE__*/React.createElement("input", {
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      borderColor: erro && !form.title ? cor : "#E8E0E0"
-    }),
-    value: form.title,
-    onChange: function onChange(e) {
-      setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          title: e.target.value
-        });
-      });
-      setErro("");
-    },
-    autoFocus: true
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 16
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Prioridade"), /*#__PURE__*/React.createElement("select", {
-    style: inp,
-    value: form.prioridade,
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          prioridade: e.target.value
-        });
-      });
-    }
-  }, /*#__PURE__*/React.createElement("option", null, "Normal"), /*#__PURE__*/React.createElement("option", null, "Alta"), /*#__PURE__*/React.createElement("option", null, "Urgente"))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 20
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Mensagem"), /*#__PURE__*/React.createElement("textarea", {
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      minHeight: 120,
-      resize: "vertical"
-    }),
-    value: form.text,
-    onChange: function onChange(e) {
-      setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          text: e.target.value
-        });
-      });
-      setErro("");
-    }
-  })), erro && /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: cor,
-      marginBottom: 12
-    }
-  }, erro), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 10
-    }
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: onClose,
-    style: {
-      flex: 1,
-      padding: "13px",
-      background: "#F0EAE8",
-      color: "#666",
-      border: "none",
-      borderRadius: 10,
-      fontSize: 14,
-      fontWeight: 600,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, "Cancelar"), /*#__PURE__*/React.createElement("button", {
-    onClick: publicar,
-    disabled: salvando,
-    style: {
-      flex: 1,
-      padding: "13px",
-      background: cor,
-      color: "#fff",
-      border: "none",
-      borderRadius: 10,
-      fontSize: 14,
-      fontWeight: 700,
-      cursor: "pointer",
-      fontFamily: "inherit",
-      opacity: salvando ? 0.7 : 1
-    }
-  }, salvando ? "Salvando..." : aviso ? "Salvar" : "Publicar"))));
-}
-function Avisos(_ref14) {
-  var config = _ref14.config,
-    isAdmin = _ref14.isAdmin;
-  var _useCollection8 = useCollection("onix_avisos"),
-    avisos = _useCollection8.data,
-    lA = _useCollection8.loading;
-  var _useCollection9 = useCollection("onix_members"),
-    members = _useCollection9.data;
-  var _useState77 = useState(false),
-    _useState78 = _slicedToArray(_useState77, 2),
-    showModal = _useState78[0],
-    setShowModal = _useState78[1];
-  var _useState79 = useState(null),
-    _useState80 = _slicedToArray(_useState79, 2),
-    editAviso = _useState80[0],
-    setEditAviso = _useState80[1];
-  var cor = config.corPrimaria || COR;
-  if (lA) return /*#__PURE__*/React.createElement(Spinner, null);
-
-  // Aniversariantes do mês atual
-  var currentMonth = new Date().getMonth() + 1;
-  var today = todayStr();
-  var aniversarios = members.filter(function (m) {
-    return m.active && m.birthday && parseInt(m.birthday.split("-")[1]) === currentMonth;
-  }).sort(function (a, b) {
-    return parseInt(a.birthday.split("-")[2]) - parseInt(b.birthday.split("-")[2]);
-  });
-
-  // Cores por prioridade
-  var prioColor = {
-    Urgente: cor,
-    Alta: "#1565C0",
-    Normal: "#E65100"
-  };
-  var prioBg = {
-    Urgente: "#FFF5F5",
-    Alta: "#EFF6FF",
-    Normal: "#fff"
-  };
-  var prioIcon = {
-    Urgente: "alert-circle",
-    Alta: "alert-circle",
-    Normal: "megaphone"
-  };
-  function fmtDataAviso(seconds) {
-    if (!seconds) return "";
-    return new Date(seconds * 1000).toLocaleDateString("pt-BR", {
-      day: "numeric",
-      month: "long",
-      year: "numeric"
-    });
-  }
-  function excluir(_x) {
-    return _excluir3.apply(this, arguments);
-  }
-  function _excluir3() {
-    _excluir3 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee1(id) {
-      return _regenerator().w(function (_context1) {
-        while (1) switch (_context1.n) {
-          case 0:
-            if (window.confirm("Excluir este aviso?")) {
-              _context1.n = 1;
-              break;
-            }
-            return _context1.a(2);
-          case 1:
-            _context1.n = 2;
-            return db.collection("onix_avisos").doc(id).delete();
-          case 2:
-            return _context1.a(2);
-        }
-      }, _callee1);
-    }));
-    return _excluir3.apply(this, arguments);
-  }
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginBottom: 24
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 28,
-      fontWeight: 700,
-      color: cor
-    }
-  }, "Avisos"), isAdmin && /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return setShowModal(true);
-    },
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 8,
-      padding: "10px 20px",
-      background: cor,
-      border: "none",
-      borderRadius: 10,
-      fontSize: 13,
-      fontWeight: 700,
-      color: "#fff",
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "plus",
-    size: 14,
-    color: "#fff"
-  }), " Novo Aviso")), aniversarios.length > 0 && /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#FFFBEB",
-      border: "1px solid #FDE68A",
-      borderLeft: "3px solid #F59E0B",
-      borderRadius: 12,
-      padding: "16px 20px",
-      marginBottom: 12,
-      boxShadow: "0 1px 4px rgba(0,0,0,0.04)"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 8,
-      marginBottom: 10
-    }
-  }, /*#__PURE__*/React.createElement("span", {
-    style: {
-      fontSize: 16
-    }
-  }, "\uD83C\uDF82"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 15,
-      fontWeight: 700,
-      color: "#92400E"
-    }
-  }, "Aniversariantes do m\xEAs \u2014 ", MONTHS_PT[currentMonth - 1].charAt(0).toUpperCase() + MONTHS_PT[currentMonth - 1].slice(1))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      flexWrap: "wrap",
-      gap: 8
-    }
-  }, aniversarios.map(function (m) {
-    var dd = parseInt(m.birthday.split("-")[2]);
-    var isToday = m.birthday.slice(5) === today.slice(5);
-    return /*#__PURE__*/React.createElement("span", {
-      key: m.id,
-      style: {
-        display: "inline-flex",
-        alignItems: "center",
-        gap: 5,
-        padding: "4px 10px",
-        background: "#FEF3C7",
-        borderRadius: 20,
-        fontSize: 12,
-        color: "#92400E",
-        fontWeight: 600,
-        border: isToday ? "2px solid #F59E0B" : "1px solid #FDE68A"
-      }
-    }, "\uD83C\uDF82 ", m.name, " (dia ", dd, ")", isToday ? " 🎉" : "");
-  }))), avisos.length === 0 && aniversarios.length === 0 && /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#fff",
-      borderRadius: 12,
-      border: "1px solid #EEE8E8",
-      padding: "32px",
-      textAlign: "center",
-      color: "#CCC",
-      fontSize: 14
-    }
-  }, "Nenhum aviso publicado."), avisos.map(function (a) {
-    var _a$createdAt2;
-    var isAuto = a.tipo && a.tipo !== "manual";
-    var borderColor = isAuto ? "#F59E0B" : prioColor[a.prioridade] || cor;
-    var bgColor = isAuto ? "#FFFBEB" : prioBg[a.prioridade] || "#fff";
-    var iconName = isAuto ? "zap" : prioIcon[a.prioridade] || "megaphone";
-    return /*#__PURE__*/React.createElement("div", {
-      key: a.id,
-      style: {
-        background: bgColor,
-        borderRadius: 12,
-        border: "1px solid #EEE8E8",
-        borderLeft: "3px solid ".concat(borderColor),
-        padding: "16px 20px",
-        marginBottom: 10,
-        boxShadow: "0 1px 4px rgba(0,0,0,0.04)"
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "flex-start",
-        marginBottom: 8
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        alignItems: "center",
-        gap: 8,
-        flex: 1
-      }
-    }, /*#__PURE__*/React.createElement(Icon, {
-      name: iconName,
-      size: 16,
-      color: borderColor
-    }), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 15,
-        fontWeight: 700,
-        color: "#1A1D23"
-      }
-    }, a.title), !isAuto && a.prioridade && a.prioridade !== "Normal" && /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 10,
-        padding: "2px 7px",
-        borderRadius: 10,
-        background: borderColor + "20",
-        color: borderColor,
-        fontWeight: 700,
-        textTransform: "uppercase"
-      }
-    }, a.prioridade)), /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        alignItems: "center",
-        gap: 8,
-        flexShrink: 0,
-        marginLeft: 12
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 12,
-        color: "#AAA"
-      }
-    }, fmtDataAviso((_a$createdAt2 = a.createdAt) === null || _a$createdAt2 === void 0 ? void 0 : _a$createdAt2.seconds)), isAdmin && !isAuto && /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick() {
-        return setEditAviso(a);
-      },
-      style: {
-        background: "none",
-        border: "none",
-        cursor: "pointer",
-        display: "flex",
-        alignItems: "center",
-        padding: 2
-      }
-    }, /*#__PURE__*/React.createElement(Icon, {
-      name: "pencil",
-      size: 14,
-      color: "#AAA"
-    })), isAdmin && /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick() {
-        return excluir(a.id);
-      },
-      style: {
-        background: "none",
-        border: "none",
-        cursor: "pointer",
-        display: "flex",
-        alignItems: "center",
-        padding: 2
-      }
-    }, /*#__PURE__*/React.createElement(Icon, {
-      name: "trash-2",
-      size: 14,
-      color: "#CCC"
-    })))), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 14,
-        color: "#555",
-        lineHeight: 1.6
-      }
-    }, a.text), isAuto && /*#__PURE__*/React.createElement("div", {
-      style: {
-        marginTop: 6,
-        fontSize: 11,
-        color: "#B45309",
-        fontStyle: "italic"
-      }
-    }, "\u26A1 Aviso autom\xE1tico"));
-  }), showModal && /*#__PURE__*/React.createElement(ModalAviso, {
-    onClose: function onClose() {
-      return setShowModal(false);
-    },
-    config: config
-  }), editAviso && /*#__PURE__*/React.createElement(ModalAviso, {
-    aviso: editAviso,
-    onClose: function onClose() {
-      return setEditAviso(null);
-    },
-    config: config
-  }));
-}
-
-// ── MÚSICAS ───────────────────────────────────────────────────────────────────
-var CATEGORIAS_MUSICA = ["MPB", "Natal", "Regionais", "Sacro", "Clássico", "Popular", "Infantil", "Internacional", "Outro"];
-var CAT_COLORS = {
-  MPB: "#2E7D32",
-  Natal: "#1565C0",
-  Regionais: "#E65100",
-  Sacro: "#7B1FA2",
-  Clássico: "#4527A0",
-  Popular: "#00838F",
-  Infantil: "#F57C00",
-  Internacional: "#1B5E20",
-  Outro: "#616161"
-};
-function ModalMusica(_ref15) {
-  var musica = _ref15.musica,
-    onClose = _ref15.onClose,
-    config = _ref15.config;
-  var cor = config.corPrimaria || COR;
-  var vazio = {
-    title: "",
-    categoria: "MPB",
-    compositor: "",
-    partitura: "",
-    audioOriginal: "",
-    audioArranjo: "",
-    playback: "",
-    playbackB: "",
-    soprano: "",
-    mezzoSoprano: "",
-    contralto: "",
-    tenor: "",
-    baritono: "",
-    baixo: "",
-    letra: "",
-    notes: ""
-  };
-  var _useState81 = useState(musica ? _objectSpread(_objectSpread({}, vazio), musica) : vazio),
-    _useState82 = _slicedToArray(_useState81, 2),
-    form = _useState82[0],
-    setForm = _useState82[1];
-  var _useState83 = useState(false),
-    _useState84 = _slicedToArray(_useState83, 2),
-    salvando = _useState84[0],
-    setSalvando = _useState84[1];
-  var _useState85 = useState(""),
-    _useState86 = _slicedToArray(_useState85, 2),
-    erro = _useState86[0],
-    setErro = _useState86[1];
-  var _useState87 = useState(""),
-    _useState88 = _slicedToArray(_useState87, 2),
-    novaCategoria = _useState88[0],
-    setNovaCategoria = _useState88[1];
-  var _useState89 = useState(false),
-    _useState90 = _slicedToArray(_useState89, 2),
-    showNovaCateg = _useState90[0],
-    setShowNovaCateg = _useState90[1];
-  var _useState91 = useState(false),
-    _useState92 = _slicedToArray(_useState91, 2),
-    uploadA = _useState92[0],
-    setUploadA = _useState92[1];
-  var _useState93 = useState(false),
-    _useState94 = _slicedToArray(_useState93, 2),
-    uploadB = _useState94[0],
-    setUploadB = _useState94[1];
-  function uploadAudio(_x2, _x3) {
-    return _uploadAudio.apply(this, arguments);
-  }
-  function _uploadAudio() {
-    _uploadAudio = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee10(file, plano) {
-      var setUpload, storage, nomeArquivo, ref, url, _t;
-      return _regenerator().w(function (_context10) {
-        while (1) switch (_context10.p = _context10.n) {
-          case 0:
-            if (file) {
-              _context10.n = 1;
-              break;
-            }
-            return _context10.a(2);
-          case 1:
-            setUpload = plano === "A" ? setUploadA : setUploadB;
-            setUpload(true);
-            _context10.p = 2;
-            storage = firebase.app().storage();
-            nomeArquivo = "playbacks/".concat(Date.now(), "_").concat(file.name.replace(/[^a-zA-Z0-9._-]/g, "_"));
-            ref = storage.ref(nomeArquivo);
-            _context10.n = 3;
-            return ref.put(file);
-          case 3:
-            _context10.n = 4;
-            return ref.getDownloadURL();
-          case 4:
-            url = _context10.v;
-            if (plano === "A") setForm(function (f) {
-              return _objectSpread(_objectSpread({}, f), {}, {
-                playback: url
-              });
-            });else setForm(function (f) {
-              return _objectSpread(_objectSpread({}, f), {}, {
-                playbackB: url
-              });
-            });
-            _context10.n = 6;
-            break;
-          case 5:
-            _context10.p = 5;
-            _t = _context10.v;
-            setErro("Erro no upload: " + _t.message);
-          case 6:
-            setUpload(false);
-          case 7:
-            return _context10.a(2);
-        }
-      }, _callee10, null, [[2, 5]]);
-    }));
-    return _uploadAudio.apply(this, arguments);
-  }
-  var _useState95 = useState(CATEGORIAS_MUSICA),
-    _useState96 = _slicedToArray(_useState95, 2),
-    categorias = _useState96[0],
-    setCategorias = _useState96[1];
-  function salvar() {
-    return _salvar5.apply(this, arguments);
-  }
-  function _salvar5() {
-    _salvar5 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee11() {
-      var d;
-      return _regenerator().w(function (_context11) {
-        while (1) switch (_context11.n) {
-          case 0:
-            if (form.title.trim()) {
-              _context11.n = 1;
-              break;
-            }
-            setErro("Título é obrigatório.");
-            return _context11.a(2);
-          case 1:
-            setSalvando(true);
-            d = {
-              title: form.title,
-              categoria: form.categoria,
-              compositor: form.compositor || "",
-              partitura: form.partitura || "",
-              audioOriginal: form.audioOriginal || "",
-              audioArranjo: form.audioArranjo || "",
-              playback: form.playback || "",
-              playbackB: form.playbackB || "",
-              soprano: form.soprano || "",
-              mezzoSoprano: form.mezzoSoprano || "",
-              contralto: form.contralto || "",
-              tenor: form.tenor || "",
-              baritono: form.baritono || "",
-              baixo: form.baixo || "",
-              letra: form.letra || "",
-              notes: form.notes || ""
-            };
-            if (!musica) {
-              _context11.n = 3;
-              break;
-            }
-            _context11.n = 2;
-            return db.collection("onix_songs").doc(musica.id).update(_objectSpread(_objectSpread({}, d), {}, {
-              updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-            }));
-          case 2:
-            _context11.n = 5;
-            break;
-          case 3:
-            _context11.n = 4;
-            return db.collection("onix_songs").add(_objectSpread(_objectSpread({}, d), {}, {
-              createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            }));
-          case 4:
-            _context11.n = 5;
-            return db.collection("onix_avisos").add({
-              title: "\uD83C\uDFB5 Nova m\xFAsica: ".concat(form.title),
-              text: "\"".concat(form.title, "\"").concat(form.compositor ? " de " + form.compositor : "", " foi adicionada ao repert\xF3rio na categoria ").concat(form.categoria, "."),
-              tipo: "auto_musica",
-              prioridade: "Normal",
-              createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            });
-          case 5:
-            setSalvando(false);
-            onClose();
-          case 6:
-            return _context11.a(2);
-        }
-      }, _callee11);
-    }));
-    return _salvar5.apply(this, arguments);
-  }
-  function excluir() {
-    return _excluir4.apply(this, arguments);
-  }
-  function _excluir4() {
-    _excluir4 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee12() {
-      return _regenerator().w(function (_context12) {
-        while (1) switch (_context12.n) {
-          case 0:
-            if (window.confirm("Excluir esta música do repertório?")) {
-              _context12.n = 1;
-              break;
-            }
-            return _context12.a(2);
-          case 1:
-            _context12.n = 2;
-            return db.collection("onix_songs").doc(musica.id).delete();
-          case 2:
-            onClose();
-          case 3:
-            return _context12.a(2);
-        }
-      }, _callee12);
-    }));
-    return _excluir4.apply(this, arguments);
-  }
-  var inp = {
-    width: "100%",
-    padding: "10px 14px",
-    border: "1px solid #E8E0E0",
-    borderRadius: 10,
-    fontSize: 13,
-    outline: "none",
-    fontFamily: "inherit",
-    color: "#1A1D23",
-    background: "#FAFAFA"
-  };
-  var lbl = {
-    display: "block",
-    fontSize: 11,
-    fontWeight: 700,
-    color: "#888",
-    marginBottom: 5,
-    textTransform: "uppercase",
-    letterSpacing: 0.8
-  };
-  var g2 = {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gap: 12,
-    marginBottom: 14
-  };
-  var sec = {
-    fontSize: 11,
-    fontWeight: 700,
-    color: cor,
-    textTransform: "uppercase",
-    letterSpacing: 1,
-    marginBottom: 10,
-    marginTop: 6
-  };
-  return /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: "fixed",
-      inset: 0,
-      background: "rgba(0,0,0,0.5)",
-      zIndex: 300,
-      display: "flex",
-      alignItems: "flex-end",
-      justifyContent: "center"
-    },
-    onClick: function onClick(e) {
-      return e.target === e.currentTarget && onClose();
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#FAFAFA",
-      borderRadius: "20px 20px 0 0",
-      padding: "24px 20px",
-      width: "100%",
-      maxWidth: 640,
-      maxHeight: "93vh",
-      overflowY: "auto"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginBottom: 20
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 20,
-      fontWeight: 700,
-      color: "#1A1D23"
-    }
-  }, musica ? "Editar Música" : "Adicionar Música ao Repertório"), /*#__PURE__*/React.createElement("button", {
-    onClick: onClose,
-    style: {
-      background: "#EEE",
-      border: "none",
-      borderRadius: 8,
-      width: 32,
-      height: 32,
-      cursor: "pointer",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "x",
-    size: 16,
-    color: "#666"
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 14
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "T\xEDtulo *"), /*#__PURE__*/React.createElement("input", {
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      borderColor: erro && !form.title ? cor : "#E8E0E0"
-    }),
-    value: form.title,
-    onChange: function onChange(e) {
-      setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          title: e.target.value
-        });
-      });
-      setErro("");
-    },
-    autoFocus: true
-  }), erro && /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      color: cor,
-      marginTop: 4
-    }
-  }, erro)), /*#__PURE__*/React.createElement("div", {
-    style: g2
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Categoria *"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 6
-    }
-  }, /*#__PURE__*/React.createElement("select", {
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      flex: 1
-    }),
-    value: form.categoria,
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          categoria: e.target.value
-        });
-      });
-    }
-  }, categorias.map(function (c) {
-    return /*#__PURE__*/React.createElement("option", {
-      key: c
-    }, c);
-  })), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return setShowNovaCateg(function (v) {
-        return !v;
-      });
-    },
-    title: "Nova categoria",
-    style: {
-      width: 36,
-      height: 38,
-      background: cor + "15",
-      border: "1px solid ".concat(cor, "33"),
-      borderRadius: 8,
-      cursor: "pointer",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      flexShrink: 0
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "plus",
-    size: 14,
-    color: cor
-  }))), showNovaCateg && /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 6,
-      marginTop: 6
-    }
-  }, /*#__PURE__*/React.createElement("input", {
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      flex: 1
-    }),
-    value: novaCategoria,
-    onChange: function onChange(e) {
-      return setNovaCategoria(e.target.value);
-    },
-    placeholder: "Nome da categoria"
-  }), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      if (novaCategoria.trim()) {
-        setCategorias(function (c) {
-          return [].concat(_toConsumableArray(c), [novaCategoria.trim()]);
-        });
-        setForm(function (f) {
-          return _objectSpread(_objectSpread({}, f), {}, {
-            categoria: novaCategoria.trim()
-          });
-        });
-        setNovaCategoria("");
-        setShowNovaCateg(false);
-      }
-    },
-    style: {
-      padding: "0 12px",
-      background: cor,
-      color: "#fff",
-      border: "none",
-      borderRadius: 8,
-      cursor: "pointer",
-      fontFamily: "inherit",
-      fontSize: 12,
-      fontWeight: 700
-    }
-  }, "Criar"))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Compositor"), /*#__PURE__*/React.createElement("input", {
-    style: inp,
-    value: form.compositor || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          compositor: e.target.value
-        });
-      });
-    }
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: sec
-  }, "Materiais (links Google Drive ou URL direta)"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 14
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "\uD83C\uDFBC Partitura (PDF)"), /*#__PURE__*/React.createElement("input", {
-    style: inp,
-    value: form.partitura || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          partitura: e.target.value
-        });
-      });
-    },
-    placeholder: "https://drive.google.com/file/d/..."
-  })), /*#__PURE__*/React.createElement("div", {
-    style: g2
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "\uD83C\uDFB5 \xC1udio Original"), /*#__PURE__*/React.createElement("input", {
-    style: inp,
-    value: form.audioOriginal || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          audioOriginal: e.target.value
-        });
-      });
-    },
-    placeholder: "Drive ou YouTube (https://...)"
-  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "\uD83C\uDFB5 \xC1udio/Arranjo"), /*#__PURE__*/React.createElement("input", {
-    style: inp,
-    value: form.audioArranjo || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          audioArranjo: e.target.value
-        });
-      });
-    },
-    placeholder: "Drive ou YouTube (https://...)"
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: g2
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "\uD83C\uDFA7 Playback \u2014 Plano A"), /*#__PURE__*/React.createElement("input", {
-    style: inp,
-    value: form.playback || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          playback: e.target.value
-        });
-      });
-    },
-    placeholder: "Drive ou YouTube (https://...)"
-  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "\uD83C\uDFA7 Playback \u2014 Plano B"), /*#__PURE__*/React.createElement("input", {
-    style: inp,
-    value: form.playbackB || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          playbackB: e.target.value
-        });
-      });
-    },
-    placeholder: "Drive ou YouTube (https://...)"
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: sec
-  }, "\xC1udios por naipe"), /*#__PURE__*/React.createElement("div", {
-    style: g2
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Soprano"), /*#__PURE__*/React.createElement("input", {
-    style: inp,
-    value: form.soprano || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          soprano: e.target.value
-        });
-      });
-    },
-    placeholder: "https://drive.google.com/..."
-  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Mezzo-soprano"), /*#__PURE__*/React.createElement("input", {
-    style: inp,
-    value: form.mezzoSoprano || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          mezzoSoprano: e.target.value
-        });
-      });
-    },
-    placeholder: "https://drive.google.com/..."
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: g2
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Contralto"), /*#__PURE__*/React.createElement("input", {
-    style: inp,
-    value: form.contralto || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          contralto: e.target.value
-        });
-      });
-    },
-    placeholder: "https://drive.google.com/..."
-  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Tenor"), /*#__PURE__*/React.createElement("input", {
-    style: inp,
-    value: form.tenor || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          tenor: e.target.value
-        });
-      });
-    },
-    placeholder: "https://drive.google.com/..."
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: g2
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Bar\xEDtono"), /*#__PURE__*/React.createElement("input", {
-    style: inp,
-    value: form.baritono || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          baritono: e.target.value
-        });
-      });
-    },
-    placeholder: "https://drive.google.com/..."
-  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Baixo"), /*#__PURE__*/React.createElement("input", {
-    style: inp,
-    value: form.baixo || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          baixo: e.target.value
-        });
-      });
-    },
-    placeholder: "https://drive.google.com/..."
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 14
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Letra"), /*#__PURE__*/React.createElement("textarea", {
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      minHeight: 100,
-      resize: "vertical"
-    }),
-    value: form.letra || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          letra: e.target.value
-        });
-      });
-    }
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 20
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Observa\xE7\xF5es"), /*#__PURE__*/React.createElement("textarea", {
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      minHeight: 70,
-      resize: "vertical"
-    }),
-    value: form.notes || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          notes: e.target.value
-        });
-      });
-    }
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 10
-    }
-  }, musica && /*#__PURE__*/React.createElement("button", {
-    onClick: excluir,
-    style: {
-      padding: "12px 16px",
-      background: "#FFF0F0",
-      color: "#5B2D8E",
-      border: "1px solid #F5DADA",
-      borderRadius: 10,
-      fontSize: 13,
-      fontWeight: 600,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, "Excluir"), /*#__PURE__*/React.createElement("button", {
-    onClick: onClose,
-    style: {
-      flex: 1,
-      padding: "13px",
-      background: "#F0EAE8",
-      color: "#666",
-      border: "none",
-      borderRadius: 10,
-      fontSize: 14,
-      fontWeight: 600,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, "Cancelar"), /*#__PURE__*/React.createElement("button", {
-    onClick: salvar,
-    disabled: salvando,
-    style: {
-      flex: 1,
-      padding: "13px",
-      background: cor,
-      color: "#fff",
-      border: "none",
-      borderRadius: 10,
-      fontSize: 14,
-      fontWeight: 700,
-      cursor: "pointer",
-      fontFamily: "inherit",
-      opacity: salvando ? 0.7 : 1
-    }
-  }, salvando ? "Salvando..." : musica ? "Salvar" : "Adicionar"))));
-}
-function Repertorio(_ref16) {
-  var config = _ref16.config,
-    isAdmin = _ref16.isAdmin;
-  var _useCollection0 = useCollection("onix_songs"),
-    songs = _useCollection0.data,
-    loading = _useCollection0.loading;
-  var _useState97 = useState(""),
-    _useState98 = _slicedToArray(_useState97, 2),
-    busca = _useState98[0],
-    setBusca = _useState98[1];
-  var _useState99 = useState("Todas as Categorias"),
-    _useState100 = _slicedToArray(_useState99, 2),
-    filtro = _useState100[0],
-    setFiltro = _useState100[1];
-  var _useState101 = useState(null),
-    _useState102 = _slicedToArray(_useState101, 2),
-    modal = _useState102[0],
-    setModal = _useState102[1];
-  var _useState103 = useState(null),
-    _useState104 = _slicedToArray(_useState103, 2),
-    player = _useState104[0],
-    setPlayer = _useState104[1];
-  var cor = config.corPrimaria || COR;
-  if (loading) return /*#__PURE__*/React.createElement(Spinner, null);
-  var categorias = ["Todas as Categorias"].concat(_toConsumableArray(Array.from(new Set(songs.map(function (s) {
-    return s.categoria;
-  }).filter(Boolean))).sort()));
-  var filtradas = songs.filter(function (s) {
-    var q = busca.toLowerCase();
-    var ok = !busca || s.title.toLowerCase().includes(q) || (s.compositor || "").toLowerCase().includes(q) || (s.categoria || "").toLowerCase().includes(q);
-    var of = filtro === "Todas as Categorias" || s.categoria === filtro;
-    return ok && of;
-  });
-  function MaterialBadge(_ref17) {
-    var label = _ref17.label,
-      icon = _ref17.icon,
-      url = _ref17.url;
-    if (!url) return null;
-    return /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick(e) {
-        e.stopPropagation();
-        setPlayer({
-          url: url,
-          title: label
-        });
-      },
-      style: {
-        display: "inline-flex",
-        alignItems: "center",
-        gap: 4,
-        padding: "3px 8px",
-        borderRadius: 10,
-        background: "#F3EEF9",
-        color: cor,
-        fontSize: 11,
-        fontWeight: 600,
-        border: "none",
-        cursor: "pointer",
-        fontFamily: "inherit",
-        marginRight: 4,
-        marginBottom: 4
-      }
-    }, /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 12
-      }
-    }, icon), " ", label);
-  }
-  function temNaipes(s) {
-    return s.soprano || s.mezzoSoprano || s.contralto || s.tenor || s.baritono || s.baixo;
-  }
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginBottom: 24
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 28,
-      fontWeight: 700,
-      color: cor
-    }
-  }, "Repert\xF3rio"), isAdmin && /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return setModal("novo");
-    },
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 8,
-      padding: "10px 20px",
-      background: cor,
-      border: "none",
-      borderRadius: 10,
-      fontSize: 13,
-      fontWeight: 700,
-      color: "#fff",
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "plus",
-    size: 14,
-    color: "#fff"
-  }), " Adicionar M\xFAsica")), /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#fff",
-      borderRadius: 12,
-      border: "1px solid #EEE8E8",
-      padding: "12px 16px",
-      marginBottom: 20,
-      display: "flex",
-      gap: 12,
-      alignItems: "center",
-      boxShadow: "0 1px 4px rgba(0,0,0,0.04)"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "search",
-    size: 16,
-    color: "#AAA"
-  }), /*#__PURE__*/React.createElement("input", {
-    value: busca,
-    onChange: function onChange(e) {
-      return setBusca(e.target.value);
-    },
-    placeholder: "Buscar m\xFAsicas...",
-    style: {
-      flex: 1,
-      border: "none",
-      outline: "none",
-      fontSize: 14,
-      fontFamily: "inherit",
-      color: "#1A1D23",
-      background: "none"
-    }
-  }), /*#__PURE__*/React.createElement("select", {
-    value: filtro,
-    onChange: function onChange(e) {
-      return setFiltro(e.target.value);
-    },
-    style: {
-      border: "1px solid #EEE8E8",
-      borderRadius: 8,
-      padding: "7px 12px",
-      fontSize: 13,
-      fontFamily: "inherit",
-      color: "#1A1D23",
-      outline: "none",
-      background: "#fff",
-      cursor: "pointer"
-    }
-  }, categorias.map(function (c) {
-    return /*#__PURE__*/React.createElement("option", {
-      key: c
-    }, c);
-  }))), filtradas.length === 0 ? /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#fff",
-      borderRadius: 12,
-      border: "1px solid #EEE8E8",
-      padding: "32px",
-      textAlign: "center",
-      color: "#CCC",
-      fontSize: 14
-    }
-  }, "Nenhuma m\xFAsica encontrada.") : /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "grid",
-      gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
-      gap: 14
-    }
-  }, filtradas.map(function (s) {
-    var catColor = CAT_COLORS[s.categoria] || "#616161";
-    return /*#__PURE__*/React.createElement("div", {
-      key: s.id,
-      style: {
-        background: "#fff",
-        borderRadius: 12,
-        border: "1px solid #EEE8E8",
-        borderTop: "3px solid ".concat(catColor),
-        padding: "16px",
-        boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
-        cursor: isAdmin ? "pointer" : "default"
-      },
-      onClick: isAdmin ? function () {
-        return setModal(s);
-      } : undefined
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "flex-start",
-        marginBottom: 4
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 15,
-        fontWeight: 700,
-        color: "#1A1D23",
-        flex: 1,
-        paddingRight: 8
-      }
-    }, s.title), /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 11,
-        padding: "2px 8px",
-        borderRadius: 10,
-        background: catColor + "18",
-        color: catColor,
-        fontWeight: 700,
-        flexShrink: 0
-      }
-    }, s.categoria)), s.compositor && /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 12,
-        color: "#AAA",
-        marginBottom: 10
-      }
-    }, s.compositor), /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        flexWrap: "wrap",
-        marginTop: 8
-      }
-    }, /*#__PURE__*/React.createElement(MaterialBadge, {
-      label: "Partitura",
-      icon: "\uD83C\uDFBC",
-      url: s.partitura
-    }), /*#__PURE__*/React.createElement(MaterialBadge, {
-      label: "\xC1udio Original",
-      icon: "\uD83C\uDFB5",
-      url: s.audioOriginal
-    }), /*#__PURE__*/React.createElement(MaterialBadge, {
-      label: "Arranjo",
-      icon: "\uD83C\uDFB5",
-      url: s.audioArranjo
-    }), /*#__PURE__*/React.createElement(MaterialBadge, {
-      label: "Playback",
-      icon: "\uD83C\uDFA7",
-      url: s.playback
-    }), temNaipes(s) && /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick(e) {
-        e.stopPropagation();
-        setPlayer({
-          url: s.soprano || s.mezzoSoprano || s.contralto || s.tenor || s.baritono || s.baixo,
-          title: "Naipes — " + s.title,
-          naipes: {
-            soprano: s.soprano,
-            mezzoSoprano: s.mezzoSoprano,
-            contralto: s.contralto,
-            tenor: s.tenor,
-            baritono: s.baritono,
-            baixo: s.baixo
-          }
-        });
-      },
-      style: {
-        display: "inline-flex",
-        alignItems: "center",
-        gap: 4,
-        padding: "3px 8px",
-        borderRadius: 10,
-        background: "#F3EEF9",
-        color: cor,
-        fontSize: 11,
-        fontWeight: 600,
-        border: "none",
-        cursor: "pointer",
-        fontFamily: "inherit",
-        marginRight: 4,
-        marginBottom: 4
-      }
-    }, "\uD83C\uDFB6 Naipes"), s.letra && /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick(e) {
-        e.stopPropagation();
-        setPlayer({
-          url: "letra",
-          title: s.title,
-          letra: s.letra
-        });
-      },
-      style: {
-        display: "inline-flex",
-        alignItems: "center",
-        gap: 4,
-        padding: "3px 8px",
-        borderRadius: 10,
-        background: "#F5F5F5",
-        color: "#666",
-        fontSize: 11,
-        fontWeight: 600,
-        border: "none",
-        cursor: "pointer",
-        fontFamily: "inherit",
-        marginRight: 4,
-        marginBottom: 4
-      }
-    }, "\uD83D\uDCC4 Letra")));
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      color: "#AAA",
-      marginTop: 12,
-      textAlign: "right"
-    }
-  }, filtradas.length, " m\xFAsica", filtradas.length !== 1 ? "s" : ""), modal && /*#__PURE__*/React.createElement(ModalMusica, {
-    musica: modal === "novo" ? null : modal,
-    onClose: function onClose() {
-      return setModal(null);
-    },
-    config: config
-  }), player && /*#__PURE__*/React.createElement(PlayerModal, {
-    url: player.url,
-    title: player.title,
-    onClose: function onClose() {
-      return setPlayer(null);
-    },
-    letra: player.letra,
-    naipes: player.naipes
-  }));
-}
-
-// ── SALA DE ESTUDOS ───────────────────────────────────────────────────────────
-var TIPOS_MIDIA = [{
-  key: "video",
-  label: "Vídeo",
-  icon: "video",
-  bg: "#EFF6FF",
-  color: "#1565C0"
-}, {
-  key: "pdf",
-  label: "PDF",
-  icon: "file-text",
-  bg: "#FFF5F5",
-  color: "#5B2D8E"
-}, {
-  key: "audio",
-  label: "Áudio",
-  icon: "mic",
-  bg: "#F0FDF4",
-  color: "#2E7D32"
-}, {
-  key: "texto",
-  label: "Texto",
-  icon: "align-left",
-  bg: "#FFFBEB",
-  color: "#92400E"
-}, {
-  key: "foto",
-  label: "Foto",
-  icon: "image",
-  bg: "#F5F3FF",
-  color: "#6D28D9"
-}];
-var CATS_ESTUDOS = ["Vocalise", "Aula", "Documentário", "Reportagem", "Concerto", "Ensaio", "Material de Apoio", "Outro"];
-function ModalEstudo(_ref18) {
-  var estudo = _ref18.estudo,
-    onClose = _ref18.onClose,
-    config = _ref18.config;
-  var cor = config.corPrimaria || COR;
-  var vazio = {
-    tipo: "video",
-    categoria: "Aula",
-    title: "",
-    descricao: "",
-    url: ""
-  };
-  var _useState105 = useState(estudo ? _objectSpread(_objectSpread({}, vazio), estudo) : vazio),
-    _useState106 = _slicedToArray(_useState105, 2),
-    form = _useState106[0],
-    setForm = _useState106[1];
-  var _useState107 = useState(false),
-    _useState108 = _slicedToArray(_useState107, 2),
-    salvando = _useState108[0],
-    setSalvando = _useState108[1];
-  var _useState109 = useState(""),
-    _useState110 = _slicedToArray(_useState109, 2),
-    erro = _useState110[0],
-    setErro = _useState110[1];
-  function salvar() {
-    return _salvar6.apply(this, arguments);
-  }
-  function _salvar6() {
-    _salvar6 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee13() {
-      var d, _TIPOS_MIDIA$find;
-      return _regenerator().w(function (_context13) {
-        while (1) switch (_context13.n) {
-          case 0:
-            if (form.title.trim()) {
-              _context13.n = 1;
-              break;
-            }
-            setErro("Título é obrigatório.");
-            return _context13.a(2);
-          case 1:
-            if (form.url.trim()) {
-              _context13.n = 2;
-              break;
-            }
-            setErro("Link é obrigatório.");
-            return _context13.a(2);
-          case 2:
-            setSalvando(true);
-            d = {
-              tipo: form.tipo,
-              categoria: form.categoria,
-              title: form.title,
-              descricao: form.descricao || "",
-              url: form.url
-            };
-            if (!estudo) {
-              _context13.n = 4;
-              break;
-            }
-            _context13.n = 3;
-            return db.collection("onix_estudos").doc(estudo.id).update(_objectSpread(_objectSpread({}, d), {}, {
-              updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-            }));
-          case 3:
-            _context13.n = 6;
-            break;
-          case 4:
-            _context13.n = 5;
-            return db.collection("onix_estudos").add(_objectSpread(_objectSpread({}, d), {}, {
-              createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            }));
-          case 5:
-            _context13.n = 6;
-            return db.collection("onix_avisos").add({
-              title: "\uD83D\uDCDA Novo material: ".concat(form.title),
-              text: "Um novo material foi adicionado \xE0 Sala de Estudos: \"".concat(form.title, "\" (").concat(((_TIPOS_MIDIA$find = TIPOS_MIDIA.find(function (t) {
-                return t.key === form.tipo;
-              })) === null || _TIPOS_MIDIA$find === void 0 ? void 0 : _TIPOS_MIDIA$find.label) || form.tipo, " \u2014 ").concat(form.categoria, ")."),
-              tipo: "auto_estudo",
-              prioridade: "Normal",
-              createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            });
-          case 6:
-            setSalvando(false);
-            onClose();
-          case 7:
-            return _context13.a(2);
-        }
-      }, _callee13);
-    }));
-    return _salvar6.apply(this, arguments);
-  }
-  function excluir() {
-    return _excluir5.apply(this, arguments);
-  }
-  function _excluir5() {
-    _excluir5 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee14() {
-      return _regenerator().w(function (_context14) {
-        while (1) switch (_context14.n) {
-          case 0:
-            if (window.confirm("Excluir este material?")) {
-              _context14.n = 1;
-              break;
-            }
-            return _context14.a(2);
-          case 1:
-            _context14.n = 2;
-            return db.collection("onix_estudos").doc(estudo.id).delete();
-          case 2:
-            onClose();
-          case 3:
-            return _context14.a(2);
-        }
-      }, _callee14);
-    }));
-    return _excluir5.apply(this, arguments);
-  }
-  var inp = {
-    width: "100%",
-    padding: "11px 14px",
-    border: "1px solid #E8E0E0",
-    borderRadius: 10,
-    fontSize: 14,
-    outline: "none",
-    fontFamily: "inherit",
-    color: "#1A1D23",
-    background: "#FAFAFA"
-  };
-  var lbl = {
-    display: "block",
-    fontSize: 12,
-    fontWeight: 600,
-    color: "#888",
-    marginBottom: 6
-  };
-  return /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: "fixed",
-      inset: 0,
-      background: "rgba(0,0,0,0.5)",
-      zIndex: 300,
-      display: "flex",
-      alignItems: "flex-end",
-      justifyContent: "center"
-    },
-    onClick: function onClick(e) {
-      return e.target === e.currentTarget && onClose();
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#FAFAFA",
-      borderRadius: "20px 20px 0 0",
-      padding: "24px 20px",
-      width: "100%",
-      maxWidth: 600,
-      maxHeight: "92vh",
-      overflowY: "auto"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginBottom: 20
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 20,
-      fontWeight: 700,
-      color: "#1A1D23"
-    }
-  }, estudo ? "Editar material" : "Adicionar material"), /*#__PURE__*/React.createElement("button", {
-    onClick: onClose,
-    style: {
-      background: "#EEE",
-      border: "none",
-      borderRadius: 8,
-      width: 32,
-      height: 32,
-      cursor: "pointer",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "x",
-    size: 16,
-    color: "#666"
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 20
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Tipo de m\xEDdia *"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 8,
-      flexWrap: "wrap"
-    }
-  }, TIPOS_MIDIA.map(function (t) {
-    return /*#__PURE__*/React.createElement("button", {
-      key: t.key,
-      onClick: function onClick() {
-        return setForm(function (f) {
-          return _objectSpread(_objectSpread({}, f), {}, {
-            tipo: t.key
-          });
-        });
-      },
-      style: {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: 4,
-        padding: "10px 16px",
-        borderRadius: 10,
-        border: "2px solid ".concat(form.tipo === t.key ? cor : "#EEE"),
-        background: form.tipo === t.key ? cor + "10" : "#fff",
-        cursor: "pointer",
-        fontFamily: "inherit",
-        minWidth: 70
-      }
-    }, /*#__PURE__*/React.createElement(Icon, {
-      name: t.icon,
-      size: 20,
-      color: form.tipo === t.key ? cor : "#AAA"
-    }), /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 12,
-        fontWeight: 700,
-        color: form.tipo === t.key ? cor : "#888"
-      }
-    }, t.label));
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 20
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Categoria *"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 8,
-      flexWrap: "wrap"
-    }
-  }, CATS_ESTUDOS.map(function (c) {
-    return /*#__PURE__*/React.createElement("button", {
-      key: c,
-      onClick: function onClick() {
-        return setForm(function (f) {
-          return _objectSpread(_objectSpread({}, f), {}, {
-            categoria: c
-          });
-        });
-      },
-      style: {
-        padding: "6px 14px",
-        borderRadius: 20,
-        border: "1px solid ".concat(form.categoria === c ? cor : "#EEE"),
-        background: form.categoria === c ? cor : "#fff",
-        color: form.categoria === c ? "#fff" : "#555",
-        fontSize: 13,
-        fontWeight: 600,
-        cursor: "pointer",
-        fontFamily: "inherit"
-      }
-    }, c);
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 14
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "T\xEDtulo *"), /*#__PURE__*/React.createElement("input", {
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      borderColor: erro && !form.title ? cor : "#E8E0E0"
-    }),
-    value: form.title,
-    onChange: function onChange(e) {
-      setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          title: e.target.value
-        });
-      });
-      setErro("");
-    },
-    placeholder: "Nome do material...",
-    autoFocus: true
-  }), erro && /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      color: cor,
-      marginTop: 4
-    }
-  }, erro)), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 14
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Descri\xE7\xE3o (opcional)"), /*#__PURE__*/React.createElement("input", {
-    style: inp,
-    value: form.descricao || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          descricao: e.target.value
-        });
-      });
-    },
-    placeholder: "Breve observa\xE7\xE3o..."
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 20
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Link do YouTube ou Google Drive"), /*#__PURE__*/React.createElement("input", {
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      borderColor: erro && !form.url ? cor : "#E8E0E0"
-    }),
-    value: form.url || "",
-    onChange: function onChange(e) {
-      setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          url: e.target.value
-        });
-      });
-      setErro("");
-    },
-    placeholder: "https://www.youtube.com/watch?v=... ou https://drive.google.com"
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 10
-    }
-  }, estudo && /*#__PURE__*/React.createElement("button", {
-    onClick: excluir,
-    style: {
-      padding: "12px 16px",
-      background: "#FFF0F0",
-      color: "#5B2D8E",
-      border: "1px solid #F5DADA",
-      borderRadius: 10,
-      fontSize: 13,
-      fontWeight: 600,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, "Excluir"), /*#__PURE__*/React.createElement("button", {
-    onClick: onClose,
-    style: {
-      flex: 1,
-      padding: "13px",
-      background: "#F0EAE8",
-      color: "#666",
-      border: "none",
-      borderRadius: 10,
-      fontSize: 14,
-      fontWeight: 600,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, "Cancelar"), /*#__PURE__*/React.createElement("button", {
-    onClick: salvar,
-    disabled: salvando,
-    style: {
-      flex: 1,
-      padding: "13px",
-      background: cor,
-      color: "#fff",
-      border: "none",
-      borderRadius: 10,
-      fontSize: 14,
-      fontWeight: 700,
-      cursor: "pointer",
-      fontFamily: "inherit",
-      opacity: salvando ? 0.7 : 1
-    }
-  }, salvando ? "Salvando..." : estudo ? "Salvar" : "Adicionar"))));
-}
-function SalaEstudos(_ref19) {
-  var config = _ref19.config,
-    isAdmin = _ref19.isAdmin;
-  var _useCollection1 = useCollection("onix_estudos"),
-    estudos = _useCollection1.data,
-    loading = _useCollection1.loading;
-  var _useState111 = useState("Todos"),
-    _useState112 = _slicedToArray(_useState111, 2),
-    filtro = _useState112[0],
-    setFiltro = _useState112[1];
-  var _useState113 = useState(null),
-    _useState114 = _slicedToArray(_useState113, 2),
-    modal = _useState114[0],
-    setModal = _useState114[1];
-  var _useState115 = useState(null),
-    _useState116 = _slicedToArray(_useState115, 2),
-    player = _useState116[0],
-    setPlayer = _useState116[1];
-  var cor = config.corPrimaria || COR;
-  if (loading) return /*#__PURE__*/React.createElement(Spinner, null);
-
-  // Categorias com contagem
-  var contagem = {};
-  estudos.forEach(function (e) {
-    contagem[e.categoria] = (contagem[e.categoria] || 0) + 1;
-  });
-  var cats = ["Todos"].concat(_toConsumableArray(Object.keys(contagem).sort()));
-  var filtrados = filtro === "Todos" ? estudos : estudos.filter(function (e) {
-    return e.categoria === filtro;
-  });
-  function getMidia(tipo) {
-    return TIPOS_MIDIA.find(function (t) {
-      return t.key === tipo;
-    }) || TIPOS_MIDIA[0];
-  }
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "flex-start",
-      marginBottom: 8
-    }
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 28,
-      fontWeight: 700,
-      color: cor
-    }
-  }, "Sala de Estudos"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#AAA",
-      marginTop: 2
-    }
-  }, "Recursos did\xE1ticos para o corista")), isAdmin && /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return setModal("novo");
-    },
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 8,
-      padding: "10px 20px",
-      background: cor,
-      border: "none",
-      borderRadius: 10,
-      fontSize: 13,
-      fontWeight: 700,
-      color: "#fff",
-      cursor: "pointer",
-      fontFamily: "inherit",
-      flexShrink: 0
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "plus",
-    size: 14,
-    color: "#fff"
-  }), " Adicionar material")), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 8,
-      flexWrap: "wrap",
-      margin: "16px 0 20px"
-    }
-  }, cats.map(function (c) {
-    var count = c === "Todos" ? estudos.length : contagem[c] || 0;
-    return /*#__PURE__*/React.createElement("button", {
-      key: c,
-      onClick: function onClick() {
-        return setFiltro(c);
-      },
-      style: {
-        padding: "6px 14px",
-        borderRadius: 20,
-        border: "1px solid ".concat(filtro === c ? cor : "#EEE"),
-        background: filtro === c ? cor : "#fff",
-        color: filtro === c ? "#fff" : "#555",
-        fontSize: 13,
-        fontWeight: 600,
-        cursor: "pointer",
-        fontFamily: "inherit"
-      }
-    }, c, " ", /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 11,
-        opacity: 0.8
-      }
-    }, "(", count, ")"));
-  })), filtrados.length === 0 ? /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#fff",
-      borderRadius: 12,
-      border: "1px solid #EEE8E8",
-      padding: "32px",
-      textAlign: "center",
-      color: "#CCC",
-      fontSize: 14
-    }
-  }, "Nenhum material encontrado.") : /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "grid",
-      gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
-      gap: 16
-    }
-  }, filtrados.map(function (e) {
-    var midia = getMidia(e.tipo);
-    return /*#__PURE__*/React.createElement("div", {
-      key: e.id,
-      style: {
-        background: "#fff",
-        borderRadius: 12,
-        border: "1px solid #EEE8E8",
-        overflow: "hidden",
-        boxShadow: "0 1px 4px rgba(0,0,0,0.04)"
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        height: 120,
-        background: midia.bg,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
-      }
-    }, /*#__PURE__*/React.createElement(Icon, {
-      name: midia.icon,
-      size: 40,
-      color: midia.color
-    })), /*#__PURE__*/React.createElement("div", {
-      style: {
-        padding: "12px 14px"
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        gap: 6,
-        marginBottom: 8,
-        flexWrap: "wrap"
-      }
-    }, /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 11,
-        padding: "2px 8px",
-        borderRadius: 10,
-        background: midia.bg,
-        color: midia.color,
-        fontWeight: 700
-      }
-    }, midia.label), /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 11,
-        padding: "2px 8px",
-        borderRadius: 10,
-        background: "#F5F5F5",
-        color: "#666",
-        fontWeight: 600
-      }
-    }, e.categoria)), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 13,
-        fontWeight: 700,
-        color: "#1A1D23",
-        marginBottom: 4,
-        lineHeight: 1.3
-      }
-    }, e.title), e.descricao && /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 12,
-        color: "#AAA",
-        marginBottom: 10
-      }
-    }, e.descricao), /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        gap: 8,
-        alignItems: "center",
-        marginTop: 8
-      }
-    }, /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick() {
-        return setPlayer({
-          url: e.url,
-          title: e.title
-        });
-      },
-      style: {
-        flex: 1,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: 6,
-        padding: "8px",
-        background: cor,
-        color: "#fff",
-        borderRadius: 8,
-        fontSize: 13,
-        fontWeight: 700,
-        border: "none",
-        cursor: "pointer",
-        fontFamily: "inherit"
-      }
-    }, /*#__PURE__*/React.createElement(Icon, {
-      name: "play",
-      size: 13,
-      color: "#fff"
-    }), " Abrir"), isAdmin && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick() {
-        return setModal(e);
-      },
-      style: {
-        width: 32,
-        height: 32,
-        background: "#F5F5F5",
-        border: "none",
-        borderRadius: 8,
-        cursor: "pointer",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
-      }
-    }, /*#__PURE__*/React.createElement(Icon, {
-      name: "pencil",
-      size: 13,
-      color: "#888"
-    })), /*#__PURE__*/React.createElement("button", {
-      onClick: /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee15() {
-        return _regenerator().w(function (_context15) {
-          while (1) switch (_context15.n) {
-            case 0:
-              if (!window.confirm("Excluir este material?")) {
-                _context15.n = 1;
-                break;
-              }
-              _context15.n = 1;
-              return db.collection("onix_estudos").doc(e.id).delete();
-            case 1:
-              return _context15.a(2);
-          }
-        }, _callee15);
-      })),
-      style: {
-        width: 32,
-        height: 32,
-        background: "#FFF0F0",
-        border: "none",
-        borderRadius: 8,
-        cursor: "pointer",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
-      }
-    }, /*#__PURE__*/React.createElement(Icon, {
-      name: "trash-2",
-      size: 13,
-      color: "#5B2D8E"
-    }))))));
-  })), modal && /*#__PURE__*/React.createElement(ModalEstudo, {
-    estudo: modal === "novo" ? null : modal,
-    onClose: function onClose() {
-      return setModal(null);
-    },
-    config: config
-  }), player && /*#__PURE__*/React.createElement(PlayerModal, {
-    url: player.url,
-    title: player.title,
-    onClose: function onClose() {
-      return setPlayer(null);
-    }
-  }));
-}
-
-// ── APRESENTAÇÃO ──────────────────────────────────────────────────────────────
-
-function Apresentacao(_ref21) {
-  var config = _ref21.config;
-  var _useCollection10 = useCollection("onix_events", "date"),
-    events = _useCollection10.data;
-  var _useState117 = useState(null),
-    _useState118 = _slicedToArray(_useState117, 2),
-    eventoSel = _useState118[0],
-    setEventoSel = _useState118[1];
-  var _useState119 = useState([]),
-    _useState120 = _slicedToArray(_useState119, 2),
-    setlist = _useState120[0],
-    setSetlist = _useState120[1];
-  var _useState121 = useState({}),
-    _useState122 = _slicedToArray(_useState121, 2),
-    planos = _useState122[0],
-    setPlanos = _useState122[1];
-  var cor = config.corPrimaria || COR;
-  var today = todayStr();
-  useEffect(function () {
-    if (eventoSel) setSetlist(eventoSel.setlist || []);else setSetlist([]);
-    setPlanos({});
-  }, [eventoSel === null || eventoSel === void 0 ? void 0 : eventoSel.id]);
-  function togglePlano(id) {
-    setPlanos(function (p) {
-      return _objectSpread(_objectSpread({}, p), {}, _defineProperty({}, id, p[id] === "B" ? "A" : "B"));
-    });
-  }
-  function getUrl(s) {
-    var plano = planos[s.id] || "A";
-    var url = plano === "B" ? s.playbackB || s.playback || s.audioOriginal : s.playback || s.audioOriginal;
-    if (!url) return null;
-    var dr = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
-    if (dr) return "https://drive.google.com/file/d/" + dr[1] + "/preview";
-    var yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
-    if (yt) return "https://www.youtube.com/embed/" + yt[1] + "?autoplay=0";
-    return url;
-  }
-  var proximos = events.filter(function (e) {
-    var _e$setlist;
-    return e.date >= today && ((_e$setlist = e.setlist) === null || _e$setlist === void 0 ? void 0 : _e$setlist.length) > 0;
-  }).sort(function (a, b) {
-    return a.date > b.date ? 1 : -1;
-  });
-  var passados = events.filter(function (e) {
-    var _e$setlist2;
-    return e.date < today && ((_e$setlist2 = e.setlist) === null || _e$setlist2 === void 0 ? void 0 : _e$setlist2.length) > 0;
-  }).sort(function (a, b) {
-    return a.date > b.date ? -1 : 1;
-  }).slice(0, 10);
-  function salvarOrdem(_x4) {
-    return _salvarOrdem.apply(this, arguments);
-  }
-  function _salvarOrdem() {
-    _salvarOrdem = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee16(nova) {
-      return _regenerator().w(function (_context16) {
-        while (1) switch (_context16.n) {
-          case 0:
-            if (eventoSel) {
-              _context16.n = 1;
-              break;
-            }
-            return _context16.a(2);
-          case 1:
-            setSetlist(nova);
-            _context16.n = 2;
-            return db.collection("onix_events").doc(eventoSel.id).update({
-              setlist: nova,
-              updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-            });
-          case 2:
-            return _context16.a(2);
-        }
-      }, _callee16);
-    }));
-    return _salvarOrdem.apply(this, arguments);
-  }
-  function moverCima(idx) {
-    if (idx === 0) return;
-    var n = _toConsumableArray(setlist);
-    var _ref22 = [n[idx], n[idx - 1]];
-    n[idx - 1] = _ref22[0];
-    n[idx] = _ref22[1];
-    salvarOrdem(n);
-  }
-  function moverBaixo(idx) {
-    if (idx === setlist.length - 1) return;
-    var n = _toConsumableArray(setlist);
-    var _ref23 = [n[idx + 1], n[idx]];
-    n[idx] = _ref23[0];
-    n[idx + 1] = _ref23[1];
-    salvarOrdem(n);
-  }
-  function prepararOffline() {
-    return _prepararOffline.apply(this, arguments);
-  }
-  function _prepararOffline() {
-    _prepararOffline = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee17() {
-      var _iterator, _step, s, plano, url, yt, dr, urlAbrir, _t2;
-      return _regenerator().w(function (_context17) {
-        while (1) switch (_context17.p = _context17.n) {
-          case 0:
-            _iterator = _createForOfIteratorHelper(setlist);
-            _context17.p = 1;
-            _iterator.s();
-          case 2:
-            if ((_step = _iterator.n()).done) {
-              _context17.n = 6;
-              break;
-            }
-            s = _step.value;
-            plano = planos[s.id] || "A";
-            url = plano === "B" ? s.playbackB || s.playback || s.audioOriginal : s.playback || s.audioOriginal;
-            if (url) {
-              _context17.n = 3;
-              break;
-            }
-            return _context17.a(3, 5);
-          case 3:
-            yt = url.match(/(?:youtube\.com|youtu\.be)/);
-            if (!yt) {
-              _context17.n = 4;
-              break;
-            }
-            return _context17.a(3, 5);
-          case 4:
-            dr = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
-            urlAbrir = dr ? "https://drive.google.com/file/d/" + dr[1] + "/view" : url;
-            window.open(urlAbrir, "_blank");
-            _context17.n = 5;
-            return new Promise(function (r) {
-              return setTimeout(r, 800);
-            });
-          case 5:
-            _context17.n = 2;
-            break;
-          case 6:
-            _context17.n = 8;
-            break;
-          case 7:
-            _context17.p = 7;
-            _t2 = _context17.v;
-            _iterator.e(_t2);
-          case 8:
-            _context17.p = 8;
-            _iterator.f();
-            return _context17.f(8);
-          case 9:
-            return _context17.a(2);
-        }
-      }, _callee17, null, [[1, 7, 8, 9]]);
-    }));
-    return _prepararOffline.apply(this, arguments);
-  }
-  var mesaUrl = eventoSel ? window.location.origin + window.location.pathname + "?mesa=" + eventoSel.id : "";
-  var card = {
-    background: "#fff",
-    borderRadius: 12,
-    border: "1px solid #EEE8E8",
-    padding: "16px 20px",
-    marginBottom: 12,
-    boxShadow: "0 1px 4px rgba(0,0,0,0.04)"
-  };
-  var inp = {
-    padding: "10px 14px",
-    border: "1px solid #E8E0E0",
-    borderRadius: 10,
-    fontSize: 13,
-    outline: "none",
-    fontFamily: "inherit",
-    color: "#1A1D23",
-    background: "#FAFAFA"
-  };
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 6
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 28,
-      fontWeight: 700,
-      color: cor
-    }
-  }, "Apresenta\xE7\xE3o"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#AAA",
-      marginTop: 2
-    }
-  }, "Painel operacional para o dia do show \u2014 playbacks e setlist")), /*#__PURE__*/React.createElement("div", {
-    style: _objectSpread(_objectSpread({}, card), {}, {
-      marginTop: 20
-    })
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      fontWeight: 700,
-      color: "#1A1D23",
-      marginBottom: 12
-    }
-  }, "Selecionar Evento"), /*#__PURE__*/React.createElement("select", {
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      width: "100%"
-    }),
-    value: (eventoSel === null || eventoSel === void 0 ? void 0 : eventoSel.id) || "",
-    onChange: function onChange(e) {
-      var ev = [].concat(_toConsumableArray(proximos), _toConsumableArray(passados)).find(function (ev) {
-        return ev.id === e.target.value;
-      });
-      setEventoSel(ev || null);
-    }
-  }, /*#__PURE__*/React.createElement("option", {
-    value: ""
-  }, "Selecionar evento..."), proximos.length > 0 && /*#__PURE__*/React.createElement("optgroup", {
-    label: "PR\xD3XIMOS"
-  }, proximos.map(function (e) {
-    return /*#__PURE__*/React.createElement("option", {
-      key: e.id,
-      value: e.id
-    }, e.date, " \u2014 ", e.title);
-  })), passados.length > 0 && /*#__PURE__*/React.createElement("optgroup", {
-    label: "PASSADOS"
-  }, passados.map(function (e) {
-    return /*#__PURE__*/React.createElement("option", {
-      key: e.id,
-      value: e.id
-    }, e.date, " \u2014 ", e.title);
-  })))), eventoSel && mesaUrl && /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#1A1D23",
-      borderRadius: 12,
-      padding: "16px 20px",
-      marginBottom: 12
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 14,
-      fontWeight: 700,
-      color: "#fff",
-      marginBottom: 6
-    }
-  }, "Mesa de Som \u2014 Painel do Sonoplasta"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      color: "#888",
-      marginBottom: 10
-    }
-  }, "Envie este link para o sonoplasta no dia da apresenta\xE7\xE3o."), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 8,
-      alignItems: "center"
-    }
-  }, /*#__PURE__*/React.createElement("input", {
-    readOnly: true,
-    value: mesaUrl,
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      flex: 1,
-      background: "#2A2D33",
-      color: "#CCC",
-      border: "1px solid #333"
-    })
-  }), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return navigator.clipboard.writeText(mesaUrl).then(function () {
-        return alert("Link copiado!");
-      });
-    },
-    style: {
-      padding: "10px 16px",
-      background: cor,
-      color: "#fff",
-      border: "none",
-      borderRadius: 8,
-      fontSize: 13,
-      fontWeight: 700,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, "Copiar"), /*#__PURE__*/React.createElement("a", {
-    href: mesaUrl,
-    target: "_blank",
-    rel: "noreferrer",
-    style: {
-      padding: "10px 16px",
-      background: "#2A2D33",
-      color: "#CCC",
-      border: "1px solid #444",
-      borderRadius: 8,
-      fontSize: 13,
-      fontWeight: 700,
-      textDecoration: "none"
-    }
-  }, "Abrir"))), eventoSel && setlist.length > 0 && /*#__PURE__*/React.createElement("div", {
-    style: _objectSpread(_objectSpread({}, card), {}, {
-      background: "#FFF8E1",
-      border: "1px solid #FFE082",
-      display: "flex",
-      alignItems: "center",
-      gap: 12,
-      flexWrap: "wrap"
-    })
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      flex: 1
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      fontWeight: 700,
-      color: "#1A1D23"
-    }
-  }, "\uD83D\uDCE5 Salvar \xE1udios para uso offline"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      color: "#888",
-      marginTop: 2
-    }
-  }, "Abre cada arquivo do Drive para voc\xEA salvar no dispositivo antes do show.")), /*#__PURE__*/React.createElement("button", {
-    onClick: prepararOffline,
-    style: {
-      padding: "10px 20px",
-      background: cor,
-      color: "#fff",
-      border: "none",
-      borderRadius: 10,
-      fontSize: 13,
-      fontWeight: 700,
-      cursor: "pointer",
-      fontFamily: "inherit",
-      whiteSpace: "nowrap"
-    }
-  }, "\uD83D\uDCC2 Abrir \xE1udios")), eventoSel && setlist.length > 0 && /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "grid",
-      gridTemplateColumns: "1fr 1fr",
-      gap: 16
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: card
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 8,
-      marginBottom: 12
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 14,
-      fontWeight: 700,
-      color: cor
-    }
-  }, "\uD83C\uDFB5 Setlist"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      color: "#AAA"
-    }
-  }, "(", setlist.length, " m\xFAsica", setlist.length !== 1 ? "s" : "", ")"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 11,
-      color: "#CCC",
-      marginLeft: "auto"
-    }
-  }, "\u2191\u2193 reordenar")), setlist.map(function (s, i) {
-    return /*#__PURE__*/React.createElement("div", {
-      key: s.id || i,
-      style: {
-        display: "flex",
-        alignItems: "center",
-        gap: 10,
-        padding: "10px 12px",
-        borderRadius: 8,
-        marginBottom: 6,
-        background: "#F9F5F5",
-        border: "1px solid transparent"
-      }
-    }, /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 13,
-        color: cor,
-        fontWeight: 700,
-        minWidth: 22,
-        textAlign: "center"
-      }
-    }, i + 1), /*#__PURE__*/React.createElement("div", {
-      style: {
-        flex: 1
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 13,
-        fontWeight: 600,
-        color: "#1A1D23"
-      }
-    }, s.title), s.compositor && /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 11,
-        color: "#AAA"
-      }
-    }, s.compositor)), /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick(e) {
-        e.stopPropagation();
-        togglePlano(s.id);
-      },
-      style: {
-        padding: "3px 8px",
-        borderRadius: 6,
-        border: "1.5px solid " + (planos[s.id] === "B" ? "#E65100" : cor),
-        background: planos[s.id] === "B" ? "#E65100" : cor,
-        color: "#fff",
-        fontSize: 11,
-        fontWeight: 700,
-        cursor: "pointer",
-        fontFamily: "inherit",
-        minWidth: 32
-      }
-    }, planos[s.id] === "B" ? "B" : "A"), /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        flexDirection: "column",
-        gap: 2
-      }
-    }, /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick(e) {
-        e.stopPropagation();
-        moverCima(i);
-      },
-      style: {
-        background: "none",
-        border: "none",
-        cursor: "pointer",
-        padding: 2,
-        fontSize: 12,
-        color: i === 0 ? "#DDD" : "#888"
-      }
-    }, "\u25B2"), /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick(e) {
-        e.stopPropagation();
-        moverBaixo(i);
-      },
-      style: {
-        background: "none",
-        border: "none",
-        cursor: "pointer",
-        padding: 2,
-        fontSize: 12,
-        color: i === setlist.length - 1 ? "#DDD" : "#888"
-      }
-    }, "\u25BC")));
-  })), /*#__PURE__*/React.createElement("div", {
-    style: card
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 14,
-      fontWeight: 700,
-      color: cor,
-      marginBottom: 12
-    }
-  }, "\uD83D\uDD0A Player"), setlist.map(function (s, i) {
-    return /*#__PURE__*/React.createElement("div", {
-      key: s.id + "-" + (planos[s.id] || "A"),
-      style: {
-        marginBottom: 16
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        alignItems: "center",
-        gap: 8,
-        marginBottom: 6
-      }
-    }, /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 13,
-        color: cor,
-        fontWeight: 700,
-        minWidth: 22
-      }
-    }, i + 1), /*#__PURE__*/React.createElement("div", {
-      style: {
-        flex: 1
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 13,
-        fontWeight: 600,
-        color: "#1A1D23"
-      }
-    }, s.title), s.compositor && /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 11,
-        color: "#AAA"
-      }
-    }, s.compositor)), /*#__PURE__*/React.createElement("span", {
-      style: {
-        padding: "2px 8px",
-        borderRadius: 6,
-        background: planos[s.id] === "B" ? "#E65100" : cor,
-        color: "#fff",
-        fontSize: 10,
-        fontWeight: 700
-      }
-    }, "Plano ", planos[s.id] || "A")), getUrl(s) ? /*#__PURE__*/React.createElement("iframe", {
-      src: getUrl(s),
-      style: {
-        width: "100%",
-        height: 80,
-        border: "none",
-        borderRadius: 8,
-        display: "block"
-      },
-      allow: "autoplay",
-      title: s.title
-    }) : /*#__PURE__*/React.createElement("div", {
-      style: {
-        padding: "10px 16px",
-        background: "#F5F5F5",
-        borderRadius: 8,
-        textAlign: "center",
-        color: "#AAA",
-        fontSize: 12
-      }
-    }, "Sem playback Plano ", planos[s.id] || "A", " cadastrado"));
-  }))), !eventoSel && /*#__PURE__*/React.createElement("div", {
-    style: _objectSpread(_objectSpread({}, card), {}, {
-      textAlign: "center",
-      padding: "48px 20px",
-      color: "#CCC"
-    })
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 48,
-      marginBottom: 12
-    }
-  }, "\uD83D\uDCCB"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 15,
-      fontWeight: 600
-    }
-  }, "Selecione um evento acima"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      marginTop: 4
-    }
-  }, "Para gerenciar o setlist e playbacks")));
-}
-
-// ── FREQUÊNCIA POR EVENTOS (usado no Relatório) ───────────────────────────────
-function FrequenciaEventos(_ref24) {
-  var eventos = _ref24.eventos,
-    frequencias = _ref24.frequencias,
-    config = _ref24.config;
-  var cor = config.corPrimaria || COR;
-  var card = {
-    background: "#fff",
-    borderRadius: 12,
-    border: "1px solid #EEE8E8",
-    padding: "16px 20px",
-    marginBottom: 12,
-    boxShadow: "0 1px 4px rgba(0,0,0,0.04)"
-  };
-
-  // Agrupar frequências por eventoId
-  var porEvento = {};
-  frequencias.forEach(function (f) {
-    if (!f.eventoId) return;
-    if (!porEvento[f.eventoId]) porEvento[f.eventoId] = [];
-    porEvento[f.eventoId].push(f);
-  });
-  var eventosComFreq = eventos.filter(function (e) {
-    var _porEvento$e$id;
-    return ((_porEvento$e$id = porEvento[e.id]) === null || _porEvento$e$id === void 0 ? void 0 : _porEvento$e$id.length) > 0;
-  });
-  if (eventosComFreq.length === 0) return null;
-  return /*#__PURE__*/React.createElement("div", {
-    style: card
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 8,
-      marginBottom: 14
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "clipboard-check",
-    size: 16,
-    color: cor
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 14,
-      fontWeight: 700,
-      color: "#1A1D23"
-    }
-  }, "Frequ\xEAncia por Evento")), eventosComFreq.map(function (e) {
-    var lista = porEvento[e.id] || [];
-    return /*#__PURE__*/React.createElement("div", {
-      key: e.id,
-      style: {
-        marginBottom: 16,
-        paddingBottom: 16,
-        borderBottom: "1px solid #F5F0F0"
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginBottom: 8
-      }
-    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 13,
-        fontWeight: 700,
-        color: "#1A1D23"
-      }
-    }, e.title), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 12,
-        color: "#AAA"
-      }
-    }, e.date ? new Date(e.date + "T12:00:00").toLocaleDateString("pt-BR") : "")), /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 13,
-        fontWeight: 700,
-        color: cor
-      }
-    }, lista.length, " presente", lista.length !== 1 ? "s" : "")), /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        flexWrap: "wrap",
-        gap: 6
-      }
-    }, lista.map(function (f) {
-      return /*#__PURE__*/React.createElement("span", {
-        key: f.id,
-        style: {
-          fontSize: 12,
-          padding: "3px 10px",
-          borderRadius: 20,
-          background: "#F0EAEA",
-          color: cor,
-          fontWeight: 600
-        }
-      }, f.membroNome);
-    })));
-  }));
-}
-
-// ── FREQUÊNCIA DE ACESSO ──────────────────────────────────────────────────────
-function FrequenciaAcesso(_ref25) {
-  var config = _ref25.config;
-  var _useState123 = useState([]),
-    _useState124 = _slicedToArray(_useState123, 2),
-    acessos = _useState124[0],
-    setAcessos = _useState124[1];
-  var cor = config.corPrimaria || COR;
-  useEffect(function () {
-    db.collection("onix_acessos").onSnapshot(function (snap) {
-      setAcessos(snap.docs.map(function (d) {
-        return _objectSpread({
-          id: d.id
-        }, d.data());
-      }));
-    });
-  }, []);
-  var hoje = new Date();
-  var trintaDiasAtras = new Date(hoje);
-  trintaDiasAtras.setDate(trintaDiasAtras.getDate() - 30);
-  var trintaStr = trintaDiasAtras.toISOString().split("T")[0];
-
-  // Agrupar por corista
-  var porCorista = {};
-  acessos.forEach(function (a) {
-    var _a$dataHora;
-    if (!a.nome) return;
-    if (!porCorista[a.nome]) porCorista[a.nome] = {
-      total: 0,
-      ultimos30: 0,
-      ultimoAcesso: null
-    };
-    porCorista[a.nome].total++;
-    if (a.data && a.data >= trintaStr) porCorista[a.nome].ultimos30++;
-    var ts = (_a$dataHora = a.dataHora) === null || _a$dataHora === void 0 ? void 0 : _a$dataHora.seconds;
-    if (ts && (!porCorista[a.nome].ultimoAcesso || ts > porCorista[a.nome].ultimoAcesso)) {
-      porCorista[a.nome].ultimoAcesso = ts;
-    }
-  });
-  var lista = Object.entries(porCorista).sort(function (a, b) {
-    return b[1].total - a[1].total;
-  });
-  var maxTotal = Math.max.apply(Math, _toConsumableArray(lista.map(function (_ref26) {
-    var _ref27 = _slicedToArray(_ref26, 2),
-      v = _ref27[1];
-    return v.total;
-  })).concat([1]));
-  var card = {
-    background: "#fff",
-    borderRadius: 12,
-    border: "1px solid #EEE8E8",
-    padding: "16px 20px",
-    marginBottom: 12,
-    boxShadow: "0 1px 4px rgba(0,0,0,0.04)"
-  };
-  return /*#__PURE__*/React.createElement("div", {
-    style: card
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 8,
-      marginBottom: 4
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "smartphone",
-    size: 16,
-    color: "#2E7D32"
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 14,
-      fontWeight: 700,
-      color: "#1A1D23"
-    }
-  }, "Frequ\xEAncia de Acesso ao App")), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      color: "#AAA",
-      marginBottom: 16
-    }
-  }, "Quantas vezes cada corista entrou no aplicativo (total e \xFAltimos 30 dias)"), lista.length === 0 ? /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#CCC",
-      textAlign: "center",
-      padding: "16px 0"
-    }
-  }, "Nenhum acesso registrado ainda.") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 16
-    }
-  }, lista.slice(0, 10).map(function (_ref28) {
-    var _ref29 = _slicedToArray(_ref28, 2),
-      nome = _ref29[0],
-      dados = _ref29[1];
-    return /*#__PURE__*/React.createElement("div", {
-      key: nome,
-      style: {
-        display: "flex",
-        alignItems: "center",
-        gap: 10,
-        marginBottom: 8
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 12,
-        color: "#555",
-        minWidth: 100,
-        textAlign: "right",
-        overflow: "hidden",
-        textOverflow: "ellipsis",
-        whiteSpace: "nowrap"
-      }
-    }, nome.split(" ")[0]), /*#__PURE__*/React.createElement("div", {
-      style: {
-        flex: 1,
-        display: "flex",
-        flexDirection: "column",
-        gap: 3
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        height: 8,
-        background: "#F0F0F0",
-        borderRadius: 4,
-        overflow: "hidden"
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        width: "".concat(dados.total / maxTotal * 100, "%"),
-        height: "100%",
-        background: "#2E7D32",
-        borderRadius: 4
-      }
-    })), /*#__PURE__*/React.createElement("div", {
-      style: {
-        height: 8,
-        background: "#F0F0F0",
-        borderRadius: 4,
-        overflow: "hidden"
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        width: "".concat(dados.ultimos30 / maxTotal * 100, "%"),
-        height: "100%",
-        background: "#5B2D8E",
-        borderRadius: 4
-      }
-    }))));
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 16,
-      marginTop: 8,
-      justifyContent: "center"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 5,
-      fontSize: 11,
-      color: "#555"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: 12,
-      height: 12,
-      background: "#2E7D32",
-      borderRadius: 2
-    }
-  }), " Total"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 5,
-      fontSize: 11,
-      color: "#555"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: 12,
-      height: 12,
-      background: "#5B2D8E",
-      borderRadius: 2
-    }
-  }), " \xDAltimos 30 dias"))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      border: "1px solid #EEE",
-      borderRadius: 8,
-      overflow: "hidden"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "grid",
-      gridTemplateColumns: "40px 1fr 80px 80px 1fr",
-      padding: "8px 12px",
-      background: "#FAFAFA",
-      borderBottom: "1px solid #EEE"
-    }
-  }, ["#", "Corista", "Total", "Últ. 30 dias", "Último acesso"].map(function (h) {
-    return /*#__PURE__*/React.createElement("div", {
-      key: h,
-      style: {
-        fontSize: 11,
-        fontWeight: 700,
-        color: cor
-      }
-    }, h);
-  })), lista.map(function (_ref30, i) {
-    var _ref31 = _slicedToArray(_ref30, 2),
-      nome = _ref31[0],
-      dados = _ref31[1];
-    return /*#__PURE__*/React.createElement("div", {
-      key: nome,
-      style: {
-        display: "grid",
-        gridTemplateColumns: "40px 1fr 80px 80px 1fr",
-        padding: "10px 12px",
-        borderBottom: i < lista.length - 1 ? "1px solid #F5F5F5" : "none",
-        alignItems: "center"
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 12,
-        color: "#AAA"
-      }
-    }, i + 1), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 13,
-        fontWeight: 600,
-        color: "#1A1D23"
-      }
-    }, nome), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", {
-      style: {
-        display: "inline-block",
-        padding: "2px 8px",
-        borderRadius: 20,
-        background: "#E8F5E9",
-        color: "#2E7D32",
-        fontSize: 12,
-        fontWeight: 700
-      }
-    }, dados.total)), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", {
-      style: {
-        display: "inline-block",
-        padding: "2px 8px",
-        borderRadius: 20,
-        background: "#FEE2E2",
-        color: "#5B2D8E",
-        fontSize: 12,
-        fontWeight: 700
-      }
-    }, dados.ultimos30)), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 12,
-        color: "#888"
-      }
-    }, dados.ultimoAcesso ? new Date(dados.ultimoAcesso * 1000).toLocaleString("pt-BR", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit"
-    }) : "—"));
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      color: "#AAA",
-      marginTop: 8
-    }
-  }, "\u2197 ", lista.length, " corista", lista.length !== 1 ? "s" : "", " com acesso registrado")));
-}
-
-// ── RELATÓRIOS ────────────────────────────────────────────────────────────────
-function Relatorios(_ref32) {
-  var config = _ref32.config;
-  var _useCollection11 = useCollection("onix_events", "date"),
-    events = _useCollection11.data;
-  var _useCollection12 = useCollection("onix_members"),
-    members = _useCollection12.data;
-  var _useCollection13 = useCollection("onix_songs"),
-    songs = _useCollection13.data;
-  var _useCollection14 = useCollection("onix_frequencias", "dataHora"),
-    frequencias = _useCollection14.data;
-  var _useCollection15 = useCollection("onix_noticias"),
-    noticias = _useCollection15.data;
-  var cor = config.corPrimaria || COR;
-  var _useState125 = useState(new Date().getFullYear() + "-01-01"),
-    _useState126 = _slicedToArray(_useState125, 2),
-    dataInicio = _useState126[0],
-    setDataInicio = _useState126[1];
-  var _useState127 = useState(todayStr()),
-    _useState128 = _slicedToArray(_useState127, 2),
-    dataFim = _useState128[0],
-    setDataFim = _useState128[1];
-  var _useState129 = useState("todos"),
-    _useState130 = _slicedToArray(_useState129, 2),
-    eventoFiltro = _useState130[0],
-    setEventoFiltro = _useState130[1];
-  var _useState131 = useState({}),
-    _useState132 = _slicedToArray(_useState131, 2),
-    textos = _useState132[0],
-    setTextos = _useState132[1];
-  var _useState133 = useState(false),
-    _useState134 = _slicedToArray(_useState133, 2),
-    editTextos = _useState134[0],
-    setEditTextos = _useState134[1];
-  var _useState135 = useState({}),
-    _useState136 = _slicedToArray(_useState135, 2),
-    formTextos = _useState136[0],
-    setFormTextos = _useState136[1];
-  var _useState137 = useState(false),
-    _useState138 = _slicedToArray(_useState137, 2),
-    salvandoTextos = _useState138[0],
-    setSalvandoTextos = _useState138[1];
-
-  // Carregar textos qualitativos do Firebase
-  useEffect(function () {
-    db.collection("onix_config").doc("relatorio").get().then(function (doc) {
-      if (doc.exists) {
-        setTextos(doc.data());
-        setFormTextos(doc.data());
-      }
-    });
-  }, []);
-  function salvarTextos() {
-    return _salvarTextos.apply(this, arguments);
-  } // Filtrar eventos por período
-  function _salvarTextos() {
-    _salvarTextos = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee18() {
-      return _regenerator().w(function (_context18) {
-        while (1) switch (_context18.n) {
-          case 0:
-            setSalvandoTextos(true);
-            _context18.n = 1;
-            return db.collection("onix_config").doc("relatorio").set(formTextos, {
-              merge: true
-            });
-          case 1:
-            setTextos(formTextos);
-            setSalvandoTextos(false);
-            setEditTextos(false);
-          case 2:
-            return _context18.a(2);
-        }
-      }, _callee18);
-    }));
-    return _salvarTextos.apply(this, arguments);
-  }
-  var eventosPeriodo = events.filter(function (e) {
-    return e.date >= dataInicio && e.date <= dataFim;
-  });
-  var eventosFiltrados = eventoFiltro === "todos" ? eventosPeriodo : eventosPeriodo.filter(function (e) {
-    return e.id === eventoFiltro;
-  });
-  var ativos = members.filter(function (m) {
-    return m.active;
-  });
-  var apresentacoes = eventosFiltrados.filter(function (e) {
-    return e.tipo === "Apresentação";
-  });
-
-  // Contagem por tipo
-  var porTipo = {};
-  eventosFiltrados.forEach(function (e) {
-    porTipo[e.tipo || "Outro"] = (porTipo[e.tipo || "Outro"] || 0) + 1;
-  });
-
-  // Contagem por status
-  var porStatus = {};
-  eventosFiltrados.forEach(function (e) {
-    porStatus[e.status || "—"] = (porStatus[e.status || "—"] || 0) + 1;
-  });
-  var statusColors = {
-    Confirmado: "#2E7D32",
-    Planejada: "#1565C0",
-    Cancelado: "#5B2D8E",
-    Reagendado: "#E65100",
-    Suspenso: "#7B1FA2"
-  };
-  var sigLucia = textos.sigLucia || "https://raw.githubusercontent.com/luciakratz-arch/onix-brasil/main/lucia-sig.png";
-  var sigMaestro = textos.sigMaestro || "https://raw.githubusercontent.com/luciakratz-arch/onix-brasil/main/paulo-sig.png";
-  function gerarPDFListaPresenca() {
-    var nomeApp = config.nomeApp || "Onix Brasil Vocal Internacional";
-    var logoUrl = config.logoUrl || LOGO_URL;
-    var cidade = textos.cidade || "Goiânia – GO";
-    var maestro = textos.maestro || "Maestro";
-    var produtora = textos.produtora || "Lucia Kratz";
-    var sigLucia = textos.sigLucia || "https://raw.githubusercontent.com/luciakratz-arch/onix-brasil/main/lucia-sig.png";
-    var sigMaestro = textos.sigMaestro || "https://raw.githubusercontent.com/luciakratz-arch/onix-brasil/main/paulo-sig.png";
-    var hoje = new Date().toLocaleDateString("pt-BR", {
-      day: "numeric",
-      month: "long",
-      year: "numeric"
-    });
-    var periodoFmt = "".concat(new Date(dataInicio + "T12:00:00").toLocaleDateString("pt-BR"), " a ").concat(new Date(dataFim + "T12:00:00").toLocaleDateString("pt-BR"));
-    var porEvento = {};
-    frequencias.forEach(function (f) {
-      if (f.eventoId) {
-        if (!porEvento[f.eventoId]) porEvento[f.eventoId] = [];
-        porEvento[f.eventoId].push(f);
-      }
-    });
-    var eventosComFreq = eventosFiltrados.filter(function (e) {
-      var _porEvento$e$id2;
-      return ((_porEvento$e$id2 = porEvento[e.id]) === null || _porEvento$e$id2 === void 0 ? void 0 : _porEvento$e$id2.length) > 0;
-    }).sort(function (a, b) {
-      return a.date > b.date ? 1 : -1;
-    });
-    if (eventosComFreq.length === 0) {
-      alert("Nenhum evento com presença registrada no período.");
-      return;
-    }
-    var paginas = eventosComFreq.map(function (e) {
-      var lista = porEvento[e.id] || [];
-      var dataEvento = e.date ? new Date(e.date + "T12:00:00").toLocaleDateString("pt-BR", {
-        day: "numeric",
-        month: "long",
-        year: "numeric"
-      }) : "";
-      var linhas = lista.map(function (f, i) {
-        var _f$dataHora;
-        return "\n                <tr>\n                    <td style=\"text-align:center;width:36px\">".concat(i + 1, "</td>\n                    <td>").concat(f.membroNome, "</td>\n                    <td>").concat(f.naipe || "—", "</td>\n                    <td style=\"text-align:center\">").concat((_f$dataHora = f.dataHora) !== null && _f$dataHora !== void 0 && _f$dataHora.seconds ? new Date(f.dataHora.seconds * 1000).toLocaleString("pt-BR", {
-          hour: "2-digit",
-          minute: "2-digit"
-        }) : "—", "</td>\n                </tr>");
-      }).join("");
-      return "\n                <div class=\"pagina\">\n                    <div class=\"header\">\n                        <img src=\"".concat(logoUrl, "\" class=\"logo\"/>\n                        <div style=\"text-align:right;font-size:11px;color:#666\"><strong>").concat(nomeApp, "</strong><br>").concat(cidade, "</div>\n                    </div>\n                    <div class=\"titulo\">Lista de Presen\xE7a</div>\n                    <div class=\"evento-info\">\n                        <div class=\"info-row\"><span class=\"info-lbl\">Evento:</span><span>").concat(e.title, "</span></div>\n                        <div class=\"info-row\"><span class=\"info-lbl\">Data:</span><span>").concat(dataEvento, "</span></div>\n                        ").concat(e.local ? "<div class=\"info-row\"><span class=\"info-lbl\">Local:</span><span>".concat(e.local, "</span></div>") : "", "\n                        ").concat(e.tipo ? "<div class=\"info-row\"><span class=\"info-lbl\">Tipo:</span><span>".concat(e.tipo, "</span></div>") : "", "\n                        <div class=\"info-row\"><span class=\"info-lbl\">Presen\xE7as:</span><span><strong>").concat(lista.length, "</strong> participante").concat(lista.length !== 1 ? "s" : "", "</span></div>\n                    </div>\n                    <table>\n                        <thead><tr><th>#</th><th>Nome</th><th>Naipe</th><th style=\"text-align:center\">Hor\xE1rio Check-in</th></tr></thead>\n                        <tbody>").concat(linhas, "</tbody>\n                    </table>\n                    <div class=\"assinaturas\">\n                        <div class=\"assin\">\n                            ").concat(sigMaestro ? "<img src=\"".concat(sigMaestro, "\"/>") : "<div style='height:52px'></div>", "\n                            <div class=\"assin-linha\"><div class=\"assin-nome\">").concat(maestro, "</div><div class=\"assin-cargo\">Maestro \u2013 ").concat(nomeApp, "</div></div>\n                        </div>\n                        <div class=\"assin\">\n                            ").concat(sigLucia ? "<img src=\"".concat(sigLucia, "\"/>") : "<div style='height:52px'></div>", "\n                            <div class=\"assin-linha\"><div class=\"assin-nome\">").concat(produtora, "</div><div class=\"assin-cargo\">Produtora \u2013 ").concat(nomeApp, "</div></div>\n                        </div>\n                    </div>\n                    <div class=\"rodape\">Documento gerado em ").concat(hoje, " pelo sistema de gest\xE3o do ").concat(nomeApp, ".</div>\n                </div>");
-    }).join("");
-    var html = "<!DOCTYPE html><html lang=\"pt-BR\"><head><meta charset=\"UTF-8\">\n<style>\n  body{font-family:Arial,sans-serif;font-size:12px;color:#222;margin:0;padding:0}\n  @media print{@page{margin:2cm}.pagina{page-break-after:always}.pagina:last-child{page-break-after:avoid}}\n  .pagina{padding:0;margin-bottom:40px}\n  .header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid ".concat(cor, ";padding-bottom:12px;margin-bottom:20px}\n  .logo{width:54px;height:54px;object-fit:contain}\n  .titulo{text-align:center;font-size:17px;font-weight:bold;color:").concat(cor, ";text-transform:uppercase;letter-spacing:2px;margin-bottom:16px}\n  .evento-info{border:1px solid #EEE;border-radius:6px;padding:12px 16px;margin-bottom:16px;background:#FAFAFA}\n  .info-row{display:flex;gap:8px;margin-bottom:4px;font-size:12px}\n  .info-lbl{font-weight:bold;color:").concat(cor, ";min-width:80px;font-size:11px;text-transform:uppercase}\n  table{width:100%;border-collapse:collapse;margin-bottom:20px}\n  th{background:").concat(cor, ";color:#fff;padding:7px 10px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:0.5px}\n  td{padding:7px 10px;border-bottom:1px solid #EEE;font-size:12px}\n  tr:nth-child(even) td{background:#FAFAFA}\n  .assinaturas{display:flex;justify-content:space-around;margin-top:48px;text-align:center}\n  .assin img{height:52px;object-fit:contain;display:block;margin:0 auto 6px}\n  .assin-linha{border-top:1px solid #333;padding-top:5px;min-width:180px}\n  .assin-nome{font-weight:bold;font-size:12px}\n  .assin-cargo{font-size:10px;color:#888}\n  .rodape{text-align:center;font-size:10px;color:#AAA;margin-top:28px;border-top:1px solid #EEE;padding-top:8px}\n</style></head><body>").concat(paginas, "</body></html>");
-    var win = window.open("", "_blank");
-    win.document.write(html);
-    win.document.close();
-    setTimeout(function () {
-      return win.print();
-    }, 800);
-  }
-  function gerarPDFCompleto() {
-    var nomeApp = config.nomeApp || "Onix Brasil Vocal Internacional";
-    var logoUrl = config.logoUrl || LOGO_URL;
-    var cidade = textos.cidade || "Goiânia – GO";
-    var maestro = textos.maestro || "Maestro";
-    var produtora = textos.produtora || "Lucia Kratz";
-    var sigLucia = textos.sigLucia || "https://raw.githubusercontent.com/luciakratz-arch/onix-brasil/main/lucia-sig.png";
-    var sigMaestro = textos.sigMaestro || "https://raw.githubusercontent.com/luciakratz-arch/onix-brasil/main/paulo-sig.png";
-    var hoje = new Date().toLocaleDateString("pt-BR", {
-      day: "numeric",
-      month: "long",
-      year: "numeric"
-    });
-    var periodoFmt = "".concat(new Date(dataInicio + "T12:00:00").toLocaleDateString("pt-BR"), " a ").concat(new Date(dataFim + "T12:00:00").toLocaleDateString("pt-BR"));
-
-    // Frequência por evento
-    var porEvento = {};
-    frequencias.forEach(function (f) {
-      if (f.eventoId) {
-        if (!porEvento[f.eventoId]) porEvento[f.eventoId] = [];
-        porEvento[f.eventoId].push(f);
-      }
-    });
-
-    // Frequência por integrante
-    var porIntegrante = {};
-    frequencias.filter(function (f) {
-      return eventosFiltrados.find(function (e) {
-        return e.id === f.eventoId;
-      });
-    }).forEach(function (f) {
-      if (!porIntegrante[f.membroNome]) porIntegrante[f.membroNome] = 0;
-      porIntegrante[f.membroNome]++;
-    });
-    var linhasAtiv = eventosFiltrados.sort(function (a, b) {
-      return a.date > b.date ? 1 : -1;
-    }).map(function (e, i) {
-      return "\n            <tr><td>".concat(i + 1, "</td><td>").concat(e.date ? new Date(e.date + "T12:00:00").toLocaleDateString("pt-BR") : "", "</td>\n            <td>").concat(e.title || "", "</td><td>").concat(e.tipo || "", "</td><td>").concat(e.status || "", "</td><td>").concat(e.local || "", "</td></tr>");
-    }).join("");
-    var blocosPresenca = eventosFiltrados.filter(function (e) {
-      var _porEvento$e$id3;
-      return ((_porEvento$e$id3 = porEvento[e.id]) === null || _porEvento$e$id3 === void 0 ? void 0 : _porEvento$e$id3.length) > 0;
-    }).sort(function (a, b) {
-      return a.date > b.date ? 1 : -1;
-    }).map(function (e) {
-      var lista = porEvento[e.id] || [];
-      var linhas = lista.map(function (f, i) {
-        var _f$dataHora2;
-        return "<tr><td>".concat(i + 1, "</td><td>").concat(f.membroNome, "</td><td>").concat(f.naipe || "—", "</td><td>").concat((_f$dataHora2 = f.dataHora) !== null && _f$dataHora2 !== void 0 && _f$dataHora2.seconds ? new Date(f.dataHora.seconds * 1000).toLocaleString("pt-BR", {
-          hour: "2-digit",
-          minute: "2-digit"
-        }) : "—", "</td></tr>");
-      }).join("");
-      return "<div class=\"bloco-evento\">\n                    <div class=\"evento-hdr\"><span>".concat(e.title, " \u2014 ").concat(e.date ? new Date(e.date + "T12:00:00").toLocaleDateString("pt-BR") : "", "</span><span>").concat(lista.length, " presente").concat(lista.length !== 1 ? "s" : "", "</span></div>\n                    <table><thead><tr><th>#</th><th>Nome</th><th>Naipe</th><th>Check-in</th></tr></thead><tbody>").concat(linhas, "</tbody></table>\n                </div>");
-    }).join("");
-    var linhasIntegrantes = ativos.sort(function (a, b) {
-      return a.name > b.name ? 1 : -1;
-    }).map(function (m, i) {
-      return "\n            <tr><td>".concat(i + 1, "</td><td>").concat(m.name, "</td><td>").concat(m.voice || "—", "</td><td>").concat(m.funcao || "Corista", "</td>\n            <td>").concat(m.startDate ? new Date(m.startDate + "T12:00:00").toLocaleDateString("pt-BR", {
-        month: "short",
-        year: "numeric"
-      }) : "", "</td>\n            <td style=\"text-align:center\">").concat(porIntegrante[m.name] || 0, "</td></tr>");
-    }).join("");
-    var html = "<!DOCTYPE html><html lang=\"pt-BR\"><head><meta charset=\"UTF-8\">\n<style>\n  body{font-family:Arial,sans-serif;font-size:12px;color:#222;margin:0;padding:0}\n  @media print{@page{margin:2cm}.bloco-evento{page-break-inside:avoid}}\n  .header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid ".concat(cor, ";padding-bottom:14px;margin-bottom:20px}\n  .logo{width:56px;height:56px;object-fit:contain}\n  .titulo{text-align:center;font-size:18px;font-weight:bold;color:").concat(cor, ";text-transform:uppercase;letter-spacing:2px;margin-bottom:4px}\n  .periodo{text-align:center;font-size:12px;color:#666;margin-bottom:20px}\n  .cards{display:flex;gap:10px;margin-bottom:20px}\n  .card{flex:1;border:1px solid #EEE;border-radius:6px;padding:10px;text-align:center}\n  .card-num{font-size:22px;font-weight:bold;color:").concat(cor, "}\n  .card-lbl{font-size:9px;color:#888;text-transform:uppercase;letter-spacing:1px}\n  .secao{font-size:11px;font-weight:bold;color:").concat(cor, ";text-transform:uppercase;letter-spacing:2px;margin:22px 0 10px;border-bottom:2px solid ").concat(cor, ";padding-bottom:4px}\n  .bloco{border-left:3px solid ").concat(cor, ";padding:8px 12px;margin-bottom:8px;background:#FAFAFA;border-radius:0 4px 4px 0}\n  .bloco-titulo{font-size:10px;font-weight:bold;color:").concat(cor, ";margin-bottom:3px;text-transform:uppercase}\n  .bloco-evento{margin-bottom:20px}\n  .evento-hdr{display:flex;justify-content:space-between;background:").concat(cor, "15;border-left:3px solid ").concat(cor, ";padding:6px 10px;font-size:11px;font-weight:bold;margin-bottom:4px}\n  table{width:100%;border-collapse:collapse;margin-bottom:6px}\n  th{background:").concat(cor, ";color:#fff;padding:5px 8px;text-align:left;font-size:9px;text-transform:uppercase}\n  td{padding:5px 8px;border-bottom:1px solid #EEE;font-size:11px}\n  tr:nth-child(even) td{background:#FAFAFA}\n  .tipo-linha{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid #F0F0F0;font-size:11px}\n  .assinaturas{display:flex;justify-content:space-around;margin-top:48px;text-align:center}\n  .assin img{height:52px;object-fit:contain;display:block;margin:0 auto 6px}\n  .assin-linha{border-top:1px solid #333;padding-top:5px;min-width:180px}\n  .assin-nome{font-weight:bold;font-size:12px}\n  .assin-cargo{font-size:10px;color:#888}\n  .rodape{text-align:center;font-size:10px;color:#AAA;margin-top:28px;border-top:1px solid #EEE;padding-top:8px}\n</style></head><body>\n<div class=\"header\">\n  <img src=\"").concat(logoUrl, "\" class=\"logo\"/>\n  <div style=\"text-align:right;font-size:11px;color:#666\"><strong>").concat(nomeApp, "</strong><br>").concat(cidade).concat(maestro ? "<br>Maestro: " + maestro : "", "</div>\n</div>\n<div class=\"titulo\">Relat\xF3rio de Atividades</div>\n<div class=\"periodo\">Per\xEDodo: ").concat(periodoFmt, "</div>\n<div class=\"cards\">\n  <div class=\"card\"><div class=\"card-num\">").concat(eventosFiltrados.length, "</div><div class=\"card-lbl\">Total atividades</div></div>\n  <div class=\"card\"><div class=\"card-num\">").concat(ativos.length, "</div><div class=\"card-lbl\">Integrantes ativos</div></div>\n  <div class=\"card\"><div class=\"card-num\">").concat(apresentacoes.length, "</div><div class=\"card-lbl\">Apresenta\xE7\xF5es</div></div>\n  <div class=\"card\"><div class=\"card-num\">").concat(eventosFiltrados.filter(function (e) {
-      var _porEvento$e$id4;
-      return ((_porEvento$e$id4 = porEvento[e.id]) === null || _porEvento$e$id4 === void 0 ? void 0 : _porEvento$e$id4.length) > 0;
-    }).length, "</div><div class=\"card-lbl\">Com frequ\xEAncia</div></div>\n</div>\n<div class=\"secao\">Distribui\xE7\xE3o por tipo de atividade</div>\n").concat(Object.entries(porTipo).map(function (_ref33) {
-      var _ref34 = _slicedToArray(_ref33, 2),
-        k = _ref34[0],
-        v = _ref34[1];
-      return "<div class=\"tipo-linha\"><span>".concat(k, "</span><span style=\"font-weight:bold;color:").concat(cor, "\">").concat(v, "</span></div>");
-    }).join(""), "\n").concat(textos.sobreProjeto || textos.curriculoMaestro || textos.equipe ? "\n<div class=\"secao\">Informa\xE7\xF5es do Projeto</div>\n".concat(textos.sobreProjeto ? "<div class=\"bloco\"><div class=\"bloco-titulo\">Sobre o Projeto</div><p style=\"margin:4px 0;font-size:11px;line-height:1.6\">".concat(textos.sobreProjeto, "</p></div>") : "", "\n").concat(textos.curriculoMaestro ? "<div class=\"bloco\"><div class=\"bloco-titulo\">Curr\xEDculo do Maestro</div><p style=\"margin:4px 0;font-size:11px;line-height:1.6\">".concat(textos.curriculoMaestro, "</p></div>") : "", "\n").concat(textos.equipe ? "<div class=\"bloco\"><div class=\"bloco-titulo\">Equipe de Produ\xE7\xE3o</div><p style=\"margin:4px 0;font-size:11px;line-height:1.6\">".concat(textos.equipe, "</p></div>") : "", "\n") : "", "\n<div class=\"secao\">Atividades realizadas no per\xEDodo</div>\n<table><thead><tr><th>#</th><th>Data</th><th>Atividade</th><th>Tipo</th><th>Status</th><th>Local</th></tr></thead>\n<tbody>").concat(linhasAtiv || "<tr><td colspan='6' style='text-align:center;color:#AAA'>Nenhuma atividade</td></tr>", "</tbody></table>\n").concat(blocosPresenca ? "<div class=\"secao\">Listas de Presen\xE7a por Evento</div>".concat(blocosPresenca) : "", "\n<div class=\"secao\">Integrantes Ativos (").concat(ativos.length, ")</div>\n<table><thead><tr><th>#</th><th>Nome</th><th>Naipe</th><th>Fun\xE7\xE3o</th><th>Desde</th><th style=\"text-align:center\">Presen\xE7as</th></tr></thead>\n<tbody>").concat(linhasIntegrantes || "<tr><td colspan='6' style='text-align:center;color:#AAA'>Nenhum integrante</td></tr>", "</tbody></table>\n<div class=\"assinaturas\">\n  <div class=\"assin\">").concat(sigMaestro ? "<img src=\"".concat(sigMaestro, "\"/>") : "<div style='height:52px'></div>", "\n    <div class=\"assin-linha\"><div class=\"assin-nome\">").concat(maestro, "</div><div class=\"assin-cargo\">Maestro \u2013 ").concat(nomeApp, "</div></div>\n  </div>\n  <div class=\"assin\">").concat(sigLucia ? "<img src=\"".concat(sigLucia, "\"/>") : "<div style='height:52px'></div>", "\n    <div class=\"assin-linha\"><div class=\"assin-nome\">").concat(produtora, "</div><div class=\"assin-cargo\">Produtora \u2013 ").concat(nomeApp, "</div></div>\n  </div>\n</div>\n<div class=\"rodape\">Relat\xF3rio gerado em ").concat(hoje, " pelo sistema de gest\xE3o do ").concat(nomeApp, ". Documento confidencial.</div>\n</body></html>");
-    var win = window.open("", "_blank");
-    win.document.write(html);
-    win.document.close();
-    setTimeout(function () {
-      return win.print();
-    }, 800);
-    // Salvar no histórico
-    db.collection("onix_relatorios_historico").add({
-      tipo: "Relatório Completo",
-      periodo: "".concat(dataInicio, " a ").concat(dataFim),
-      geradoEm: firebase.firestore.FieldValue.serverTimestamp(),
-      geradoPor: "Gestor"
-    });
-  }
-  function gerarPDF() {
-    var nomeApp = config.nomeApp || "Onix Brasil Vocal Internacional";
-    var logoUrl = config.logoUrl || LOGO_URL;
-    var cidade = textos.cidade || "Goiânia – GO";
-    var maestro = textos.maestro || "Maestro";
-    var produtora = textos.produtora || "Lucia Kratz";
-    var hoje = new Date().toLocaleDateString("pt-BR", {
-      day: "numeric",
-      month: "long",
-      year: "numeric"
-    });
-    var periodoFmt = "".concat(new Date(dataInicio + "T12:00:00").toLocaleDateString("pt-BR"), " a ").concat(new Date(dataFim + "T12:00:00").toLocaleDateString("pt-BR"));
-    var linhasAtiv = eventosFiltrados.map(function (e, i) {
-      return "\n            <tr>\n                <td>".concat(i + 1, "</td>\n                <td>").concat(e.date ? new Date(e.date + "T12:00:00").toLocaleDateString("pt-BR") : "", "</td>\n                <td>").concat(e.title || "", "</td>\n                <td>").concat(e.tipo || "", "</td>\n                <td>").concat(e.status || "", "</td>\n                <td>").concat(e.local || "", "</td>\n            </tr>");
-    }).join("");
-    var html = "<!DOCTYPE html><html lang=\"pt-BR\"><head><meta charset=\"UTF-8\">\n<style>\n  body { font-family: Arial, sans-serif; font-size: 12px; color: #222; margin:0; padding:0; }\n  @media print { @page { margin: 1.5cm; } }\n  .header { display:flex; justify-content:space-between; align-items:flex-start; border-bottom:2px solid ".concat(cor, "; padding-bottom:12px; margin-bottom:20px; }\n  .logo { width:50px; height:50px; object-fit:contain; }\n  .titulo { text-align:center; margin:20px 0 6px; font-size:16px; font-weight:bold; color:").concat(cor, "; text-transform:uppercase; letter-spacing:2px; }\n  .periodo { text-align:center; font-size:11px; color:#666; margin-bottom:20px; }\n  .cards { display:flex; gap:12px; margin-bottom:20px; }\n  .card { flex:1; border:1px solid #EEE; border-radius:6px; padding:12px; text-align:center; }\n  .card-num { font-size:24px; font-weight:bold; color:").concat(cor, "; }\n  .card-lbl { font-size:10px; color:#888; text-transform:uppercase; letter-spacing:1px; }\n  .secao { font-size:11px; font-weight:bold; color:").concat(cor, "; text-transform:uppercase; letter-spacing:2px; margin:20px 0 10px; border-bottom:1px solid #EEE; padding-bottom:4px; }\n  .bloco { border-left:3px solid ").concat(cor, "; padding:8px 12px; margin-bottom:10px; background:#FAFAFA; border-radius:0 4px 4px 0; }\n  .bloco-titulo { font-size:11px; font-weight:bold; color:").concat(cor, "; margin-bottom:4px; }\n  table { width:100%; border-collapse:collapse; margin-top:8px; }\n  th { background:").concat(cor, "; color:#fff; padding:6px 8px; text-align:left; font-size:10px; text-transform:uppercase; }\n  td { padding:6px 8px; border-bottom:1px solid #EEE; font-size:11px; }\n  .assinaturas { display:flex; justify-content:space-around; margin-top:40px; text-align:center; }\n  .assin { display:flex; flex-direction:column; align-items:center; gap:4px; }\n  .assin img { height:50px; object-fit:contain; }\n  .assin-nome { font-weight:bold; font-size:12px; }\n  .assin-cargo { font-size:10px; color:#888; }\n  .rodape { text-align:center; font-size:10px; color:#AAA; margin-top:30px; border-top:1px solid #EEE; padding-top:8px; }\n  .tipo-linha { display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px solid #F0F0F0; }\n</style></head><body>\n<div class=\"header\">\n  <img src=\"").concat(logoUrl, "\" class=\"logo\" />\n  <div style=\"text-align:right; font-size:11px; color:#666\">\n    <strong>").concat(nomeApp, "</strong><br>").concat(cidade, "<br>").concat(maestro ? "Maestro: " + maestro : "", "\n  </div>\n</div>\n<div class=\"titulo\">Relat\xF3rio de Atividades</div>\n<div class=\"periodo\">Per\xEDodo: ").concat(periodoFmt, "</div>\n<div class=\"cards\">\n  <div class=\"card\"><div class=\"card-num\">").concat(eventosFiltrados.length, "</div><div class=\"card-lbl\">Total atividades</div></div>\n  <div class=\"card\"><div class=\"card-num\">").concat(ativos.length, "</div><div class=\"card-lbl\">Integrantes ativos</div></div>\n  <div class=\"card\"><div class=\"card-num\">").concat(apresentacoes.length, "</div><div class=\"card-lbl\">Apresenta\xE7\xF5es</div></div>\n</div>\n<div class=\"secao\">Distribui\xE7\xE3o por tipo</div>\n").concat(Object.entries(porTipo).map(function (_ref35) {
-      var _ref36 = _slicedToArray(_ref35, 2),
-        k = _ref36[0],
-        v = _ref36[1];
-      return "<div class=\"tipo-linha\"><span>".concat(k, "</span><span style=\"font-weight:bold;color:").concat(cor, "\">").concat(v, "</span></div>");
-    }).join(""), "\n").concat(textos.sobreProjeto || textos.curriculoMaestro || textos.equipe ? "\n<div class=\"secao\">Informa\xE7\xF5es do Projeto</div>\n".concat(textos.sobreProjeto ? "<div class=\"bloco\"><div class=\"bloco-titulo\">Sobre o Projeto</div><p>".concat(textos.sobreProjeto, "</p></div>") : "", "\n").concat(textos.curriculoMaestro ? "<div class=\"bloco\"><div class=\"bloco-titulo\">Curr\xEDculo do Maestro</div><p>".concat(textos.curriculoMaestro, "</p></div>") : "", "\n").concat(textos.equipe ? "<div class=\"bloco\"><div class=\"bloco-titulo\">Equipe de Produ\xE7\xE3o</div><p>".concat(textos.equipe, "</p></div>") : "", "\n") : "", "\n<div class=\"secao\">Detalhamento das Atividades</div>\n<table><thead><tr><th>#</th><th>Data</th><th>T\xEDtulo</th><th>Tipo</th><th>Status</th><th>Local</th></tr></thead>\n<tbody>").concat(linhasAtiv || "<tr><td colspan='6' style='text-align:center;color:#AAA'>Nenhuma atividade no período</td></tr>", "</tbody></table>\n<div class=\"assinaturas\">\n  <div class=\"assin\">\n    ").concat(sigMaestro ? "<img src=\"".concat(sigMaestro, "\" />") : "<div style='height:50px'></div>", "\n    <div style=\"border-top:1px solid #333;padding-top:4px;min-width:160px\">\n      <div class=\"assin-nome\">").concat(maestro, "</div>\n      <div class=\"assin-cargo\">Maestro \u2013 ").concat(nomeApp, "</div>\n    </div>\n  </div>\n  <div class=\"assin\">\n    ").concat(sigLucia ? "<img src=\"".concat(sigLucia, "\" />") : "<div style='height:50px'></div>", "\n    <div style=\"border-top:1px solid #333;padding-top:4px;min-width:160px\">\n      <div class=\"assin-nome\">").concat(produtora, "</div>\n      <div class=\"assin-cargo\">Produtora \u2013 ").concat(nomeApp, "</div>\n    </div>\n  </div>\n</div>\n<div class=\"rodape\">Relat\xF3rio gerado em ").concat(hoje, " pelo sistema de gest\xE3o do ").concat(nomeApp, ".</div>\n</body></html>");
-    var win = window.open("", "_blank");
-    win.document.write(html);
-    win.document.close();
-    setTimeout(function () {
-      return win.print();
-    }, 800);
-  }
-  var card = {
-    background: "#fff",
-    borderRadius: 12,
-    border: "1px solid #EEE8E8",
-    padding: "16px 20px",
-    marginBottom: 12,
-    boxShadow: "0 1px 4px rgba(0,0,0,0.04)"
-  };
-  var inp = {
-    padding: "10px 14px",
-    border: "1px solid #E8E0E0",
-    borderRadius: 10,
-    fontSize: 13,
-    outline: "none",
-    fontFamily: "inherit",
-    color: "#1A1D23",
-    background: "#FAFAFA"
-  };
-  var lbl = {
-    display: "block",
-    fontSize: 11,
-    fontWeight: 700,
-    color: "#888",
-    marginBottom: 5,
-    textTransform: "uppercase",
-    letterSpacing: 0.8
-  };
-  var ta = {
-    width: "100%",
-    padding: "10px 14px",
-    border: "1px solid #E8E0E0",
-    borderRadius: 10,
-    fontSize: 13,
-    outline: "none",
-    fontFamily: "inherit",
-    color: "#1A1D23",
-    background: "#FAFAFA",
-    resize: "vertical",
-    minHeight: 80
-  };
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 28,
-      fontWeight: 700,
-      color: cor,
-      marginBottom: 4
-    }
-  }, "Relat\xF3rios"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#AAA",
-      marginBottom: 20
-    }
-  }, "Relat\xF3rio de atividades e gest\xE3o do coral"), /*#__PURE__*/React.createElement("div", {
-    style: card
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 8,
-      marginBottom: 14
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "calendar",
-    size: 16,
-    color: cor
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 14,
-      fontWeight: 700,
-      color: "#1A1D23"
-    }
-  }, "Per\xEDodo do relat\xF3rio")), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 16,
-      flexWrap: "wrap",
-      alignItems: "flex-end"
-    }
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Data in\xEDcio"), /*#__PURE__*/React.createElement("input", {
-    type: "date",
-    style: inp,
-    value: dataInicio,
-    onChange: function onChange(e) {
-      return setDataInicio(e.target.value);
-    }
-  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Data fim"), /*#__PURE__*/React.createElement("input", {
-    type: "date",
-    style: inp,
-    value: dataFim,
-    onChange: function onChange(e) {
-      return setDataFim(e.target.value);
-    }
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      flex: 1,
-      minWidth: 200
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Filtrar por evento"), /*#__PURE__*/React.createElement("select", {
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      width: "100%"
-    }),
-    value: eventoFiltro,
-    onChange: function onChange(e) {
-      return setEventoFiltro(e.target.value);
-    }
-  }, /*#__PURE__*/React.createElement("option", {
-    value: "todos"
-  }, "Todos os eventos"), eventosPeriodo.map(function (e) {
-    return /*#__PURE__*/React.createElement("option", {
-      key: e.id,
-      value: e.id
-    }, e.date, " \u2014 ", e.title);
-  }))))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "grid",
-      gridTemplateColumns: "1fr 1fr 1fr",
-      gap: 10,
-      marginBottom: 12
-    }
-  }, [{
-    label: "Total atividades",
-    value: eventosFiltrados.length,
-    icon: "calendar",
-    color: cor
-  }, {
-    label: "Integrantes ativos",
-    value: ativos.length,
-    icon: "users",
-    color: "#2E7D32"
-  }, {
-    label: "Apresentações",
-    value: apresentacoes.length,
-    icon: "mic",
-    color: cor
-  }].map(function (m) {
-    return /*#__PURE__*/React.createElement("div", {
-      key: m.label,
-      style: _objectSpread(_objectSpread({}, card), {}, {
-        marginBottom: 0,
-        textAlign: "center",
-        padding: "16px"
-      })
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: 6,
-        marginBottom: 6
-      }
-    }, /*#__PURE__*/React.createElement(Icon, {
-      name: m.icon,
-      size: 16,
-      color: m.color
-    })), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 28,
-        fontWeight: 700,
-        color: m.color,
-        lineHeight: 1
-      }
-    }, m.value), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 12,
-        color: "#AAA",
-        marginTop: 4
-      }
-    }, m.label));
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "grid",
-      gridTemplateColumns: "1fr 1fr",
-      gap: 12,
-      marginBottom: 12
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: card
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      fontWeight: 700,
-      color: "#1A1D23",
-      marginBottom: 14
-    }
-  }, "Atividades por tipo"), Object.entries(porTipo).length === 0 ? /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#CCC",
-      textAlign: "center",
-      padding: "16px 0"
-    }
-  }, "Sem atividades no per\xEDodo") : Object.entries(porTipo).map(function (_ref37) {
-    var _ref38 = _slicedToArray(_ref37, 2),
-      tipo = _ref38[0],
-      qtd = _ref38[1];
-    var max = Math.max.apply(Math, _toConsumableArray(Object.values(porTipo)));
-    return /*#__PURE__*/React.createElement("div", {
-      key: tipo,
-      style: {
-        marginBottom: 10
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        justifyContent: "space-between",
-        marginBottom: 4
-      }
-    }, /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 12,
-        color: "#555"
-      }
-    }, tipo), /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 12,
-        fontWeight: 700,
-        color: cor
-      }
-    }, qtd)), /*#__PURE__*/React.createElement("div", {
-      style: {
-        height: 8,
-        background: "#F0EAEA",
-        borderRadius: 4,
-        overflow: "hidden"
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        width: "".concat(qtd / max * 100, "%"),
-        height: "100%",
-        background: cor,
-        borderRadius: 4
-      }
-    })));
-  })), /*#__PURE__*/React.createElement("div", {
-    style: card
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      fontWeight: 700,
-      color: "#1A1D23",
-      marginBottom: 14
-    }
-  }, "Distribui\xE7\xE3o por status"), Object.entries(porStatus).length === 0 ? /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#CCC",
-      textAlign: "center",
-      padding: "16px 0"
-    }
-  }, "Sem atividades no per\xEDodo") : Object.entries(porStatus).map(function (_ref39) {
-    var _ref40 = _slicedToArray(_ref39, 2),
-      status = _ref40[0],
-      qtd = _ref40[1];
-    return /*#__PURE__*/React.createElement("div", {
-      key: status,
-      style: {
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: "6px 0",
-        borderBottom: "1px solid #F5F0F0"
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        alignItems: "center",
-        gap: 8
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        width: 10,
-        height: 10,
-        borderRadius: "50%",
-        background: statusColors[status] || "#888"
-      }
-    }), /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 13,
-        color: "#555"
-      }
-    }, status)), /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 13,
-        fontWeight: 700,
-        color: statusColors[status] || "#888"
-      }
-    }, qtd));
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: card
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginBottom: 16
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 8
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "pencil",
-    size: 15,
-    color: cor
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 14,
-      fontWeight: 700,
-      color: "#1A1D23"
-    }
-  }, "Texto Qualitativo do Relat\xF3rio")), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      setEditTextos(function (v) {
-        return !v;
-      });
-      setFormTextos(_objectSpread({}, textos));
-    },
-    style: {
-      padding: "6px 14px",
-      background: "#fff",
-      border: "1px solid #EEE",
-      borderRadius: 8,
-      fontSize: 12,
-      fontWeight: 600,
-      cursor: "pointer",
-      fontFamily: "inherit",
-      color: "#666"
-    }
-  }, editTextos ? "Cancelar" : "Editar textos")), !editTextos ? /*#__PURE__*/React.createElement(React.Fragment, null, textos.sobreProjeto && /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 14
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 11,
-      fontWeight: 700,
-      color: cor,
-      textTransform: "uppercase",
-      letterSpacing: 1,
-      marginBottom: 6
-    }
-  }, "Sobre o Projeto"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#555",
-      lineHeight: 1.6
-    }
-  }, textos.sobreProjeto)), textos.curriculoMaestro && /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 14
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 11,
-      fontWeight: 700,
-      color: cor,
-      textTransform: "uppercase",
-      letterSpacing: 1,
-      marginBottom: 6
-    }
-  }, "Curr\xEDculo do Maestro"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#555",
-      lineHeight: 1.6
-    }
-  }, textos.curriculoMaestro)), textos.equipe && /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 14
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 11,
-      fontWeight: 700,
-      color: cor,
-      textTransform: "uppercase",
-      letterSpacing: 1,
-      marginBottom: 6
-    }
-  }, "Equipe de Produ\xE7\xE3o"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#555",
-      lineHeight: 1.6
-    }
-  }, textos.equipe)), !textos.sobreProjeto && !textos.curriculoMaestro && !textos.equipe && /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#CCC",
-      textAlign: "center",
-      padding: "16px 0"
-    }
-  }, "Clique em \"Editar textos\" para preencher.")) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 14
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Sobre o Projeto"), /*#__PURE__*/React.createElement("textarea", {
-    style: ta,
-    value: formTextos.sobreProjeto || "",
-    onChange: function onChange(e) {
-      return setFormTextos(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          sobreProjeto: e.target.value
-        });
-      });
-    }
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 14
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Curr\xEDculo do Maestro"), /*#__PURE__*/React.createElement("textarea", {
-    style: ta,
-    value: formTextos.curriculoMaestro || "",
-    onChange: function onChange(e) {
-      return setFormTextos(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          curriculoMaestro: e.target.value
-        });
-      });
-    }
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 14
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Equipe de Produ\xE7\xE3o"), /*#__PURE__*/React.createElement("textarea", {
-    style: ta,
-    value: formTextos.equipe || "",
-    onChange: function onChange(e) {
-      return setFormTextos(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          equipe: e.target.value
-        });
-      });
-    }
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "grid",
-      gridTemplateColumns: "1fr 1fr",
-      gap: 12,
-      marginBottom: 14
-    }
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Nome do Maestro"), /*#__PURE__*/React.createElement("input", {
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      width: "100%"
-    }),
-    value: formTextos.maestro || "",
-    onChange: function onChange(e) {
-      return setFormTextos(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          maestro: e.target.value
-        });
-      });
-    },
-    placeholder: "Ex: Paulo Sergio Motta"
-  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Nome da Produtora"), /*#__PURE__*/React.createElement("input", {
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      width: "100%"
-    }),
-    value: formTextos.produtora || "",
-    onChange: function onChange(e) {
-      return setFormTextos(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          produtora: e.target.value
-        });
-      });
-    },
-    placeholder: "Ex: Lucia Kratz"
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "grid",
-      gridTemplateColumns: "1fr 1fr",
-      gap: 12,
-      marginBottom: 14
-    }
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Cidade"), /*#__PURE__*/React.createElement("input", {
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      width: "100%"
-    }),
-    value: formTextos.cidade || "",
-    onChange: function onChange(e) {
-      return setFormTextos(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          cidade: e.target.value
-        });
-      });
-    },
-    placeholder: "Ex: Goi\xE2nia \u2013 GO"
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 14
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "URL assinatura \u2014 Lucia Kratz"), /*#__PURE__*/React.createElement("input", {
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      width: "100%"
-    }),
-    value: formTextos.sigLucia || "",
-    onChange: function onChange(e) {
-      return setFormTextos(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          sigLucia: e.target.value
-        });
-      });
-    },
-    placeholder: "https://raw.githubusercontent.com/.../lucia-sig.png"
-  }), (formTextos.sigLucia || sigLucia) && /*#__PURE__*/React.createElement("img", {
-    src: formTextos.sigLucia || sigLucia,
-    alt: "Assinatura Lucia",
-    style: {
-      maxHeight: 40,
-      marginTop: 8,
-      objectFit: "contain"
-    },
-    onError: function onError(e) {
-      return e.target.style.display = "none";
-    }
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 20
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "URL assinatura \u2014 Maestro"), /*#__PURE__*/React.createElement("input", {
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      width: "100%"
-    }),
-    value: formTextos.sigMaestro || "",
-    onChange: function onChange(e) {
-      return setFormTextos(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          sigMaestro: e.target.value
-        });
-      });
-    },
-    placeholder: "https://raw.githubusercontent.com/.../paulo-sig.png"
-  }), (formTextos.sigMaestro || sigMaestro) && /*#__PURE__*/React.createElement("img", {
-    src: formTextos.sigMaestro || sigMaestro,
-    alt: "Assinatura Maestro",
-    style: {
-      maxHeight: 40,
-      marginTop: 8,
-      objectFit: "contain"
-    },
-    onError: function onError(e) {
-      return e.target.style.display = "none";
-    }
-  })), /*#__PURE__*/React.createElement("button", {
-    onClick: salvarTextos,
-    disabled: salvandoTextos,
-    style: {
-      padding: "11px 24px",
-      background: cor,
-      color: "#fff",
-      border: "none",
-      borderRadius: 10,
-      fontSize: 14,
-      fontWeight: 700,
-      cursor: "pointer",
-      fontFamily: "inherit",
-      opacity: salvandoTextos ? 0.7 : 1
-    }
-  }, salvandoTextos ? "Salvando..." : "Salvar textos"))), eventosFiltrados.length > 0 && /*#__PURE__*/React.createElement(FrequenciaEventos, {
-    eventos: eventosFiltrados,
-    frequencias: frequencias,
-    config: config
-  }), /*#__PURE__*/React.createElement(FrequenciaAcesso, {
-    config: config
-  }), function () {
-    var postsPeriodo = noticias.filter(function (n) {
-      var _n$createdAt;
-      if (!((_n$createdAt = n.createdAt) !== null && _n$createdAt !== void 0 && _n$createdAt.seconds)) return false;
-      var d = new Date(n.createdAt.seconds * 1000).toISOString().split("T")[0];
-      return d >= dataInicio && d <= dataFim;
-    });
-    if (postsPeriodo.length === 0) return null;
-    return /*#__PURE__*/React.createElement("div", {
-      style: {
-        background: "#fff",
-        borderRadius: 12,
-        border: "1px solid #EEE8E8",
-        padding: "16px 20px",
-        marginBottom: 12,
-        boxShadow: "0 1px 4px rgba(0,0,0,0.04)"
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        alignItems: "center",
-        gap: 8,
-        marginBottom: 14
-      }
-    }, /*#__PURE__*/React.createElement(Icon, {
-      name: "newspaper",
-      size: 16,
-      color: cor
-    }), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 14,
-        fontWeight: 700,
-        color: "#1A1D23"
-      }
-    }, "Posts / Not\xEDcias do Grupo (", postsPeriodo.length, ")")), postsPeriodo.map(function (n) {
-      var _n$createdAt2, _n$texto, _n$texto2;
-      return /*#__PURE__*/React.createElement("div", {
-        key: n.id,
-        style: {
-          padding: "10px 0",
-          borderBottom: "1px solid #F5F0F0"
-        }
-      }, /*#__PURE__*/React.createElement("div", {
-        style: {
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "flex-start"
-        }
-      }, /*#__PURE__*/React.createElement("div", {
-        style: {
-          fontSize: 13,
-          fontWeight: 700,
-          color: "#1A1D23",
-          flex: 1
-        }
-      }, n.titulo), /*#__PURE__*/React.createElement("div", {
-        style: {
-          fontSize: 11,
-          color: "#AAA",
-          marginLeft: 12,
-          flexShrink: 0
-        }
-      }, (_n$createdAt2 = n.createdAt) !== null && _n$createdAt2 !== void 0 && _n$createdAt2.seconds ? new Date(n.createdAt.seconds * 1000).toLocaleDateString("pt-BR") : "")), n.autorNome && /*#__PURE__*/React.createElement("div", {
-        style: {
-          fontSize: 11,
-          color: cor,
-          fontWeight: 600,
-          marginTop: 2
-        }
-      }, "\u270D\uFE0F ", n.autorNome), /*#__PURE__*/React.createElement("div", {
-        style: {
-          fontSize: 12,
-          color: "#888",
-          marginTop: 4,
-          lineHeight: 1.5
-        }
-      }, (_n$texto = n.texto) === null || _n$texto === void 0 ? void 0 : _n$texto.slice(0, 150), ((_n$texto2 = n.texto) === null || _n$texto2 === void 0 ? void 0 : _n$texto2.length) > 150 ? "..." : ""));
-    }));
-  }(), /*#__PURE__*/React.createElement("div", {
-    style: card
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginBottom: 14
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 14,
-      fontWeight: 700,
-      color: "#1A1D23"
-    }
-  }, "Atividades no per\xEDodo ", /*#__PURE__*/React.createElement("span", {
-    style: {
-      fontSize: 13,
-      color: "#AAA",
-      fontWeight: 400
-    }
-  }, "(", eventosFiltrados.length, ")")), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 8,
-      flexWrap: "wrap"
-    }
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: gerarPDFListaPresenca,
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 8,
-      padding: "9px 18px",
-      background: "#fff",
-      color: cor,
-      border: "1px solid ".concat(cor),
-      borderRadius: 10,
-      fontSize: 13,
-      fontWeight: 700,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "clipboard-list",
-    size: 14,
-    color: cor
-  }), " Lista de Presen\xE7a"), /*#__PURE__*/React.createElement("button", {
-    onClick: gerarPDFCompleto,
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 8,
-      padding: "9px 18px",
-      background: cor,
-      color: "#fff",
-      border: "none",
-      borderRadius: 10,
-      fontSize: 13,
-      fontWeight: 700,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "file-text",
-    size: 14,
-    color: "#fff"
-  }), " Relat\xF3rio Completo para Empresa"))), eventosFiltrados.length === 0 ? /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#CCC",
-      textAlign: "center",
-      padding: "16px 0"
-    }
-  }, "Nenhuma atividade no per\xEDodo selecionado.") : eventosFiltrados.sort(function (a, b) {
-    return a.date > b.date ? 1 : -1;
-  }).map(function (e, i) {
-    return /*#__PURE__*/React.createElement("div", {
-      key: e.id,
-      style: {
-        display: "flex",
-        alignItems: "center",
-        gap: 12,
-        padding: "10px 0",
-        borderBottom: "1px solid #F5F0F0"
-      }
-    }, /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 12,
-        color: "#AAA",
-        minWidth: 20
-      }
-    }, i + 1), /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 12,
-        color: "#888",
-        minWidth: 80
-      }
-    }, e.date ? new Date(e.date + "T12:00:00").toLocaleDateString("pt-BR") : ""), /*#__PURE__*/React.createElement("div", {
-      style: {
-        flex: 1
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 13,
-        fontWeight: 600,
-        color: "#1A1D23"
-      }
-    }, e.title), e.local && /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 11,
-        color: "#AAA"
-      }
-    }, e.local)), /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 11,
-        padding: "2px 8px",
-        borderRadius: 10,
-        background: "#F0EAEA",
-        color: cor,
-        fontWeight: 600
-      }
-    }, e.tipo), /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 11,
-        padding: "2px 8px",
-        borderRadius: 10,
-        background: (statusColors[e.status] || "#888") + "18",
-        color: statusColors[e.status] || "#888",
-        fontWeight: 600
-      }
-    }, e.status));
-  })));
-}
-
-// ── FREQUÊNCIA VIA QR ─────────────────────────────────────────────────────────
-function CheckinPublico(_ref41) {
-  var sessaoId = _ref41.sessaoId,
-    config = _ref41.config;
-  var _useState139 = useState(null),
-    _useState140 = _slicedToArray(_useState139, 2),
-    sessao = _useState140[0],
-    setSessao = _useState140[1];
-  var _useState141 = useState(null),
-    _useState142 = _slicedToArray(_useState141, 2),
-    membro = _useState142[0],
-    setMembro = _useState142[1];
-  var _useState143 = useState([]),
-    _useState144 = _slicedToArray(_useState143, 2),
-    members = _useState144[0],
-    setMembers = _useState144[1];
-  var _useState145 = useState(""),
-    _useState146 = _slicedToArray(_useState145, 2),
-    busca = _useState146[0],
-    setBusca = _useState146[1];
-  var _useState147 = useState([]),
-    _useState148 = _slicedToArray(_useState147, 2),
-    sugestoes = _useState148[0],
-    setSugestoes = _useState148[1];
-  var _useState149 = useState(null),
-    _useState150 = _slicedToArray(_useState149, 2),
-    status = _useState150[0],
-    setStatus = _useState150[1]; // null | 'ok' | 'erro' | 'expirado'
-  var _useState151 = useState(true),
-    _useState152 = _slicedToArray(_useState151, 2),
-    loading = _useState152[0],
-    setLoading = _useState152[1];
-  var cor = config.corPrimaria || COR;
-  useEffect(function () {
-    // Carregar sessão
-    db.collection("onix_sessoes_checkin").doc(sessaoId).get().then(function (doc) {
-      if (!doc.exists) {
-        setStatus("erro");
-        setLoading(false);
-        return;
-      }
-      var d = _objectSpread({
-        id: doc.id
-      }, doc.data());
-      // Verificar validade 24h
-      if (d.expiraEm && d.expiraEm.seconds < Date.now() / 1000) {
-        setStatus("expirado");
-        setLoading(false);
-        return;
-      }
-      setSessao(d);
-      setLoading(false);
-    });
-    // Carregar membros
-    db.collection("onix_members").onSnapshot(function (snap) {
-      setMembers(snap.docs.map(function (d) {
-        return _objectSpread({
-          id: d.id
-        }, d.data());
-      }));
-    });
-  }, [sessaoId]);
-  useEffect(function () {
-    if (busca.length < 3) {
-      setSugestoes([]);
-      return;
-    }
-    var t = busca.toLowerCase();
-    setSugestoes(members.filter(function (m) {
-      return m.active && m.name.toLowerCase().includes(t);
-    }).slice(0, 6));
-  }, [busca, members]);
-  function confirmarPresenca(_x5) {
-    return _confirmarPresenca.apply(this, arguments);
-  }
-  function _confirmarPresenca() {
-    _confirmarPresenca = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee19(m) {
-      var snap;
-      return _regenerator().w(function (_context19) {
-        while (1) switch (_context19.n) {
-          case 0:
-            _context19.n = 1;
-            return db.collection("onix_frequencias").where("sessaoId", "==", sessaoId).where("membroId", "==", m.id).get();
-          case 1:
-            snap = _context19.v;
-            if (snap.empty) {
-              _context19.n = 2;
-              break;
-            }
-            setMembro(m);
-            setStatus("jaRegistrado");
-            return _context19.a(2);
-          case 2:
-            _context19.n = 3;
-            return db.collection("onix_frequencias").add({
-              sessaoId: sessaoId,
-              eventoId: sessao.eventoId,
-              eventoTitulo: sessao.eventoTitulo,
-              eventoData: sessao.eventoData,
-              membroId: m.id,
-              membroNome: m.name,
-              naipe: m.voice || "",
-              dataHora: firebase.firestore.FieldValue.serverTimestamp(),
-              data: todayStr()
-            });
-          case 3:
-            setMembro(m);
-            setStatus("ok");
-          case 4:
-            return _context19.a(2);
-        }
-      }, _callee19);
-    }));
-    return _confirmarPresenca.apply(this, arguments);
-  }
-  if (loading) return /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      height: "100vh",
-      background: config.corFundo || COR_FUNDO
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: 32,
-      height: 32,
-      border: "3px solid ".concat(cor),
-      borderTopColor: "transparent",
-      borderRadius: "50%",
-      animation: "spin 0.8s linear infinite"
-    }
-  }));
-  var wrap = {
-    minHeight: "100vh",
-    background: config.corFundo || COR_FUNDO,
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: "32px 20px"
-  };
-  if (status === "expirado") return /*#__PURE__*/React.createElement("div", {
-    style: wrap
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      textAlign: "center"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 48,
-      marginBottom: 16
-    }
-  }, "\u23F0"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 22,
-      fontWeight: 700,
-      color: "#1A1D23"
-    }
-  }, "QR Code expirado"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 14,
-      color: "#AAA",
-      marginTop: 8
-    }
-  }, "Este link de check-in n\xE3o \xE9 mais v\xE1lido.")));
-  if (status === "erro") return /*#__PURE__*/React.createElement("div", {
-    style: wrap
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      textAlign: "center"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 48,
-      marginBottom: 16
-    }
-  }, "\u274C"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 22,
-      fontWeight: 700,
-      color: "#1A1D23"
-    }
-  }, "Sess\xE3o n\xE3o encontrada")));
-  if (status === "ok") return /*#__PURE__*/React.createElement("div", {
-    style: wrap
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      textAlign: "center",
-      background: "#fff",
-      borderRadius: 20,
-      padding: "32px 24px",
-      maxWidth: 360,
-      width: "100%",
-      boxShadow: "0 4px 24px rgba(0,0,0,0.08)"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: 72,
-      height: 72,
-      background: "#E8F5E9",
-      borderRadius: "50%",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      margin: "0 auto 16px"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "check",
-    size: 36,
-    color: "#2E7D32"
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 22,
-      fontWeight: 700,
-      color: "#1A1D23",
-      marginBottom: 8
-    }
-  }, "Presen\xE7a confirmada!"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 15,
-      color: "#2E7D32",
-      fontWeight: 600,
-      marginBottom: 4
-    }
-  }, membro === null || membro === void 0 ? void 0 : membro.name), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#AAA",
-      marginBottom: 16
-    }
-  }, sessao === null || sessao === void 0 ? void 0 : sessao.eventoTitulo, " \xB7 ", sessao === null || sessao === void 0 ? void 0 : sessao.eventoData), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      color: "#CCC"
-    }
-  }, config.nomeApp || "Onix Brasil Vocal Internacional")));
-  if (status === "jaRegistrado") return /*#__PURE__*/React.createElement("div", {
-    style: wrap
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      textAlign: "center",
-      background: "#fff",
-      borderRadius: 20,
-      padding: "32px 24px",
-      maxWidth: 360,
-      width: "100%",
-      boxShadow: "0 4px 24px rgba(0,0,0,0.08)"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 48,
-      marginBottom: 16
-    }
-  }, "\u2705"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 20,
-      fontWeight: 700,
-      color: "#1A1D23"
-    }
-  }, "J\xE1 registrado!"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 14,
-      color: "#AAA",
-      marginTop: 8
-    }
-  }, membro === null || membro === void 0 ? void 0 : membro.name, ", sua presen\xE7a j\xE1 foi confirmada neste evento.")));
-  return /*#__PURE__*/React.createElement("div", {
-    style: wrap
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      textAlign: "center",
-      marginBottom: 24
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: 64,
-      height: 64,
-      background: "#fff",
-      borderRadius: 12,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      margin: "0 auto 12px",
-      boxShadow: "0 2px 12px rgba(0,0,0,0.1)"
-    }
-  }, /*#__PURE__*/React.createElement("img", {
-    src: config.logoUrl || LOGO_URL,
-    alt: "",
-    style: {
-      width: 44,
-      height: 44,
-      objectFit: "contain"
-    },
-    onError: function onError(e) {
-      return e.target.style.display = "none";
-    }
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 20,
-      fontWeight: 700,
-      color: cor
-    }
-  }, config.nomeApp || "Onix Brasil Vocal Internacional"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#AAA",
-      marginTop: 4
-    }
-  }, "Check-in de presen\xE7a")), /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#fff",
-      borderRadius: 16,
-      padding: "24px 20px",
-      width: "100%",
-      maxWidth: 400,
-      boxShadow: "0 4px 24px rgba(0,0,0,0.07)"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 16,
-      fontWeight: 700,
-      color: "#1A1D23",
-      marginBottom: 4
-    }
-  }, sessao === null || sessao === void 0 ? void 0 : sessao.eventoTitulo), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#AAA",
-      marginBottom: 20
-    }
-  }, sessao === null || sessao === void 0 ? void 0 : sessao.eventoData), /*#__PURE__*/React.createElement("input", {
-    value: busca,
-    onChange: function onChange(e) {
-      setBusca(e.target.value);
-    },
-    autoFocus: true,
-    placeholder: "Digite seu nome (m\xEDn. 3 letras)",
-    style: {
-      width: "100%",
-      padding: "12px 14px",
-      border: "1px solid #E8E0E0",
-      borderRadius: 10,
-      fontSize: 14,
-      outline: "none",
-      fontFamily: "inherit",
-      color: "#1A1D23",
-      marginBottom: 8
-    }
-  }), sugestoes.length > 0 && /*#__PURE__*/React.createElement("div", {
-    style: {
-      border: "1px solid #EEE",
-      borderRadius: 10,
-      overflow: "hidden",
-      marginBottom: 8
-    }
-  }, sugestoes.map(function (m) {
-    return /*#__PURE__*/React.createElement("button", {
-      key: m.id,
-      onClick: function onClick() {
-        return confirmarPresenca(m);
-      },
-      style: {
-        display: "block",
-        width: "100%",
-        padding: "12px 14px",
-        background: "none",
-        border: "none",
-        textAlign: "left",
-        cursor: "pointer",
-        fontSize: 14,
-        borderBottom: "1px solid #F5F5F5",
-        fontFamily: "inherit",
-        color: "#1A1D23"
-      }
-    }, m.name, " ", /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 12,
-        color: "#AAA",
-        marginLeft: 8
-      }
-    }, m.voice));
-  })), busca.length > 0 && busca.length < 3 && /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      color: "#AAA"
-    }
-  }, "Digite mais ", 3 - busca.length, " letra(s)..."), busca.length >= 3 && sugestoes.length === 0 && /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      color: cor
-    }
-  }, "Nenhum corista encontrado.")));
-}
-function Frequencia(_ref42) {
-  var config = _ref42.config;
-  var _useCollection16 = useCollection("onix_events", "date"),
-    events = _useCollection16.data;
-  var _useState153 = useState(""),
-    _useState154 = _slicedToArray(_useState153, 2),
-    eventoSel = _useState154[0],
-    setEventoSel = _useState154[1];
-  var _useState155 = useState(null),
-    _useState156 = _slicedToArray(_useState155, 2),
-    sessaoAtiva = _useState156[0],
-    setSessaoAtiva = _useState156[1];
-  var _useState157 = useState([]),
-    _useState158 = _slicedToArray(_useState157, 2),
-    frequencias = _useState158[0],
-    setFrequencias = _useState158[1];
-  var _useState159 = useState(""),
-    _useState160 = _slicedToArray(_useState159, 2),
-    qrUrl = _useState160[0],
-    setQrUrl = _useState160[1];
-  var _useState161 = useState(false),
-    _useState162 = _slicedToArray(_useState161, 2),
-    gerando = _useState162[0],
-    setGerando = _useState162[1];
-  var _useState163 = useState(false),
-    _useState164 = _slicedToArray(_useState163, 2),
-    showQR = _useState164[0],
-    setShowQR = _useState164[1];
-  var cor = config.corPrimaria || COR;
-  var today = todayStr();
-
-  // Carregar sessão ativa do evento selecionado
-  useEffect(function () {
-    if (!eventoSel) {
-      setSessaoAtiva(null);
-      setQrUrl("");
-      setShowQR(false);
-      return;
-    }
-    var unsub = db.collection("onix_sessoes_checkin").where("eventoId", "==", eventoSel).onSnapshot(function (snap) {
-      var ativas = snap.docs.map(function (d) {
-        return _objectSpread({
-          id: d.id
-        }, d.data());
-      }).filter(function (s) {
-        var _s$expiraEm;
-        return ((_s$expiraEm = s.expiraEm) === null || _s$expiraEm === void 0 ? void 0 : _s$expiraEm.seconds) > Date.now() / 1000;
-      });
-      setSessaoAtiva(ativas[0] || null);
-      if (ativas[0]) {
-        var url = "".concat(window.location.origin).concat(window.location.pathname, "?checkin=").concat(ativas[0].id);
-        setQrUrl("https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=".concat(encodeURIComponent(url)));
-        setShowQR(true);
-      }
-    });
-    return unsub;
-  }, [eventoSel]);
-
-  // Carregar frequências do evento selecionado
-  useEffect(function () {
-    if (!eventoSel) {
-      setFrequencias([]);
-      return;
-    }
-    var unsub = db.collection("onix_frequencias").where("eventoId", "==", eventoSel).onSnapshot(function (snap) {
-      return setFrequencias(snap.docs.map(function (d) {
-        return _objectSpread({
-          id: d.id
-        }, d.data());
-      }));
-    });
-    return unsub;
-  }, [eventoSel]);
-  function gerarQR() {
-    return _gerarQR.apply(this, arguments);
-  }
-  function _gerarQR() {
-    _gerarQR = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee20() {
-      var evento, expiraEm, ref, url;
-      return _regenerator().w(function (_context20) {
-        while (1) switch (_context20.n) {
-          case 0:
-            if (eventoSel) {
-              _context20.n = 1;
-              break;
-            }
-            return _context20.a(2);
-          case 1:
-            evento = events.find(function (e) {
-              return e.id === eventoSel;
-            });
-            if (evento) {
-              _context20.n = 2;
-              break;
-            }
-            return _context20.a(2);
-          case 2:
-            setGerando(true);
-            expiraEm = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 horas
-            _context20.n = 3;
-            return db.collection("onix_sessoes_checkin").add({
-              eventoId: eventoSel,
-              eventoTitulo: evento.title,
-              eventoData: evento.date,
-              criadoEm: firebase.firestore.FieldValue.serverTimestamp(),
-              expiraEm: firebase.firestore.Timestamp.fromDate(expiraEm)
-            });
-          case 3:
-            ref = _context20.v;
-            url = "".concat(window.location.origin).concat(window.location.pathname, "?checkin=").concat(ref.id);
-            setQrUrl("https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=".concat(encodeURIComponent(url)));
-            setShowQR(true);
-            setGerando(false);
-          case 4:
-            return _context20.a(2);
-        }
-      }, _callee20);
-    }));
-    return _gerarQR.apply(this, arguments);
-  }
-  function encerrarSessao() {
-    return _encerrarSessao.apply(this, arguments);
-  }
-  function _encerrarSessao() {
-    _encerrarSessao = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee21() {
-      return _regenerator().w(function (_context21) {
-        while (1) switch (_context21.n) {
-          case 0:
-            if (sessaoAtiva) {
-              _context21.n = 1;
-              break;
-            }
-            return _context21.a(2);
-          case 1:
-            if (window.confirm("Encerrar sessão de check-in?")) {
-              _context21.n = 2;
-              break;
-            }
-            return _context21.a(2);
-          case 2:
-            _context21.n = 3;
-            return db.collection("onix_sessoes_checkin").doc(sessaoAtiva.id).update({
-              expiraEm: firebase.firestore.Timestamp.fromDate(new Date(0))
-            });
-          case 3:
-            setSessaoAtiva(null);
-            setShowQR(false);
-            setQrUrl("");
-          case 4:
-            return _context21.a(2);
-        }
-      }, _callee21);
-    }));
-    return _encerrarSessao.apply(this, arguments);
-  }
-  var proximos = events.filter(function (e) {
-    return e.date >= today;
-  }).sort(function (a, b) {
-    return a.date > b.date ? 1 : -1;
-  });
-  var passados = events.filter(function (e) {
-    return e.date < today;
-  }).sort(function (a, b) {
-    return a.date > b.date ? -1 : 1;
-  }).slice(0, 20);
-  var eventoAtual = events.find(function (e) {
-    return e.id === eventoSel;
-  });
-  var totalMembros = frequencias.length;
-  var card = {
-    background: "#fff",
-    borderRadius: 12,
-    border: "1px solid #EEE8E8",
-    padding: "20px",
-    marginBottom: 12,
-    boxShadow: "0 1px 4px rgba(0,0,0,0.04)"
-  };
-  var inp = {
-    padding: "10px 14px",
-    border: "1px solid #E8E0E0",
-    borderRadius: 10,
-    fontSize: 13,
-    outline: "none",
-    fontFamily: "inherit",
-    color: "#1A1D23",
-    background: "#FAFAFA"
-  };
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 10,
-      marginBottom: 6
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "qr-code",
-    size: 24,
-    color: cor
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 28,
-      fontWeight: 700,
-      color: cor
-    }
-  }, "Frequ\xEAncia via QR")), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#AAA",
-      marginBottom: 20
-    }
-  }, "Controle de presen\xE7a em ensaios e eventos"), /*#__PURE__*/React.createElement("div", {
-    style: card
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 14,
-      fontWeight: 700,
-      color: "#1A1D23",
-      marginBottom: 14
-    }
-  }, "Nova Sess\xE3o de Check-in"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 12,
-      flexWrap: "wrap",
-      alignItems: "flex-end",
-      marginBottom: 16
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      flex: 1,
-      minWidth: 200
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: {
-      display: "block",
-      fontSize: 11,
-      fontWeight: 700,
-      color: "#888",
-      marginBottom: 5,
-      textTransform: "uppercase",
-      letterSpacing: 0.8
-    }
-  }, "Evento"), /*#__PURE__*/React.createElement("select", {
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      width: "100%"
-    }),
-    value: eventoSel,
-    onChange: function onChange(e) {
-      return setEventoSel(e.target.value);
-    }
-  }, /*#__PURE__*/React.createElement("option", {
-    value: ""
-  }, "Selecionar evento..."), proximos.length > 0 && /*#__PURE__*/React.createElement("optgroup", {
-    label: "PR\xD3XIMOS"
-  }, proximos.map(function (e) {
-    return /*#__PURE__*/React.createElement("option", {
-      key: e.id,
-      value: e.id
-    }, e.date, " \u2014 ", e.title);
-  })), passados.length > 0 && /*#__PURE__*/React.createElement("optgroup", {
-    label: "PASSADOS"
-  }, passados.map(function (e) {
-    return /*#__PURE__*/React.createElement("option", {
-      key: e.id,
-      value: e.id
-    }, e.date, " \u2014 ", e.title);
-  })))), eventoSel && !sessaoAtiva && /*#__PURE__*/React.createElement("button", {
-    onClick: gerarQR,
-    disabled: gerando,
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 8,
-      padding: "11px 20px",
-      background: cor,
-      color: "#fff",
-      border: "none",
-      borderRadius: 10,
-      fontSize: 13,
-      fontWeight: 700,
-      cursor: "pointer",
-      fontFamily: "inherit",
-      opacity: gerando ? 0.7 : 1
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "qr-code",
-    size: 14,
-    color: "#fff"
-  }), " ", gerando ? "Gerando..." : "Gerar QR Code"), sessaoAtiva && /*#__PURE__*/React.createElement("button", {
-    onClick: encerrarSessao,
-    style: {
-      padding: "11px 16px",
-      background: "#FFF0F0",
-      color: "#5B2D8E",
-      border: "1px solid #F5DADA",
-      borderRadius: 10,
-      fontSize: 13,
-      fontWeight: 600,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, "Encerrar sess\xE3o")), showQR && qrUrl && eventoAtual && /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 20,
-      alignItems: "flex-start",
-      flexWrap: "wrap",
-      padding: "16px",
-      background: "#F9F5F5",
-      borderRadius: 10
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      textAlign: "center"
-    }
-  }, /*#__PURE__*/React.createElement("img", {
-    src: qrUrl,
-    alt: "QR Code",
-    style: {
-      width: 160,
-      height: 160,
-      borderRadius: 8
-    }
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 11,
-      color: "#AAA",
-      marginTop: 6
-    }
-  }, sessaoAtiva ? "V\xE1lido at\xE9 ".concat(new Date(sessaoAtiva.expiraEm.seconds * 1000).toLocaleString("pt-BR", {
-    day: "2-digit",
-    month: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit"
-  })) : "Válido por 24h")), /*#__PURE__*/React.createElement("div", {
-    style: {
-      flex: 1
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 15,
-      fontWeight: 700,
-      color: "#1A1D23",
-      marginBottom: 4
-    }
-  }, eventoAtual.title), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#AAA",
-      marginBottom: 12
-    }
-  }, eventoAtual.date), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      color: "#555",
-      marginBottom: 8
-    }
-  }, "\uD83D\uDCF2 Coristas escaneiam o QR ou acessam o link:"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 8
-    }
-  }, /*#__PURE__*/React.createElement("input", {
-    readOnly: true,
-    value: sessaoAtiva ? "".concat(window.location.origin).concat(window.location.pathname, "?checkin=").concat(sessaoAtiva.id) : "",
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      flex: 1,
-      fontSize: 11
-    })
-  }), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return navigator.clipboard.writeText("".concat(window.location.origin).concat(window.location.pathname, "?checkin=").concat((sessaoAtiva === null || sessaoAtiva === void 0 ? void 0 : sessaoAtiva.id) || "")).then(function () {
-        return alert("Link copiado!");
-      });
-    },
-    style: {
-      padding: "8px 12px",
-      background: cor,
-      color: "#fff",
-      border: "none",
-      borderRadius: 8,
-      fontSize: 12,
-      fontWeight: 700,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, "Copiar")), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginTop: 12,
-      display: "flex",
-      alignItems: "center",
-      gap: 8
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: 8,
-      height: 8,
-      borderRadius: "50%",
-      background: "#2E7D32",
-      animation: "pulse 1.5s infinite"
-    }
-  }), /*#__PURE__*/React.createElement("span", {
-    style: {
-      fontSize: 13,
-      color: "#2E7D32",
-      fontWeight: 600
-    }
-  }, totalMembros, " presen\xE7a", totalMembros !== 1 ? "s" : "", " registrada", totalMembros !== 1 ? "s" : "")))), eventoSel && !showQR && /*#__PURE__*/React.createElement("div", {
-    style: {
-      textAlign: "center",
-      padding: "32px 20px",
-      color: "#CCC"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "qr-code",
-    size: 48,
-    color: "#EEE"
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginTop: 12,
-      fontSize: 14
-    }
-  }, "Clique em \"Gerar QR Code\" para iniciar o check-in")), !eventoSel && /*#__PURE__*/React.createElement("div", {
-    style: {
-      textAlign: "center",
-      padding: "32px 20px",
-      color: "#CCC"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "qr-code",
-    size: 48,
-    color: "#EEE"
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginTop: 12,
-      fontSize: 15,
-      fontWeight: 600
-    }
-  }, "Selecione um evento acima"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      marginTop: 4
-    }
-  }, "Para gerenciar sess\xF5es QR de check-in de presen\xE7a"))), eventoSel && /*#__PURE__*/React.createElement("div", {
-    style: card
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 14,
-      fontWeight: 700,
-      color: "#1A1D23",
-      marginBottom: 14
-    }
-  }, "Presen\xE7as registradas ", /*#__PURE__*/React.createElement("span", {
-    style: {
-      fontSize: 13,
-      color: "#AAA",
-      fontWeight: 400
-    }
-  }, "(", frequencias.length, ")")), frequencias.length === 0 ? /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#CCC",
-      textAlign: "center",
-      padding: "16px 0"
-    }
-  }, "Nenhuma presen\xE7a registrada ainda.") : /*#__PURE__*/React.createElement("div", {
-    style: {
-      border: "1px solid #EEE",
-      borderRadius: 8,
-      overflow: "hidden"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "grid",
-      gridTemplateColumns: "40px 1fr 100px 1fr",
-      padding: "8px 12px",
-      background: "#FAFAFA",
-      borderBottom: "1px solid #EEE"
-    }
-  }, ["#", "Nome", "Naipe", "Horário"].map(function (h) {
-    return /*#__PURE__*/React.createElement("div", {
-      key: h,
-      style: {
-        fontSize: 11,
-        fontWeight: 700,
-        color: cor
-      }
-    }, h);
-  })), frequencias.sort(function (a, b) {
-    var _a$dataHora2, _b$dataHora;
-    return (((_a$dataHora2 = a.dataHora) === null || _a$dataHora2 === void 0 ? void 0 : _a$dataHora2.seconds) || 0) - (((_b$dataHora = b.dataHora) === null || _b$dataHora === void 0 ? void 0 : _b$dataHora.seconds) || 0);
-  }).map(function (f, i) {
-    var _f$dataHora3;
-    return /*#__PURE__*/React.createElement("div", {
-      key: f.id,
-      style: {
-        display: "grid",
-        gridTemplateColumns: "40px 1fr 100px 1fr",
-        padding: "10px 12px",
-        borderBottom: i < frequencias.length - 1 ? "1px solid #F5F5F5" : "none",
-        alignItems: "center"
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 12,
-        color: "#AAA"
-      }
-    }, i + 1), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 13,
-        fontWeight: 600,
-        color: "#1A1D23"
-      }
-    }, f.membroNome), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 12,
-        color: "#888"
-      }
-    }, f.naipe || "—"), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 12,
-        color: "#AAA"
-      }
-    }, (_f$dataHora3 = f.dataHora) !== null && _f$dataHora3 !== void 0 && _f$dataHora3.seconds ? new Date(f.dataHora.seconds * 1000).toLocaleString("pt-BR", {
-      hour: "2-digit",
-      minute: "2-digit"
-    }) : "—"));
-  }))));
-}
-
-// ── DECLARAÇÃO DIGITAL ────────────────────────────────────────────────────────
-function Declaracao(_ref43) {
-  var config = _ref43.config;
-  var _useCollection17 = useCollection("onix_events", "date"),
-    events = _useCollection17.data;
-  var _useCollection18 = useCollection("onix_members"),
-    members = _useCollection18.data;
-  var _useCollection19 = useCollection("onix_frequencias", "dataHora"),
-    frequencias = _useCollection19.data;
-  var _useState165 = useState("evento"),
-    _useState166 = _slicedToArray(_useState165, 2),
-    tipo = _useState166[0],
-    setTipo = _useState166[1]; // 'evento' | 'corista'
-  var _useState167 = useState(""),
-    _useState168 = _slicedToArray(_useState167, 2),
-    eventoSel = _useState168[0],
-    setEventoSel = _useState168[1];
-  var _useState169 = useState(""),
-    _useState170 = _slicedToArray(_useState169, 2),
-    coristaId = _useState170[0],
-    setCoristaId = _useState170[1];
-  var _useState171 = useState(new Date().getFullYear() + "-01-01"),
-    _useState172 = _slicedToArray(_useState171, 2),
-    dataInicio = _useState172[0],
-    setDataInicio = _useState172[1];
-  var _useState173 = useState(todayStr()),
-    _useState174 = _slicedToArray(_useState173, 2),
-    dataFim = _useState174[0],
-    setDataFim = _useState174[1];
-  var _useState175 = useState({}),
-    _useState176 = _slicedToArray(_useState175, 2),
-    textos = _useState176[0],
-    setTextos = _useState176[1];
-  var cor = config.corPrimaria || COR;
-  useEffect(function () {
-    db.collection("onix_config").doc("relatorio").get().then(function (doc) {
-      if (doc.exists) setTextos(doc.data());
-    });
-  }, []);
-  var today = todayStr();
-  var proximos = events.filter(function (e) {
-    return e.date >= today;
-  }).sort(function (a, b) {
-    return a.date > b.date ? 1 : -1;
-  });
-  var passados = events.filter(function (e) {
-    return e.date < today;
-  }).sort(function (a, b) {
-    return a.date > b.date ? -1 : 1;
-  });
-
-  // Frequências do evento selecionado
-  var freqEvento = frequencias.filter(function (f) {
-    return f.eventoId === eventoSel;
-  });
-
-  // Eventos que o corista participou no período
-  var freqCorista = frequencias.filter(function (f) {
-    return f.membroId === coristaId && f.eventoData >= dataInicio && f.eventoData <= dataFim;
-  }).sort(function (a, b) {
-    return a.eventoData > b.eventoData ? 1 : -1;
-  });
-  var eventoAtual = events.find(function (e) {
-    return e.id === eventoSel;
-  });
-  var coristaAtual = members.find(function (m) {
-    return m.id === coristaId;
-  });
-  function gerarPDFEvento() {
-    if (!eventoAtual || freqEvento.length === 0) return;
-    var nomeApp = config.nomeApp || "Onix Brasil Vocal Internacional";
-    var logoUrl = config.logoUrl || LOGO_URL;
-    var maestro = textos.maestro || "Maestro";
-    var produtora = textos.produtora || "Lucia Kratz";
-    var cidade = textos.cidade || "Goiânia – GO";
-    var sigLucia = textos.sigLucia || "https://raw.githubusercontent.com/luciakratz-arch/onix-brasil/main/lucia-sig.png";
-    var sigMaestro = textos.sigMaestro || "https://raw.githubusercontent.com/luciakratz-arch/onix-brasil/main/paulo-sig.png";
-    var hoje = new Date().toLocaleDateString("pt-BR", {
-      day: "numeric",
-      month: "long",
-      year: "numeric"
-    });
-    var dataEvento = eventoAtual.date ? new Date(eventoAtual.date + "T12:00:00").toLocaleDateString("pt-BR", {
-      day: "numeric",
-      month: "long",
-      year: "numeric"
-    }) : "";
-    var linhas = freqEvento.map(function (f, i) {
-      var _f$dataHora4;
-      return "\n            <tr>\n                <td style=\"text-align:center\">".concat(i + 1, "</td>\n                <td>").concat(f.membroNome, "</td>\n                <td>").concat(f.naipe || "—", "</td>\n                <td style=\"text-align:center\">").concat((_f$dataHora4 = f.dataHora) !== null && _f$dataHora4 !== void 0 && _f$dataHora4.seconds ? new Date(f.dataHora.seconds * 1000).toLocaleString("pt-BR", {
-        hour: "2-digit",
-        minute: "2-digit"
-      }) : "—", "</td>\n            </tr>");
-    }).join("");
-    var html = "<!DOCTYPE html><html lang=\"pt-BR\"><head><meta charset=\"UTF-8\">\n<style>\n  body { font-family: Arial, sans-serif; font-size: 12px; color: #222; margin:0; padding:0; }\n  @media print { @page { margin: 2cm; } }\n  .header { display:flex; justify-content:space-between; align-items:flex-start; border-bottom:2px solid ".concat(cor, "; padding-bottom:14px; margin-bottom:24px; }\n  .logo { width:50px; height:50px; object-fit:contain; }\n  .titulo { text-align:center; font-size:16px; font-weight:bold; color:").concat(cor, "; text-transform:uppercase; letter-spacing:2px; margin-bottom:6px; }\n  .subtitulo { text-align:center; font-size:13px; color:#444; margin-bottom:24px; }\n  .info-box { border:1px solid #EEE; border-radius:6px; padding:12px 16px; margin-bottom:20px; background:#FAFAFA; }\n  .info-row { display:flex; gap:8px; margin-bottom:4px; }\n  .info-label { font-weight:bold; color:").concat(cor, "; min-width:80px; font-size:11px; text-transform:uppercase; }\n  .info-valor { font-size:12px; color:#333; }\n  table { width:100%; border-collapse:collapse; margin-bottom:24px; }\n  th { background:").concat(cor, "; color:#fff; padding:8px 10px; text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:0.5px; }\n  td { padding:8px 10px; border-bottom:1px solid #EEE; font-size:12px; }\n  tr:nth-child(even) td { background:#FAFAFA; }\n  .assinaturas { display:flex; justify-content:space-around; margin-top:48px; text-align:center; }\n  .assin img { height:50px; object-fit:contain; display:block; margin:0 auto 6px; }\n  .assin-linha { border-top:1px solid #333; padding-top:6px; min-width:180px; }\n  .assin-nome { font-weight:bold; font-size:12px; }\n  .assin-cargo { font-size:10px; color:#888; }\n  .rodape { text-align:center; font-size:10px; color:#AAA; margin-top:32px; border-top:1px solid #EEE; padding-top:8px; }\n</style></head><body>\n<div class=\"header\">\n  <img src=\"").concat(logoUrl, "\" class=\"logo\" />\n  <div style=\"text-align:right;font-size:11px;color:#666\"><strong>").concat(nomeApp, "</strong><br>").concat(cidade, "</div>\n</div>\n<div class=\"titulo\">Lista de Presen\xE7a</div>\n<div class=\"subtitulo\">").concat(eventoAtual.title, "</div>\n<div class=\"info-box\">\n  <div class=\"info-row\"><span class=\"info-label\">Evento:</span><span class=\"info-valor\">").concat(eventoAtual.title, "</span></div>\n  <div class=\"info-row\"><span class=\"info-label\">Data:</span><span class=\"info-valor\">").concat(dataEvento, "</span></div>\n  ").concat(eventoAtual.local ? "<div class=\"info-row\"><span class=\"info-label\">Local:</span><span class=\"info-valor\">".concat(eventoAtual.local, "</span></div>") : "", "\n  <div class=\"info-row\"><span class=\"info-label\">Presen\xE7as:</span><span class=\"info-valor\">").concat(freqEvento.length, " participante").concat(freqEvento.length !== 1 ? "s" : "", "</span></div>\n</div>\n<table>\n  <thead><tr><th style=\"width:40px;text-align:center\">#</th><th>Nome</th><th>Naipe</th><th style=\"text-align:center\">Check-in</th></tr></thead>\n  <tbody>").concat(linhas, "</tbody>\n</table>\n<div class=\"assinaturas\">\n  <div class=\"assin\">\n    ").concat(sigMaestro ? "<img src=\"".concat(sigMaestro, "\" />") : "<div style='height:50px'></div>", "\n    <div class=\"assin-linha\"><div class=\"assin-nome\">").concat(maestro, "</div><div class=\"assin-cargo\">Maestro \u2013 ").concat(nomeApp, "</div></div>\n  </div>\n  <div class=\"assin\">\n    ").concat(sigLucia ? "<img src=\"".concat(sigLucia, "\" />") : "<div style='height:50px'></div>", "\n    <div class=\"assin-linha\"><div class=\"assin-nome\">").concat(produtora, "</div><div class=\"assin-cargo\">Produtora \u2013 ").concat(nomeApp, "</div></div>\n  </div>\n</div>\n<div class=\"rodape\">Documento gerado em ").concat(hoje, " pelo sistema de gest\xE3o do ").concat(nomeApp, ".</div>\n</body></html>");
-    var win = window.open("", "_blank");
-    win.document.write(html);
-    win.document.close();
-    setTimeout(function () {
-      return win.print();
-    }, 800);
-  }
-  function gerarPDFCorista() {
-    if (!coristaAtual) return;
-    var nomeApp = config.nomeApp || "Onix Brasil Vocal Internacional";
-    var logoUrl = config.logoUrl || LOGO_URL;
-    var maestro = textos.maestro || "Maestro";
-    var produtora = textos.produtora || "Lucia Kratz";
-    var cidade = textos.cidade || "Goiânia – GO";
-    var sigLucia = textos.sigLucia || "https://raw.githubusercontent.com/luciakratz-arch/onix-brasil/main/lucia-sig.png";
-    var sigMaestro = textos.sigMaestro || "https://raw.githubusercontent.com/luciakratz-arch/onix-brasil/main/paulo-sig.png";
-    var hoje = new Date().toLocaleDateString("pt-BR", {
-      day: "numeric",
-      month: "long",
-      year: "numeric"
-    });
-    var periodoFmt = "".concat(new Date(dataInicio + "T12:00:00").toLocaleDateString("pt-BR"), " a ").concat(new Date(dataFim + "T12:00:00").toLocaleDateString("pt-BR"));
-    var admissao = coristaAtual.startDate ? new Date(coristaAtual.startDate + "T12:00:00").toLocaleDateString("pt-BR", {
-      month: "long",
-      year: "numeric"
-    }) : "—";
-    var temFreq = freqCorista.length > 0;
-    var linhas = temFreq ? freqCorista.map(function (f, i) {
-      return "\n            <tr>\n                <td style=\"text-align:center\">".concat(i + 1, "</td>\n                <td>").concat(f.eventoData ? new Date(f.eventoData + "T12:00:00").toLocaleDateString("pt-BR") : "", "</td>\n                <td>").concat(f.eventoTitulo || "—", "</td>\n            </tr>");
-    }).join("") : "";
-    var tabelaHTML = temFreq ? "\n<table>\n  <thead><tr><th style=\"width:40px;text-align:center\">#</th><th>Data</th><th>Evento</th></tr></thead>\n  <tbody>".concat(linhas, "</tbody>\n</table>") : "";
-    var textoDeclaracao = temFreq ? "Declaramos para os devidos fins que <strong>".concat(coristaAtual.name, "</strong> \xE9 integrante do ").concat(nomeApp, ",\n  participando ativamente das atividades do grupo desde ").concat(admissao, ",\n  com registro de presen\xE7a em ").concat(freqCorista.length, " evento").concat(freqCorista.length !== 1 ? "s" : "", " no per\xEDodo de ").concat(periodoFmt, ", conforme detalhado abaixo.") : "Declaramos para os devidos fins que <strong>".concat(coristaAtual.name, "</strong> \xE9 integrante do ").concat(nomeApp, ",\n  participando ativamente das atividades do grupo desde ").concat(admissao, ",\n  exercendo a fun\xE7\xE3o de <strong>").concat(coristaAtual.funcao || "Corista", "</strong> no naipe de <strong>").concat(coristaAtual.voice || "—", "</strong>.");
-    var html = "<!DOCTYPE html><html lang=\"pt-BR\"><head><meta charset=\"UTF-8\">\n<style>\n  body { font-family: Arial, sans-serif; font-size: 12px; color: #222; margin:0; padding:0; }\n  @media print { @page { margin: 2cm; } }\n  .header { display:flex; justify-content:space-between; align-items:flex-start; border-bottom:2px solid ".concat(cor, "; padding-bottom:14px; margin-bottom:24px; }\n  .logo { width:50px; height:50px; object-fit:contain; }\n  .titulo { text-align:center; font-size:16px; font-weight:bold; color:").concat(cor, "; text-transform:uppercase; letter-spacing:2px; margin-bottom:6px; }\n  .subtitulo { text-align:center; font-size:13px; color:#444; margin-bottom:8px; }\n  .info-box { border:1px solid #EEE; border-radius:6px; padding:12px 16px; margin-bottom:20px; background:#FAFAFA; }\n  .info-row { display:flex; gap:8px; margin-bottom:4px; }\n  .info-label { font-weight:bold; color:").concat(cor, "; min-width:80px; font-size:11px; text-transform:uppercase; }\n  .info-valor { font-size:12px; color:#333; }\n  .declaracao { border-left:3px solid ").concat(cor, "; padding:10px 14px; margin:20px 0; background:#FAFAFA; font-size:13px; line-height:1.7; color:#333; }\n  table { width:100%; border-collapse:collapse; margin-bottom:24px; }\n  th { background:").concat(cor, "; color:#fff; padding:8px 10px; text-align:left; font-size:11px; text-transform:uppercase; }\n  td { padding:8px 10px; border-bottom:1px solid #EEE; font-size:12px; }\n  tr:nth-child(even) td { background:#FAFAFA; }\n  .assinaturas { display:flex; justify-content:space-around; margin-top:48px; text-align:center; }\n  .assin img { height:50px; object-fit:contain; display:block; margin:0 auto 6px; }\n  .assin-linha { border-top:1px solid #333; padding-top:6px; min-width:180px; }\n  .assin-nome { font-weight:bold; font-size:12px; }\n  .assin-cargo { font-size:10px; color:#888; }\n  .rodape { text-align:center; font-size:10px; color:#AAA; margin-top:32px; border-top:1px solid #EEE; padding-top:8px; }\n</style></head><body>\n<div class=\"header\">\n  <img src=\"").concat(logoUrl, "\" class=\"logo\" />\n  <div style=\"text-align:right;font-size:11px;color:#666\"><strong>").concat(nomeApp, "</strong><br>").concat(cidade, "</div>\n</div>\n<div class=\"titulo\">Declara\xE7\xE3o de Participa\xE7\xE3o</div>\n<div class=\"subtitulo\">").concat(nomeApp, "</div>\n<div class=\"info-box\">\n  <div class=\"info-row\"><span class=\"info-label\">Corista:</span><span class=\"info-valor\"><strong>").concat(coristaAtual.name, "</strong></span></div>\n  <div class=\"info-row\"><span class=\"info-label\">Fun\xE7\xE3o:</span><span class=\"info-valor\">").concat(coristaAtual.funcao || "Corista", "</span></div>\n  <div class=\"info-row\"><span class=\"info-label\">Naipe:</span><span class=\"info-valor\">").concat(coristaAtual.voice || "—", "</span></div>\n  <div class=\"info-row\"><span class=\"info-label\">Membro desde:</span><span class=\"info-valor\">").concat(admissao, "</span></div>\n  <div class=\"info-row\"><span class=\"info-label\">Per\xEDodo:</span><span class=\"info-valor\">").concat(periodoFmt, "</span></div>\n  ").concat(temFreq ? "<div class=\"info-row\"><span class=\"info-label\">Participa\xE7\xF5es:</span><span class=\"info-valor\">".concat(freqCorista.length, " evento").concat(freqCorista.length !== 1 ? "s" : "", "</span></div>") : "", "\n</div>\n<div class=\"declaracao\">").concat(textoDeclaracao, "</div>\n").concat(tabelaHTML, "\n<div class=\"assinaturas\">\n  <div class=\"assin\">\n    ").concat(sigMaestro ? "<img src=\"".concat(sigMaestro, "\" />") : "<div style='height:50px'></div>", "\n    <div class=\"assin-linha\"><div class=\"assin-nome\">").concat(maestro, "</div><div class=\"assin-cargo\">Maestro \u2013 ").concat(nomeApp, "</div></div>\n  </div>\n  <div class=\"assin\">\n    ").concat(sigLucia ? "<img src=\"".concat(sigLucia, "\" />") : "<div style='height:50px'></div>", "\n    <div class=\"assin-linha\"><div class=\"assin-nome\">").concat(produtora, "</div><div class=\"assin-cargo\">Produtora \u2013 ").concat(nomeApp, "</div></div>\n  </div>\n</div>\n<div class=\"rodape\">Documento gerado em ").concat(hoje, " pelo sistema de gest\xE3o do ").concat(nomeApp, ".</div>\n</body></html>");
-    var win = window.open("", "_blank");
-    win.document.write(html);
-    win.document.close();
-    setTimeout(function () {
-      return win.print();
-    }, 800);
-  }
-  var card = {
-    background: "#fff",
-    borderRadius: 12,
-    border: "1px solid #EEE8E8",
-    padding: "20px",
-    marginBottom: 12,
-    boxShadow: "0 1px 4px rgba(0,0,0,0.04)"
-  };
-  var inp = {
-    padding: "10px 14px",
-    border: "1px solid #E8E0E0",
-    borderRadius: 10,
-    fontSize: 13,
-    outline: "none",
-    fontFamily: "inherit",
-    color: "#1A1D23",
-    background: "#FAFAFA"
-  };
-  var lbl = {
-    display: "block",
-    fontSize: 11,
-    fontWeight: 700,
-    color: "#888",
-    marginBottom: 5,
-    textTransform: "uppercase",
-    letterSpacing: 0.8
-  };
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 28,
-      fontWeight: 700,
-      color: cor,
-      marginBottom: 4
-    }
-  }, "Declara\xE7\xE3o Digital"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#AAA",
-      marginBottom: 20
-    }
-  }, "Emiss\xE3o de listas de presen\xE7a e declara\xE7\xF5es individuais"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 10,
-      marginBottom: 16
-    }
-  }, [{
-    key: "evento",
-    label: "Lista de presença por evento",
-    icon: "clipboard-list"
-  }, {
-    key: "corista",
-    label: "Declaração individual do corista",
-    icon: "user-check"
-  }].map(function (t) {
-    return /*#__PURE__*/React.createElement("button", {
-      key: t.key,
-      onClick: function onClick() {
-        return setTipo(t.key);
-      },
-      style: {
-        flex: 1,
-        display: "flex",
-        alignItems: "center",
-        gap: 8,
-        padding: "12px 16px",
-        borderRadius: 10,
-        border: "2px solid ".concat(tipo === t.key ? cor : "#EEE"),
-        background: tipo === t.key ? cor + "10" : "#fff",
-        cursor: "pointer",
-        fontFamily: "inherit",
-        fontWeight: tipo === t.key ? 700 : 500,
-        color: tipo === t.key ? cor : "#555",
-        fontSize: 13
-      }
-    }, /*#__PURE__*/React.createElement(Icon, {
-      name: t.icon,
-      size: 16,
-      color: tipo === t.key ? cor : "#AAA"
-    }), t.label);
-  })), tipo === "evento" && /*#__PURE__*/React.createElement("div", {
-    style: card
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 14,
-      fontWeight: 700,
-      color: "#1A1D23",
-      marginBottom: 14
-    }
-  }, "Lista de Presen\xE7a por Evento"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 16
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Evento"), /*#__PURE__*/React.createElement("select", {
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      width: "100%"
-    }),
-    value: eventoSel,
-    onChange: function onChange(e) {
-      return setEventoSel(e.target.value);
-    }
-  }, /*#__PURE__*/React.createElement("option", {
-    value: ""
-  }, "Selecionar evento..."), proximos.length > 0 && /*#__PURE__*/React.createElement("optgroup", {
-    label: "PR\xD3XIMOS"
-  }, proximos.map(function (e) {
-    return /*#__PURE__*/React.createElement("option", {
-      key: e.id,
-      value: e.id
-    }, e.date, " \u2014 ", e.title);
-  })), passados.length > 0 && /*#__PURE__*/React.createElement("optgroup", {
-    label: "PASSADOS"
-  }, passados.map(function (e) {
-    return /*#__PURE__*/React.createElement("option", {
-      key: e.id,
-      value: e.id
-    }, e.date, " \u2014 ", e.title);
-  })))), eventoSel && /*#__PURE__*/React.createElement(React.Fragment, null, freqEvento.length === 0 ? /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#CCC",
-      textAlign: "center",
-      padding: "16px 0"
-    }
-  }, "Nenhuma presen\xE7a registrada neste evento.") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 12
-    }
-  }, freqEvento.map(function (f, i) {
-    var _f$dataHora5;
-    return /*#__PURE__*/React.createElement("div", {
-      key: f.id,
-      style: {
-        display: "flex",
-        alignItems: "center",
-        gap: 10,
-        padding: "8px 0",
-        borderBottom: "1px solid #F5F0F0"
-      }
-    }, /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 12,
-        color: "#AAA",
-        minWidth: 20
-      }
-    }, i + 1), /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 13,
-        fontWeight: 600,
-        color: "#1A1D23",
-        flex: 1
-      }
-    }, f.membroNome), /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 12,
-        color: "#888"
-      }
-    }, f.naipe || "—"), /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 12,
-        color: "#AAA"
-      }
-    }, (_f$dataHora5 = f.dataHora) !== null && _f$dataHora5 !== void 0 && _f$dataHora5.seconds ? new Date(f.dataHora.seconds * 1000).toLocaleString("pt-BR", {
-      hour: "2-digit",
-      minute: "2-digit"
-    }) : "—"));
-  })), /*#__PURE__*/React.createElement("button", {
-    onClick: gerarPDFEvento,
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 8,
-      padding: "11px 20px",
-      background: cor,
-      color: "#fff",
-      border: "none",
-      borderRadius: 10,
-      fontSize: 13,
-      fontWeight: 700,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "printer",
-    size: 14,
-    color: "#fff"
-  }), " Gerar PDF \u2014 Lista de Presen\xE7a")))), tipo === "corista" && /*#__PURE__*/React.createElement("div", {
-    style: card
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 14,
-      fontWeight: 700,
-      color: "#1A1D23",
-      marginBottom: 14
-    }
-  }, "Declara\xE7\xE3o Individual do Corista"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "grid",
-      gridTemplateColumns: "1fr 1fr 1fr",
-      gap: 12,
-      marginBottom: 16
-    }
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Corista"), /*#__PURE__*/React.createElement("select", {
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      width: "100%"
-    }),
-    value: coristaId,
-    onChange: function onChange(e) {
-      return setCoristaId(e.target.value);
-    }
-  }, /*#__PURE__*/React.createElement("option", {
-    value: ""
-  }, "Selecionar corista..."), members.filter(function (m) {
-    return m.active;
-  }).sort(function (a, b) {
-    return a.name > b.name ? 1 : -1;
-  }).map(function (m) {
-    return /*#__PURE__*/React.createElement("option", {
-      key: m.id,
-      value: m.id
-    }, m.name);
-  }))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Data in\xEDcio"), /*#__PURE__*/React.createElement("input", {
-    type: "date",
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      width: "100%"
-    }),
-    value: dataInicio,
-    onChange: function onChange(e) {
-      return setDataInicio(e.target.value);
-    }
-  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Data fim"), /*#__PURE__*/React.createElement("input", {
-    type: "date",
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      width: "100%"
-    }),
-    value: dataFim,
-    onChange: function onChange(e) {
-      return setDataFim(e.target.value);
-    }
-  }))), coristaId && /*#__PURE__*/React.createElement(React.Fragment, null, freqCorista.length > 0 && /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 12
-    }
-  }, freqCorista.map(function (f, i) {
-    return /*#__PURE__*/React.createElement("div", {
-      key: f.id,
-      style: {
-        display: "flex",
-        alignItems: "center",
-        gap: 10,
-        padding: "8px 0",
-        borderBottom: "1px solid #F5F0F0"
-      }
-    }, /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 12,
-        color: "#AAA",
-        minWidth: 20
-      }
-    }, i + 1), /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 12,
-        color: "#888",
-        minWidth: 90
-      }
-    }, f.eventoData ? new Date(f.eventoData + "T12:00:00").toLocaleDateString("pt-BR") : ""), /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 13,
-        fontWeight: 600,
-        color: "#1A1D23",
-        flex: 1
-      }
-    }, f.eventoTitulo));
-  })), freqCorista.length === 0 && /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      color: "#888",
-      padding: "8px 0 12px",
-      fontStyle: "italic"
-    }
-  }, "Nenhuma participa\xE7\xE3o em eventos no per\xEDodo \u2014 a declara\xE7\xE3o ser\xE1 gerada com os dados de v\xEDnculo do corista."), /*#__PURE__*/React.createElement("button", {
-    onClick: gerarPDFCorista,
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 8,
-      padding: "11px 20px",
-      background: cor,
-      color: "#fff",
-      border: "none",
-      borderRadius: 10,
-      fontSize: 13,
-      fontWeight: 700,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "printer",
-    size: 14,
-    color: "#fff"
-  }), " Gerar PDF \u2014 Declara\xE7\xE3o Individual"))));
-}
-
-// ── PLACEHOLDER ───────────────────────────────────────────────────────────────
-function EmBreve(_ref44) {
-  var label = _ref44.label,
-    icon = _ref44.icon;
-  return /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      padding: 80,
-      gap: 12
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: icon,
-    size: 40,
-    color: "#DDD"
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 18,
-      fontWeight: 600,
-      color: "#CCC"
-    }
-  }, label), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#DDD"
-    }
-  }, "Em constru\xE7\xE3o"));
-}
-
-// ── PAINEL DO CORISTA ─────────────────────────────────────────────────────────
-function PainelCorista(_ref45) {
-  var user = _ref45.user,
-    config = _ref45.config;
-  var _useCollection20 = useCollection("onix_avisos"),
-    avisos = _useCollection20.data;
-  var _useCollection21 = useCollection("onix_events", "date"),
-    events = _useCollection21.data;
-  var _useCollection22 = useCollection("onix_songs"),
-    songs = _useCollection22.data;
-  var _useCollection23 = useCollection("onix_noticias"),
-    noticias = _useCollection23.data;
-  var _useState177 = useState(new Date().getMonth()),
-    _useState178 = _slicedToArray(_useState177, 2),
-    mes = _useState178[0],
-    setMes = _useState178[1];
-  var _useState179 = useState(new Date().getFullYear()),
-    _useState180 = _slicedToArray(_useState179, 2),
-    ano = _useState180[0],
-    setAno = _useState180[1];
-  var _useState181 = useState({}),
-    _useState182 = _slicedToArray(_useState181, 2),
-    confirmacoes = _useState182[0],
-    setConfirmacoes = _useState182[1];
-  var _useState183 = useState(null),
-    _useState184 = _slicedToArray(_useState183, 2),
-    naipeOpen = _useState184[0],
-    setNaipeOpen = _useState184[1];
-  var _useState185 = useState(false),
-    _useState186 = _slicedToArray(_useState185, 2),
-    modalNoticiaCorista = _useState186[0],
-    setModalNoticiaCorista = _useState186[1];
-  var cor = config.corPrimaria || COR;
-  var naipe = user.voice || "";
-  var naipeKey = {
-    "Soprano": "soprano",
-    "Mezzo-soprano": "mezzoSoprano",
-    "Contralto": "contralto",
-    "Tenor": "tenor",
-    "Barítono": "baritono",
-    "Baixo": "baixo"
-  }[naipe] || "soprano";
-
-  // Carregar confirmações do corista
-  useEffect(function () {
-    if (!user.name) return;
-    db.collection("onix_confirmacoes").where("membroNome", "==", user.name).onSnapshot(function (snap) {
-      var m = {};
-      snap.docs.forEach(function (d) {
-        m[d.data().eventoId] = d.data().status;
-      });
-      setConfirmacoes(m);
-    });
-  }, [user.name]);
-  function confirmar(_x6, _x7) {
-    return _confirmar.apply(this, arguments);
-  }
-  function _confirmar() {
-    _confirmar = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee22(eventoId, status) {
-      var snap;
-      return _regenerator().w(function (_context22) {
-        while (1) switch (_context22.n) {
-          case 0:
-            _context22.n = 1;
-            return db.collection("onix_confirmacoes").where("membroNome", "==", user.name).where("eventoId", "==", eventoId).get();
-          case 1:
-            snap = _context22.v;
-            if (snap.empty) {
-              _context22.n = 3;
-              break;
-            }
-            _context22.n = 2;
-            return snap.docs[0].ref.update({
-              status: status,
-              updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-            });
-          case 2:
-            _context22.n = 4;
-            break;
-          case 3:
-            _context22.n = 4;
-            return db.collection("onix_confirmacoes").add({
-              membroNome: user.name,
-              eventoId: eventoId,
-              status: status,
-              createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            });
-          case 4:
-            return _context22.a(2);
-        }
-      }, _callee22);
-    }));
-    return _confirmar.apply(this, arguments);
-  }
-  function navMes(dir) {
-    var nm = mes + dir,
-      na = ano;
-    if (nm > 11) {
-      nm = 0;
-      na++;
-    }
-    if (nm < 0) {
-      nm = 11;
-      na--;
-    }
-    setMes(nm);
-    setAno(na);
-  }
-  var eventosMes = events.filter(function (e) {
-    if (!e.date) return false;
-    var _e$date$split3 = e.date.split("-"),
-      _e$date$split4 = _slicedToArray(_e$date$split3, 2),
-      y = _e$date$split4[0],
-      m = _e$date$split4[1];
-    return parseInt(m) - 1 === mes && parseInt(y) === ano;
-  }).sort(function (a, b) {
-    return a.date > b.date ? 1 : -1;
-  });
-  var card = {
-    background: "#fff",
-    borderRadius: 12,
-    border: "1px solid #EEE8E8",
-    padding: "16px 20px",
-    marginBottom: 12,
-    boxShadow: "0 1px 4px rgba(0,0,0,0.04)"
-  };
-  var prioColor = {
-    Urgente: cor,
-    Alta: "#1565C0",
-    Normal: "#E65100"
-  };
-  var prioBg = {
-    Urgente: "#FFF5F5",
-    Alta: "#EFF6FF",
-    Normal: "#fff"
-  };
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 24
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 24,
-      fontWeight: 700,
-      color: "#1A1D23"
-    }
-  }, "Ol\xE1, ", user.name.split(" ")[0], "! \uD83D\uDC4B"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#AAA",
-      marginTop: 4
-    }
-  }, "Confira os avisos e a agenda do coral \xB7 Seu naipe: ", /*#__PURE__*/React.createElement("span", {
-    style: {
-      color: cor,
-      fontWeight: 700
-    }
-  }, naipe || "—"))), /*#__PURE__*/React.createElement(RifaBanner, {
-    config: config,
-    isAdmin: false
-  }), avisos.length > 0 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 8,
-      marginBottom: 12
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "megaphone",
-    size: 16,
-    color: cor
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      fontWeight: 700,
-      color: cor,
-      textTransform: "uppercase",
-      letterSpacing: 1
-    }
-  }, "Avisos")), avisos.slice(0, 4).map(function (a) {
-    var _a$createdAt3;
-    var isAuto = a.tipo && a.tipo !== "manual";
-    var bc = isAuto ? "#F59E0B" : prioColor[a.prioridade] || cor;
-    var bg = isAuto ? "#FFFBEB" : prioBg[a.prioridade] || "#fff";
-    return /*#__PURE__*/React.createElement("div", {
-      key: a.id,
-      style: _objectSpread(_objectSpread({}, card), {}, {
-        borderLeft: "3px solid ".concat(bc),
-        background: bg,
-        padding: "12px 16px"
-      })
-    }, a.prioridade && a.prioridade !== "Normal" && !isAuto && /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 10,
-        fontWeight: 700,
-        color: bc,
-        textTransform: "uppercase",
-        letterSpacing: 1,
-        marginBottom: 4
-      }
-    }, a.prioridade), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 14,
-        fontWeight: 700,
-        color: "#1A1D23",
-        marginBottom: 4
-      }
-    }, a.title || a.titulo), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 13,
-        color: "#555",
-        lineHeight: 1.5
-      }
-    }, a.text || a.texto), ((_a$createdAt3 = a.createdAt) === null || _a$createdAt3 === void 0 ? void 0 : _a$createdAt3.seconds) && /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 11,
-        color: "#AAA",
-        marginTop: 6
-      }
-    }, new Date(a.createdAt.seconds * 1000).toLocaleDateString("pt-BR", {
-      day: "numeric",
-      month: "long"
-    })));
-  })), modalNoticiaCorista && /*#__PURE__*/React.createElement(ModalNoticia, {
-    noticia: null,
-    onClose: function onClose() {
-      return setModalNoticiaCorista(false);
-    },
-    config: config,
-    autorInicial: user.name
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 8,
-      margin: "20px 0 12px",
-      justifyContent: "space-between"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 8
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "newspaper",
-    size: 16,
-    color: cor
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      fontWeight: 700,
-      color: cor,
-      textTransform: "uppercase",
-      letterSpacing: 1
-    }
-  }, "Galeria do Coral")), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return setModalNoticiaCorista(true);
-    },
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 6,
-      padding: "6px 12px",
-      background: cor,
-      color: "#fff",
-      border: "none",
-      borderRadius: 8,
-      fontSize: 12,
-      fontWeight: 700,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "plus",
-    size: 12,
-    color: "#fff"
-  }), " Publicar")), noticias.length > 0 && /*#__PURE__*/React.createElement(React.Fragment, null, noticias.slice(0, 3).map(function (n) {
-    var _n$createdAt3;
-    return /*#__PURE__*/React.createElement("div", {
-      key: n.id,
-      style: {
-        background: "#fff",
-        borderRadius: 12,
-        border: "1px solid #EEE8E8",
-        marginBottom: 10,
-        overflow: "hidden",
-        boxShadow: "0 1px 4px rgba(0,0,0,0.04)"
-      }
-    }, n.imageUrl && /*#__PURE__*/React.createElement("img", {
-      src: n.imageUrl,
-      alt: "",
-      style: {
-        width: "100%",
-        height: 140,
-        objectFit: "cover"
-      },
-      onError: function onError(e) {
-        return e.target.style.display = "none";
-      }
-    }), /*#__PURE__*/React.createElement("div", {
-      style: {
-        padding: "12px 16px"
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 14,
-        fontWeight: 700,
-        color: "#1A1D23",
-        marginBottom: 4
-      }
-    }, n.titulo), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 13,
-        color: "#555",
-        lineHeight: 1.5
-      }
-    }, n.texto), /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        gap: 12,
-        marginTop: 6,
-        alignItems: "center"
-      }
-    }, n.autorNome && /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 11,
-        color: cor,
-        fontWeight: 600
-      }
-    }, "\u270D\uFE0F ", n.autorNome), ((_n$createdAt3 = n.createdAt) === null || _n$createdAt3 === void 0 ? void 0 : _n$createdAt3.seconds) && /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 11,
-        color: "#AAA"
-      }
-    }, new Date(n.createdAt.seconds * 1000).toLocaleDateString("pt-BR", {
-      day: "numeric",
-      month: "long",
-      year: "numeric"
-    })))));
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 8,
-      margin: "20px 0 12px"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "calendar",
-    size: 16,
-    color: cor
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      fontWeight: 700,
-      color: cor,
-      textTransform: "uppercase",
-      letterSpacing: 1
-    }
-  }, "Agenda")), /*#__PURE__*/React.createElement("div", {
-    style: _objectSpread(_objectSpread({}, card), {}, {
-      padding: 0,
-      overflow: "hidden"
-    })
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-between",
-      padding: "14px 20px",
-      borderBottom: "1px solid #F3EEF9"
-    }
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return navMes(-1);
-    },
-    style: {
-      width: 32,
-      height: 32,
-      border: "1px solid #EEE",
-      borderRadius: 8,
-      background: "none",
-      cursor: "pointer",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "chevron-left",
-    size: 16,
-    color: "#666"
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      textAlign: "center"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 16,
-      fontWeight: 700,
-      color: "#1A1D23"
-    }
-  }, MONTHS_PT[mes].charAt(0).toUpperCase() + MONTHS_PT[mes].slice(1), " De ", ano), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      color: "#AAA"
-    }
-  }, eventosMes.length, " atividade", eventosMes.length !== 1 ? "s" : "")), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return navMes(1);
-    },
-    style: {
-      width: 32,
-      height: 32,
-      border: "1px solid #EEE",
-      borderRadius: 8,
-      background: "none",
-      cursor: "pointer",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "chevron-right",
-    size: 16,
-    color: "#666"
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      padding: "12px 16px"
-    }
-  }, eventosMes.length === 0 ? /*#__PURE__*/React.createElement("div", {
-    style: {
-      textAlign: "center",
-      padding: "24px",
-      color: "#CCC",
-      fontSize: 13
-    }
-  }, "Nenhuma atividade neste m\xEAs.") : eventosMes.map(function (e) {
-    var dt = new Date(e.date + "T12:00:00");
-    var dia = dt.getDate();
-    var semana = WEEKDAYS_PT[dt.getDay()].toUpperCase();
-    var conf = confirmacoes[e.id];
-    var tipoColor = {
-      Ensaio: "#1565C0",
-      Apresentação: "#2E7D32",
-      Reunião: "#E65100",
-      Gravação: "#7B1FA2"
-    }[e.tipo] || "#888";
-    // Áudio do naipe — busca em todas as músicas do setlist
-    var audioNaipe = e[naipeKey] || null;
-    var urlsNaipe = (e.setlist || []).map(function (item) {
-      return songs.find(function (s) {
-        return s.id === item.id;
-      });
-    }).filter(Boolean).map(function (s) {
-      return s[naipeKey];
-    }).filter(Boolean);
-    return /*#__PURE__*/React.createElement("div", {
-      key: e.id,
-      style: {
-        display: "flex",
-        gap: 14,
-        padding: "14px 0",
-        borderBottom: "1px solid #F9F5F5",
-        alignItems: "flex-start"
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        minWidth: 52,
-        textAlign: "center"
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 28,
-        fontWeight: 700,
-        color: cor,
-        lineHeight: 1
-      }
-    }, dia), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 10,
-        color: "#AAA",
-        fontWeight: 700,
-        textTransform: "uppercase",
-        letterSpacing: 0.5
-      }
-    }, semana)), /*#__PURE__*/React.createElement("div", {
-      style: {
-        flex: 1
-      }
-    }, e.tipo && /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 11,
-        padding: "2px 8px",
-        borderRadius: 10,
-        background: tipoColor + "18",
-        color: tipoColor,
-        fontWeight: 700,
-        display: "inline-block",
-        marginBottom: 6
-      }
-    }, e.tipo), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 14,
-        fontWeight: 700,
-        color: "#1A1D23",
-        marginBottom: 6
-      }
-    }, e.title), /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        flexWrap: "wrap",
-        gap: 12,
-        marginBottom: 6
-      }
-    }, e.timeChegada && /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        alignItems: "center",
-        gap: 4,
-        fontSize: 12,
-        color: "#666"
-      }
-    }, /*#__PURE__*/React.createElement(Icon, {
-      name: "clock",
-      size: 12,
-      color: "#AAA"
-    }), " Chegada: ", e.timeChegada), e.local && /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        alignItems: "center",
-        gap: 4,
-        fontSize: 12,
-        color: "#666"
-      }
-    }, /*#__PURE__*/React.createElement(Icon, {
-      name: "map-pin",
-      size: 12,
-      color: "#AAA"
-    }), e.mapsUrl ? /*#__PURE__*/React.createElement("a", {
-      href: e.mapsUrl,
-      target: "_blank",
-      rel: "noreferrer",
-      style: {
-        color: cor,
-        textDecoration: "none"
-      }
-    }, e.local) : e.local), e.traje && /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        alignItems: "center",
-        gap: 4,
-        fontSize: 12,
-        color: "#666"
-      }
-    }, /*#__PURE__*/React.createElement(Icon, {
-      name: "shirt",
-      size: 12,
-      color: "#AAA"
-    }), " ", e.traje)), e.notes && /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 12,
-        color: "#AAA",
-        fontStyle: "italic",
-        marginBottom: 8
-      }
-    }, e.notes), urlsNaipe.length > 0 && /*#__PURE__*/React.createElement("div", {
-      style: {
-        marginBottom: 8
-      }
-    }, /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick() {
-        return setNaipeOpen(naipeOpen === e.id ? null : e.id);
-      },
-      style: {
-        display: "flex",
-        alignItems: "center",
-        gap: 6,
-        padding: "6px 12px",
-        background: cor + "15",
-        border: "1px solid ".concat(cor, "33"),
-        borderRadius: 20,
-        fontSize: 12,
-        fontWeight: 600,
-        color: cor,
-        cursor: "pointer",
-        fontFamily: "inherit"
-      }
-    }, /*#__PURE__*/React.createElement(Icon, {
-      name: "music",
-      size: 12,
-      color: cor
-    }), "Estudar meu naipe (", naipe, ") \u2014 ", urlsNaipe.length, " m\xFAsica", urlsNaipe.length !== 1 ? "s" : "", /*#__PURE__*/React.createElement(Icon, {
-      name: naipeOpen === e.id ? "chevron-up" : "chevron-down",
-      size: 12,
-      color: cor
-    })), naipeOpen === e.id && /*#__PURE__*/React.createElement("div", {
-      style: {
-        marginTop: 8,
-        display: "flex",
-        flexDirection: "column",
-        gap: 8
-      }
-    }, (e.setlist || []).map(function (item, idx) {
-      var song = songs.find(function (s) {
-        return s.id === item.id;
-      });
-      var urlN = song === null || song === void 0 ? void 0 : song[naipeKey];
-      if (!urlN) return null;
-      var embedUrl = function () {
-        var yt = urlN.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
-        if (yt) return "https://www.youtube.com/embed/".concat(yt[1], "?autoplay=0");
-        var dr = urlN.match(/\/d\/([a-zA-Z0-9_-]+)/);
-        if (dr) return "https://drive.google.com/file/d/".concat(dr[1], "/preview");
-        return urlN;
-      }();
-      return /*#__PURE__*/React.createElement("div", {
-        key: item.id || idx
-      }, /*#__PURE__*/React.createElement("div", {
-        style: {
-          fontSize: 12,
-          fontWeight: 600,
-          color: "#888",
-          marginBottom: 4
-        }
-      }, idx + 1, ". ", item.title), /*#__PURE__*/React.createElement("iframe", {
-        src: embedUrl,
-        style: {
-          width: "100%",
-          height: 80,
-          border: "none",
-          borderRadius: 8
-        },
-        allow: "autoplay",
-        title: item.title
-      }));
-    }))), /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        alignItems: "center",
-        gap: 8,
-        flexWrap: "wrap"
-      }
-    }, /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 12,
-        color: "#AAA"
-      }
-    }, "Sua presen\xE7a:"), /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick() {
-        return confirmar(e.id, "vou");
-      },
-      style: {
-        display: "flex",
-        alignItems: "center",
-        gap: 5,
-        padding: "5px 12px",
-        borderRadius: 20,
-        border: "1px solid ".concat(conf === "vou" ? "#2E7D32" : "#EEE"),
-        background: conf === "vou" ? "#E8F5E9" : "#fff",
-        color: conf === "vou" ? "#2E7D32" : "#888",
-        fontSize: 12,
-        fontWeight: 600,
-        cursor: "pointer",
-        fontFamily: "inherit"
-      }
-    }, /*#__PURE__*/React.createElement(Icon, {
-      name: "check-circle",
-      size: 13,
-      color: conf === "vou" ? "#2E7D32" : "#CCC"
-    }), " Vou participar"), /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick() {
-        return confirmar(e.id, "nao");
-      },
-      style: {
-        display: "flex",
-        alignItems: "center",
-        gap: 5,
-        padding: "5px 12px",
-        borderRadius: 20,
-        border: "1px solid ".concat(conf === "nao" ? cor : "#EEE"),
-        background: conf === "nao" ? "#FFF5F5" : "#fff",
-        color: conf === "nao" ? cor : "#888",
-        fontSize: 12,
-        fontWeight: 600,
-        cursor: "pointer",
-        fontFamily: "inherit"
-      }
-    }, /*#__PURE__*/React.createElement(Icon, {
-      name: "x-circle",
-      size: 13,
-      color: conf === "nao" ? cor : "#CCC"
-    }), " N\xE3o vou"))));
-  }))));
-}
-
-// ── MINHA DECLARAÇÃO (corista) ────────────────────────────────────────────────
-function MinhaDeclaracao(_ref46) {
-  var user = _ref46.user,
-    config = _ref46.config;
-  var _useCollection24 = useCollection("onix_frequencias", "dataHora"),
-    frequencias = _useCollection24.data;
-  var _useState187 = useState(new Date().getFullYear() + "-01-01"),
-    _useState188 = _slicedToArray(_useState187, 2),
-    dataInicio = _useState188[0],
-    setDataInicio = _useState188[1];
-  var _useState189 = useState(todayStr()),
-    _useState190 = _slicedToArray(_useState189, 2),
-    dataFim = _useState190[0],
-    setDataFim = _useState190[1];
-  var _useState191 = useState({}),
-    _useState192 = _slicedToArray(_useState191, 2),
-    textos = _useState192[0],
-    setTextos = _useState192[1];
-  var cor = config.corPrimaria || COR;
-  useEffect(function () {
-    db.collection("onix_config").doc("relatorio").get().then(function (doc) {
-      if (doc.exists) setTextos(doc.data());
-    });
-  }, []);
-  var freqCorista = frequencias.filter(function (f) {
-    return f.membroNome === user.name && f.eventoData >= dataInicio && f.eventoData <= dataFim;
-  }).sort(function (a, b) {
-    return a.eventoData > b.eventoData ? 1 : -1;
-  });
-  var card = {
-    background: "#fff",
-    borderRadius: 12,
-    border: "1px solid #EEE8E8",
-    padding: "20px",
-    marginBottom: 12,
-    boxShadow: "0 1px 4px rgba(0,0,0,0.04)"
-  };
-  var inp = {
-    padding: "10px 14px",
-    border: "1px solid #E8E0E0",
-    borderRadius: 10,
-    fontSize: 13,
-    outline: "none",
-    fontFamily: "inherit",
-    color: "#1A1D23",
-    background: "#FAFAFA"
-  };
-  var lbl = {
-    display: "block",
-    fontSize: 11,
-    fontWeight: 700,
-    color: "#888",
-    marginBottom: 5,
-    textTransform: "uppercase",
-    letterSpacing: 0.8
-  };
-  function gerarPDF() {
-    var nomeApp = config.nomeApp || "Onix Brasil Vocal Internacional";
-    var logoUrl = config.logoUrl || LOGO_URL;
-    var cidade = textos.cidade || "Goiânia – GO";
-    var maestro = textos.maestro || "Maestro";
-    var produtora = textos.produtora || "Lucia Kratz";
-    var sigLucia = textos.sigLucia || "https://raw.githubusercontent.com/luciakratz-arch/onix-brasil/main/lucia-sig.png";
-    var sigMaestro = textos.sigMaestro || "https://raw.githubusercontent.com/luciakratz-arch/onix-brasil/main/paulo-sig.png";
-    var hoje = new Date().toLocaleDateString("pt-BR", {
-      day: "numeric",
-      month: "long",
-      year: "numeric"
-    });
-    var periodoFmt = "".concat(new Date(dataInicio + "T12:00:00").toLocaleDateString("pt-BR"), " a ").concat(new Date(dataFim + "T12:00:00").toLocaleDateString("pt-BR"));
-    var admissao = user.startDate ? new Date(user.startDate + "T12:00:00").toLocaleDateString("pt-BR", {
-      month: "long",
-      year: "numeric"
-    }) : "—";
-    var temFreq = freqCorista.length > 0;
-    var linhas = temFreq ? freqCorista.map(function (f, i) {
-      return "\n            <tr><td>".concat(i + 1, "</td>\n            <td>").concat(f.eventoData ? new Date(f.eventoData + "T12:00:00").toLocaleDateString("pt-BR") : "", "</td>\n            <td>").concat(f.eventoTitulo || "—", "</td></tr>");
-    }).join("") : "";
-    var tabelaHTML = temFreq ? "\n<table><thead><tr><th>#</th><th>Data</th><th>Evento</th></tr></thead>\n<tbody>".concat(linhas, "</tbody></table>") : "";
-    var textoDecl = temFreq ? "Declaramos para os devidos fins que <strong>".concat(user.name, "</strong>").concat(user.voice ? ", " + user.voice : "", ", \n  \xE9 integrante do ").concat(nomeApp, ", participando ativamente das atividades do grupo desde ").concat(admissao, ",\n  com registro de presen\xE7a em <strong>").concat(freqCorista.length, " evento").concat(freqCorista.length !== 1 ? "s" : "", "</strong> no per\xEDodo de ").concat(periodoFmt, ", conforme detalhado abaixo.") : "Declaramos para os devidos fins que <strong>".concat(user.name, "</strong>").concat(user.voice ? ", " + user.voice : "", ", \n  \xE9 integrante do ").concat(nomeApp, ", participando ativamente das atividades do grupo desde ").concat(admissao, ",\n  exercendo a fun\xE7\xE3o de <strong>").concat(user.funcao || "Corista", "</strong>.");
-    var html = "<!DOCTYPE html><html lang=\"pt-BR\"><head><meta charset=\"UTF-8\">\n<style>\n  body{font-family:Arial,sans-serif;font-size:12px;color:#222;margin:0;padding:0}\n  @media print{@page{margin:2cm}}\n  .header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid ".concat(cor, ";padding-bottom:14px;margin-bottom:20px}\n  .logo{width:54px;height:54px;object-fit:contain}\n  .titulo{text-align:center;font-size:17px;font-weight:bold;color:").concat(cor, ";text-transform:uppercase;letter-spacing:2px;margin-bottom:6px}\n  .subtitulo{text-align:center;font-size:12px;color:#666;margin-bottom:20px}\n  .info-box{border:1px solid #EEE;border-radius:6px;padding:12px 16px;margin-bottom:16px;background:#FAFAFA}\n  .info-row{display:flex;gap:8px;margin-bottom:4px;font-size:12px}\n  .info-lbl{font-weight:bold;color:").concat(cor, ";min-width:100px;font-size:11px;text-transform:uppercase}\n  .decl{border-left:3px solid ").concat(cor, ";padding:10px 14px;margin:16px 0;background:#FAFAFA;font-size:13px;line-height:1.7}\n  table{width:100%;border-collapse:collapse;margin-bottom:20px}\n  th{background:").concat(cor, ";color:#fff;padding:7px 10px;text-align:left;font-size:10px;text-transform:uppercase}\n  td{padding:7px 10px;border-bottom:1px solid #EEE;font-size:12px}\n  tr:nth-child(even) td{background:#FAFAFA}\n  .assinaturas{display:flex;justify-content:space-around;margin-top:48px;text-align:center}\n  .assin img{height:52px;object-fit:contain;display:block;margin:0 auto 6px}\n  .assin-linha{border-top:1px solid #333;padding-top:5px;min-width:180px}\n  .assin-nome{font-weight:bold;font-size:12px}\n  .assin-cargo{font-size:10px;color:#888}\n  .rodape{text-align:center;font-size:10px;color:#AAA;margin-top:28px;border-top:1px solid #EEE;padding-top:8px}\n</style></head><body>\n<div class=\"header\">\n  <img src=\"").concat(logoUrl, "\" class=\"logo\"/>\n  <div style=\"text-align:right;font-size:11px;color:#666\"><strong>").concat(nomeApp, "</strong><br>").concat(cidade, "</div>\n</div>\n<div class=\"titulo\">Declara\xE7\xE3o de Participa\xE7\xE3o</div>\n<div class=\"subtitulo\">").concat(nomeApp, "</div>\n<div class=\"info-box\">\n  <div class=\"info-row\"><span class=\"info-lbl\">Nome:</span><span><strong>").concat(user.name, "</strong></span></div>\n  <div class=\"info-row\"><span class=\"info-lbl\">Naipe:</span><span>").concat(user.voice || "—", "</span></div>\n  <div class=\"info-row\"><span class=\"info-lbl\">Membro desde:</span><span>").concat(admissao, "</span></div>\n  <div class=\"info-row\"><span class=\"info-lbl\">Per\xEDodo:</span><span>").concat(periodoFmt, "</span></div>\n  ").concat(temFreq ? "<div class=\"info-row\"><span class=\"info-lbl\">Participa\xE7\xF5es:</span><span>".concat(freqCorista.length, " evento").concat(freqCorista.length !== 1 ? "s" : "", "</span></div>") : "", "\n</div>\n<div class=\"decl\">").concat(textoDecl, "</div>\n").concat(tabelaHTML, "\n<div class=\"assinaturas\">\n  <div class=\"assin\">").concat(sigMaestro ? "<img src=\"".concat(sigMaestro, "\"/>") : "<div style='height:52px'></div>", "\n    <div class=\"assin-linha\"><div class=\"assin-nome\">").concat(maestro, "</div><div class=\"assin-cargo\">Maestro \u2013 ").concat(nomeApp, "</div></div>\n  </div>\n  <div class=\"assin\">").concat(sigLucia ? "<img src=\"".concat(sigLucia, "\"/>") : "<div style='height:52px'></div>", "\n    <div class=\"assin-linha\"><div class=\"assin-nome\">").concat(produtora, "</div><div class=\"assin-cargo\">Produtora \u2013 ").concat(nomeApp, "</div></div>\n  </div>\n</div>\n<div class=\"rodape\">Documento gerado em ").concat(hoje, " pelo sistema de gest\xE3o do ").concat(nomeApp, ".</div>\n</body></html>");
-    var win = window.open("", "_blank");
-    win.document.write(html);
-    win.document.close();
-    setTimeout(function () {
-      return win.print();
-    }, 800);
-  }
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 28,
-      fontWeight: 700,
-      color: cor,
-      marginBottom: 4
-    }
-  }, "Minha Declara\xE7\xE3o"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#AAA",
-      marginBottom: 20
-    }
-  }, "Declara\xE7\xE3o de participa\xE7\xE3o nas atividades do coral"), /*#__PURE__*/React.createElement("div", {
-    style: card
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "grid",
-      gridTemplateColumns: "1fr 1fr",
-      gap: 12,
-      marginBottom: 16
-    }
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Data in\xEDcio"), /*#__PURE__*/React.createElement("input", {
-    type: "date",
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      width: "100%"
-    }),
-    value: dataInicio,
-    onChange: function onChange(e) {
-      return setDataInicio(e.target.value);
-    }
-  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Data fim"), /*#__PURE__*/React.createElement("input", {
-    type: "date",
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      width: "100%"
-    }),
-    value: dataFim,
-    onChange: function onChange(e) {
-      return setDataFim(e.target.value);
-    }
-  }))), freqCorista.length > 0 && /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 14
-    }
-  }, freqCorista.map(function (f, i) {
-    return /*#__PURE__*/React.createElement("div", {
-      key: f.id,
-      style: {
-        display: "flex",
-        alignItems: "center",
-        gap: 10,
-        padding: "8px 0",
-        borderBottom: "1px solid #F5F0F0"
-      }
-    }, /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 12,
-        color: "#AAA",
-        minWidth: 20
-      }
-    }, i + 1), /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 12,
-        color: "#888",
-        minWidth: 90
-      }
-    }, f.eventoData ? new Date(f.eventoData + "T12:00:00").toLocaleDateString("pt-BR") : ""), /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 13,
-        fontWeight: 600,
-        color: "#1A1D23",
-        flex: 1
-      }
-    }, f.eventoTitulo));
-  })), freqCorista.length === 0 && /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      color: "#888",
-      padding: "8px 0 12px",
-      fontStyle: "italic"
-    }
-  }, "Nenhuma participa\xE7\xE3o no per\xEDodo \u2014 a declara\xE7\xE3o ser\xE1 gerada com seus dados de v\xEDnculo."), /*#__PURE__*/React.createElement("button", {
-    onClick: gerarPDF,
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 8,
-      padding: "11px 20px",
-      background: cor,
-      color: "#fff",
-      border: "none",
-      borderRadius: 10,
-      fontSize: 13,
-      fontWeight: 700,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "printer",
-    size: 14,
-    color: "#fff"
-  }), " Gerar Declara\xE7\xE3o PDF")));
-}
-
-// ── NOTÍCIAS / BLOG ───────────────────────────────────────────────────────────
-function ModalNoticia(_ref47) {
-  var noticia = _ref47.noticia,
-    onClose = _ref47.onClose,
-    config = _ref47.config,
-    autorInicial = _ref47.autorInicial;
-  var cor = config.corPrimaria || COR;
-  var vazio = {
-    titulo: "",
-    texto: "",
-    imageUrl: "",
-    categoria: "Geral",
-    autorNome: autorInicial || "Gestão"
-  };
-  var _useState193 = useState(noticia ? _objectSpread(_objectSpread({}, vazio), noticia) : vazio),
-    _useState194 = _slicedToArray(_useState193, 2),
-    form = _useState194[0],
-    setForm = _useState194[1];
-  var _useState195 = useState(false),
-    _useState196 = _slicedToArray(_useState195, 2),
-    salvando = _useState196[0],
-    setSalvando = _useState196[1];
-  var _useState197 = useState(""),
-    _useState198 = _slicedToArray(_useState197, 2),
-    erro = _useState198[0],
-    setErro = _useState198[1];
-  function salvar() {
-    return _salvar7.apply(this, arguments);
-  }
-  function _salvar7() {
-    _salvar7 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee23() {
-      var d;
-      return _regenerator().w(function (_context23) {
-        while (1) switch (_context23.n) {
-          case 0:
-            if (form.titulo.trim()) {
-              _context23.n = 1;
-              break;
-            }
-            setErro("Título é obrigatório.");
-            return _context23.a(2);
-          case 1:
-            if (form.texto.trim()) {
-              _context23.n = 2;
-              break;
-            }
-            setErro("Texto é obrigatório.");
-            return _context23.a(2);
-          case 2:
-            setSalvando(true);
-            d = {
-              titulo: form.titulo,
-              texto: form.texto,
-              imageUrl: form.imageUrl || "",
-              categoria: form.categoria,
-              autorNome: form.autorNome || "Gestão",
-              createdAt: noticia ? noticia.createdAt : firebase.firestore.FieldValue.serverTimestamp()
-            };
-            if (!noticia) {
-              _context23.n = 4;
-              break;
-            }
-            _context23.n = 3;
-            return db.collection("onix_noticias").doc(noticia.id).update(_objectSpread(_objectSpread({}, d), {}, {
-              updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-            }));
-          case 3:
-            _context23.n = 5;
-            break;
-          case 4:
-            _context23.n = 5;
-            return db.collection("onix_noticias").add(d);
-          case 5:
-            setSalvando(false);
-            onClose();
-          case 6:
-            return _context23.a(2);
-        }
-      }, _callee23);
-    }));
-    return _salvar7.apply(this, arguments);
-  }
-  function excluir() {
-    return _excluir6.apply(this, arguments);
-  }
-  function _excluir6() {
-    _excluir6 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee24() {
-      return _regenerator().w(function (_context24) {
-        while (1) switch (_context24.n) {
-          case 0:
-            if (window.confirm("Excluir esta notícia?")) {
-              _context24.n = 1;
-              break;
-            }
-            return _context24.a(2);
-          case 1:
-            _context24.n = 2;
-            return db.collection("onix_noticias").doc(noticia.id).delete();
-          case 2:
-            onClose();
-          case 3:
-            return _context24.a(2);
-        }
-      }, _callee24);
-    }));
-    return _excluir6.apply(this, arguments);
-  }
-  var inp = {
-    width: "100%",
-    padding: "11px 14px",
-    border: "1px solid #E8E0E0",
-    borderRadius: 10,
-    fontSize: 14,
-    outline: "none",
-    fontFamily: "inherit",
-    color: "#1A1D23",
-    background: "#FAFAFA"
-  };
-  var lbl = {
-    display: "block",
-    fontSize: 12,
-    fontWeight: 600,
-    color: "#888",
-    marginBottom: 5
-  };
-  return /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: "fixed",
-      inset: 0,
-      background: "rgba(0,0,0,0.5)",
-      zIndex: 300,
-      display: "flex",
-      alignItems: "flex-end",
-      justifyContent: "center"
-    },
-    onClick: function onClick(e) {
-      return e.target === e.currentTarget && onClose();
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#FAFAFA",
-      borderRadius: "20px 20px 0 0",
-      padding: "24px 20px",
-      width: "100%",
-      maxWidth: 640,
-      maxHeight: "92vh",
-      overflowY: "auto"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginBottom: 20
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 20,
-      fontWeight: 700,
-      color: "#1A1D23"
-    }
-  }, noticia ? "Editar Notícia" : "Nova Notícia"), /*#__PURE__*/React.createElement("button", {
-    onClick: onClose,
-    style: {
-      background: "#EEE",
-      border: "none",
-      borderRadius: 8,
-      width: 32,
-      height: 32,
-      cursor: "pointer",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "x",
-    size: 16,
-    color: "#666"
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 14
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "T\xEDtulo *"), /*#__PURE__*/React.createElement("input", {
-    style: inp,
-    value: form.titulo,
-    onChange: function onChange(e) {
-      setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          titulo: e.target.value
-        });
-      });
-      setErro("");
-    },
-    autoFocus: true
-  }), erro && /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      color: cor,
-      marginTop: 4
-    }
-  }, erro)), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 14
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Categoria"), /*#__PURE__*/React.createElement("select", {
-    style: inp,
-    value: form.categoria,
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          categoria: e.target.value
-        });
-      });
-    }
-  }, ["Geral", "Apresentação", "Ensaio", "Conquista", "Comunicado", "Evento"].map(function (c) {
-    return /*#__PURE__*/React.createElement("option", {
-      key: c
-    }, c);
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 14
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "URL da imagem (opcional)"), /*#__PURE__*/React.createElement("input", {
-    style: inp,
-    value: form.imageUrl || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          imageUrl: e.target.value
-        });
-      });
-    },
-    placeholder: "https://..."
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 20
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Texto *"), /*#__PURE__*/React.createElement("textarea", {
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      minHeight: 140,
-      resize: "vertical"
-    }),
-    value: form.texto,
-    onChange: function onChange(e) {
-      setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          texto: e.target.value
-        });
-      });
-      setErro("");
-    }
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 10
-    }
-  }, noticia && /*#__PURE__*/React.createElement("button", {
-    onClick: excluir,
-    style: {
-      padding: "12px 16px",
-      background: "#FFF0F0",
-      color: "#5B2D8E",
-      border: "1px solid #F5DADA",
-      borderRadius: 10,
-      fontSize: 13,
-      fontWeight: 600,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, "Excluir"), /*#__PURE__*/React.createElement("button", {
-    onClick: onClose,
-    style: {
-      flex: 1,
-      padding: "13px",
-      background: "#F0EAE8",
-      color: "#666",
-      border: "none",
-      borderRadius: 10,
-      fontSize: 14,
-      fontWeight: 600,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, "Cancelar"), /*#__PURE__*/React.createElement("button", {
-    onClick: salvar,
-    disabled: salvando,
-    style: {
-      flex: 1,
-      padding: "13px",
-      background: cor,
-      color: "#fff",
-      border: "none",
-      borderRadius: 10,
-      fontSize: 14,
-      fontWeight: 700,
-      cursor: "pointer",
-      fontFamily: "inherit",
-      opacity: salvando ? 0.7 : 1
-    }
-  }, salvando ? "Salvando..." : noticia ? "Salvar" : "Publicar"))));
-}
-
-// ── ÁREA DO RH ────────────────────────────────────────────────────────────────
-function AreaRH(_ref48) {
-  var config = _ref48.config,
-    abaInicial = _ref48.abaInicial;
-  var _useCollection25 = useCollection("onix_members"),
-    members = _useCollection25.data;
-  var _useCollection26 = useCollection("onix_events", "date"),
-    events = _useCollection26.data;
-  var _useCollection27 = useCollection("onix_frequencias", "dataHora"),
-    frequencias = _useCollection27.data;
-  var _useCollection28 = useCollection("onix_noticias"),
-    noticias = _useCollection28.data;
-  var _useCollection29 = useCollection("onix_relatorios_historico"),
-    relatorios = _useCollection29.data;
-  var _useState199 = useState(abaInicial || "dashboard"),
-    _useState200 = _slicedToArray(_useState199, 2),
-    aba = _useState200[0],
-    setAba = _useState200[1];
-  useEffect(function () {
-    if (abaInicial) setAba(abaInicial);
-  }, [abaInicial]);
-  var _useState201 = useState(null),
-    _useState202 = _slicedToArray(_useState201, 2),
-    modalNoticia = _useState202[0],
-    setModalNoticia = _useState202[1];
-  var _useState203 = useState({}),
-    _useState204 = _slicedToArray(_useState203, 2),
-    textos = _useState204[0],
-    setTextos = _useState204[1];
-  var cor = config.corPrimaria || COR;
-  var today = todayStr();
-  useEffect(function () {
-    db.collection("onix_config").doc("relatorio").get().then(function (doc) {
-      if (doc.exists) setTextos(doc.data());
-    });
-  }, []);
-  var ativos = members.filter(function (m) {
-    return m.active;
-  });
-  var inativos = members.filter(function (m) {
-    return !m.active;
-  });
-  var proxEventos = events.filter(function (e) {
-    return e.date >= today;
-  }).sort(function (a, b) {
-    return a.date > b.date ? 1 : -1;
-  }).slice(0, 5);
-  var currentMonth = new Date().getMonth() + 1;
-  var aniversarios = ativos.filter(function (m) {
-    return m.birthday && parseInt(m.birthday.split("-")[1]) === currentMonth;
-  });
-
-  // Por naipe
-  var naipes = {};
-  ativos.forEach(function (m) {
-    var n = m.voice || "Outro";
-    naipes[n] = (naipes[n] || 0) + 1;
-  });
-  var naipeColors = {
-    Soprano: cor,
-    Contralto: "#7B1FA2",
-    "Mezzo-soprano": "#C2185B",
-    Alto: "#E65100",
-    Tenor: "#1565C0",
-    Barítono: "#4527A0",
-    Baixo: "#1B5E20",
-    Outro: "#888"
-  };
-
-  // Frequência por corista (últimos 30 dias)
-  var hoje30 = new Date();
-  hoje30.setDate(hoje30.getDate() - 30);
-  var trintaStr = hoje30.toISOString().split("T")[0];
-  var freqMap = {};
-  frequencias.forEach(function (f) {
-    if (f.membroNome) freqMap[f.membroNome] = (freqMap[f.membroNome] || 0) + 1;
-  });
-  var freqLista = Object.entries(freqMap).sort(function (a, b) {
-    return b[1] - a[1];
-  }).slice(0, 10);
-  var maxFreq = Math.max.apply(Math, _toConsumableArray(freqLista.map(function (_ref49) {
-    var _ref50 = _slicedToArray(_ref49, 2),
-      v = _ref50[1];
-    return v;
-  })).concat([1]));
-
-  // Confirmações
-  var _useState205 = useState([]),
-    _useState206 = _slicedToArray(_useState205, 2),
-    confirmacoes = _useState206[0],
-    setConfirmacoes = _useState206[1];
-  useEffect(function () {
-    db.collection("onix_confirmacoes").onSnapshot(function (snap) {
-      return setConfirmacoes(snap.docs.map(function (d) {
-        return _objectSpread({
-          id: d.id
-        }, d.data());
-      }));
-    });
-  }, []);
-  var vaiParticipiar = confirmacoes.filter(function (c) {
-    return c.status === "vou";
-  }).length;
-  var naoVai = confirmacoes.filter(function (c) {
-    return c.status === "nao";
-  }).length;
-  var card = {
-    background: "#fff",
-    borderRadius: 12,
-    border: "1px solid #EEE8E8",
-    padding: "16px 20px",
-    marginBottom: 12,
-    boxShadow: "0 1px 4px rgba(0,0,0,0.04)"
-  };
-  var abas = [{
-    key: "dashboard",
-    label: "Dashboard",
-    icon: "bar-chart-2"
-  }, {
-    key: "noticias",
-    label: "Notícias",
-    icon: "newspaper"
-  }, {
-    key: "declaracoes",
-    label: "Declarações",
-    icon: "file-text"
-  }, {
-    key: "historico",
-    label: "Histórico",
-    icon: "clock"
-  }];
-
-  // ── DECLARAÇÕES POR CORISTA ──
-  var _useState207 = useState(""),
-    _useState208 = _slicedToArray(_useState207, 2),
-    coristaDecl = _useState208[0],
-    setCoristaDecl = _useState208[1];
-  var _useState209 = useState(new Date().getFullYear() + "-01-01"),
-    _useState210 = _slicedToArray(_useState209, 2),
-    dataInicio = _useState210[0],
-    setDataInicio = _useState210[1];
-  var _useState211 = useState(todayStr()),
-    _useState212 = _slicedToArray(_useState211, 2),
-    dataFim = _useState212[0],
-    setDataFim = _useState212[1];
-  var coristaAtual = members.find(function (m) {
-    return m.id === coristaDecl;
-  });
-  var freqCorista = frequencias.filter(function (f) {
-    return f.membroId === coristaDecl && f.eventoData >= dataInicio && f.eventoData <= dataFim;
-  }).sort(function (a, b) {
-    return a.eventoData > b.eventoData ? 1 : -1;
-  });
-  function gerarDeclCorista() {
-    if (!coristaAtual || freqCorista.length === 0) return;
-    var nomeApp = config.nomeApp || "Onix Brasil Vocal Internacional",
-      logoUrl = config.logoUrl || LOGO_URL;
-    var maestro = textos.maestro || "Maestro",
-      produtora = textos.produtora || "Lucia Kratz",
-      cidade = textos.cidade || "Goiânia – GO";
-    var sigL = textos.sigLucia || "https://raw.githubusercontent.com/luciakratz-arch/onix-brasil/main/lucia-sig.png";
-    var sigM = textos.sigMaestro || "https://raw.githubusercontent.com/luciakratz-arch/onix-brasil/main/paulo-sig.png";
-    var hoje = new Date().toLocaleDateString("pt-BR", {
-      day: "numeric",
-      month: "long",
-      year: "numeric"
-    });
-    var periodo = "".concat(new Date(dataInicio + "T12:00:00").toLocaleDateString("pt-BR"), " a ").concat(new Date(dataFim + "T12:00:00").toLocaleDateString("pt-BR"));
-    var linhas = freqCorista.map(function (f, i) {
-      return "<tr><td>".concat(i + 1, "</td><td>").concat(f.eventoData ? new Date(f.eventoData + "T12:00:00").toLocaleDateString("pt-BR") : "", "</td><td>").concat(f.eventoTitulo || "—", "</td></tr>");
-    }).join("");
-    var html = "<!DOCTYPE html><html lang=\"pt-BR\"><head><meta charset=\"UTF-8\"><style>body{font-family:Arial,sans-serif;font-size:12px;color:#222}@media print{@page{margin:2cm}}.header{display:flex;justify-content:space-between;border-bottom:3px solid ".concat(cor, ";padding-bottom:12px;margin-bottom:20px}.logo{width:52px;height:52px;object-fit:contain}.titulo{text-align:center;font-size:16px;font-weight:bold;color:").concat(cor, ";text-transform:uppercase;letter-spacing:2px;margin-bottom:6px}.subtitulo{text-align:center;font-size:12px;color:#666;margin-bottom:20px}.info-box{border:1px solid #EEE;border-radius:6px;padding:12px;margin-bottom:16px;background:#FAFAFA}.info-row{display:flex;gap:8px;margin-bottom:4px;font-size:12px}.info-lbl{font-weight:bold;color:").concat(cor, ";min-width:100px;font-size:11px;text-transform:uppercase}.decl{border-left:3px solid ").concat(cor, ";padding:10px 14px;margin:16px 0;background:#FAFAFA;font-size:13px;line-height:1.7}table{width:100%;border-collapse:collapse;margin-bottom:20px}th{background:").concat(cor, ";color:#fff;padding:7px 10px;text-align:left;font-size:10px;text-transform:uppercase}td{padding:7px 10px;border-bottom:1px solid #EEE;font-size:12px}tr:nth-child(even) td{background:#FAFAFA}.assinaturas{display:flex;justify-content:space-around;margin-top:48px;text-align:center}.assin img{height:50px;object-fit:contain;display:block;margin:0 auto 6px}.assin-linha{border-top:1px solid #333;padding-top:5px;min-width:180px}.assin-nome{font-weight:bold;font-size:12px}.assin-cargo{font-size:10px;color:#888}.rodape{text-align:center;font-size:10px;color:#AAA;margin-top:28px;border-top:1px solid #EEE;padding-top:8px}</style></head><body>\n<div class=\"header\"><img src=\"").concat(logoUrl, "\" class=\"logo\"/><div style=\"text-align:right;font-size:11px;color:#666\"><strong>").concat(nomeApp, "</strong><br>").concat(cidade, "</div></div>\n<div class=\"titulo\">Declara\xE7\xE3o de Participa\xE7\xE3o</div><div class=\"subtitulo\">").concat(nomeApp, "</div>\n<div class=\"info-box\">\n  <div class=\"info-row\"><span class=\"info-lbl\">Nome:</span><span><strong>").concat(coristaAtual.name, "</strong></span></div>\n  <div class=\"info-row\"><span class=\"info-lbl\">Fun\xE7\xE3o:</span><span>").concat(coristaAtual.funcao || "Corista", "</span></div>\n  <div class=\"info-row\"><span class=\"info-lbl\">Naipe:</span><span>").concat(coristaAtual.voice || "—", "</span></div>\n  <div class=\"info-row\"><span class=\"info-lbl\">Per\xEDodo:</span><span>").concat(periodo, "</span></div>\n  <div class=\"info-row\"><span class=\"info-lbl\">Participa\xE7\xF5es:</span><span>").concat(freqCorista.length, " evento").concat(freqCorista.length !== 1 ? "s" : "", "</span></div>\n</div>\n<div class=\"decl\">Declaramos para os devidos fins que <strong>").concat(coristaAtual.name, "</strong>, ").concat(coristaAtual.funcao || "Corista").concat(coristaAtual.voice ? " — " + coristaAtual.voice : "", ", \xE9 integrante do ").concat(nomeApp, ", participando ativamente das atividades do grupo no per\xEDodo de ").concat(periodo, ", com registro de presen\xE7a em <strong>").concat(freqCorista.length, " evento").concat(freqCorista.length !== 1 ? "s" : "", "</strong> conforme detalhado abaixo.</div>\n<table><thead><tr><th>#</th><th>Data</th><th>Evento</th></tr></thead><tbody>").concat(linhas, "</tbody></table>\n<div class=\"assinaturas\">\n  <div class=\"assin\">").concat(sigM ? "<img src=\"".concat(sigM, "\"/>") : "<div style='height:50px'></div>", "<div class=\"assin-linha\"><div class=\"assin-nome\">").concat(maestro, "</div><div class=\"assin-cargo\">Maestro \u2013 ").concat(nomeApp, "</div></div></div>\n  <div class=\"assin\">").concat(sigL ? "<img src=\"".concat(sigL, "\"/>") : "<div style='height:50px'></div>", "<div class=\"assin-linha\"><div class=\"assin-nome\">").concat(produtora, "</div><div class=\"assin-cargo\">Produtora \u2013 ").concat(nomeApp, "</div></div></div>\n</div>\n<div class=\"rodape\">Documento gerado em ").concat(hoje, " pelo sistema de gest\xE3o do ").concat(nomeApp, ".</div>\n</body></html>");
-    var win = window.open("", "_blank");
-    win.document.write(html);
-    win.document.close();
-    setTimeout(function () {
-      return win.print();
-    }, 800);
-    // Salvar no histórico
-    db.collection("onix_relatorios_historico").add({
-      tipo: "Declaração Individual",
-      corista: coristaAtual.name,
-      periodo: "".concat(dataInicio, " a ").concat(dataFim),
-      geradoEm: firebase.firestore.FieldValue.serverTimestamp(),
-      geradoPor: "RH"
-    });
-  }
-  var inp = {
-    padding: "10px 14px",
-    border: "1px solid #E8E0E0",
-    borderRadius: 10,
-    fontSize: 13,
-    outline: "none",
-    fontFamily: "inherit",
-    color: "#1A1D23",
-    background: "#FAFAFA"
-  };
-  var lbl = {
-    display: "block",
-    fontSize: 11,
-    fontWeight: 700,
-    color: "#888",
-    marginBottom: 5,
-    textTransform: "uppercase",
-    letterSpacing: 0.8
-  };
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 28,
-      fontWeight: 700,
-      color: cor,
-      marginBottom: 4
-    }
-  }, "RH \u2014 Pessoas e Cultura"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#AAA",
-      marginBottom: 20
-    }
-  }, "Gest\xE3o de pessoas, comunica\xE7\xE3o e relat\xF3rios"), aba === "dashboard" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "grid",
-      gridTemplateColumns: "repeat(3,1fr)",
-      gap: 10,
-      marginBottom: 12
-    }
-  }, [{
-    label: "Integrantes ativos",
-    value: ativos.length,
-    sub: "".concat(inativos.length, " inativos"),
-    icon: "users",
-    color: cor
-  }, {
-    label: "Confirmações",
-    value: vaiParticipiar,
-    sub: "".concat(naoVai, " n\xE3o v\xE3o"),
-    icon: "check",
-    color: "#2E7D32"
-  }, {
-    label: "Aniversariantes",
-    value: aniversarios.length,
-    sub: "este mês",
-    icon: "cake",
-    color: "#E65100"
-  }].map(function (m) {
-    return /*#__PURE__*/React.createElement("div", {
-      key: m.label,
-      style: _objectSpread(_objectSpread({}, card), {}, {
-        marginBottom: 0,
-        textAlign: "center",
-        padding: "14px"
-      })
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: 6,
-        marginBottom: 8
-      }
-    }, /*#__PURE__*/React.createElement(Icon, {
-      name: m.icon,
-      size: 16,
-      color: m.color
-    })), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 26,
-        fontWeight: 700,
-        color: m.color,
-        lineHeight: 1
-      }
-    }, m.value), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 11,
-        color: "#1A1D23",
-        fontWeight: 600,
-        marginTop: 4
-      }
-    }, m.label), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 11,
-        color: "#AAA",
-        marginTop: 2
-      }
-    }, m.sub));
-  })), /*#__PURE__*/React.createElement("div", {
-    style: card
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      fontWeight: 700,
-      color: "#1A1D23",
-      marginBottom: 14
-    }
-  }, "Distribui\xE7\xE3o por Naipe"), Object.entries(naipes).map(function (_ref51) {
-    var _ref52 = _slicedToArray(_ref51, 2),
-      naipe = _ref52[0],
-      qtd = _ref52[1];
-    var pct = ativos.length > 0 ? Math.round(qtd / ativos.length * 100) : 0;
-    return /*#__PURE__*/React.createElement("div", {
-      key: naipe,
-      style: {
-        marginBottom: 10
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        justifyContent: "space-between",
-        marginBottom: 4
-      }
-    }, /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 13,
-        color: "#1A1D23",
-        fontWeight: 600
-      }
-    }, naipe), /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 12,
-        color: "#AAA"
-      }
-    }, qtd, " \xB7 ", pct, "%")), /*#__PURE__*/React.createElement("div", {
-      style: {
-        height: 8,
-        background: "#F3EEF9",
-        borderRadius: 4,
-        overflow: "hidden"
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        width: pct + "%",
-        height: "100%",
-        background: naipeColors[naipe] || "#888",
-        borderRadius: 4
-      }
-    })));
-  })), freqLista.length > 0 && /*#__PURE__*/React.createElement("div", {
-    style: card
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      fontWeight: 700,
-      color: "#1A1D23",
-      marginBottom: 14
-    }
-  }, "Frequ\xEAncia de Participa\xE7\xE3o"), freqLista.map(function (_ref53) {
-    var _ref54 = _slicedToArray(_ref53, 2),
-      nome = _ref54[0],
-      qtd = _ref54[1];
-    return /*#__PURE__*/React.createElement("div", {
-      key: nome,
-      style: {
-        marginBottom: 10
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        justifyContent: "space-between",
-        marginBottom: 4
-      }
-    }, /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 13,
-        color: "#1A1D23"
-      }
-    }, nome), /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 12,
-        fontWeight: 700,
-        color: cor
-      }
-    }, qtd, " evento", qtd !== 1 ? "s" : "")), /*#__PURE__*/React.createElement("div", {
-      style: {
-        height: 6,
-        background: "#F3EEF9",
-        borderRadius: 3,
-        overflow: "hidden"
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        width: "".concat(qtd / maxFreq * 100, "%"),
-        height: "100%",
-        background: cor,
-        borderRadius: 3
-      }
-    })));
-  })), proxEventos.length > 0 && /*#__PURE__*/React.createElement("div", {
-    style: card
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      fontWeight: 700,
-      color: "#1A1D23",
-      marginBottom: 14
-    }
-  }, "Confirma\xE7\xF5es \u2014 Pr\xF3ximos Eventos"), proxEventos.map(function (e) {
-    var vao = confirmacoes.filter(function (c) {
-      return c.eventoId === e.id && c.status === "vou";
-    }).length;
-    var nao = confirmacoes.filter(function (c) {
-      return c.eventoId === e.id && c.status === "nao";
-    }).length;
-    return /*#__PURE__*/React.createElement("div", {
-      key: e.id,
-      style: {
-        display: "flex",
-        alignItems: "center",
-        gap: 12,
-        padding: "10px 0",
-        borderBottom: "1px solid #F3EEF9"
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        flex: 1
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 13,
-        fontWeight: 600,
-        color: "#1A1D23"
-      }
-    }, e.title), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 12,
-        color: "#AAA"
-      }
-    }, e.date)), /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 12,
-        padding: "2px 10px",
-        borderRadius: 20,
-        background: "#E8F5E9",
-        color: "#2E7D32",
-        fontWeight: 700
-      }
-    }, "\u2713 ", vao, " v\xE3o"), /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 12,
-        padding: "2px 10px",
-        borderRadius: 20,
-        background: "#FFF5F5",
-        color: cor,
-        fontWeight: 700
-      }
-    }, "\u2715 ", nao, " n\xE3o v\xE3o"));
-  })), aniversarios.length > 0 && /*#__PURE__*/React.createElement("div", {
-    style: _objectSpread(_objectSpread({}, card), {}, {
-      borderLeft: "3px solid #E65100",
-      background: "#FFFBEB"
-    })
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      fontWeight: 700,
-      color: "#E65100",
-      marginBottom: 10,
-      textTransform: "uppercase",
-      letterSpacing: 1
-    }
-  }, "\uD83C\uDF82 Aniversariantes do M\xEAs"), aniversarios.map(function (m) {
-    var _m$birthday$split3 = m.birthday.split("-"),
-      _m$birthday$split4 = _slicedToArray(_m$birthday$split3, 3),
-      mm = _m$birthday$split4[1],
-      dd = _m$birthday$split4[2];
-    return /*#__PURE__*/React.createElement("div", {
-      key: m.id,
-      style: {
-        display: "flex",
-        justifyContent: "space-between",
-        padding: "6px 0",
-        borderBottom: "1px solid #FDE68A"
-      }
-    }, /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 13,
-        fontWeight: 600,
-        color: "#1A1D23"
-      }
-    }, m.name), /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 12,
-        color: "#AAA"
-      }
-    }, "dia ", parseInt(dd)));
-  }))), aba === "noticias" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginBottom: 16
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 14,
-      fontWeight: 700,
-      color: "#1A1D23"
-    }
-  }, "Not\xEDcias do Coral"), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return setModalNoticia("nova");
-    },
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 8,
-      padding: "10px 16px",
-      background: cor,
-      border: "none",
-      borderRadius: 10,
-      fontSize: 13,
-      fontWeight: 700,
-      color: "#fff",
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "plus",
-    size: 14,
-    color: "#fff"
-  }), " Nova Not\xEDcia")), noticias.length === 0 ? /*#__PURE__*/React.createElement("div", {
-    style: _objectSpread(_objectSpread({}, card), {}, {
-      textAlign: "center",
-      color: "#CCC",
-      padding: "32px"
-    })
-  }, "Nenhuma not\xEDcia publicada.") : noticias.map(function (n) {
-    var _n$createdAt4;
-    return /*#__PURE__*/React.createElement("div", {
-      key: n.id,
-      style: _objectSpread(_objectSpread({}, card), {}, {
-        cursor: "pointer"
-      }),
-      onClick: function onClick() {
-        return setModalNoticia(n);
-      }
-    }, n.imageUrl && /*#__PURE__*/React.createElement("img", {
-      src: n.imageUrl,
-      alt: "",
-      style: {
-        width: "100%",
-        height: 160,
-        objectFit: "cover",
-        borderRadius: 8,
-        marginBottom: 12
-      },
-      onError: function onError(e) {
-        return e.target.style.display = "none";
-      }
-    }), /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        alignItems: "center",
-        gap: 8,
-        marginBottom: 6
-      }
-    }, /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 11,
-        padding: "2px 8px",
-        borderRadius: 10,
-        background: cor + "18",
-        color: cor,
-        fontWeight: 700
-      }
-    }, n.categoria || "Geral"), ((_n$createdAt4 = n.createdAt) === null || _n$createdAt4 === void 0 ? void 0 : _n$createdAt4.seconds) && /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 11,
-        color: "#AAA"
-      }
-    }, new Date(n.createdAt.seconds * 1000).toLocaleDateString("pt-BR", {
-      day: "numeric",
-      month: "long",
-      year: "numeric"
-    }))), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 15,
-        fontWeight: 700,
-        color: "#1A1D23",
-        marginBottom: 6
-      }
-    }, n.titulo), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 13,
-        color: "#555",
-        lineHeight: 1.5
-      }
-    }, n.texto.slice(0, 200), n.texto.length > 200 ? "..." : ""));
-  }), modalNoticia && /*#__PURE__*/React.createElement(ModalNoticia, {
-    noticia: modalNoticia === "nova" ? null : modalNoticia,
-    onClose: function onClose() {
-      return setModalNoticia(null);
-    },
-    config: config
-  })), aba === "declaracoes" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 14,
-      fontWeight: 700,
-      color: "#1A1D23",
-      marginBottom: 16
-    }
-  }, "Declara\xE7\xE3o Individual por Corista"), /*#__PURE__*/React.createElement("div", {
-    style: card
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "grid",
-      gridTemplateColumns: "1fr 1fr 1fr",
-      gap: 12,
-      marginBottom: 16
-    }
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Corista"), /*#__PURE__*/React.createElement("select", {
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      width: "100%"
-    }),
-    value: coristaDecl,
-    onChange: function onChange(e) {
-      return setCoristaDecl(e.target.value);
-    }
-  }, /*#__PURE__*/React.createElement("option", {
-    value: ""
-  }, "Selecionar..."), members.filter(function (m) {
-    return m.active;
-  }).sort(function (a, b) {
-    return a.name > b.name ? 1 : -1;
-  }).map(function (m) {
-    return /*#__PURE__*/React.createElement("option", {
-      key: m.id,
-      value: m.id
-    }, m.name);
-  }))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Data in\xEDcio"), /*#__PURE__*/React.createElement("input", {
-    type: "date",
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      width: "100%"
-    }),
-    value: dataInicio,
-    onChange: function onChange(e) {
-      return setDataInicio(e.target.value);
-    }
-  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Data fim"), /*#__PURE__*/React.createElement("input", {
-    type: "date",
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      width: "100%"
-    }),
-    value: dataFim,
-    onChange: function onChange(e) {
-      return setDataFim(e.target.value);
-    }
-  }))), coristaDecl && (freqCorista.length === 0 ? /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#CCC",
-      textAlign: "center",
-      padding: "16px 0"
-    }
-  }, "Nenhuma participa\xE7\xE3o registrada.") : /*#__PURE__*/React.createElement(React.Fragment, null, freqCorista.map(function (f, i) {
-    return /*#__PURE__*/React.createElement("div", {
-      key: f.id,
-      style: {
-        display: "flex",
-        gap: 10,
-        padding: "8px 0",
-        borderBottom: "1px solid #F5F0F0",
-        alignItems: "center"
-      }
-    }, /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 12,
-        color: "#AAA",
-        minWidth: 20
-      }
-    }, i + 1), /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 12,
-        color: "#888",
-        minWidth: 90
-      }
-    }, f.eventoData ? new Date(f.eventoData + "T12:00:00").toLocaleDateString("pt-BR") : ""), /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 13,
-        fontWeight: 600,
-        color: "#1A1D23"
-      }
-    }, f.eventoTitulo));
-  }), /*#__PURE__*/React.createElement("button", {
-    onClick: gerarDeclCorista,
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 8,
-      padding: "11px 20px",
-      background: cor,
-      color: "#fff",
-      border: "none",
-      borderRadius: 10,
-      fontSize: 13,
-      fontWeight: 700,
-      cursor: "pointer",
-      fontFamily: "inherit",
-      marginTop: 14
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "printer",
-    size: 14,
-    color: "#fff"
-  }), " Gerar Declara\xE7\xE3o PDF"))))), aba === "historico" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 14,
-      fontWeight: 700,
-      color: "#1A1D23",
-      marginBottom: 16
-    }
-  }, "Hist\xF3rico de Relat\xF3rios Enviados"), relatorios.length === 0 ? /*#__PURE__*/React.createElement("div", {
-    style: _objectSpread(_objectSpread({}, card), {}, {
-      textAlign: "center",
-      color: "#CCC",
-      padding: "32px"
-    })
-  }, "Nenhum relat\xF3rio registrado ainda.") : /*#__PURE__*/React.createElement("div", {
-    style: _objectSpread(_objectSpread({}, card), {}, {
-      padding: 0,
-      overflow: "hidden"
-    })
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "grid",
-      gridTemplateColumns: "1fr 1fr 100px 100px",
-      padding: "10px 16px",
-      background: "#FAFAFA",
-      borderBottom: "1px solid #EEE"
-    }
-  }, ["Tipo", "Período", "Gerado em", "Por"].map(function (h) {
-    return /*#__PURE__*/React.createElement("div", {
-      key: h,
-      style: {
-        fontSize: 11,
-        fontWeight: 700,
-        color: cor
-      }
-    }, h);
-  })), relatorios.map(function (r, i) {
-    var _r$geradoEm;
-    return /*#__PURE__*/React.createElement("div", {
-      key: r.id,
-      style: {
-        display: "grid",
-        gridTemplateColumns: "1fr 1fr 100px 100px",
-        padding: "12px 16px",
-        borderBottom: i < relatorios.length - 1 ? "1px solid #F5F5F5" : "none",
-        alignItems: "center",
-        background: i % 2 === 0 ? "#fff" : "#FDFBFB"
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 13,
-        fontWeight: 600,
-        color: "#1A1D23"
-      }
-    }, r.tipo || "Relatório"), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 12,
-        color: "#888"
-      }
-    }, r.periodo || "—", r.corista ? " \xB7 ".concat(r.corista) : ""), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 12,
-        color: "#AAA"
-      }
-    }, (_r$geradoEm = r.geradoEm) !== null && _r$geradoEm !== void 0 && _r$geradoEm.seconds ? new Date(r.geradoEm.seconds * 1000).toLocaleDateString("pt-BR") : ""), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 12,
-        color: "#AAA"
-      }
-    }, r.geradoPor || "—"));
-  }))));
-}
-
-// ── FINANCEIRO ────────────────────────────────────────────────────────────────
-var WPP_MAESTRO = "5562991489893";
-var WPP_LUCIA = "5562991546757";
-var CATS_GASTO_PADRAO = ["Transporte", "Aluguel de carro", "Pedágio", "Gasolina", "Hotel", "Alimentação", "Passagem aérea", "Passagem rodoviária", "Figurino", "Material de ensaio", "Gravação", "Divulgação", "Outros"];
-var CATS_RECEITA_PADRAO = ["Mensalidade", "Campanha", "Doação", "Serviço prestado", "Rifa", "Evento", "Patrocínio", "Outros"];
-function useCatsFinanceiro() {
-  var _useState213 = useState({
-      gasto: CATS_GASTO_PADRAO,
-      receita: CATS_RECEITA_PADRAO
-    }),
-    _useState214 = _slicedToArray(_useState213, 2),
-    cats = _useState214[0],
-    setCats = _useState214[1];
-  useEffect(function () {
-    var unsub = db.collection("onix_config").doc("cats_financeiro").onSnapshot(function (snap) {
-      if (snap.exists) setCats(function (d) {
-        return _objectSpread(_objectSpread({}, d), snap.data());
-      });
-    });
-    return unsub;
-  }, []);
-  function addCat(_x8, _x9) {
-    return _addCat.apply(this, arguments);
-  }
-  function _addCat() {
-    _addCat = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee25(tipo, nome) {
-      var nova;
-      return _regenerator().w(function (_context25) {
-        while (1) switch (_context25.n) {
-          case 0:
-            nova = [].concat(_toConsumableArray(cats[tipo]), [nome]);
-            _context25.n = 1;
-            return db.collection("onix_config").doc("cats_financeiro").set(_defineProperty({}, tipo, nova), {
-              merge: true
-            });
-          case 1:
-            return _context25.a(2);
-        }
-      }, _callee25);
-    }));
-    return _addCat.apply(this, arguments);
-  }
-  return {
-    cats: cats,
-    addCat: addCat
-  };
-}
-function ModalMensalidade(_ref55) {
-  var config = _ref55.config,
-    onClose = _ref55.onClose;
-  var cor = config.corPrimaria || COR;
-  var _useState215 = useState({
-      dataInicio: "",
-      dataFim: "",
-      valorMensal: "25.00"
-    }),
-    _useState216 = _slicedToArray(_useState215, 2),
-    cfg = _useState216[0],
-    setCfg = _useState216[1];
-  var _useState217 = useState(false),
-    _useState218 = _slicedToArray(_useState217, 2),
-    salvando = _useState218[0],
-    setSalvando = _useState218[1];
-  var _useState219 = useState(false),
-    _useState220 = _slicedToArray(_useState219, 2),
-    ok = _useState220[0],
-    setOk = _useState220[1];
-  useEffect(function () {
-    db.collection("onix_config").doc("mensalidade").get().then(function (d) {
-      if (d.exists) setCfg(function (x) {
-        return _objectSpread(_objectSpread(_objectSpread({}, x), d.data()), {}, {
-          valorMensal: String(d.data().valorMensal || 25)
-        });
-      });
-    });
-  }, []);
-  function salvar() {
-    return _salvar8.apply(this, arguments);
-  }
-  function _salvar8() {
-    _salvar8 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee26() {
-      return _regenerator().w(function (_context26) {
-        while (1) switch (_context26.n) {
-          case 0:
-            if (!(!cfg.dataInicio || !cfg.dataFim)) {
-              _context26.n = 1;
-              break;
-            }
-            alert("Preencha início e fim.");
-            return _context26.a(2);
-          case 1:
-            setSalvando(true);
-            _context26.n = 2;
-            return db.collection("onix_config").doc("mensalidade").set({
-              dataInicio: cfg.dataInicio,
-              dataFim: cfg.dataFim,
-              valorMensal: parseFloat(cfg.valorMensal) || 25,
-              updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-            }, {
-              merge: true
-            });
-          case 2:
-            setSalvando(false);
-            setOk(true);
-            setTimeout(function () {
-              setOk(false);
-              onClose();
-            }, 1200);
-          case 3:
-            return _context26.a(2);
-        }
-      }, _callee26);
-    }));
-    return _salvar8.apply(this, arguments);
-  }
-  var inp = {
-    width: "100%",
-    padding: "11px 14px",
-    border: "1px solid #E8E0E0",
-    borderRadius: 10,
-    fontSize: 14,
-    outline: "none",
-    fontFamily: "inherit",
-    color: "#1A1D23",
-    background: "#FAFAFA"
-  };
-  var lbl = {
-    display: "block",
-    fontSize: 12,
-    fontWeight: 600,
-    color: "#888",
-    marginBottom: 5
-  };
-  return /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: "fixed",
-      inset: 0,
-      background: "rgba(0,0,0,0.5)",
-      zIndex: 300,
-      display: "flex",
-      alignItems: "flex-end",
-      justifyContent: "center"
-    },
-    onClick: function onClick(e) {
-      return e.target === e.currentTarget && onClose();
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#FAFAFA",
-      borderRadius: "20px 20px 0 0",
-      padding: "24px 20px",
-      width: "100%",
-      maxWidth: 500,
-      maxHeight: "90vh",
-      overflowY: "auto"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginBottom: 12
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 20,
-      fontWeight: 700,
-      color: "#1A1D23"
-    }
-  }, "Per\xEDodo de Cobran\xE7a"), /*#__PURE__*/React.createElement("button", {
-    onClick: onClose,
-    style: {
-      background: "#EEE",
-      border: "none",
-      borderRadius: 8,
-      width: 32,
-      height: 32,
-      cursor: "pointer",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "x",
-    size: 16,
-    color: "#666"
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#888",
-      marginBottom: 16,
-      background: (config.corPrimaria || COR) + "12",
-      borderRadius: 10,
-      padding: "10px 14px"
-    }
-  }, "Fora do per\xEDodo definido nenhuma cobran\xE7a \xE9 gerada."), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "grid",
-      gridTemplateColumns: "1fr 1fr",
-      gap: 12,
-      marginBottom: 14
-    }
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "In\xEDcio da cobran\xE7a"), /*#__PURE__*/React.createElement("input", {
-    type: "date",
-    style: inp,
-    value: cfg.dataInicio,
-    onChange: function onChange(e) {
-      return setCfg(function (x) {
-        return _objectSpread(_objectSpread({}, x), {}, {
-          dataInicio: e.target.value
-        });
-      });
-    }
-  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Fim da cobran\xE7a"), /*#__PURE__*/React.createElement("input", {
-    type: "date",
-    style: inp,
-    value: cfg.dataFim,
-    onChange: function onChange(e) {
-      return setCfg(function (x) {
-        return _objectSpread(_objectSpread({}, x), {}, {
-          dataFim: e.target.value
-        });
-      });
-    }
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 20
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Valor mensal (R$)"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
-    step: "0.01",
-    style: inp,
-    value: cfg.valorMensal,
-    onChange: function onChange(e) {
-      return setCfg(function (x) {
-        return _objectSpread(_objectSpread({}, x), {}, {
-          valorMensal: e.target.value
-        });
-      });
-    }
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 10
-    }
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: onClose,
-    style: {
-      flex: 1,
-      padding: "13px",
-      background: "#F0EAE8",
-      color: "#666",
-      border: "none",
-      borderRadius: 10,
-      fontSize: 14,
-      fontWeight: 600,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, "Cancelar"), /*#__PURE__*/React.createElement("button", {
-    onClick: salvar,
-    disabled: salvando,
-    style: {
-      flex: 1,
-      padding: "13px",
-      background: config.corPrimaria || COR,
-      color: "#fff",
-      border: "none",
-      borderRadius: 10,
-      fontSize: 14,
-      fontWeight: 700,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, ok ? "✓ Salvo!" : salvando ? "Salvando..." : "Salvar"))));
-}
-function ModalPagamento(_ref56) {
-  var membro = _ref56.membro,
-    mesalidade = _ref56.mesalidade,
-    config = _ref56.config,
-    onClose = _ref56.onClose;
-  var cor = config.corPrimaria || COR;
-  var _useState221 = useState([]),
-    _useState222 = _slicedToArray(_useState221, 2),
-    meses = _useState222[0],
-    setMeses = _useState222[1];
-  var _useState223 = useState(false),
-    _useState224 = _slicedToArray(_useState223, 2),
-    salvando = _useState224[0],
-    setSalvando = _useState224[1];
-  useEffect(function () {
-    if (!(mesalidade !== null && mesalidade !== void 0 && mesalidade.dataInicio) || !(mesalidade !== null && mesalidade !== void 0 && mesalidade.dataFim)) return;
-    var unsub = db.collection("onix_pagamentos").where("membroId", "==", membro.id).onSnapshot(function (snap) {
-      var pagos = {};
-      snap.docs.forEach(function (d) {
-        var p = d.data();
-        pagos[p.mes] = _objectSpread({
-          docId: d.id
-        }, p);
-      });
-      var lista = [];
-      var _mesalidade$dataInici = mesalidade.dataInicio.split("-").map(Number),
-        _mesalidade$dataInici2 = _slicedToArray(_mesalidade$dataInici, 2),
-        sy = _mesalidade$dataInici2[0],
-        sm = _mesalidade$dataInici2[1];
-      var _mesalidade$dataFim$s = mesalidade.dataFim.split("-").map(Number),
-        _mesalidade$dataFim$s2 = _slicedToArray(_mesalidade$dataFim$s, 2),
-        ey = _mesalidade$dataFim$s2[0],
-        em = _mesalidade$dataFim$s2[1];
-      var y = sy,
-        m = sm;
-      while (y < ey || y === ey && m <= em) {
-        var key = "".concat(y, "-").concat(String(m).padStart(2, "0"));
-        var pag = pagos[key];
-        lista.push({
-          key: key,
-          label: "".concat(MONTHS_PT[m - 1], " ").concat(y),
-          status: (pag === null || pag === void 0 ? void 0 : pag.status) || "pendente",
-          docId: (pag === null || pag === void 0 ? void 0 : pag.docId) || null
-        });
-        m++;
-        if (m > 12) {
-          m = 1;
-          y++;
-        }
-      }
-      setMeses(lista);
-    });
-    return unsub;
-  }, [membro.id, mesalidade]);
-  function marcarAguardando(_x0) {
-    return _marcarAguardando.apply(this, arguments);
-  }
-  function _marcarAguardando() {
-    _marcarAguardando = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee27(mes) {
-      var existing, msg;
-      return _regenerator().w(function (_context27) {
-        while (1) switch (_context27.n) {
-          case 0:
-            setSalvando(true);
-            existing = meses.find(function (x) {
-              return x.key === mes.key;
-            });
-            if (!existing.docId) {
-              _context27.n = 2;
-              break;
-            }
-            _context27.n = 1;
-            return db.collection("onix_pagamentos").doc(existing.docId).update({
-              status: "aguardando",
-              updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-            });
-          case 1:
-            _context27.n = 3;
-            break;
-          case 2:
-            _context27.n = 3;
-            return db.collection("onix_pagamentos").add({
-              membroId: membro.id,
-              membroNome: membro.name,
-              naipe: membro.voice || "",
-              mes: mes.key,
-              valor: mesalidade.valorMensal || 25,
-              status: "aguardando",
-              createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            });
-          case 3:
-            // WhatsApp maestro e produtora
-            msg = encodeURIComponent("Ol\xE1! Sou ".concat(membro.name, " (").concat(membro.voice || "Corista", ") do Onix Brasil Vocal Internacional. Segue comprovante de pagamento da mensalidade de ").concat(mes.label, ". Por favor, validar no sistema."));
-            setSalvando(false);
-          case 4:
-            return _context27.a(2);
-        }
-      }, _callee27);
-    }));
-    return _marcarAguardando.apply(this, arguments);
-  }
-  function validar(_x1) {
-    return _validar.apply(this, arguments);
-  }
-  function _validar() {
-    _validar = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee28(mes) {
-      return _regenerator().w(function (_context28) {
-        while (1) switch (_context28.n) {
-          case 0:
-            if (mes.docId) {
-              _context28.n = 1;
-              break;
-            }
-            return _context28.a(2);
-          case 1:
-            setSalvando(true);
-            _context28.n = 2;
-            return db.collection("onix_pagamentos").doc(mes.docId).update({
-              status: "pago",
-              validadoEm: firebase.firestore.FieldValue.serverTimestamp()
-            });
-          case 2:
-            _context28.n = 3;
-            return db.collection("onix_financeiro").add({
-              descricao: "Mensalidade ".concat(mes.label, " \u2014 ").concat(membro.name),
-              categoria: "Mensalidade",
-              valor: mesalidade.valorMensal || 25,
-              data: "".concat(mes.key, "-01"),
-              tipo: "receita",
-              membroId: membro.id,
-              membroNome: membro.name,
-              origem: "mensalidade",
-              createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            });
-          case 3:
-            setSalvando(false);
-          case 4:
-            return _context28.a(2);
-        }
-      }, _callee28);
-    }));
-    return _validar.apply(this, arguments);
-  }
-  function recusar(_x10) {
-    return _recusar.apply(this, arguments);
-  }
-  function _recusar() {
-    _recusar = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee29(mes) {
-      return _regenerator().w(function (_context29) {
-        while (1) switch (_context29.n) {
-          case 0:
-            if (mes.docId) {
-              _context29.n = 1;
-              break;
-            }
-            return _context29.a(2);
-          case 1:
-            _context29.n = 2;
-            return db.collection("onix_pagamentos").doc(mes.docId).update({
-              status: "pendente",
-              updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-            });
-          case 2:
-            return _context29.a(2);
-        }
-      }, _callee29);
-    }));
-    return _recusar.apply(this, arguments);
-  }
-  function marcarPago(mes) {
-    var val = mesalidade.valorMensal || 25;
-    if (!mes.docId) {
-      db.collection("onix_pagamentos").add({ membroId: membro.id, membroNome: membro.name, mes: mes.key, status: "pago", validadoEm: firebase.firestore.FieldValue.serverTimestamp(), createdAt: firebase.firestore.FieldValue.serverTimestamp() }).then(function() {
-        db.collection("onix_financeiro").add({ descricao: "Mensalidade " + mes.label + " — " + membro.name, categoria: "Mensalidade", valor: val, data: mes.key + "-01", tipo: "receita", membroId: membro.id, membroNome: membro.name, origem: "mensalidade", createdAt: firebase.firestore.FieldValue.serverTimestamp() });
-      });
+  // Salvar lançamento avulso
+  async function salvarAvulso(){
+    if(!formAvulso.valor||!formAvulso.data){alert("Valor e data obrigatórios.");return;}
+    setSalvando(true);
+    const pac = pacientes.find(p=>p.id===formAvulso.pacienteId);
+    const dados = {...formAvulso,valor:parseFloat(formAvulso.valor),pacienteNome:pac?.nome||""};
+    if(editando){
+      await db.collection("clinica_lancamentos").doc(editando).update(dados);
     } else {
-      db.collection("onix_pagamentos").doc(mes.docId).update({ status: "pago", validadoEm: firebase.firestore.FieldValue.serverTimestamp() }).then(function() {
-        db.collection("onix_financeiro").add({ descricao: "Mensalidade " + mes.label + " — " + membro.name, categoria: "Mensalidade", valor: val, data: mes.key + "-01", tipo: "receita", membroId: membro.id, membroNome: membro.name, origem: "mensalidade", createdAt: firebase.firestore.FieldValue.serverTimestamp() });
-      });
+      await db.collection("clinica_lancamentos").add({...dados,tipo_lancamento:"avulso",createdAt:firebase.firestore.FieldValue.serverTimestamp()});
     }
-  }
-  function marcarIsento(mes) {
-    if (!mes.docId) {
-      db.collection("onix_pagamentos").add({ membroId: membro.id, membroNome: membro.name, mes: mes.key, status: "isento", createdAt: firebase.firestore.FieldValue.serverTimestamp() });
-    } else {
-      db.collection("onix_pagamentos").doc(mes.docId).update({ status: "isento", updatedAt: firebase.firestore.FieldValue.serverTimestamp() });
-    }
-  }
-  var statusInfo = {
-    pendente: {
-      label: "Pendente",
-      bg: "#FFF3E0",
-      cor: "#E65100",
-      icon: "clock"
-    },
-    aguardando: {
-      label: "Aguardando",
-      bg: "#E3F2FD",
-      cor: "#1565C0",
-      icon: "send"
-    },
-    pago: {
-      label: "Pago",
-      bg: "#E8F5E9",
-      cor: "#2E7D32",
-      icon: "check-circle"
-    },
-    isento: {
-      label: "Isento",
-      bg: "#F5F5F5",
-      cor: "#888",
-      icon: "minus-circle"
-    }
-  };
-  return /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: "fixed",
-      inset: 0,
-      background: "rgba(0,0,0,0.5)",
-      zIndex: 300,
-      display: "flex",
-      alignItems: "flex-end",
-      justifyContent: "center"
-    },
-    onClick: function onClick(e) {
-      return e.target === e.currentTarget && onClose();
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#FAFAFA",
-      borderRadius: "20px 20px 0 0",
-      padding: "24px 20px",
-      width: "100%",
-      maxWidth: 540,
-      maxHeight: "92vh",
-      overflowY: "auto"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginBottom: 6
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 18,
-      fontWeight: 700,
-      color: "#1A1D23"
-    }
-  }, "Mensalidade \u2014 ", membro.name), /*#__PURE__*/React.createElement("button", {
-    onClick: onClose,
-    style: {
-      background: "#EEE",
-      border: "none",
-      borderRadius: 8,
-      width: 32,
-      height: 32,
-      cursor: "pointer",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "x",
-    size: 16,
-    color: "#666"
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#888",
-      marginBottom: 20
-    }
-  }, membro.voice || "Corista", " \xB7 R$ ", ((mesalidade === null || mesalidade === void 0 ? void 0 : mesalidade.valorMensal) || 25).toFixed(2), "/m\xEAs"), meses.length === 0 ? /*#__PURE__*/React.createElement("div", {
-    style: {
-      textAlign: "center",
-      color: "#CCC",
-      padding: "24px",
-      fontSize: 13
-    }
-  }, "Nenhum per\xEDodo configurado.") : /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      flexDirection: "column",
-      gap: 8,
-      marginBottom: 16
-    }
-  }, meses.map(function (m) {
-    var si = statusInfo[m.status] || statusInfo.pendente;
-    return /*#__PURE__*/React.createElement("div", {
-      key: m.key,
-      style: {
-        background: si.bg,
-        borderRadius: 10,
-        border: "1px solid ".concat(si.cor, "33"),
-        padding: "12px 16px",
-        display: "flex",
-        alignItems: "center",
-        gap: 12
-      }
-    }, /*#__PURE__*/React.createElement(Icon, {
-      name: si.icon,
-      size: 18,
-      color: si.cor
-    }), /*#__PURE__*/React.createElement("div", {
-      style: {
-        flex: 1
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 13,
-        fontWeight: 700,
-        color: "#1A1D23"
-      }
-    }, m.label), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 11,
-        color: si.cor,
-        fontWeight: 600
-      }
-    }, si.label)), (m.status === "aguardando" || m.status === "pendente") && /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        gap: 6,
-        flexWrap: "wrap"
-      }
-    }, m.status === "aguardando" && /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick() { return validar(m); },
-      disabled: salvando,
-      style: { padding: "6px 12px", background: "#2E7D32", color: "#fff", border: "none", borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "inherit" }
-    }, "\u2713 Validar"), m.status === "aguardando" && /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick() { return recusar(m); },
-      disabled: salvando,
-      style: { padding: "6px 12px", background: "#FFF0F0", color: "#C62828", border: "1px solid #FFDADA", borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "inherit" }
-    }, "\u2715"),
-    m.status === "pendente" && /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick() { return marcarPago(m); },
-      disabled: salvando,
-      style: { padding: "6px 12px", background: "#2E7D32", color: "#fff", border: "none", borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "inherit" }
-    }, "\u2713 Marcar pago"),
-    m.status === "pendente" && /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick() { return marcarIsento(m); },
-      disabled: salvando,
-      style: { padding: "6px 12px", background: "#F5F5F5", color: "#888", border: "1px solid #DDD", borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "inherit" }
-    }, "Isentar"),
-    m.status === "isento" && /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick() { return recusar(m); },
-      disabled: salvando,
-      style: { padding: "6px 12px", background: "#FFF3E0", color: "#E65100", border: "1px solid #FFE0B2", borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "inherit" }
-    }, "Remover isenção")), m.status === "pago" && /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 11,
-        color: "#2E7D32",
-        fontWeight: 700
-      }
-    }, "\u2713 Validado"));
-  })), /*#__PURE__*/React.createElement("button", {
-    onClick: onClose,
-    style: {
-      width: "100%",
-      padding: "13px",
-      background: "#F0EAE8",
-      color: "#666",
-      border: "none",
-      borderRadius: 10,
-      fontSize: 14,
-      fontWeight: 600,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, "Fechar")));
-}
-function ModalLancamento(_ref57) {
-  var lancamento = _ref57.lancamento,
-    tipo = _ref57.tipo,
-    config = _ref57.config,
-    cats = _ref57.cats,
-    addCat = _ref57.addCat,
-    onClose = _ref57.onClose;
-  var cor = config.corPrimaria || COR;
-  var _useCollection30 = useCollection("onix_members"),
-    members = _useCollection30.data;
-  var categorias = tipo === "gasto" ? (cats === null || cats === void 0 ? void 0 : cats.gasto) || CATS_GASTO_PADRAO : (cats === null || cats === void 0 ? void 0 : cats.receita) || CATS_RECEITA_PADRAO;
-  var vazio = {
-    descricao: "",
-    categoria: categorias[0] || "",
-    valor: "",
-    data: todayStr(),
-    observacao: "",
-    membroId: "",
-    membroNome: ""
-  };
-  var _useState225 = useState(lancamento ? _objectSpread(_objectSpread(_objectSpread({}, vazio), lancamento), {}, {
-      valor: String(lancamento.valor || "")
-    }) : vazio),
-    _useState226 = _slicedToArray(_useState225, 2),
-    form = _useState226[0],
-    setForm = _useState226[1];
-  var _useState227 = useState(false),
-    _useState228 = _slicedToArray(_useState227, 2),
-    salvando = _useState228[0],
-    setSalvando = _useState228[1];
-  var _useState229 = useState(""),
-    _useState230 = _slicedToArray(_useState229, 2),
-    erro = _useState230[0],
-    setErro = _useState230[1];
-  var _useState231 = useState(""),
-    _useState232 = _slicedToArray(_useState231, 2),
-    novaCat = _useState232[0],
-    setNovaCat = _useState232[1];
-  var _useState233 = useState(false),
-    _useState234 = _slicedToArray(_useState233, 2),
-    showNovaCat = _useState234[0],
-    setShowNovaCat = _useState234[1];
-  function salvar() {
-    return _salvar9.apply(this, arguments);
-  }
-  function _salvar9() {
-    _salvar9 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee30() {
-      var membro, d;
-      return _regenerator().w(function (_context30) {
-        while (1) switch (_context30.n) {
-          case 0:
-            if (form.descricao.trim()) {
-              _context30.n = 1;
-              break;
-            }
-            setErro("Descrição obrigatória.");
-            return _context30.a(2);
-          case 1:
-            if (!(!form.valor || isNaN(parseFloat(form.valor)))) {
-              _context30.n = 2;
-              break;
-            }
-            setErro("Valor inválido.");
-            return _context30.a(2);
-          case 2:
-            setSalvando(true);
-            membro = members.find(function (m) {
-              return m.id === form.membroId;
-            });
-            d = {
-              descricao: form.descricao,
-              categoria: form.categoria,
-              valor: parseFloat(form.valor),
-              data: form.data,
-              observacao: form.observacao || "",
-              tipo: tipo,
-              membroId: form.membroId || "grupo",
-              membroNome: form.membroId ? (membro === null || membro === void 0 ? void 0 : membro.name) || form.membroNome : "Onix Brasil Vocal"
-            };
-            if (!lancamento) {
-              _context30.n = 4;
-              break;
-            }
-            _context30.n = 3;
-            return db.collection("onix_financeiro").doc(lancamento.id).update(_objectSpread(_objectSpread({}, d), {}, {
-              updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-            }));
-          case 3:
-            _context30.n = 5;
-            break;
-          case 4:
-            _context30.n = 5;
-            return db.collection("onix_financeiro").add(_objectSpread(_objectSpread({}, d), {}, {
-              createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            }));
-          case 5:
-            setSalvando(false);
-            onClose();
-          case 6:
-            return _context30.a(2);
-        }
-      }, _callee30);
-    }));
-    return _salvar9.apply(this, arguments);
-  }
-  function excluir() {
-    return _excluir7.apply(this, arguments);
-  }
-  function _excluir7() {
-    _excluir7 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee31() {
-      return _regenerator().w(function (_context31) {
-        while (1) switch (_context31.n) {
-          case 0:
-            if (window.confirm("Excluir lançamento?")) {
-              _context31.n = 1;
-              break;
-            }
-            return _context31.a(2);
-          case 1:
-            _context31.n = 2;
-            return db.collection("onix_financeiro").doc(lancamento.id).delete();
-          case 2:
-            onClose();
-          case 3:
-            return _context31.a(2);
-        }
-      }, _callee31);
-    }));
-    return _excluir7.apply(this, arguments);
-  }
-  function criarCategoria() {
-    return _criarCategoria.apply(this, arguments);
-  }
-  function _criarCategoria() {
-    _criarCategoria = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee32() {
-      return _regenerator().w(function (_context32) {
-        while (1) switch (_context32.n) {
-          case 0:
-            if (novaCat.trim()) {
-              _context32.n = 1;
-              break;
-            }
-            return _context32.a(2);
-          case 1:
-            _context32.n = 2;
-            return addCat(tipo, novaCat.trim());
-          case 2:
-            setForm(function (f) {
-              return _objectSpread(_objectSpread({}, f), {}, {
-                categoria: novaCat.trim()
-              });
-            });
-            setNovaCat("");
-            setShowNovaCat(false);
-          case 3:
-            return _context32.a(2);
-        }
-      }, _callee32);
-    }));
-    return _criarCategoria.apply(this, arguments);
-  }
-  var inp = {
-    width: "100%",
-    padding: "11px 14px",
-    border: "1px solid #E8E0E0",
-    borderRadius: 10,
-    fontSize: 14,
-    outline: "none",
-    fontFamily: "inherit",
-    color: "#1A1D23",
-    background: "#FAFAFA"
-  };
-  var lbl = {
-    display: "block",
-    fontSize: 12,
-    fontWeight: 600,
-    color: "#888",
-    marginBottom: 5
-  };
-  return /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: "fixed",
-      inset: 0,
-      background: "rgba(0,0,0,0.5)",
-      zIndex: 300,
-      display: "flex",
-      alignItems: "flex-end",
-      justifyContent: "center"
-    },
-    onClick: function onClick(e) {
-      return e.target === e.currentTarget && onClose();
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#FAFAFA",
-      borderRadius: "20px 20px 0 0",
-      padding: "24px 20px",
-      width: "100%",
-      maxWidth: 520,
-      maxHeight: "92vh",
-      overflowY: "auto"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginBottom: 20
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 20,
-      fontWeight: 700,
-      color: "#1A1D23"
-    }
-  }, lancamento ? tipo === "gasto" ? "Editar Gasto" : "Editar Receita" : tipo === "gasto" ? "Novo Gasto" : "Nova Receita"), /*#__PURE__*/React.createElement("button", {
-    onClick: onClose,
-    style: {
-      background: "#EEE",
-      border: "none",
-      borderRadius: 8,
-      width: 32,
-      height: 32,
-      cursor: "pointer",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "x",
-    size: 16,
-    color: "#666"
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 14
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Descri\xE7\xE3o *"), /*#__PURE__*/React.createElement("input", {
-    style: inp,
-    value: form.descricao,
-    onChange: function onChange(e) {
-      setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          descricao: e.target.value
-        });
-      });
-      setErro("");
-    },
-    autoFocus: true
-  }), erro && /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      color: cor,
-      marginTop: 4
-    }
-  }, erro)), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "grid",
-      gridTemplateColumns: "1fr 1fr",
-      gap: 12,
-      marginBottom: 14
-    }
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Categoria"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 6
-    }
-  }, /*#__PURE__*/React.createElement("select", {
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      flex: 1
-    }),
-    value: form.categoria,
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          categoria: e.target.value
-        });
-      });
-    }
-  }, categorias.map(function (cat) {
-    return /*#__PURE__*/React.createElement("option", {
-      key: cat
-    }, cat);
-  })), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return setShowNovaCat(function (v) {
-        return !v;
-      });
-    },
-    title: "Nova categoria",
-    style: {
-      width: 36,
-      height: 38,
-      background: cor + "15",
-      border: "1px solid ".concat(cor, "33"),
-      borderRadius: 8,
-      cursor: "pointer",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      flexShrink: 0
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "plus",
-    size: 14,
-    color: cor
-  }))), showNovaCat && /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 6,
-      marginTop: 6
-    }
-  }, /*#__PURE__*/React.createElement("input", {
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      flex: 1,
-      padding: "8px 12px"
-    }),
-    value: novaCat,
-    onChange: function onChange(e) {
-      return setNovaCat(e.target.value);
-    },
-    placeholder: "Nova categoria..."
-  }), /*#__PURE__*/React.createElement("button", {
-    onClick: criarCategoria,
-    style: {
-      padding: "0 12px",
-      background: cor,
-      color: "#fff",
-      border: "none",
-      borderRadius: 8,
-      cursor: "pointer",
-      fontFamily: "inherit",
-      fontSize: 12,
-      fontWeight: 700
-    }
-  }, "Criar"))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Data"), /*#__PURE__*/React.createElement("input", {
-    type: "date",
-    style: inp,
-    value: form.data,
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          data: e.target.value
-        });
-      });
-    }
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 14
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Valor (R$) *"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
-    step: "0.01",
-    style: inp,
-    value: form.valor,
-    onChange: function onChange(e) {
-      setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          valor: e.target.value
-        });
-      });
-      setErro("");
-    },
-    placeholder: "0,00"
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 14
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Vinculado a"), /*#__PURE__*/React.createElement("select", {
-    style: inp,
-    value: form.membroId,
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          membroId: e.target.value
-        });
-      });
-    }
-  }, /*#__PURE__*/React.createElement("option", {
-    value: ""
-  }, "Onix Brasil Vocal (grupo)"), members.filter(function (m) {
-    return m.active;
-  }).sort(function (a, b) {
-    return a.name > b.name ? 1 : -1;
-  }).map(function (m) {
-    return /*#__PURE__*/React.createElement("option", {
-      key: m.id,
-      value: m.id
-    }, m.name);
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 20
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    style: lbl
-  }, "Observa\xE7\xE3o"), /*#__PURE__*/React.createElement("textarea", {
-    style: _objectSpread(_objectSpread({}, inp), {}, {
-      minHeight: 60,
-      resize: "vertical"
-    }),
-    value: form.observacao || "",
-    onChange: function onChange(e) {
-      return setForm(function (f) {
-        return _objectSpread(_objectSpread({}, f), {}, {
-          observacao: e.target.value
-        });
-      });
-    }
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 10
-    }
-  }, lancamento && /*#__PURE__*/React.createElement("button", {
-    onClick: excluir,
-    style: {
-      padding: "12px 16px",
-      background: "#FFF0F0",
-      color: "#C62828",
-      border: "1px solid #FFDADA",
-      borderRadius: 10,
-      fontSize: 13,
-      fontWeight: 600,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, "Excluir"), /*#__PURE__*/React.createElement("button", {
-    onClick: onClose,
-    style: {
-      flex: 1,
-      padding: "13px",
-      background: "#F0EAE8",
-      color: "#666",
-      border: "none",
-      borderRadius: 10,
-      fontSize: 14,
-      fontWeight: 600,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, "Cancelar"), /*#__PURE__*/React.createElement("button", {
-    onClick: salvar,
-    disabled: salvando,
-    style: {
-      flex: 1,
-      padding: "13px",
-      background: cor,
-      color: "#fff",
-      border: "none",
-      borderRadius: 10,
-      fontSize: 14,
-      fontWeight: 700,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, salvando ? "Salvando..." : lancamento ? "Salvar" : "Adicionar"))));
-}
-function Financeiro(_ref58) {
-  var _MONTHS_PT, _MONTHS_PT2;
-  var config = _ref58.config;
-  var _useCollection31 = useCollection("onix_members"),
-    members = _useCollection31.data;
-  var _useCollection32 = useCollection("onix_financeiro", "createdAt"),
-    lancamentos = _useCollection32.data;
-  var _useCatsFinanceiro = useCatsFinanceiro(),
-    cats = _useCatsFinanceiro.cats,
-    addCat = _useCatsFinanceiro.addCat;
-  var _useState235 = useState("resumo"),
-    _useState236 = _slicedToArray(_useState235, 2),
-    aba = _useState236[0],
-    setAba = _useState236[1];
-  var _useState237 = useState(function () {
-      var d = new Date();
-      return "".concat(d.getFullYear(), "-").concat(String(d.getMonth() + 1).padStart(2, "0"));
-    }),
-    _useState238 = _slicedToArray(_useState237, 2),
-    mesAtual = _useState238[0],
-    setMesAtual = _useState238[1];
-  var _useState239 = useState(false),
-    _useState240 = _slicedToArray(_useState239, 2),
-    modalMens = _useState240[0],
-    setModalMens = _useState240[1];
-  var _useState241 = useState(null),
-    _useState242 = _slicedToArray(_useState241, 2),
-    modalLanc = _useState242[0],
-    setModalLanc = _useState242[1];
-  var _useState243 = useState(null),
-    _useState244 = _slicedToArray(_useState243, 2),
-    modalPag = _useState244[0],
-    setModalPag = _useState244[1];
-  var _useState245 = useState("gasto"),
-    _useState246 = _slicedToArray(_useState245, 2),
-    tipoLanc = _useState246[0],
-    setTipoLanc = _useState246[1];
-  var _useState247 = useState(null),
-    _useState248 = _slicedToArray(_useState247, 2),
-    mesalidade = _useState248[0],
-    setMesalidade = _useState248[1];
-  var _useState249 = useState([]),
-    _useState250 = _slicedToArray(_useState249, 2),
-    pagamentos = _useState250[0],
-    setPagamentos = _useState250[1];
-  var cor = config.corPrimaria || COR;
-  useEffect(function () {
-    var u1 = db.collection("onix_config").doc("mensalidade").onSnapshot(function (s) {
-      if (s.exists) setMesalidade(s.data());
-    });
-    var u2 = db.collection("onix_pagamentos").onSnapshot(function (s) {
-      return setPagamentos(s.docs.map(function (d) {
-        return _objectSpread({
-          id: d.id
-        }, d.data());
-      }));
-    });
-    return function () {
-      u1();
-      u2();
-    };
-  }, []);
-  function navMes(dir) {
-    var _mesAtual$split$map = mesAtual.split("-").map(Number),
-      _mesAtual$split$map2 = _slicedToArray(_mesAtual$split$map, 2),
-      y = _mesAtual$split$map2[0],
-      m = _mesAtual$split$map2[1];
-    var nm = m + dir,
-      ny = y;
-    if (nm > 12) {
-      nm = 1;
-      ny++;
-    }
-    if (nm < 0) {
-      nm = 12;
-      ny--;
-    }
-    setMesAtual("".concat(ny, "-").concat(String(nm).padStart(2, "0")));
-  }
-  var lancMes = lancamentos.filter(function (l) {
-    var _l$data;
-    return (_l$data = l.data) === null || _l$data === void 0 ? void 0 : _l$data.startsWith(mesAtual);
-  });
-  var todoGastos = lancamentos.filter(function (l) {
-    return l.tipo === "gasto";
-  });
-  var todoReceitas = lancamentos.filter(function (l) {
-    return l.tipo === "receita";
-  });
-  var totalG = todoGastos.reduce(function (s, l) {
-    return s + (l.valor || 0);
-  }, 0);
-  var totalR = todoReceitas.reduce(function (s, l) {
-    return s + (l.valor || 0);
-  }, 0);
-  var saldo = totalR - totalG;
-  var gastosM = lancMes.filter(function (l) {
-    return l.tipo === "gasto";
-  });
-  var receitasM = lancMes.filter(function (l) {
-    return l.tipo === "receita";
-  });
-  var totalGM = gastosM.reduce(function (s, l) {
-    return s + (l.valor || 0);
-  }, 0);
-  var totalRM = receitasM.reduce(function (s, l) {
-    return s + (l.valor || 0);
-  }, 0);
-  var pendentes = pagamentos.filter(function (p) {
-    return p.status === "aguardando";
-  });
-  var membrosAtivos = members.filter(function (m) {
-    return m.active;
-  }).sort(function (a, b) {
-    return a.name > b.name ? 1 : -1;
-  });
-  function statusMens(membroId) {
-    if (!(mesalidade !== null && mesalidade !== void 0 && mesalidade.dataInicio) || !(mesalidade !== null && mesalidade !== void 0 && mesalidade.dataFim)) return null;
-    var _mesalidade$dataInici3 = mesalidade.dataInicio.split("-").map(Number),
-      _mesalidade$dataInici4 = _slicedToArray(_mesalidade$dataInici3, 2),
-      sy = _mesalidade$dataInici4[0],
-      sm = _mesalidade$dataInici4[1];
-    var _mesalidade$dataFim$s3 = mesalidade.dataFim.split("-").map(Number),
-      _mesalidade$dataFim$s4 = _slicedToArray(_mesalidade$dataFim$s3, 2),
-      ey = _mesalidade$dataFim$s4[0],
-      em = _mesalidade$dataFim$s4[1];
-    var hoje = new Date();
-    var ym = hoje.getFullYear();
-    var mm = hoje.getMonth() + 1;
-    var total = 0,
-      pagos = 0,
-      aguard = 0,
-      y = sy,
-      m = sm;
-    var _loop = function _loop() {
-      if (y * 100 + m <= ym * 100 + mm) {
-        total++;
-        var key = "".concat(y, "-").concat(String(m).padStart(2, "0"));
-        var p = pagamentos.find(function (x) {
-          return x.membroId === membroId && x.mes === key;
-        });
-        if ((p === null || p === void 0 ? void 0 : p.status) === "pago") pagos++;else if ((p === null || p === void 0 ? void 0 : p.status) === "aguardando") aguard++;
-      }
-      m++;
-      if (m > 12) {
-        m = 1;
-        y++;
-      }
-    };
-    while (y < ey || y === ey && m <= em) {
-      _loop();
-    }
-    return {
-      total: total,
-      pagos: pagos,
-      aguard: aguard,
-      pendente: total - pagos - aguard
-    };
+    setModal(false);setEditando(null);setFormAvulso({pacienteId:"",tipo:"Consulta",valor:"",data:new Date().toISOString().slice(0,10),formaPag:"PIX",status:"pendente",obs:""});setSalvando(false);
   }
 
-  // Gráfico barras simples por mês (últimos 6)
-  function ultimos6Meses() {
-    var meses = [];
-    var d = new Date();
-    var _loop2 = function _loop2() {
-      var nd = new Date(d.getFullYear(), d.getMonth() - i, 1);
-      var key = "".concat(nd.getFullYear(), "-").concat(String(nd.getMonth() + 1).padStart(2, "0"));
-      var r = lancamentos.filter(function (l) {
-        var _l$data2;
-        return l.tipo === "receita" && ((_l$data2 = l.data) === null || _l$data2 === void 0 ? void 0 : _l$data2.startsWith(key));
-      }).reduce(function (s, l) {
-        return s + (l.valor || 0);
-      }, 0);
-      var g = lancamentos.filter(function (l) {
-        var _l$data3;
-        return l.tipo === "gasto" && ((_l$data3 = l.data) === null || _l$data3 === void 0 ? void 0 : _l$data3.startsWith(key));
-      }).reduce(function (s, l) {
-        return s + (l.valor || 0);
-      }, 0);
-      meses.push({
-        key: key,
-        label: MONTHS_SHORT[nd.getMonth()],
-        receita: r,
-        gasto: g
-      });
-    };
-    for (var i = 5; i >= 0; i--) {
-      _loop2();
-    }
-    return meses;
+  function abrirEditar(l){
+    setFormAvulso({pacienteId:l.pacienteId||"",tipo:l.tipo||"Consulta",valor:l.valor||"",data:l.data||"",formaPag:l.formaPag||"PIX",status:l.status||"pendente",obs:l.obs||""});
+    setEditando(l.id);setModal("avulso");
   }
-  var meses6 = ultimos6Meses();
-  var maxVal = Math.max.apply(Math, _toConsumableArray(meses6.map(function (m) {
-    return Math.max(m.receita, m.gasto);
-  })).concat([1]));
-  var card = {
-    background: "#fff",
-    borderRadius: 12,
-    border: "1px solid #EEE8E8",
-    padding: "16px 20px",
-    boxShadow: "0 1px 4px rgba(0,0,0,0.04)"
-  };
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginBottom: 20,
-      flexWrap: "wrap",
-      gap: 12
+
+  async function excluirLanc(id){
+    if(!confirm("Excluir lançamento?"))return;
+    await db.collection("clinica_lancamentos").doc(id).delete();
+  }
+
+  // Marcar pago — marca todas as sessões do pacote
+  async function marcarPacotePago(pacoteId, formaPag){
+    const sessPac = sessoes.filter(s=>s.pacoteId===pacoteId);
+    const batch = db.batch();
+    sessPac.forEach(s=>{
+      batch.update(db.collection("clinica_sessoes").doc(s.id),{pagamento:"pago",formaPagamento:formaPag,dataPagamento:new Date().toISOString().slice(0,10)});
+    });
+    // Atualiza lançamento do pacote
+    const lancPacote = lancamentos.find(l=>l.pacoteId===pacoteId);
+    if(lancPacote){
+      batch.update(db.collection("clinica_lancamentos").doc(lancPacote.id),{status:"recebido",formaPag,dataPagamento:new Date().toISOString().slice(0,10)});
     }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 28,
-      fontWeight: 700,
-      color: cor
-    }
-  }, "Financeiro"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 8,
-      flexWrap: "wrap"
-    }
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return setModalMens(true);
-    },
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 6,
-      padding: "9px 14px",
-      background: "#fff",
-      border: "1px solid ".concat(cor),
-      borderRadius: 10,
-      fontSize: 13,
-      fontWeight: 600,
-      color: cor,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "settings",
-    size: 14,
-    color: cor
-  }), " Per\xEDodo"), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      setTipoLanc("receita");
-      setModalLanc("novo");
-    },
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 6,
-      padding: "9px 14px",
-      background: "#E8F5E9",
-      border: "1px solid #A5D6A7",
-      borderRadius: 10,
-      fontSize: 13,
-      fontWeight: 700,
-      color: "#2E7D32",
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "plus",
-    size: 14,
-    color: "#2E7D32"
-  }), " Receita"), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      setTipoLanc("gasto");
-      setModalLanc("novo");
-    },
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 6,
-      padding: "9px 14px",
-      background: "#FFF3E0",
-      border: "1px solid #FFCC80",
-      borderRadius: 10,
-      fontSize: 13,
-      fontWeight: 700,
-      color: "#E65100",
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "minus",
-    size: 14,
-    color: "#E65100"
-  }), " Gasto"))), pendentes.length > 0 && /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#FFF3E0",
-      border: "2px solid #E65100",
-      borderRadius: 12,
-      padding: "12px 16px",
-      marginBottom: 16,
-      display: "flex",
-      alignItems: "center",
-      gap: 12
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "alert-circle",
-    size: 18,
-    color: "#E65100"
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      flex: 1,
-      fontSize: 13,
-      fontWeight: 700,
-      color: "#E65100"
-    }
-  }, pendentes.length, " pagamento", pendentes.length !== 1 ? "s" : "", " aguardando valida\xE7\xE3o"), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return setAba("mensalidade");
-    },
-    style: {
-      padding: "6px 12px",
-      background: "#E65100",
-      color: "#fff",
-      border: "none",
-      borderRadius: 8,
-      fontSize: 12,
-      fontWeight: 700,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, "Ver")), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "grid",
-      gridTemplateColumns: "1fr 1fr 1fr",
-      gap: 12,
-      marginBottom: 20
-    }
-  }, [{
-    label: "Total Receitas",
-    valor: totalR,
-    cor: "#2E7D32",
-    bg: "#E8F5E9",
-    icon: "trending-up"
-  }, {
-    label: "Total Gastos",
-    valor: totalG,
-    cor: "#E65100",
-    bg: "#FFF3E0",
-    icon: "trending-down"
-  }, {
-    label: "Saldo Geral",
-    valor: saldo,
-    cor: saldo >= 0 ? "#1565C0" : "#C62828",
-    bg: saldo >= 0 ? "#E3F2FD" : "#FFEBEE",
-    icon: "dollar-sign"
-  }].map(function (m) {
-    return /*#__PURE__*/React.createElement("div", {
-      key: m.label,
-      style: _objectSpread(_objectSpread({}, card), {}, {
-        background: m.bg,
-        border: "1px solid ".concat(m.cor, "22")
-      })
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 11,
-        color: m.cor,
-        fontWeight: 700,
-        marginBottom: 4,
-        textTransform: "uppercase"
+    await batch.commit();
+  }
+
+  // Geração de datas recorrentes
+  function gerarDatas(dataInicio, recorrencia, total, diasSemana){
+    if(recorrencia==="Sessão única") return [dataInicio];
+    const datas=[];
+    if(["Semanal (1x/semana)","Quinzenal","Mensal"].includes(recorrencia)){
+      let atual=new Date(dataInicio+"T00:00:00");
+      while(datas.length<total){
+        datas.push(atual.toISOString().split("T")[0]);
+        if(recorrencia==="Semanal (1x/semana)") atual.setDate(atual.getDate()+7);
+        else if(recorrencia==="Quinzenal") atual.setDate(atual.getDate()+14);
+        else atual.setMonth(atual.getMonth()+1);
       }
-    }, m.label), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 20,
-        fontWeight: 700,
-        color: m.cor
-      }
-    }, "R$ ", Math.abs(m.valor).toFixed(2)));
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 4,
-      marginBottom: 20,
-      background: "#fff",
-      borderRadius: 12,
-      padding: 5,
-      border: "1px solid #EEE8E8",
-      width: "fit-content",
-      flexWrap: "wrap"
+      return datas.slice(0,total);
     }
-  }, [{
-    key: "resumo",
-    label: "Resumo"
-  }, {
-    key: "lancamentos",
-    label: "Lançamentos"
-  }, {
-    key: "mensalidade",
-    label: "Mensalidade"
-  }].map(function (a) {
-    return /*#__PURE__*/React.createElement("button", {
-      key: a.key,
-      onClick: function onClick() {
-        return setAba(a.key);
-      },
-      style: {
-        padding: "8px 16px",
-        borderRadius: 8,
-        border: "none",
-        background: aba === a.key ? cor : "none",
-        color: aba === a.key ? "#fff" : "#888",
-        fontSize: 13,
-        fontWeight: 700,
-        cursor: "pointer",
-        fontFamily: "inherit"
-      }
-    }, a.label, a.key === "mensalidade" && pendentes.length > 0 ? " (".concat(pendentes.length, ")") : "");
-  })), aba === "resumo" && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    style: _objectSpread(_objectSpread({}, card), {}, {
-      marginBottom: 14
-    })
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      fontWeight: 700,
-      color: "#1A1D23",
-      marginBottom: 16
+    // 2x ou 3x por semana
+    const dias=(diasSemana||[]).map(Number).sort();
+    if(!dias.length) return [];
+    let atual=new Date(dataInicio+"T00:00:00");
+    const fim=new Date(atual);fim.setFullYear(fim.getFullYear()+2);
+    while(datas.length<total&&atual<fim){
+      if(dias.includes(atual.getDay())) datas.push(atual.toISOString().split("T")[0]);
+      atual.setDate(atual.getDate()+1);
     }
-  }, "Receitas \xD7 Gastos \u2014 \xFAltimos 6 meses"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 8,
-      alignItems: "flex-end",
-      height: 120
+    return datas.slice(0,total);
+  }
+
+  async function salvarPacote(){
+    const {pacienteId,totalSessoes,valorSessao,recorrencia,dataInicio,horario,diasSemana,horariosPorDia,obs}=formPacote;
+    if(!pacienteId||!totalSessoes||!dataInicio){alert("Paciente, nº de sessões e data de início obrigatórios.");return;}
+    const needDias=["2x por semana","3x por semana"].includes(recorrencia);
+    if(needDias&&(!diasSemana||diasSemana.length===0)){alert("Selecione os dias da semana.");return;}
+    setSalvando(true);
+    const pac=pacientes.find(p=>p.id===pacienteId);
+    const total=parseInt(totalSessoes)||1;
+    const vSessao=parseFloat(valorSessao)||0;
+    const vTotal=vSessao*total;
+    const datas=gerarDatas(dataInicio,recorrencia,total,diasSemana);
+
+    // Cria pacote
+    const pacRef=await db.collection("clinica_pacotes").add({
+      pacienteId,pacienteNome:pac?.nome||"",totalSessoes:total,valorSessao:vSessao,valorTotal:vTotal,
+      recorrencia,dataInicio,horario,diasSemana:diasSemana||[],horariosPorDia:horariosPorDia||{},obs,
+      status:"ativo",createdAt:firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    // Cria lançamento financeiro do pacote
+    await db.collection("clinica_lancamentos").add({
+      tipo_lancamento:"pacote",pacoteId:pacRef.id,
+      pacienteId,pacienteNome:pac?.nome||"",
+      tipo:"Pacote "+recorrencia,
+      valor:vTotal,data:dataInicio,
+      formaPag:"",status:"pendente",obs,
+      totalSessoes:total,valorSessao:vSessao,
+      createdAt:firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    // Cria sessões na agenda
+    const batch=db.batch();
+    datas.forEach((data,i)=>{
+      const ref=db.collection("clinica_sessoes").doc();
+      const dia=new Date(data+"T00:00:00").getDay().toString();
+      const horaDia=(horariosPorDia||{})[dia]||horario;
+      batch.set(ref,{
+        pacienteId,pacienteNome:pac?.nome||"",data,hora:horaDia,
+        duracao:"50",tipo:"Psicoterapia",status:"agendado",
+        numSessao:i+1,pacoteId:pacRef.id,valorSessao:vSessao,
+        pagamento:"pendente",formaPagamento:"",dataPagamento:"",obs:"",
+        createdAt:firebase.firestore.FieldValue.serverTimestamp()
+      });
+    });
+    await batch.commit();
+    setModal(false);setFormPacote({pacienteId:"",totalSessoes:"",valorSessao:"",recorrencia:"Semanal (1x/semana)",dataInicio:"",horario:"09:00",diasSemana:[],horariosPorDia:{},obs:""});setSalvando(false);
+    alert(`✅ Pacote criado! ${datas.length} sessões geradas na agenda.`);
+  }
+
+  async function atualizarSessao(id,campos){ await db.collection("clinica_sessoes").doc(id).update(campos); }
+
+  async function remarcarSessao(s){
+    const nd=prompt("Nova data (AAAA-MM-DD):",s.data);
+    if(!nd)return;
+    await db.collection("clinica_sessoes").doc(s.id).update({data:nd,status:"agendado",remarcada:true,dataOriginal:s.dataOriginal||s.data});
+  }
+
+  async function confirmarExclusao(tipo){
+    if(!modalExcluir)return;
+    const {id,pacoteId,numSessao}=modalExcluir;
+    if(tipo==="este"){
+      await db.collection("clinica_sessoes").doc(id).delete();
+    } else if(tipo==="daqui"){
+      const fut=sessoes.filter(s=>s.pacoteId===pacoteId&&(s.numSessao||0)>=(numSessao||0));
+      const b=db.batch();fut.forEach(s=>b.delete(db.collection("clinica_sessoes").doc(s.id)));await b.commit();
+    } else {
+      const todas=sessoes.filter(s=>s.pacoteId===pacoteId);
+      const b=db.batch();todas.forEach(s=>b.delete(db.collection("clinica_sessoes").doc(s.id)));
+      b.delete(db.collection("clinica_pacotes").doc(pacoteId));
+      // Exclui lançamento do pacote também
+      const lp=lancamentos.find(l=>l.pacoteId===pacoteId);
+      if(lp) b.delete(db.collection("clinica_lancamentos").doc(lp.id));
+      await b.commit();setPacoteSelecionado(null);
     }
-  }, meses6.map(function (m) {
-    return /*#__PURE__*/React.createElement("div", {
-      key: m.key,
-      style: {
-        flex: 1,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: 4
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        width: "100%",
-        display: "flex",
-        gap: 2,
-        alignItems: "flex-end",
-        height: 90
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        flex: 1,
-        background: "#2E7D32",
-        borderRadius: "3px 3px 0 0",
-        height: "".concat(m.receita / maxVal * 90, "px"),
-        minHeight: m.receita > 0 ? 4 : 0,
-        transition: "height 0.3s"
-      },
-      title: "Receita: R$ ".concat(m.receita.toFixed(2))
-    }), /*#__PURE__*/React.createElement("div", {
-      style: {
-        flex: 1,
-        background: "#E65100",
-        borderRadius: "3px 3px 0 0",
-        height: "".concat(m.gasto / maxVal * 90, "px"),
-        minHeight: m.gasto > 0 ? 4 : 0,
-        transition: "height 0.3s"
-      },
-      title: "Gasto: R$ ".concat(m.gasto.toFixed(2))
-    })), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 10,
-        color: "#AAA",
-        fontWeight: 700
-      }
-    }, m.label));
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 16,
-      marginTop: 8,
-      justifyContent: "center"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 5,
-      fontSize: 11,
-      color: "#555"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: 10,
-      height: 10,
-      background: "#2E7D32",
-      borderRadius: 2
-    }
-  }), " Receitas"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 5,
-      fontSize: 11,
-      color: "#555"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: 10,
-      height: 10,
-      background: "#E65100",
-      borderRadius: 2
-    }
-  }), " Gastos"))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "grid",
-      gridTemplateColumns: "1fr 1fr",
-      gap: 12,
-      marginBottom: 14
-    }
-  }, [{
-    tipo: "receita",
-    label: "Receitas por categoria",
-    cor: "#2E7D32",
-    lista: todoReceitas
-  }, {
-    tipo: "gasto",
-    label: "Gastos por categoria",
-    cor: "#E65100",
-    lista: todoGastos
-  }].map(function (_ref59) {
-    var tipo = _ref59.tipo,
-      label = _ref59.label,
-      c = _ref59.cor,
-      lista = _ref59.lista;
-    return /*#__PURE__*/React.createElement("div", {
-      key: tipo,
-      style: card
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 12,
-        fontWeight: 700,
-        color: c,
-        marginBottom: 12,
-        textTransform: "uppercase",
-        letterSpacing: 0.5
-      }
-    }, label), lista.length === 0 ? /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 12,
-        color: "#CCC",
-        textAlign: "center",
-        padding: "12px 0"
-      }
-    }, "Nenhum") : Object.entries(lista.reduce(function (acc, l) {
-      acc[l.categoria] = (acc[l.categoria] || 0) + l.valor;
+    setModalExcluir(null);
+  }
+
+  // ── Relatório de frequência ──
+  function RelatorioFrequencia({pacienteId}){
+    const pac = pacientes.find(p=>p.id===pacienteId);
+    const sessPac = sessoes.filter(s=>s.pacienteId===pacienteId).sort((a,b)=>a.data?.localeCompare(b.data));
+    const pacotesPac = pacotes.filter(p=>p.pacienteId===pacienteId);
+    const [mesFiltro, setMesFiltro] = useState("todos");
+    const [accordionAberto, setAccordionAberto] = useState({});
+
+    const STATUS_S={
+      agendado:  {l:"Agendado",   c:"#7B00C4"},
+      confirmado:{l:"Confirmado", c:"#059669"},
+      realizado: {l:"✓ Realizado",c:"#059669"},
+      cancelado: {l:"Cancelado",  c:"#dc2626"},
+      falta:     {l:"Falta",      c:"#d97706"},
+      remarcado: {l:"Remarcado",  c:"#0891b2"},
+    };
+
+    // Agrupa por mês
+    const porMes = sessPac.reduce((acc,s)=>{
+      const mes = s.data?.slice(0,7)||"sem-data";
+      if(!acc[mes]) acc[mes]=[];
+      acc[mes].push(s);
       return acc;
-    }, {})).sort(function (a, b) {
-      return b[1] - a[1];
-    }).slice(0, 5).map(function (_ref60) {
-      var _ref61 = _slicedToArray(_ref60, 2),
-        cat = _ref61[0],
-        val = _ref61[1];
-      return /*#__PURE__*/React.createElement("div", {
-        key: cat,
-        style: {
-          display: "flex",
-          justifyContent: "space-between",
-          padding: "6px 0",
-          borderBottom: "1px solid #F5F5F5"
-        }
-      }, /*#__PURE__*/React.createElement("div", {
-        style: {
-          fontSize: 12,
-          color: "#555"
-        }
-      }, cat), /*#__PURE__*/React.createElement("div", {
-        style: {
-          fontSize: 12,
-          fontWeight: 700,
-          color: c
-        }
-      }, "R$ ", val.toFixed(2)));
-    }));
-  }))), aba === "lancamentos" && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    style: _objectSpread(_objectSpread({}, card), {}, {
-      padding: 0,
-      overflow: "hidden",
-      marginBottom: 14
-    })
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-between",
-      padding: "12px 20px",
-      borderBottom: "1px solid #EEE8E8"
-    }
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return navMes(-1);
-    },
-    style: {
-      width: 32,
-      height: 32,
-      border: "1px solid #EEE",
-      borderRadius: 8,
-      background: "none",
-      cursor: "pointer",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "chevron-left",
-    size: 16,
-    color: "#666"
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      textAlign: "center"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 16,
-      fontWeight: 700,
-      color: "#1A1D23"
-    }
-  }, ((_MONTHS_PT = MONTHS_PT[parseInt(mesAtual.split("-")[1]) - 1]) === null || _MONTHS_PT === void 0 ? void 0 : _MONTHS_PT.charAt(0).toUpperCase()) + ((_MONTHS_PT2 = MONTHS_PT[parseInt(mesAtual.split("-")[1]) - 1]) === null || _MONTHS_PT2 === void 0 ? void 0 : _MONTHS_PT2.slice(1)), " ", mesAtual.split("-")[0]), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      color: "#AAA"
-    }
-  }, "Receitas: R$ ", totalRM.toFixed(2), " \xB7 Gastos: R$ ", totalGM.toFixed(2), " \xB7 Saldo: ", /*#__PURE__*/React.createElement("span", {
-    style: {
-      color: totalRM - totalGM >= 0 ? "#2E7D32" : "#C62828",
-      fontWeight: 700
-    }
-  }, "R$ ", (totalRM - totalGM).toFixed(2)))), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return navMes(1);
-    },
-    style: {
-      width: 32,
-      height: 32,
-      border: "1px solid #EEE",
-      borderRadius: 8,
-      background: "none",
-      cursor: "pointer",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "chevron-right",
-    size: 16,
-    color: "#666"
-  }))), lancMes.length === 0 ? /*#__PURE__*/React.createElement("div", {
-    style: {
-      textAlign: "center",
-      padding: "32px",
-      color: "#CCC",
-      fontSize: 13
-    }
-  }, "Nenhum lan\xE7amento neste m\xEAs.") : lancMes.sort(function (a, b) {
-    return a.data < b.data ? 1 : -1;
-  }).map(function (l, i) {
-    return /*#__PURE__*/React.createElement("div", {
-      key: l.id,
-      style: {
-        display: "flex",
-        alignItems: "center",
-        gap: 12,
-        padding: "13px 16px",
-        borderBottom: i < lancMes.length - 1 ? "1px solid #F5F5F5" : "none",
-        background: i % 2 === 0 ? "#fff" : "#FDFBFB"
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        width: 8,
-        height: 8,
-        borderRadius: "50%",
-        background: l.tipo === "receita" ? "#2E7D32" : "#E65100",
-        flexShrink: 0
-      }
-    }), /*#__PURE__*/React.createElement("div", {
-      style: {
-        flex: 1
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 13,
-        fontWeight: 600,
-        color: "#1A1D23"
-      }
-    }, l.descricao), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 11,
-        color: "#AAA"
-      }
-    }, l.categoria, l.membroNome && l.membroNome !== "Onix Brasil Vocal" ? " \xB7 ".concat(l.membroNome) : "")), /*#__PURE__*/React.createElement("div", {
-      style: {
-        textAlign: "right"
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 13,
-        fontWeight: 700,
-        color: l.tipo === "receita" ? "#2E7D32" : "#E65100"
-      }
-    }, l.tipo === "receita" ? "+" : "-", "R$ ", (l.valor || 0).toFixed(2)), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 11,
-        color: "#AAA"
-      }
-    }, l.data ? new Date(l.data + "T12:00:00").toLocaleDateString("pt-BR", {
-      day: "2-digit",
-      month: "2-digit"
-    }) : "")), /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick() {
-        setTipoLanc(l.tipo);
-        setModalLanc(l);
-      },
-      style: {
-        background: "none",
-        border: "none",
-        color: cor,
-        fontSize: 12,
-        fontWeight: 600,
-        cursor: "pointer",
-        fontFamily: "inherit",
-        padding: "4px 8px"
-      }
-    }, "Editar"));
-  }))), aba === "mensalidade" && /*#__PURE__*/React.createElement("div", null, !(mesalidade !== null && mesalidade !== void 0 && mesalidade.dataInicio) ? /*#__PURE__*/React.createElement("div", {
-    style: _objectSpread(_objectSpread({}, card), {}, {
-      textAlign: "center",
-      color: "#AAA",
-      padding: "40px"
-    })
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "calendar",
-    size: 32,
-    color: "#DDD"
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginTop: 12,
-      fontSize: 14
-    }
-  }, "Nenhum per\xEDodo configurado."), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return setModalMens(true);
-    },
-    style: {
-      marginTop: 16,
-      padding: "10px 20px",
-      background: cor,
-      color: "#fff",
-      border: "none",
-      borderRadius: 10,
-      fontSize: 13,
-      fontWeight: 700,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, "Configurar agora")) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    style: _objectSpread(_objectSpread({}, card), {}, {
-      marginBottom: 14,
-      display: "flex",
-      gap: 12,
-      alignItems: "center"
-    })
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "calendar",
-    size: 18,
-    color: cor
-  }), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      fontWeight: 700,
-      color: "#1A1D23"
-    }
-  }, "Per\xEDodo ativo"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      color: "#888"
-    }
-  }, fmtDate(mesalidade.dataInicio), " at\xE9 ", fmtDate(mesalidade.dataFim), " \xB7 R$ ", (mesalidade.valorMensal || 25).toFixed(2), "/m\xEAs"))), /*#__PURE__*/React.createElement("div", {
-    style: _objectSpread(_objectSpread({}, card), {}, {
-      padding: 0,
-      overflow: "hidden"
-    })
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "grid",
-      gridTemplateColumns: "2fr 60px 60px 70px 80px",
-      padding: "10px 16px",
-      background: "#FAFAFA",
-      borderBottom: "1px solid #EEE"
-    }
-  }, ["Corista", "Pagos", "Aguard.", "Pend.", "Ação"].map(function (h) {
-    return /*#__PURE__*/React.createElement("div", {
-      key: h,
-      style: {
-        fontSize: 11,
-        fontWeight: 700,
-        color: cor
-      }
-    }, h);
-  })), membrosAtivos.map(function (m, i) {
-    var st = statusMens(m.id);
-    var temAguard = pagamentos.some(function (p) {
-      return p.membroId === m.id && p.status === "aguardando";
-    });
-    return /*#__PURE__*/React.createElement("div", {
-      key: m.id,
-      style: {
-        display: "grid",
-        gridTemplateColumns: "2fr 60px 60px 70px 80px",
-        padding: "12px 16px",
-        borderBottom: i < membrosAtivos.length - 1 ? "1px solid #F5F5F5" : "none",
-        alignItems: "center",
-        background: temAguard ? "#FFF8E1" : i % 2 === 0 ? "#fff" : "#FDFBFB"
-      }
-    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 13,
-        fontWeight: 600,
-        color: "#1A1D23"
-      }
-    }, m.name, temAguard && /*#__PURE__*/React.createElement("span", {
-      style: {
-        marginLeft: 6,
-        fontSize: 10,
-        background: "#E65100",
-        color: "#fff",
-        borderRadius: 10,
-        padding: "1px 6px",
-        fontWeight: 700
-      }
-    }, "!")), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 11,
-        color: "#AAA"
-      }
-    }, m.voice || "Corista")), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 13,
-        fontWeight: 700,
-        color: "#2E7D32"
-      }
-    }, (st === null || st === void 0 ? void 0 : st.pagos) || 0), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 13,
-        fontWeight: 700,
-        color: "#1565C0"
-      }
-    }, (st === null || st === void 0 ? void 0 : st.aguard) || 0), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 13,
-        fontWeight: 700,
-        color: (st === null || st === void 0 ? void 0 : st.pendente) > 0 ? "#E65100" : "#2E7D32"
-      }
-    }, (st === null || st === void 0 ? void 0 : st.pendente) || 0), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick() {
-        return setModalPag(m);
-      },
-      style: {
-        padding: "6px 12px",
-        background: cor + "15",
-        color: cor,
-        border: "1px solid ".concat(cor, "33"),
-        borderRadius: 8,
-        fontSize: 12,
-        fontWeight: 700,
-        cursor: "pointer",
-        fontFamily: "inherit"
-      }
-    }, "Ver")));
-  })))), modalMens && /*#__PURE__*/React.createElement(ModalMensalidade, {
-    config: config,
-    onClose: function onClose() {
-      return setModalMens(false);
-    }
-  }), modalLanc && /*#__PURE__*/React.createElement(ModalLancamento, {
-    lancamento: modalLanc === "novo" ? null : modalLanc,
-    tipo: tipoLanc,
-    config: config,
-    cats: cats,
-    addCat: addCat,
-    onClose: function onClose() {
-      return setModalLanc(null);
-    }
-  }), modalPag && /*#__PURE__*/React.createElement(ModalPagamento, {
-    membro: modalPag,
-    mesalidade: mesalidade,
-    config: config,
-    onClose: function onClose() {
-      return setModalPag(null);
-    }
-  }));
-}
+    },{});
+    const meses = Object.keys(porMes).sort();
 
-// ── FINANCEIRO CORISTA ────────────────────────────────────────────────────────
-function FinanceiroCorista(_ref62) {
-  var user = _ref62.user,
-    config = _ref62.config,
-    setTab = _ref62.setTab;
-  var cor = config.corPrimaria || COR;
-  var _useState251 = useState(null),
-    _useState252 = _slicedToArray(_useState251, 2),
-    mesalidade = _useState252[0],
-    setMesalidade = _useState252[1];
-  var _useState253 = useState([]),
-    _useState254 = _slicedToArray(_useState253, 2),
-    pagamentos = _useState254[0],
-    setPagamentos = _useState254[1];
-  var _useState255 = useState(null),
-    _useState256 = _slicedToArray(_useState255, 2),
-    salvando = _useState256[0],
-    setSalvando = _useState256[1];
-  var _useState257 = useState([]),
-    _useState258 = _slicedToArray(_useState257, 2),
-    meses = _useState258[0],
-    setMeses = _useState258[1];
-  useEffect(function () {
-    var u1 = db.collection("onix_config").doc("mensalidade").onSnapshot(function (s) {
-      if (s.exists) setMesalidade(s.data());
-    });
-    var u2 = db.collection("onix_pagamentos").where("membroId", "==", user.memberId || "").onSnapshot(function (s) {
-      return setPagamentos(s.docs.map(function (d) {
-        return _objectSpread({
-          id: d.id
-        }, d.data());
-      }));
-    });
-    return function () {
-      u1();
-      u2();
-    };
-  }, [user.memberId]);
+    // Totais gerais
+    const totalRecebido = sessPac.reduce((a,s)=>a+(parseFloat(s.valorPago)||parseFloat(s.valorSessao)||0)*(s.pagamento==="pago"?1:0),0);
+    const totalSaldo = sessPac.filter(s=>s.pagamento==="pago").reduce((a,s)=>{
+      const esperado=parseFloat(s.valorSessao)||0;
+      const pago=parseFloat(s.valorPago)||esperado;
+      return a+(pago-esperado);
+    },0);
+    const anoAtual = new Date().getFullYear();
+    const totalAno = sessPac.filter(s=>s.data?.startsWith(anoAtual+"")&&s.pagamento==="pago").reduce((a,s)=>a+(parseFloat(s.valorPago)||parseFloat(s.valorSessao)||0),0);
 
-  // Buscar memberId do corista pelo nome
-  var _useState259 = useState(null),
-    _useState260 = _slicedToArray(_useState259, 2),
-    memberId = _useState260[0],
-    setMemberId = _useState260[1];
-  useEffect(function () {
-    if (!user.name) return;
-    db.collection("onix_members").where("name", "==", user.name).get().then(function (s) {
-      if (!s.empty) setMemberId(s.docs[0].id);
-    });
-  }, [user.name]);
-  useEffect(function () {
-    if (!(mesalidade !== null && mesalidade !== void 0 && mesalidade.dataInicio) || !(mesalidade !== null && mesalidade !== void 0 && mesalidade.dataFim) || !memberId) return;
-    db.collection("onix_pagamentos").where("membroId", "==", memberId).onSnapshot(function (snap) {
-      var pagos = {};
-      snap.docs.forEach(function (d) {
-        var p = d.data();
-        pagos[p.mes] = _objectSpread({
-          docId: d.id
-        }, p);
+    // Sessões do filtro
+    const mesesFiltrados = mesFiltro==="todos"?meses:[mesFiltro];
+
+    async function atualizarPagamento(s, formaPag, valorPago){
+      const pago = formaPag!==""&&formaPag!=="pendente";
+      const vPago = parseFloat(valorPago)||(parseFloat(s.valorSessao)||0);
+      await atualizarSessao(s.id,{
+        formaPagamento:formaPag,
+        pagamento:pago?"pago":"pendente",
+        valorPago:pago?vPago:0,
+        dataPagamento:pago&&!s.dataPagamento?new Date().toISOString().slice(0,10):s.dataPagamento
       });
-      var lista = [];
-      var _mesalidade$dataInici5 = mesalidade.dataInicio.split("-").map(Number),
-        _mesalidade$dataInici6 = _slicedToArray(_mesalidade$dataInici5, 2),
-        sy = _mesalidade$dataInici6[0],
-        sm = _mesalidade$dataInici6[1];
-      var _mesalidade$dataFim$s5 = mesalidade.dataFim.split("-").map(Number),
-        _mesalidade$dataFim$s6 = _slicedToArray(_mesalidade$dataFim$s5, 2),
-        ey = _mesalidade$dataFim$s6[0],
-        em = _mesalidade$dataFim$s6[1];
-      var y = sy,
-        m = sm;
-      var hoje = new Date();
-      var ym = hoje.getFullYear();
-      var mm = hoje.getMonth() + 1;
-      while (y < ey || y === ey && m <= em) {
-        if (y * 100 + m <= ym * 100 + mm) {
-          var key = "".concat(y, "-").concat(String(m).padStart(2, "0"));
-          var pag = pagos[key];
-          lista.push({
-            key: key,
-            label: "".concat(MONTHS_PT[m - 1], " ").concat(y),
-            status: (pag === null || pag === void 0 ? void 0 : pag.status) || "pendente",
-            docId: (pag === null || pag === void 0 ? void 0 : pag.docId) || null
+      // Integra com lançamentos — cria ou atualiza lançamento avulso da sessão
+      if(pago){
+        const lancExist = lancamentos.find(l=>l.sessaoId===s.id);
+        if(!lancExist){
+          await db.collection("clinica_lancamentos").add({
+            tipo_lancamento:"sessao",sessaoId:s.id,
+            pacienteId:s.pacienteId,pacienteNome:s.pacienteNome||"",
+            tipo:"Sessão #"+(s.numSessao||""),
+            valor:vPago,data:s.dataPagamento||new Date().toISOString().slice(0,10),
+            formaPag,status:"recebido",
+            createdAt:firebase.firestore.FieldValue.serverTimestamp()
           });
-        }
-        m++;
-        if (m > 12) {
-          m = 1;
-          y++;
+        } else {
+          await db.collection("clinica_lancamentos").doc(lancExist.id).update({valor:vPago,formaPag,status:"recebido"});
         }
       }
-      setMeses(lista.reverse());
-    });
-  }, [mesalidade, memberId]);
-  function marcarPago(_x11) {
-    return _marcarPago.apply(this, arguments);
+    }
+
+    return(
+      <div>
+        <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:16,flexWrap:"wrap"}}>
+          <button className="btn btn-ghost" onClick={()=>setPacoteSelecionado(null)}>← Voltar</button>
+          <div style={{flex:1,fontFamily:"var(--font-display)",fontSize:18,fontWeight:600}}>{pac?.nome}</div>
+          <button className="btn btn-outline" style={{fontSize:13}} onClick={()=>window.print()}>
+            <Icon name="printer" size={14}/> Imprimir
+          </button>
+        </div>
+
+        {/* Cabeçalho */}
+        <div style={{background:"white",borderRadius:16,overflow:"hidden",border:"1px solid var(--gray-200)",marginBottom:16}}>
+          <div style={{background:"var(--purple)",padding:"12px 20px",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+            <div style={{fontFamily:"Dancing Script, cursive",fontSize:22,color:"white",fontWeight:600}}>Controle de Atendimento Terapêutico</div>
+            <img src="../logo-transparente.png" style={{height:36,objectFit:"contain"}} onError={e=>e.target.style.display="none"}/>
+          </div>
+          <div style={{padding:"14px 20px",display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:12,borderBottom:"1px solid var(--gray-100)"}}>
+            {[["Nome",pac?.nome||"—"],["Início",pacotesPac[0]?.dataInicio?new Date(pacotesPac[0].dataInicio+"T00:00:00").toLocaleDateString("pt-BR"):"—"],["Horário",pacotesPac[0]?.horario||"—"],["Recorrência",pacotesPac[0]?.recorrencia||"—"]].map(([l,v])=>(
+              <div key={l}><div style={{fontSize:10,color:"var(--text-muted)",fontWeight:600,textTransform:"uppercase",marginBottom:2}}>{l}</div><div style={{fontWeight:600,fontSize:13}}>{v}</div></div>
+            ))}
+          </div>
+          {/* Resumo por período selecionado */}
+          <div style={{padding:"12px 20px",display:"flex",gap:20,flexWrap:"wrap",background:"var(--purple-soft)",borderBottom:"1px solid var(--gray-200)"}}>
+            {(()=>{
+              const sessFiltro = mesFiltro==="todos"?sessPac:sessPac.filter(s=>s.data?.startsWith(mesFiltro));
+              const recFiltro = sessFiltro.filter(s=>s.pagamento==="pago").reduce((a,s)=>a+(parseFloat(s.valorPago)||parseFloat(s.valorSessao)||0),0);
+              const pendFiltro = sessFiltro.filter(s=>s.pagamento!=="pago"&&s.status!=="cancelado").reduce((a,s)=>a+(parseFloat(s.valorSessao)||0),0);
+              return [
+                ["Sessões",sessFiltro.length,"#7B00C4"],
+                ["Realizadas",sessFiltro.filter(s=>s.status==="realizado").length,"#059669"],
+                ["Pagas",sessFiltro.filter(s=>s.pagamento==="pago").length,"#059669"],
+                ["Pendentes",sessFiltro.filter(s=>s.pagamento!=="pago"&&s.status!=="cancelado").length,"#d97706"],
+                ["Faltas",sessFiltro.filter(s=>s.status==="falta").length,"#dc2626"],
+                ["Recebido",recFiltro.toLocaleString("pt-BR",{style:"currency",currency:"BRL"}),"#059669"],
+                ["A Receber",pendFiltro.toLocaleString("pt-BR",{style:"currency",currency:"BRL"}),"#d97706"],
+                ["Total "+anoAtual,totalAno.toLocaleString("pt-BR",{style:"currency",currency:"BRL"}),"#0891b2"],
+              ].map(([l,v,c])=>(
+                <div key={l} style={{textAlign:"center"}}>
+                  <div style={{fontSize:16,fontWeight:800,color:c}}>{v}</div>
+                  <div style={{fontSize:10,color:c,fontWeight:500}}>{l}</div>
+                </div>
+              ));
+            })()}
+          </div>
+        </div>
+
+        {/* Filtro de mês */}
+        <div style={{display:"flex",gap:6,marginBottom:16,flexWrap:"wrap",alignItems:"center"}}>
+          <span style={{fontSize:12,fontWeight:600,color:"var(--text-muted)"}}>Mês:</span>
+          <button onClick={()=>setMesFiltro("todos")} style={{padding:"4px 12px",borderRadius:20,border:"1.5px solid",borderColor:mesFiltro==="todos"?"var(--purple)":"#e5e7eb",background:mesFiltro==="todos"?"var(--purple)":"white",color:mesFiltro==="todos"?"white":"#6b7280",fontSize:11,fontWeight:600,cursor:"pointer"}}>Todos</button>
+          {meses.map(m=>(
+            <button key={m} onClick={()=>setMesFiltro(m)} style={{padding:"4px 12px",borderRadius:20,border:"1.5px solid",borderColor:mesFiltro===m?"var(--purple)":"#e5e7eb",background:mesFiltro===m?"var(--purple)":"white",color:mesFiltro===m?"white":"#6b7280",fontSize:11,fontWeight:600,cursor:"pointer"}}>
+              {new Date(m+"-01").toLocaleDateString("pt-BR",{month:"short",year:"2-digit"})}
+            </button>
+          ))}
+        </div>
+
+        {/* Tabelas por mês com accordion */}
+        {mesesFiltrados.map(mes=>{
+          const sessMes = porMes[mes]||[];
+          const mesLabel = new Date(mes+"-01").toLocaleDateString("pt-BR",{month:"long",year:"numeric"});
+          const recMes = sessMes.filter(s=>s.pagamento==="pago").reduce((a,s)=>a+(parseFloat(s.valorPago)||parseFloat(s.valorSessao)||0),0);
+          const aberto = accordionAberto[mes]!==false; // default aberto
+          return(
+            <div key={mes} style={{background:"white",borderRadius:16,overflow:"hidden",border:"1px solid var(--gray-200)",marginBottom:12}}>
+              {/* Header accordion */}
+              <button onClick={()=>setAccordionAberto(a=>({...a,[mes]:!aberto}))}
+                style={{width:"100%",display:"flex",alignItems:"center",justifyContent:"space-between",padding:"12px 20px",background:"#f5f0ff",border:"none",cursor:"pointer",borderBottom:aberto?"2px solid var(--purple)":"none"}}>
+                <div style={{display:"flex",alignItems:"center",gap:12}}>
+                  <span style={{fontWeight:700,fontSize:14,color:"var(--purple)",textTransform:"capitalize"}}>{mesLabel}</span>
+                  <span style={{fontSize:12,color:"var(--text-muted)"}}>{sessMes.length} sessões</span>
+                  <span style={{fontSize:12,fontWeight:600,color:"#059669"}}>{recMes.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}</span>
+                </div>
+                <Icon name={aberto?"chevron-up":"chevron-down"} size={16}/>
+              </button>
+              {aberto&&(
+                <div style={{overflowX:"auto"}}>
+                  <table style={{width:"100%",borderCollapse:"collapse",fontSize:12}}>
+                    <thead>
+                      <tr style={{background:"var(--purple)",color:"white"}}>
+                        {["","Nº","Data","Presença","Modalidade","V. Sessão","V. Pago","Saldo","Forma Pagto","Data Pagto","Obs"].map(h=>(
+                          <th key={h} style={{padding:"8px 10px",textAlign:"left",fontWeight:600,whiteSpace:"nowrap",fontSize:11}}>{h}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {sessMes.map((s,i)=>{
+                        const st=STATUS_S[s.status]||STATUS_S.agendado;
+                        const isPago=s.pagamento==="pago";
+                        const vSessao=parseFloat(s.valorSessao)||0;
+                        const vPago=parseFloat(s.valorPago)||(isPago?vSessao:0);
+                        const saldo=isPago?(vPago-vSessao):0;
+                        return(
+                          <tr key={s.id} style={{borderBottom:"1px solid var(--gray-100)",background:i%2===0?"white":"#fafafa"}}>
+                            <td style={{padding:"5px 6px"}}>
+                              <button onClick={()=>setModalExcluir({id:s.id,pacoteId:s.pacoteId,numSessao:s.numSessao||i+1,data:s.data})}
+                                style={{background:"none",border:"none",cursor:"pointer",color:"#dc2626",padding:"2px"}}>
+                                <Icon name="trash-2" size={12}/>
+                              </button>
+                            </td>
+                            <td style={{padding:"6px 10px",fontWeight:700,color:"var(--purple)"}}>{s.numSessao||"—"}</td>
+                            <td style={{padding:"6px 10px",whiteSpace:"nowrap"}}>
+                              {s.data?new Date(s.data+"T00:00:00").toLocaleDateString("pt-BR"):"—"}
+                              {s.remarcada&&<div style={{fontSize:9,color:"#0891b2"}}>Rem.</div>}
+                            </td>
+                            <td style={{padding:"6px 10px"}}>
+                              <select value={s.status} onChange={e=>atualizarSessao(s.id,{status:e.target.value})}
+                                style={{fontSize:10,border:"1px solid #e5e7eb",borderRadius:5,padding:"2px 4px",color:st.c,fontWeight:600,background:"white",cursor:"pointer",minWidth:90}}>
+                                {Object.entries(STATUS_S).map(([k,v])=><option key={k} value={k}>{v.l}</option>)}
+                              </select>
+                              {s.status==="cancelado"&&(
+                                <button onClick={()=>remarcarSessao(s)} style={{marginTop:2,display:"block",fontSize:9,background:"none",border:"1px solid #0891b2",color:"#0891b2",borderRadius:3,padding:"1px 5px",cursor:"pointer"}}>Remarcar</button>
+                              )}
+                            </td>
+                            <td style={{padding:"6px 10px"}}>
+                              <input defaultValue={s.modalidade||"on-line"} onBlur={e=>atualizarSessao(s.id,{modalidade:e.target.value})}
+                                style={{fontSize:10,border:"1px solid #e5e7eb",borderRadius:5,padding:"2px 5px",width:65}}/>
+                            </td>
+                            <td style={{padding:"6px 10px",fontWeight:600,color:"#374151",whiteSpace:"nowrap"}}>
+                              {vSessao.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}
+                            </td>
+                            <td style={{padding:"6px 10px"}}>
+                              <input type="number" defaultValue={isPago?vPago:""} onBlur={e=>atualizarPagamento(s,s.formaPagamento||"",e.target.value)}
+                                placeholder="0,00" style={{fontSize:10,border:"1px solid",borderColor:isPago?"#6ee7b7":"#e5e7eb",borderRadius:5,padding:"2px 5px",width:70,color:isPago?"#059669":"#374151",fontWeight:isPago?600:400}}/>
+                            </td>
+                            <td style={{padding:"6px 10px",fontWeight:600,whiteSpace:"nowrap",color:saldo<0?"#dc2626":saldo>0?"#059669":"#9ca3af"}}>
+                              {isPago?(saldo===0?"—":saldo.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})):"—"}
+                            </td>
+                            <td style={{padding:"6px 10px"}}>
+                              <select value={s.formaPagamento||""} onChange={e=>atualizarPagamento(s,e.target.value,s.valorPago||s.valorSessao)}
+                                style={{fontSize:10,border:"1px solid",borderColor:isPago?"#6ee7b7":"#e5e7eb",borderRadius:5,padding:"2px 4px",color:isPago?"#059669":"#6b7280",fontWeight:isPago?600:400,cursor:"pointer",background:isPago?"#f0fdf4":"white",minWidth:75}}>
+                                <option value="">Pendente</option>
+                                {FORMAS.map(f=><option key={f} value={f}>{f}</option>)}
+                              </select>
+                            </td>
+                            <td style={{padding:"6px 10px"}}>
+                              <input type="date" defaultValue={s.dataPagamento||""} onBlur={e=>atualizarSessao(s.id,{dataPagamento:e.target.value})}
+                                style={{fontSize:10,border:"1px solid #e5e7eb",borderRadius:5,padding:"2px 4px",width:108}}/>
+                            </td>
+                            <td style={{padding:"6px 10px"}}>
+                              <input defaultValue={s.obs||""} onBlur={e=>atualizarSessao(s.id,{obs:e.target.value})}
+                                placeholder="—" style={{fontSize:10,border:"1px solid #e5e7eb",borderRadius:5,padding:"2px 5px",width:75}}/>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                    <tfoot>
+                      <tr style={{background:"var(--purple-soft)"}}>
+                        <td colSpan={5} style={{padding:"8px 10px",fontWeight:700,fontSize:12}}>Total do mês</td>
+                        <td style={{padding:"8px 10px",fontWeight:700,fontSize:12}}>{sessMes.reduce((a,s)=>a+(parseFloat(s.valorSessao)||0),0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}</td>
+                        <td style={{padding:"8px 10px",fontWeight:700,fontSize:12,color:"#059669"}}>{recMes.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}</td>
+                        <td style={{padding:"8px 10px",fontWeight:700,fontSize:12,color:sessMes.reduce((a,s)=>a+(s.pagamento==="pago"?(parseFloat(s.valorPago)||parseFloat(s.valorSessao)||0)-(parseFloat(s.valorSessao)||0):0),0)<0?"#dc2626":"#059669"}}>
+                          {(()=>{const sd=sessMes.reduce((a,s)=>a+(s.pagamento==="pago"?(parseFloat(s.valorPago)||parseFloat(s.valorSessao)||0)-(parseFloat(s.valorSessao)||0):0),0);return sd===0?"—":sd.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});})()}
+                        </td>
+                        <td colSpan={3}/>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              )}
+            </div>
+          );
+        })}
+
+        {/* Modal exclusão */}
+        {modalExcluir&&(
+          <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.5)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:600,padding:20}}>
+            <div style={{background:"white",borderRadius:16,padding:28,width:"100%",maxWidth:400,textAlign:"center"}}>
+              <div style={{fontSize:32,marginBottom:12}}>🗑️</div>
+              <div style={{fontFamily:"var(--font-display)",fontSize:18,fontWeight:600,marginBottom:8}}>Excluir sessão #{modalExcluir.numSessao}?</div>
+              <p style={{fontSize:13,color:"#6b7280",marginBottom:20}}>{modalExcluir.data?new Date(modalExcluir.data+"T00:00:00").toLocaleDateString("pt-BR"):""}</p>
+              <div style={{display:"flex",flexDirection:"column",gap:8,marginBottom:14}}>
+                <button className="btn btn-ghost" style={{border:"1.5px solid #e5e7eb",textAlign:"left",padding:"12px 16px"}} onClick={()=>confirmarExclusao("este")}>
+                  <div style={{fontWeight:600,fontSize:13}}>Só esta sessão</div>
+                </button>
+                <button className="btn btn-ghost" style={{border:"1.5px solid #fbbf24",textAlign:"left",padding:"12px 16px"}} onClick={()=>confirmarExclusao("daqui")}>
+                  <div style={{fontWeight:600,fontSize:13,color:"#d97706"}}>Esta e todas as próximas</div>
+                </button>
+                <button className="btn btn-ghost" style={{border:"1.5px solid #fca5a5",textAlign:"left",padding:"12px 16px"}} onClick={()=>confirmarExclusao("todos")}>
+                  <div style={{fontWeight:600,fontSize:13,color:"#dc2626"}}>Cancelar todo o pacote</div>
+                </button>
+              </div>
+              <button className="btn btn-ghost" style={{width:"100%"}} onClick={()=>setModalExcluir(null)}>Cancelar</button>
+            </div>
+          </div>
+        )}
+      </div>
+    );
   }
-  function _marcarPago() {
-    _marcarPago = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee33(mes) {
-      var mesLabel, valor, msgMaestro, msgLucia;
-      return _regenerator().w(function (_context33) {
-        while (1) switch (_context33.n) {
-          case 0:
-            if (memberId) {
-              _context33.n = 1;
-              break;
-            }
-            return _context33.a(2);
-          case 1:
-            setSalvando(mes.key);
-            if (!mes.docId) {
-              _context33.n = 3;
-              break;
-            }
-            _context33.n = 2;
-            return db.collection("onix_pagamentos").doc(mes.docId).update({
-              status: "aguardando",
-              updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-            });
-          case 2:
-            _context33.n = 4;
-            break;
-          case 3:
-            _context33.n = 4;
-            return db.collection("onix_pagamentos").add({
-              membroId: memberId,
-              membroNome: user.name,
-              naipe: user.voice || "",
-              mes: mes.key,
-              valor: (mesalidade === null || mesalidade === void 0 ? void 0 : mesalidade.valorMensal) || 25,
-              status: "aguardando",
-              createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            });
-          case 4:
-            setSalvando(null);
-            // Abrir WhatsApp
-            mesLabel = mes.label;
-            valor = ((mesalidade === null || mesalidade === void 0 ? void 0 : mesalidade.valorMensal) || 25).toFixed(2);
-            msgMaestro = encodeURIComponent("Ol\xE1 Paulo! Sou ".concat(user.name, " (").concat(user.voice || "Corista", ") do Onix Brasil Vocal Internacional. Enviei o comprovante de pagamento da mensalidade de ").concat(mesLabel, " (R$ ").concat(valor, "). Por favor, valide no sistema. Obrigado! \uD83C\uDFB5"));
-            msgLucia = encodeURIComponent("Ol\xE1 L\xFA! Sou ".concat(user.name, " (").concat(user.voice || "Corista", ") do Onix Brasil Vocal Internacional. Enviei o comprovante de pagamento da mensalidade de ").concat(mesLabel, " (R$ ").concat(valor, "). Por favor, valide no sistema. Obrigado! \uD83C\uDFB5"));
-            window.open("https://wa.me/".concat(WPP_MAESTRO, "?text=").concat(msgMaestro), "_blank");
-            setTimeout(function () {
-              return window.open("https://wa.me/".concat(WPP_LUCIA, "?text=").concat(msgLucia), "_blank");
-            }, 800);
-          case 5:
-            return _context33.a(2);
-        }
-      }, _callee33);
-    }));
-    return _marcarPago.apply(this, arguments);
+
+    const STATUS_S={
+      agendado:  {l:"Agendado",   c:"#7B00C4"},
+      confirmado:{l:"Confirmado", c:"#059669"},
+      realizado: {l:"✓",          c:"#059669"},
+      cancelado: {l:"Cancelado",  c:"#dc2626"},
+      falta:     {l:"Falta",      c:"#d97706"},
+      remarcado: {l:"Remarcado",  c:"#0891b2"},
+    };
+
+    // Agrupa sessões por mês
+    const porMes = sessPac.reduce((acc,s)=>{
+      const mes = s.data?.slice(0,7)||"sem-data";
+      if(!acc[mes]) acc[mes]=[];
+      acc[mes].push(s);
+      return acc;
+    },{});
+
+    const meses = Object.keys(porMes).sort();
+
+    // Totais gerais
+    const totalRealizadas = sessPac.filter(s=>s.status==="realizado").length;
+    const totalPagas = sessPac.filter(s=>s.pagamento==="pago").length;
+    const totalFaltas = sessPac.filter(s=>s.status==="falta").length;
+    const totalRecebido = sessPac.filter(s=>s.pagamento==="pago").reduce((a,s)=>a+(parseFloat(s.valorSessao)||0),0);
+
+    return(
+      <div>
+        <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:16}}>
+          <button className="btn btn-ghost" onClick={()=>setPacoteSelecionado(null)}>← Voltar</button>
+          <div style={{flex:1,fontFamily:"var(--font-display)",fontSize:18,fontWeight:600}}>{pac?.nome} — Controle de Atendimento</div>
+          <button className="btn btn-outline" style={{fontSize:13}} onClick={()=>window.print()}>
+            <Icon name="printer" size={14}/> Imprimir
+          </button>
+        </div>
+
+        {/* Cabeçalho do relatório */}
+        <div style={{background:"white",borderRadius:16,overflow:"hidden",border:"1px solid var(--gray-200)",marginBottom:16}}>
+          <div style={{background:"var(--purple)",padding:"14px 20px",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+            <div style={{fontFamily:"Dancing Script, cursive",fontSize:24,color:"white",fontWeight:600}}>Controle de Atendimento Terapêutico</div>
+            <img src="../logo-transparente.png" style={{height:40,objectFit:"contain"}} onError={e=>e.target.style.display="none"}/>
+          </div>
+          <div style={{padding:"16px 20px",display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:16,borderBottom:"1px solid var(--gray-100)"}}>
+            <div><div style={{fontSize:11,color:"var(--text-muted)",fontWeight:600,textTransform:"uppercase",marginBottom:3}}>Nome</div><div style={{fontWeight:700,fontSize:15}}>{pac?.nome||"—"}</div></div>
+            <div><div style={{fontSize:11,color:"var(--text-muted)",fontWeight:600,textTransform:"uppercase",marginBottom:3}}>Início</div><div style={{fontWeight:600}}>{pacotesPac[0]?.dataInicio?new Date(pacotesPac[0].dataInicio+"T00:00:00").toLocaleDateString("pt-BR"):"—"}</div></div>
+            <div><div style={{fontSize:11,color:"var(--text-muted)",fontWeight:600,textTransform:"uppercase",marginBottom:3}}>Horário</div><div style={{fontWeight:600}}>{pacotesPac[0]?.horario||"—"}</div></div>
+            <div><div style={{fontSize:11,color:"var(--text-muted)",fontWeight:600,textTransform:"uppercase",marginBottom:3}}>Recorrência</div><div style={{fontWeight:600}}>{pacotesPac[0]?.recorrencia||"—"}</div></div>
+          </div>
+          {/* Totais gerais */}
+          <div style={{padding:"12px 20px",background:"var(--purple-soft)",display:"flex",gap:24,flexWrap:"wrap"}}>
+            {[["Total Sessões",sessPac.length,"#7B00C4"],["Realizadas",totalRealizadas,"#059669"],["Pagas",totalPagas,"#059669"],["Faltas",totalFaltas,"#dc2626"],["Total Recebido",totalRecebido.toLocaleString("pt-BR",{style:"currency",currency:"BRL"}),"#059669"]].map(([l,v,c])=>(
+              <div key={l} style={{textAlign:"center"}}>
+                <div style={{fontSize:18,fontWeight:800,color:c}}>{v}</div>
+                <div style={{fontSize:11,color:c,fontWeight:500}}>{l}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Tabelas por mês */}
+        {meses.map(mes=>{
+          const sessMes = porMes[mes];
+          const mesLabel = new Date(mes+"-01").toLocaleDateString("pt-BR",{month:"long",year:"numeric"});
+          const pagas = sessMes.filter(s=>s.pagamento==="pago").length;
+          const faltas = sessMes.filter(s=>s.status==="falta").length;
+          return(
+            <div key={mes} style={{background:"white",borderRadius:16,overflow:"hidden",border:"1px solid var(--gray-200)",marginBottom:16}}>
+              {/* Cabeçalho do mês */}
+              <div style={{background:"#f5f0ff",padding:"10px 20px",display:"flex",alignItems:"center",justifyContent:"space-between",borderBottom:"2px solid var(--purple)"}}>
+                <div style={{fontWeight:700,fontSize:15,color:"var(--purple)",textTransform:"capitalize"}}>{mesLabel}</div>
+                <div style={{display:"flex",gap:16,fontSize:12}}>
+                  <span>Sessões: <strong>{sessMes.length}</strong></span>
+                  <span style={{color:"#059669"}}>Pagas: <strong>{pagas}</strong></span>
+                  {faltas>0&&<span style={{color:"#dc2626"}}>Faltas: <strong>{faltas}</strong></span>}
+                </div>
+              </div>
+              <div style={{overflowX:"auto"}}>
+                <table style={{width:"100%",borderCollapse:"collapse",fontSize:13}}>
+                  <thead>
+                    <tr style={{background:"var(--purple)",color:"white"}}>
+                      {["","Nº","Data","Presença","Modalidade","Forma Pagto","Data Pagto","Obs"].map(h=>(
+                        <th key={h} style={{padding:"8px 12px",textAlign:"left",fontSize:12,fontWeight:600,whiteSpace:"nowrap"}}>{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {sessMes.map((s,i)=>{
+                      const st=STATUS_S[s.status]||STATUS_S.agendado;
+                      const isPago=s.pagamento==="pago";
+                      return(
+                        <tr key={s.id} style={{borderBottom:"1px solid var(--gray-100)",background:i%2===0?"white":"#fafafa"}}>
+                          <td style={{padding:"6px 8px"}}>
+                            <button onClick={()=>setModalExcluir({id:s.id,pacoteId:s.pacoteId,numSessao:s.numSessao||i+1,data:s.data})}
+                              style={{background:"none",border:"none",cursor:"pointer",color:"#dc2626",padding:"2px 4px"}}>
+                              <Icon name="trash-2" size={12}/>
+                            </button>
+                          </td>
+                          <td style={{padding:"8px 12px",fontWeight:700,color:"var(--purple)"}}>{s.numSessao||"—"}</td>
+                          <td style={{padding:"8px 12px",whiteSpace:"nowrap"}}>
+                            {s.data?new Date(s.data+"T00:00:00").toLocaleDateString("pt-BR"):"—"}
+                            {s.remarcada&&<div style={{fontSize:9,color:"#0891b2"}}>Rem.</div>}
+                          </td>
+                          <td style={{padding:"8px 12px"}}>
+                            <select value={s.status} onChange={e=>atualizarSessao(s.id,{status:e.target.value})}
+                              style={{fontSize:11,border:"1px solid #e5e7eb",borderRadius:6,padding:"3px 6px",color:st.c,fontWeight:600,background:"white",cursor:"pointer",minWidth:100}}>
+                              {Object.entries(STATUS_S).map(([k,v])=><option key={k} value={k}>{v.l}</option>)}
+                            </select>
+                            {s.status==="cancelado"&&(
+                              <button onClick={()=>remarcarSessao(s)} style={{marginTop:2,display:"block",fontSize:10,background:"none",border:"1px solid #0891b2",color:"#0891b2",borderRadius:4,padding:"1px 5px",cursor:"pointer"}}>Remarcar</button>
+                            )}
+                          </td>
+                          <td style={{padding:"8px 12px"}}>
+                            <input defaultValue={s.modalidade||"on-line"} onBlur={e=>atualizarSessao(s.id,{modalidade:e.target.value})}
+                              style={{fontSize:11,border:"1px solid #e5e7eb",borderRadius:6,padding:"3px 6px",width:75}}/>
+                          </td>
+                          <td style={{padding:"8px 12px"}}>
+                            <select value={s.formaPagamento||""} onChange={e=>atualizarSessao(s.id,{formaPagamento:e.target.value,pagamento:e.target.value?"pago":"pendente"})}
+                              style={{fontSize:11,border:"1px solid",borderColor:isPago?"#6ee7b7":"#e5e7eb",borderRadius:6,padding:"3px 6px",color:isPago?"#059669":"#6b7280",fontWeight:isPago?600:400,cursor:"pointer",background:isPago?"#f0fdf4":"white",minWidth:85}}>
+                              <option value="">Pendente</option>
+                              {FORMAS.map(f=><option key={f} value={f}>{f}</option>)}
+                            </select>
+                          </td>
+                          <td style={{padding:"8px 12px"}}>
+                            <input type="date" defaultValue={s.dataPagamento||""} onBlur={e=>atualizarSessao(s.id,{dataPagamento:e.target.value})}
+                              style={{fontSize:11,border:"1px solid #e5e7eb",borderRadius:6,padding:"3px 6px",width:115}}/>
+                          </td>
+                          <td style={{padding:"8px 12px"}}>
+                            <input defaultValue={s.obs||""} onBlur={e=>atualizarSessao(s.id,{obs:e.target.value})}
+                              placeholder="—" style={{fontSize:11,border:"1px solid #e5e7eb",borderRadius:6,padding:"3px 6px",width:85}}/>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          );
+        })}
+
+        {/* Modal exclusão */}
+        {modalExcluir&&(
+          <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.5)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:600,padding:20}}>
+            <div style={{background:"white",borderRadius:16,padding:28,width:"100%",maxWidth:400,textAlign:"center"}}>
+              <div style={{fontSize:32,marginBottom:12}}>🗑️</div>
+              <div style={{fontFamily:"var(--font-display)",fontSize:18,fontWeight:600,marginBottom:8}}>Excluir sessão #{modalExcluir.numSessao}?</div>
+              <p style={{fontSize:13,color:"#6b7280",marginBottom:20}}>{modalExcluir.data?new Date(modalExcluir.data+"T00:00:00").toLocaleDateString("pt-BR"):""}</p>
+              <div style={{display:"flex",flexDirection:"column",gap:8,marginBottom:14}}>
+                <button className="btn btn-ghost" style={{border:"1.5px solid #e5e7eb",textAlign:"left",padding:"12px 16px"}} onClick={()=>confirmarExclusao("este")}>
+                  <div style={{fontWeight:600,fontSize:13}}>Só esta sessão</div>
+                  <div style={{fontSize:11,color:"#6b7280"}}>Remove apenas esta sessão</div>
+                </button>
+                <button className="btn btn-ghost" style={{border:"1.5px solid #fbbf24",textAlign:"left",padding:"12px 16px"}} onClick={()=>confirmarExclusao("daqui")}>
+                  <div style={{fontWeight:600,fontSize:13,color:"#d97706"}}>Esta e todas as próximas</div>
+                  <div style={{fontSize:11,color:"#6b7280"}}>Remove esta e as sessões seguintes do pacote</div>
+                </button>
+                <button className="btn btn-ghost" style={{border:"1.5px solid #fca5a5",textAlign:"left",padding:"12px 16px"}} onClick={()=>confirmarExclusao("todos")}>
+                  <div style={{fontWeight:600,fontSize:13,color:"#dc2626"}}>Cancelar todo o pacote</div>
+                  <div style={{fontSize:11,color:"#6b7280"}}>Remove todas as sessões e encerra o pacote</div>
+                </button>
+              </div>
+              <button className="btn btn-ghost" style={{width:"100%"}} onClick={()=>setModalExcluir(null)}>Cancelar</button>
+            </div>
+          </div>
+        )}
+      </div>
+    );
   }
-  var statusInfo = {
-    pendente: {
-      label: "Pendente",
-      bg: "#FFF3E0",
-      cor: "#E65100",
-      icon: "clock"
-    },
-    aguardando: {
-      label: "Aguardando validação",
-      bg: "#E3F2FD",
-      cor: "#1565C0",
-      icon: "send"
-    },
-    pago: {
-      label: "Confirmado ✓",
-      bg: "#E8F5E9",
-      cor: "#2E7D32",
-      icon: "check-circle"
-    },
-    isento: {
-      label: "Isento",
-      bg: "#F5F5F5",
-      cor: "#888",
-      icon: "minus-circle"
-    }
-  };
-  var card = {
-    background: "#fff",
-    borderRadius: 12,
-    border: "1px solid #EEE8E8",
-    padding: "16px 20px",
-    marginBottom: 12,
-    boxShadow: "0 1px 4px rgba(0,0,0,0.04)"
-  };
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 22,
-      fontWeight: 700,
-      color: cor,
-      marginBottom: 4
-    }
-  }, "Meu Financeiro"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#AAA",
-      marginBottom: 20
-    }
-  }, "Acompanhe suas mensalidades"), (mesalidade === null || mesalidade === void 0 ? void 0 : mesalidade.valorMensal) && /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 20
-    }
-  }, /*#__PURE__*/React.createElement(PixQRCode, {
-    valor: mesalidade.valorMensal || 25,
-    descricao: "Mensalidade Onix",
-    config: config
-  })), !(mesalidade !== null && mesalidade !== void 0 && mesalidade.dataInicio) ? /*#__PURE__*/React.createElement("div", {
-    style: _objectSpread(_objectSpread({}, card), {}, {
-      textAlign: "center",
-      color: "#CCC",
-      padding: "32px"
-    })
-  }, "Nenhum per\xEDodo de cobran\xE7a configurado.") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    style: _objectSpread(_objectSpread({}, card), {}, {
-      marginBottom: 14,
-      display: "flex",
-      gap: 12,
-      alignItems: "center"
-    })
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "info",
-    size: 16,
-    color: cor
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#555"
-    }
-  }, "Valor mensal: ", /*#__PURE__*/React.createElement("strong", null, "R$ ", (mesalidade.valorMensal || 25).toFixed(2)), " \xB7 Per\xEDodo: ", fmtDate(mesalidade.dataInicio), " at\xE9 ", fmtDate(mesalidade.dataFim))), meses.length === 0 ? /*#__PURE__*/React.createElement("div", {
-    style: _objectSpread(_objectSpread({}, card), {}, {
-      textAlign: "center",
-      color: "#CCC",
-      padding: "24px"
-    })
-  }, "Nenhuma mensalidade no per\xEDodo atual.") : meses.map(function (m) {
-    var si = statusInfo[m.status] || statusInfo.pendente;
-    return /*#__PURE__*/React.createElement("div", {
-      key: m.key,
-      style: _objectSpread(_objectSpread({}, card), {}, {
-        background: si.bg,
-        border: "1px solid ".concat(si.cor, "33"),
-        padding: "14px 16px"
-      })
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        alignItems: "center",
-        gap: 12
-      }
-    }, /*#__PURE__*/React.createElement(Icon, {
-      name: si.icon,
-      size: 20,
-      color: si.cor
-    }), /*#__PURE__*/React.createElement("div", {
-      style: {
-        flex: 1
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 14,
-        fontWeight: 700,
-        color: "#1A1D23"
-      }
-    }, m.label), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 12,
-        color: si.cor,
-        fontWeight: 600
-      }
-    }, si.label)), /*#__PURE__*/React.createElement("div", {
-      style: {
-        textAlign: "right"
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 14,
-        fontWeight: 700,
-        color: "#1A1D23"
-      }
-    }, "R$ ", (mesalidade.valorMensal || 25).toFixed(2)), m.status === "pendente" && /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick() {
-        return marcarPago(m);
-      },
-      disabled: salvando === m.key,
-      style: {
-        marginTop: 6,
-        padding: "7px 14px",
-        background: cor,
-        color: "#fff",
-        border: "none",
-        borderRadius: 8,
-        fontSize: 12,
-        fontWeight: 700,
-        cursor: "pointer",
-        fontFamily: "inherit",
-        display: "block"
-      }
-    }, salvando === m.key ? "Enviando..." : "Paguei ✓"))), m.status === "aguardando" && /*#__PURE__*/React.createElement("div", {
-      style: {
-        marginTop: 10,
-        padding: "8px 12px",
-        background: "rgba(21,101,192,0.08)",
-        borderRadius: 8,
-        fontSize: 12,
-        color: "#1565C0"
-      }
-    }, "\uD83D\uDCAC Comprovante enviado. Aguarde confirma\xE7\xE3o do maestro ou produtora."));
-  })));
+
+  if(pacoteSelecionado){
+    return <RelatorioFrequencia pacienteId={pacoteSelecionado}/>;
+  }
+
+  // Métricas
+  const totalRecebido=lancamentos.filter(l=>l.status==="recebido").reduce((a,l)=>a+(parseFloat(l.valor)||0),0);
+
+  return(
+    <div>
+      <div className="page-header" style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
+        <div>
+          <div className="page-title">Financeiro da Clínica</div>
+          <div className="page-subtitle">Lançamentos, pacotes e controle de sessões</div>
+        </div>
+        <button className="btn btn-purple" onClick={()=>setModal("escolha")}><Icon name="plus" size={16}/> Novo Lançamento</button>
+      </div>
+
+      {/* Métricas */}
+      <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:12,marginBottom:20}}>
+        {[["Recebido (total)","#059669","#d1fae5",totalRecebido.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})],
+          ["Pendente","#d97706","#fef3c7",totalPendente.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})],
+          ["Pacotes ativos","#7B00C4","var(--purple-soft)",pacotes.filter(p=>p.status==="ativo").length],
+          ["Lançamentos (mês)","#0891b2","#e0f2fe",lancMes.length]
+        ].map(([l,cor,bg,v])=>(
+          <div key={l} style={{background:bg,borderRadius:12,padding:"14px 16px",textAlign:"center"}}>
+            <div style={{fontSize:20,fontWeight:800,color:cor}}>{v}</div>
+            <div style={{fontSize:12,color:cor,fontWeight:500,marginTop:2}}>{l}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Abas */}
+      <div style={{display:"flex",gap:0,marginBottom:20,borderBottom:"1px solid var(--gray-200)"}}>
+        {[["lancamentos","Lançamentos","dollar-sign"],["pacotes","Pacotes & Sessões","package"]].map(([id,lbl,ic])=>(
+          <button key={id} onClick={()=>setAba(id)} style={{padding:"10px 20px",border:"none",background:"none",cursor:"pointer",fontSize:14,color:aba===id?"var(--purple)":"var(--gray-600)",borderBottom:aba===id?"2px solid var(--purple)":"2px solid transparent",fontWeight:aba===id?600:400,fontFamily:"var(--font-body)",marginBottom:-1,display:"flex",alignItems:"center",gap:6}}>
+            <Icon name={ic} size={15}/>{lbl}
+          </button>
+        ))}
+      </div>
+
+      {/* ABA LANÇAMENTOS */}
+      {aba==="lancamentos"&&(
+        <div>
+          {/* Filtro mês */}
+          <div style={{display:"flex",gap:6,marginBottom:16,flexWrap:"wrap",alignItems:"center"}}>
+            <span style={{fontSize:13,fontWeight:600,color:"var(--text-muted)"}}>Mês:</span>
+            {mesesDisp.slice(0,18).map(m=>(
+              <button key={m} onClick={()=>setMesFiltro(m)}
+                style={{padding:"4px 12px",borderRadius:20,border:"1.5px solid",borderColor:mesFiltro===m?"var(--purple)":"#e5e7eb",background:mesFiltro===m?"var(--purple)":"white",color:mesFiltro===m?"white":"#6b7280",fontSize:12,fontWeight:600,cursor:"pointer"}}>
+                {new Date(m+"-01").toLocaleDateString("pt-BR",{month:"short",year:"2-digit"})}
+              </button>
+            ))}
+          </div>
+          {lancMes.length===0?(
+            <div className="card" style={{textAlign:"center",padding:48,color:"var(--text-muted)"}}>
+              <Icon name="dollar-sign" size={40}/>
+              <div style={{marginTop:12}}>Nenhum lançamento em {new Date(mesFiltro+"-01").toLocaleDateString("pt-BR",{month:"long",year:"numeric"})}</div>
+            </div>
+          ):(
+            <div className="card" style={{padding:0}}>
+              <table style={{width:"100%",borderCollapse:"collapse",fontSize:13}}>
+                <thead><tr style={{background:"var(--gray-50)"}}>
+                  {["Data","Paciente","Tipo","Forma Pag.","Valor","Status","Ações"].map(h=>(
+                    <th key={h} style={{padding:"10px 16px",textAlign:"left",fontSize:12,fontWeight:600,color:"var(--text-muted)",borderBottom:"1px solid var(--gray-200)",whiteSpace:"nowrap"}}>{h}</th>
+                  ))}
+                </tr></thead>
+                <tbody>
+                  {lancMes.map(l=>(
+                    <tr key={l.id} style={{borderBottom:"1px solid var(--gray-100)"}}>
+                      <td style={{padding:"10px 16px",whiteSpace:"nowrap"}}>{l.data?new Date(l.data+"T00:00:00").toLocaleDateString("pt-BR"):"—"}</td>
+                      <td style={{padding:"10px 16px"}}>{l.pacienteNome||getPacNome(l.pacienteId)}</td>
+                      <td style={{padding:"10px 16px"}}>
+                        {l.tipo}
+                        {l.tipo_lancamento==="pacote"&&<span style={{marginLeft:6,background:"var(--purple-soft)",color:"var(--purple)",borderRadius:20,padding:"1px 8px",fontSize:10,fontWeight:600}}>Pacote</span>}
+                      </td>
+                      <td style={{padding:"10px 16px"}}><span style={{background:"#f3f4f6",borderRadius:6,padding:"2px 8px",fontSize:11}}>{l.formaPag||"—"}</span></td>
+                      <td style={{padding:"10px 16px",fontWeight:700,color:l.status==="recebido"?"#059669":l.status==="pendente"?"#d97706":"#9ca3af"}}>
+                        {(parseFloat(l.valor)||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}
+                      </td>
+                      <td style={{padding:"10px 16px"}}>
+                        <span style={{background:l.status==="recebido"?"#d1fae5":"#fef3c7",color:l.status==="recebido"?"#065f46":"#b45309",borderRadius:20,padding:"2px 10px",fontSize:11,fontWeight:600}}>
+                          {l.status==="recebido"?"✓ Recebido":"Pendente"}
+                        </span>
+                      </td>
+                      <td style={{padding:"10px 16px"}}>
+                        <div style={{display:"flex",gap:4}}>
+                          {l.tipo_lancamento==="pacote"?(
+                            <button className="btn btn-ghost" style={{padding:"5px 10px",fontSize:11,color:"var(--purple)"}}
+                              onClick={()=>{setPacoteSelecionado(l.pacoteId);setAba("pacotes");}}>
+                              <Icon name="clipboard-list" size={13}/>
+                            </button>
+                          ):(
+                            <button className="btn btn-ghost" style={{padding:"5px 10px",fontSize:11,color:"var(--purple)"}} onClick={()=>abrirEditar(l)}>
+                              <Icon name="pencil" size={13}/>
+                            </button>
+                          )}
+                          <button className="btn btn-ghost" style={{padding:"5px 10px",fontSize:11,color:"#dc2626"}} onClick={()=>excluirLanc(l.id)}>
+                            <Icon name="trash-2" size={13}/>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+                <tfoot><tr style={{background:"var(--gray-50)"}}>
+                  <td colSpan={4} style={{padding:"10px 16px",fontWeight:700}}>Total recebido no mês</td>
+                  <td style={{padding:"10px 16px",fontWeight:800,color:"#059669",fontSize:15}}>{totalRecebidoMes.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}</td>
+                  <td colSpan={2}/>
+                </tr></tfoot>
+              </table>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ABA PACOTES */}
+      {aba==="pacotes"&&(
+        <div>
+          {pacotes.length===0?(
+            <div className="card" style={{textAlign:"center",padding:60}}>
+              <Icon name="package" size={48}/>
+              <div style={{marginTop:12,fontWeight:500}}>Nenhum pacote criado ainda</div>
+              <button className="btn btn-purple" style={{marginTop:16}} onClick={()=>setModal("pacote")}>+ Criar Pacote</button>
+            </div>
+          ):(
+            <div style={{display:"flex",flexDirection:"column",gap:12}}>
+              {pacotes.map(p=>{
+                const sessPac=sessoes.filter(s=>s.pacoteId===p.id);
+                const realizadas=sessPac.filter(s=>s.status==="realizado").length;
+                const pagas=sessPac.filter(s=>s.pagamento==="pago").length;
+                const pct=Math.round((realizadas/(p.totalSessoes||1))*100);
+                const lancPac=lancamentos.find(l=>l.pacoteId===p.id);
+                return(
+                  <div key={p.id} className="card" style={{padding:"16px 20px"}}>
+                    <div style={{display:"flex",gap:12,alignItems:"flex-start"}}>
+                      <div style={{width:44,height:44,borderRadius:12,background:"var(--purple-soft)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,flexShrink:0}}>📦</div>
+                      <div style={{flex:1}}>
+                        <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:4,flexWrap:"wrap"}}>
+                          <span style={{fontWeight:700,fontSize:15}}>{p.pacienteNome}</span>
+                          <span style={{background:lancPac?.status==="recebido"?"#d1fae5":"#fef3c7",color:lancPac?.status==="recebido"?"#065f46":"#b45309",borderRadius:20,padding:"2px 10px",fontSize:11,fontWeight:600}}>{lancPac?.status==="recebido"?"✓ Pago":"Pagamento Pendente"}</span>
+                        </div>
+                        <div style={{fontSize:12,color:"var(--text-muted)",display:"flex",gap:12,flexWrap:"wrap",marginBottom:8}}>
+                          <span>📅 {p.recorrencia}</span>
+                          <span>🕐 {p.horario}</span>
+                          <span>📋 {realizadas}/{p.totalSessoes} sessões</span>
+                          <span style={{color:"#059669",fontWeight:600}}>{(p.valorTotal||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}</span>
+                        </div>
+                        <div style={{background:"#e5e7eb",borderRadius:20,height:5}}>
+                          <div style={{background:"var(--purple)",height:5,borderRadius:20,width:pct+"%",transition:"width .3s"}}/>
+                        </div>
+                        <div style={{fontSize:11,color:"var(--text-muted)",marginTop:3}}>{pct}% concluído</div>
+                      </div>
+                    </div>
+                    <div style={{display:"flex",gap:8,marginTop:12,borderTop:"1px solid var(--gray-100)",paddingTop:12}}>
+                      <button className="btn btn-purple" style={{fontSize:12}} onClick={()=>setPacoteSelecionado(p.pacienteId)}>
+                        <Icon name="clipboard-list" size={13}/> Controle de Sessões e Frequência
+                      </button>
+                      <button className="btn btn-ghost" style={{fontSize:12,color:"#dc2626",marginLeft:"auto"}} onClick={async()=>{
+                        if(!confirm(`Excluir pacote de ${p.pacienteNome}? Isso remove todas as sessões e o lançamento.`))return;
+                        const todas=sessoes.filter(s=>s.pacoteId===p.id);
+                        const b=db.batch();
+                        todas.forEach(s=>b.delete(db.collection("clinica_sessoes").doc(s.id)));
+                        b.delete(db.collection("clinica_pacotes").doc(p.id));
+                        const lp=lancamentos.find(l=>l.pacoteId===p.id);
+                        if(lp) b.delete(db.collection("clinica_lancamentos").doc(lp.id));
+                        await b.commit();
+                      }}>
+                        <Icon name="trash-2" size={13}/> Excluir Pacote
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* MODAL ESCOLHA */}
+      {modal==="escolha"&&(
+        <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.4)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:500,padding:20}} onClick={()=>setModal(false)}>
+          <div style={{background:"white",borderRadius:16,padding:32,width:"100%",maxWidth:420,textAlign:"center"}} onClick={e=>e.stopPropagation()}>
+            <div style={{fontFamily:"var(--font-display)",fontSize:20,fontWeight:600,marginBottom:8}}>Novo Lançamento</div>
+            <p style={{fontSize:13,color:"#6b7280",marginBottom:24}}>O que deseja lançar?</p>
+            <div style={{display:"flex",gap:12}}>
+              <button className="btn btn-outline" style={{flex:1,padding:"20px 12px",fontSize:13,display:"flex",flexDirection:"column",alignItems:"center",gap:8}}
+                onClick={()=>setModal("pacote")}>
+                <span style={{fontSize:32}}>📦</span>
+                <strong>Pacote de Sessões</strong>
+                <span style={{fontSize:11,color:"#6b7280",lineHeight:1.4}}>Gera sessões recorrentes na agenda com ficha de frequência</span>
+              </button>
+              <button className="btn btn-outline" style={{flex:1,padding:"20px 12px",fontSize:13,display:"flex",flexDirection:"column",alignItems:"center",gap:8}}
+                onClick={()=>setModal("avulso")}>
+                <span style={{fontSize:32}}>💲</span>
+                <strong>Lançamento Avulso</strong>
+                <span style={{fontSize:11,color:"#6b7280",lineHeight:1.4}}>Sessão única, avaliação, outro serviço isolado</span>
+              </button>
+            </div>
+            <button className="btn btn-ghost" style={{width:"100%",marginTop:12}} onClick={()=>setModal(false)}>Cancelar</button>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL AVULSO */}
+      {(modal==="avulso")&&(
+        <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.4)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:500,padding:20}} onClick={()=>{setModal(false);setEditando(null);}}>
+          <div style={{background:"white",borderRadius:16,padding:28,width:"100%",maxWidth:500}} onClick={e=>e.stopPropagation()}>
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20}}>
+              <div style={{fontFamily:"var(--font-display)",fontSize:20,fontWeight:600}}>{editando?"Editar Lançamento":"Lançamento Avulso"}</div>
+              <button onClick={()=>{setModal(false);setEditando(null);}} style={{background:"none",border:"none",cursor:"pointer"}}><Icon name="x" size={20}/></button>
+            </div>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:12}}>
+              <div className="form-group" style={{gridColumn:"1/-1"}}><label className="form-label">Paciente</label>
+                <select className="form-input" value={formAvulso.pacienteId} onChange={e=>setFormAvulso({...formAvulso,pacienteId:e.target.value})}>
+                  <option value="">Selecionar...</option>{pacientes.filter(p=>p.status==="ativo").map(p=><option key={p.id} value={p.id}>{p.nome}</option>)}
+                </select>
+              </div>
+              <div className="form-group"><label className="form-label">Tipo</label>
+                <select className="form-input" value={formAvulso.tipo} onChange={e=>setFormAvulso({...formAvulso,tipo:e.target.value})}>
+                  {["Consulta","Avaliação","Musicoterapia","Neuromodulação","Orientação","Outro"].map(t=><option key={t}>{t}</option>)}
+                </select>
+              </div>
+              <div className="form-group"><label className="form-label">Valor R$</label>
+                <input className="form-input" type="number" placeholder="0,00" value={formAvulso.valor} onChange={e=>setFormAvulso({...formAvulso,valor:e.target.value})}/>
+              </div>
+              <div className="form-group"><label className="form-label">Data</label>
+                <input className="form-input" type="date" value={formAvulso.data} onChange={e=>setFormAvulso({...formAvulso,data:e.target.value})}/>
+              </div>
+              <div className="form-group"><label className="form-label">Forma de Pagamento</label>
+                <select className="form-input" value={formAvulso.formaPag} onChange={e=>setFormAvulso({...formAvulso,formaPag:e.target.value})}>
+                  {FORMAS.map(f=><option key={f}>{f}</option>)}
+                </select>
+              </div>
+              <div className="form-group" style={{gridColumn:"1/-1"}}><label className="form-label">Status</label>
+                <div style={{display:"flex",gap:8}}>
+                  {[["pendente","Pendente","#d97706"],["recebido","✓ Recebido","#059669"]].map(([v,l,c])=>(
+                    <button key={v} onClick={()=>setFormAvulso({...formAvulso,status:v})}
+                      style={{flex:1,padding:"10px",borderRadius:10,border:"1.5px solid",borderColor:formAvulso.status===v?c:"#e5e7eb",background:formAvulso.status===v?c+"15":"white",color:formAvulso.status===v?c:"#6b7280",fontWeight:600,cursor:"pointer",fontSize:13,fontFamily:"var(--font-body)"}}>
+                      {l}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="form-group" style={{gridColumn:"1/-1"}}><label className="form-label">Observações</label>
+                <input className="form-input" placeholder="Opcional..." value={formAvulso.obs} onChange={e=>setFormAvulso({...formAvulso,obs:e.target.value})}/>
+              </div>
+            </div>
+            <div style={{display:"flex",gap:10,justifyContent:"flex-end"}}>
+              <button className="btn btn-ghost" onClick={()=>{setModal(false);setEditando(null);}}>Cancelar</button>
+              <button className="btn btn-purple" onClick={salvarAvulso} disabled={salvando}><Icon name="save" size={15}/> {salvando?"Salvando...":editando?"Salvar Alterações":"Lançar"}</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL PACOTE */}
+      {modal==="pacote"&&(()=>{
+        const DIAS=[{v:"0",l:"Dom"},{v:"1",l:"Seg"},{v:"2",l:"Ter"},{v:"3",l:"Qua"},{v:"4",l:"Qui"},{v:"5",l:"Sex"},{v:"6",l:"Sáb"}];
+        const needDias=["2x por semana","3x por semana"].includes(formPacote.recorrencia);
+        const maxDias=formPacote.recorrencia==="3x por semana"?3:2;
+        const diasSel=formPacote.diasSemana||[];
+        function toggleDia(v){if(diasSel.includes(v)){setFormPacote({...formPacote,diasSemana:diasSel.filter(d=>d!==v)});}else if(diasSel.length<maxDias){setFormPacote({...formPacote,diasSemana:[...diasSel,v].sort()});}}
+        return(
+          <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.4)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:500,padding:20}} onClick={()=>setModal(false)}>
+            <div style={{background:"white",borderRadius:16,padding:28,width:"100%",maxWidth:560,maxHeight:"90vh",overflowY:"auto"}} onClick={e=>e.stopPropagation()}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:16}}>
+                <div style={{fontFamily:"var(--font-display)",fontSize:20,fontWeight:600}}>Novo Pacote de Sessões</div>
+                <button onClick={()=>setModal(false)} style={{background:"none",border:"none",cursor:"pointer"}}><Icon name="x" size={20}/></button>
+              </div>
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:12}}>
+                <div className="form-group" style={{gridColumn:"1/-1"}}><label className="form-label">Paciente *</label>
+                  <select className="form-input" value={formPacote.pacienteId} onChange={e=>setFormPacote({...formPacote,pacienteId:e.target.value})}>
+                    <option value="">Selecionar...</option>{pacientes.filter(p=>p.status==="ativo").map(p=><option key={p.id} value={p.id}>{p.nome}</option>)}
+                  </select>
+                </div>
+                <div className="form-group"><label className="form-label">Nº de Sessões *</label>
+                  <input className="form-input" type="number" min="1" max="40" placeholder="Ex: 10" value={formPacote.totalSessoes} onChange={e=>setFormPacote({...formPacote,totalSessoes:e.target.value})}/>
+                </div>
+                <div className="form-group"><label className="form-label">Recorrência *</label>
+                  <select className="form-input" value={formPacote.recorrencia} onChange={e=>setFormPacote({...formPacote,recorrencia:e.target.value,diasSemana:[],horariosPorDia:{}})}>
+                    {RECORRENCIAS.map(r=><option key={r}>{r}</option>)}
+                  </select>
+                </div>
+                {needDias&&(
+                  <div className="form-group" style={{gridColumn:"1/-1"}}>
+                    <label className="form-label">Dias da Semana * (escolha {maxDias})</label>
+                    <div style={{display:"flex",gap:8,flexWrap:"wrap",marginTop:4}}>
+                      {DIAS.map(d=>{
+                        const sel=diasSel.includes(d.v);
+                        const dis=!sel&&diasSel.length>=maxDias;
+                        return(
+                          <div key={d.v} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:3}}>
+                            <button type="button" onClick={()=>toggleDia(d.v)} disabled={dis}
+                              style={{padding:"8px 14px",borderRadius:10,border:"1.5px solid",borderColor:sel?"var(--purple)":"#e5e7eb",background:sel?"var(--purple)":"white",color:sel?"white":dis?"#d1d5db":"#374151",fontWeight:sel?700:400,cursor:dis?"not-allowed":"pointer",fontSize:13,fontFamily:"var(--font-body)"}}>{d.l}</button>
+                            {sel&&<input type="time" value={(formPacote.horariosPorDia||{})[d.v]||formPacote.horario||"09:00"}
+                              onChange={e=>setFormPacote({...formPacote,horariosPorDia:{...(formPacote.horariosPorDia||{}),[d.v]:e.target.value}})}
+                              style={{fontSize:11,border:"1px solid #e9d5ff",borderRadius:6,padding:"3px 6px",width:72,textAlign:"center",color:"var(--purple)",fontWeight:600}}/>}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+                <div className="form-group"><label className="form-label">Data de Início *</label>
+                  <input className="form-input" type="date" value={formPacote.dataInicio} onChange={e=>setFormPacote({...formPacote,dataInicio:e.target.value})}/>
+                </div>
+                <div className="form-group"><label className="form-label">Horário {needDias?"(padrão)":""}</label>
+                  <input className="form-input" type="time" value={formPacote.horario} onChange={e=>setFormPacote({...formPacote,horario:e.target.value})}/>
+                </div>
+                <div className="form-group"><label className="form-label">Valor por Sessão (R$)</label>
+                  <input className="form-input" type="number" placeholder="Ex: 250" value={formPacote.valorSessao} onChange={e=>setFormPacote({...formPacote,valorSessao:e.target.value})}/>
+                </div>
+                <div className="form-group"><label className="form-label">Total do Pacote (R$)</label>
+                  <input className="form-input" type="number" placeholder="Automático" value={formPacote.valorSessao&&formPacote.totalSessoes?(parseFloat(formPacote.valorSessao)||0)*(parseInt(formPacote.totalSessoes)||0):""} readOnly style={{background:"#f9fafb"}}/>
+                </div>
+                <div className="form-group" style={{gridColumn:"1/-1"}}><label className="form-label">Observações</label>
+                  <textarea className="form-input" rows={2} value={formPacote.obs} onChange={e=>setFormPacote({...formPacote,obs:e.target.value})} placeholder="Notas sobre o pacote..."/>
+                </div>
+              </div>
+              {formPacote.totalSessoes&&formPacote.dataInicio&&(
+                <div style={{background:"#f0fdf4",border:"1px solid #86efac",borderRadius:10,padding:12,marginBottom:14,fontSize:13,color:"#065f46"}}>
+                  ✅ <strong>{formPacote.totalSessoes} sessões</strong> a partir de <strong>{new Date(formPacote.dataInicio+"T00:00:00").toLocaleDateString("pt-BR")}</strong> · <strong>{formPacote.recorrencia}</strong>
+                  {needDias&&diasSel.length>0&&<span> · dias: <strong>{diasSel.map(d=>DIAS_LABEL[d]).join(", ")}</strong></span>}
+                </div>
+              )}
+              <div style={{display:"flex",gap:10,justifyContent:"flex-end"}}>
+                <button className="btn btn-ghost" onClick={()=>setModal(false)}>Cancelar</button>
+                <button className="btn btn-purple" onClick={salvarPacote} disabled={salvando}><Icon name="package" size={15}/> {salvando?"Criando...":"Criar Pacote"}</button>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
+    </div>
+  );
 }
 
-// ── RIFA BANNER ───────────────────────────────────────────────────────────────
-function RifaBanner(_ref63) {
-  var config = _ref63.config,
-    isAdmin = _ref63.isAdmin;
-  var cor = config.corPrimaria || COR;
-  var _useState261 = useState("https://luciakratz-arch.github.io/RIFA-ONIX/"),
-    _useState262 = _slicedToArray(_useState261, 2),
-    rifaUrl = _useState262[0],
-    setRifaUrl = _useState262[1];
-  var _useState263 = useState(false),
-    _useState264 = _slicedToArray(_useState263, 2),
-    editando = _useState264[0],
-    setEditando = _useState264[1];
-  var _useState265 = useState(""),
-    _useState266 = _slicedToArray(_useState265, 2),
-    urlTemp = _useState266[0],
-    setUrlTemp = _useState266[1];
-  useEffect(function () {
-    var unsub = db.collection("onix_config").doc("rifa").onSnapshot(function (s) {
-      if (s.exists && s.data().url) setRifaUrl(s.data().url);
-    });
+function FinanceiroPessoal({ somenteLeitura=false }) {
+  return (
+    <div>
+      <div className="page-header"><div className="page-title">Financeiro Familiar</div><div className="page-subtitle">{somenteLeitura?"Visualizacao — Paulo Sergio":"Gestao financeira pessoal e familiar"}</div></div>
+      <div className="card">
+        <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:16}}><Icon name="home" size={24}/><div style={{fontWeight:600}}>Modulo Financeiro Pessoal</div>{somenteLeitura&&<span className="badge badge-purple">Somente visualizacao</span>}</div>
+        <p style={{fontSize:14,color:"var(--text-muted)",lineHeight:1.7}}>O sistema de gestao financeira pessoal sera integrado nesta area em breve.</p>
+        <div style={{marginTop:16,padding:16,background:"var(--purple-bg)",borderRadius:"var(--radius)",fontSize:13,color:"var(--gray-600)"}}>O sistema financeiro completo (fluxo mensal, anual, graficos e dividas) sera integrado na proxima etapa.</div>
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════
+// ALUNOS EM SUPERVISÃO
+// ═══════════════════════════════════════════════════════
+function Alunos() {
+  const [alunos, setAlunos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [busca, setBusca] = useState("");
+  const [filtro, setFiltro] = useState("ativo");
+  const [modal, setModal] = useState(false);
+  const [form, setForm] = useState({nome:"",email:"",telefone:"",instituicao:"",semestre:"",senha:"",obs:""});
+  const [salvando, setSalvando] = useState(false);
+  const [detalhe, setDetalhe] = useState(null);
+  const [editando, setEditando] = useState(null);
+
+  useEffect(()=>{
+    const unsub = db.collection("clinica_alunos").onSnapshot(snap=>{
+      setAlunos(snap.docs.map(d=>({id:d.id,...d.data()})));
+      setLoading(false);
+    },()=>setLoading(false));
     return unsub;
-  }, []);
-  function salvarUrl() {
-    return _salvarUrl.apply(this, arguments);
+  },[]);
+
+  const filtrados = alunos.filter(a=>{
+    const fOk = filtro==="todos" || a.status===filtro;
+    const bOk = !busca || a.nome?.toLowerCase().includes(busca.toLowerCase()) || a.email?.toLowerCase().includes(busca.toLowerCase());
+    return fOk && bOk;
+  });
+
+  async function salvar(){
+    if(!form.nome||!form.email){alert("Nome e e-mail obrigatorios.");return;}
+    if(!editando&&!form.senha){alert("Senha obrigatoria para novo aluno.");return;}
+    setSalvando(true);
+    if(editando){
+      const {senha,...dados}=form;
+      await db.collection("clinica_alunos").doc(editando).update(dados);
+    } else {
+      await db.collection("clinica_alunos").add({...form,status:"ativo",createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    }
+    setModal(false);setForm({nome:"",email:"",telefone:"",instituicao:"",semestre:"",senha:"",obs:""});setEditando(null);setSalvando(false);
   }
-  function _salvarUrl() {
-    _salvarUrl = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee34() {
-      return _regenerator().w(function (_context34) {
-        while (1) switch (_context34.n) {
-          case 0:
-            _context34.n = 1;
-            return db.collection("onix_config").doc("rifa").set({
-              url: urlTemp
-            }, {
-              merge: true
-            });
-          case 1:
-            setEditando(false);
-          case 2:
-            return _context34.a(2);
-        }
-      }, _callee34);
-    }));
-    return _salvarUrl.apply(this, arguments);
+
+  async function excluir(id){
+    if(!confirm("Remover aluno?"))return;
+    await db.collection("clinica_alunos").doc(id).delete();
   }
-  if (!rifaUrl) return null;
-  return /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "linear-gradient(135deg, ".concat(cor, ", ").concat(cor, "CC)"),
-      borderRadius: 12,
-      padding: "14px 18px",
-      marginBottom: 16,
-      display: "flex",
-      alignItems: "center",
-      gap: 14
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 28
-    }
-  }, "\uD83C\uDF9F\uFE0F"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      flex: 1
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 14,
-      fontWeight: 700,
-      color: "#fff"
-    }
-  }, "Rifa Onix Brasil"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      color: "rgba(255,255,255,0.8)"
-    }
-  }, "Participe e concorra a pr\xEAmios!")), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 8,
-      alignItems: "center"
-    }
-  }, isAdmin && !editando && /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      setUrlTemp(rifaUrl);
-      setEditando(true);
-    },
-    style: {
-      padding: "5px 10px",
-      background: "rgba(255,255,255,0.2)",
-      color: "#fff",
-      border: "1px solid rgba(255,255,255,0.3)",
-      borderRadius: 6,
-      fontSize: 11,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "edit-2",
-    size: 12,
-    color: "#fff"
-  })), editando ? /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: 6
-    }
-  }, /*#__PURE__*/React.createElement("input", {
-    value: urlTemp,
-    onChange: function onChange(e) {
-      return setUrlTemp(e.target.value);
-    },
-    style: {
-      padding: "6px 10px",
-      borderRadius: 6,
-      border: "none",
-      fontSize: 12,
-      fontFamily: "inherit",
-      width: 200
-    }
-  }), /*#__PURE__*/React.createElement("button", {
-    onClick: salvarUrl,
-    style: {
-      padding: "6px 10px",
-      background: "#fff",
-      color: cor,
-      border: "none",
-      borderRadius: 6,
-      fontSize: 12,
-      fontWeight: 700,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, "OK"), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return setEditando(false);
-    },
-    style: {
-      padding: "6px 10px",
-      background: "rgba(255,255,255,0.2)",
-      color: "#fff",
-      border: "none",
-      borderRadius: 6,
-      fontSize: 12,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, "\u2715")) : /*#__PURE__*/React.createElement("a", {
-    href: rifaUrl,
-    target: "_blank",
-    rel: "noreferrer",
-    style: {
-      padding: "8px 16px",
-      background: "#fff",
-      color: cor,
-      borderRadius: 8,
-      fontSize: 13,
-      fontWeight: 700,
-      textDecoration: "none",
-      display: "flex",
-      alignItems: "center",
-      gap: 6
-    }
-  }, "Acessar ", /*#__PURE__*/React.createElement(Icon, {
-    name: "external-link",
-    size: 12,
-    color: cor
-  }))));
+
+  function abrirEditar(a){
+    setForm({nome:a.nome||"",email:a.email||"",telefone:a.telefone||"",instituicao:a.instituicao||"",semestre:a.semestre||"",senha:"",obs:a.obs||""});
+    setEditando(a.id);setModal(true);
+  }
+
+  if(loading) return <Spinner/>;
+
+  return (
+    <div>
+      <div className="page-header" style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
+        <div>
+          <div className="page-title">Alunos em Supervisao</div>
+          <div className="page-subtitle">{alunos.filter(a=>a.status==="ativo").length} aluno(s) cadastrado(s)</div>
+        </div>
+        <button className="btn btn-purple" onClick={()=>{setForm({nome:"",email:"",telefone:"",instituicao:"",semestre:"",senha:"",obs:""});setEditando(null);setModal(true);}}>
+          <Icon name="user-plus" size={16}/> Cadastrar Aluno
+        </button>
+      </div>
+      <div style={{display:"flex",gap:12,marginBottom:20,flexWrap:"wrap"}}>
+        <input className="form-input" style={{flex:1,minWidth:200}} placeholder="Buscar por nome ou e-mail..." value={busca} onChange={e=>setBusca(e.target.value)}/>
+        {[["todos","Todos"],["ativo","Ativos"],["inativo","Inativos"]].map(([f,l])=>(
+          <button key={f} className={"btn "+(filtro===f?"btn-purple":"btn-ghost")} onClick={()=>setFiltro(f)}>{l}</button>
+        ))}
+      </div>
+      {filtrados.length===0?(
+        <div className="card" style={{textAlign:"center",padding:48,color:"var(--text-muted)"}}>
+          <Icon name="graduation-cap" size={40}/>
+          <div style={{marginTop:12}}>{busca?"Nenhum aluno encontrado.":"Nenhum aluno cadastrado ainda."}</div>
+        </div>
+      ):(
+        <div style={{display:"flex",flexDirection:"column",gap:10}}>
+          {filtrados.map(a=>(
+            <div key={a.id} className="card" style={{display:"flex",alignItems:"center",gap:14,padding:"14px 20px"}}>
+              <div style={{width:42,height:42,borderRadius:"50%",background:"var(--purple-soft)",display:"flex",alignItems:"center",justifyContent:"center",fontWeight:700,color:"var(--purple)",flexShrink:0,fontSize:16}}>{(a.nome||"?")[0].toUpperCase()}</div>
+              <div style={{flex:1,minWidth:0}}>
+                <div style={{display:"flex",alignItems:"center",gap:8}}>
+                  <span style={{fontWeight:600}}>{a.nome}</span>
+                  <span className={"badge "+(a.status==="ativo"?"badge-green":"badge-gray")}>{a.status==="ativo"?"Ativo":"Inativo"}</span>
+                </div>
+                <div style={{fontSize:13,color:"var(--text-muted)",display:"flex",gap:12,marginTop:2,flexWrap:"wrap"}}>
+                  <span>✉ {a.email}</span>
+                  {a.instituicao&&<span>🏛 {a.instituicao}{a.semestre?" · "+a.semestre:""}</span>}
+                  <span>👤 {a.pacientesVinculados||0} paciente(s)</span>
+                </div>
+              </div>
+              <div style={{display:"flex",gap:6}}>
+                <button className="btn btn-ghost" style={{fontSize:12,color:"var(--purple)",padding:"6px 12px"}} onClick={()=>setDetalhe(a)}>
+                  <Icon name="eye" size={13}/> Ver
+                </button>
+                <button className="btn btn-ghost" style={{padding:"6px 10px"}} onClick={()=>abrirEditar(a)}><Icon name="pencil" size={13}/></button>
+                <button className="btn btn-ghost" style={{padding:"6px 10px",color:"var(--danger)"}} onClick={()=>excluir(a.id)}><Icon name="trash-2" size={13}/></button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Modal cadastro */}
+      {modal&&(
+        <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.4)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:500,padding:20}} onClick={()=>setModal(false)}>
+          <div style={{background:"white",borderRadius:16,padding:28,width:"100%",maxWidth:520,maxHeight:"90vh",overflowY:"auto"}} onClick={e=>e.stopPropagation()}>
+            <div style={{fontFamily:"var(--font-display)",fontSize:20,fontWeight:600,marginBottom:20}}>{editando?"Editar Aluno":"Cadastrar Novo Aluno"}</div>
+            <div className="form-group" style={{marginBottom:14}}>
+              <label className="form-label">NOME COMPLETO *</label>
+              <input className="form-input" value={form.nome} onChange={e=>setForm({...form,nome:e.target.value})} placeholder="Nome do aluno" autoFocus/>
+            </div>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14,marginBottom:14}}>
+              <div className="form-group">
+                <label className="form-label">E-MAIL *</label>
+                <input className="form-input" type="email" value={form.email} onChange={e=>setForm({...form,email:e.target.value})} placeholder="aluno@email.com" disabled={!!editando}/>
+              </div>
+              <div className="form-group">
+                <label className="form-label">TELEFONE</label>
+                <input className="form-input" value={form.telefone} onChange={e=>setForm({...form,telefone:e.target.value})} placeholder="(00) 9 0000-0000"/>
+              </div>
+            </div>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14,marginBottom:14}}>
+              <div className="form-group">
+                <label className="form-label">INSTITUIÇÃO</label>
+                <input className="form-input" value={form.instituicao} onChange={e=>setForm({...form,instituicao:e.target.value})} placeholder="Nome da faculdade"/>
+              </div>
+              <div className="form-group">
+                <label className="form-label">SEMESTRE</label>
+                <input className="form-input" value={form.semestre} onChange={e=>setForm({...form,semestre:e.target.value})} placeholder="Ex: 8º semestre"/>
+              </div>
+            </div>
+            {!editando&&(
+              <div className="form-group" style={{marginBottom:14}}>
+                <label className="form-label">SENHA DE ACESSO *</label>
+                <input className="form-input" type="password" value={form.senha} onChange={e=>setForm({...form,senha:e.target.value})} placeholder="Senha para o aluno acessar o portal"/>
+              </div>
+            )}
+            <div className="form-group" style={{marginBottom:20}}>
+              <label className="form-label">OBSERVAÇÕES</label>
+              <textarea className="form-input" rows={2} value={form.obs} onChange={e=>setForm({...form,obs:e.target.value})} placeholder="Notas sobre o aluno..."/>
+            </div>
+            <div style={{display:"flex",gap:10,justifyContent:"flex-end"}}>
+              <button className="btn btn-ghost" onClick={()=>setModal(false)}>Cancelar</button>
+              <button className="btn btn-purple" onClick={salvar} disabled={salvando}>{salvando?"Salvando...":editando?"Salvar":"Cadastrar aluno"}</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Detalhe aluno */}
+      {detalhe&&(
+        <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.4)",display:"flex",alignItems:"flex-end",justifyContent:"flex-end",zIndex:500}} onClick={()=>setDetalhe(null)}>
+          <div style={{background:"white",width:"100%",maxWidth:480,height:"100%",overflowY:"auto",padding:28}} onClick={e=>e.stopPropagation()}>
+            <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:20}}>
+              <Icon name="graduation-cap" size={20}/>
+              <div style={{fontFamily:"var(--font-display)",fontSize:20,fontWeight:600,flex:1}}>{detalhe.nome}</div>
+              <button onClick={()=>setDetalhe(null)} style={{background:"none",border:"none",cursor:"pointer",color:"var(--gray-400)"}}><Icon name="x" size={20}/></button>
+            </div>
+            <div style={{display:"flex",gap:8,marginBottom:20}}>
+              <span className={"badge "+(detalhe.status==="ativo"?"badge-green":"badge-gray")}>{detalhe.status==="ativo"?"Ativo":"Inativo"}</span>
+              {detalhe.instituicao&&<span className="badge badge-purple">{detalhe.instituicao}</span>}
+            </div>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16,fontSize:14}}>
+              {detalhe.email&&<div><div style={{fontSize:12,color:"var(--text-muted)"}}>E-mail</div><div style={{fontWeight:500}}>{detalhe.email}</div></div>}
+              {detalhe.telefone&&<div><div style={{fontSize:12,color:"var(--text-muted)"}}>Telefone</div><div style={{fontWeight:500}}>{detalhe.telefone}</div></div>}
+              {detalhe.instituicao&&<div><div style={{fontSize:12,color:"var(--text-muted)"}}>Instituicao</div><div style={{fontWeight:500}}>{detalhe.instituicao}</div></div>}
+              {detalhe.semestre&&<div><div style={{fontSize:12,color:"var(--text-muted)"}}>Semestre</div><div style={{fontWeight:500}}>{detalhe.semestre}</div></div>}
+            </div>
+            {detalhe.obs&&<div style={{marginTop:16,padding:12,background:"var(--gray-50)",borderRadius:8,fontSize:13,color:"var(--text-muted)"}}>{detalhe.obs}</div>}
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 
-// ── BLOG / NOTÍCIAS ───────────────────────────────────────────────────────────
-function Blog(_ref64) {
-  var config = _ref64.config,
-    user = _ref64.user;
-  var _useCollection33 = useCollection("onix_noticias"),
-    noticias = _useCollection33.data,
-    loading = _useCollection33.loading;
-  var _useState267 = useState(null),
-    _useState268 = _slicedToArray(_useState267, 2),
-    modal = _useState268[0],
-    setModal = _useState268[1];
-  var cor = config.corPrimaria || COR;
-  var isAdmin = user === null || user === void 0 ? void 0 : user.isAdmin;
-  if (loading) return /*#__PURE__*/React.createElement(Spinner, null);
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginBottom: 24
-    }
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 28,
-      fontWeight: 700,
-      color: cor
-    }
-  }, "Blog / Not\xEDcias"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#AAA",
-      marginTop: 2
-    }
-  }, "Posts do grupo \u2014 todos podem publicar")), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return setModal("novo");
-    },
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 8,
-      padding: "10px 20px",
-      background: cor,
-      border: "none",
-      borderRadius: 10,
-      fontSize: 13,
-      fontWeight: 700,
-      color: "#fff",
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "plus",
-    size: 14,
-    color: "#fff"
-  }), " Novo Post")), noticias.length === 0 ? /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#fff",
-      borderRadius: 12,
-      border: "1px solid #EEE8E8",
-      padding: "40px",
-      textAlign: "center",
-      color: "#CCC",
-      fontSize: 14
-    }
-  }, "Nenhum post publicado ainda.") : /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      flexDirection: "column",
-      gap: 14
-    }
-  }, noticias.map(function (n) {
-    var _n$createdAt5;
-    return /*#__PURE__*/React.createElement("div", {
-      key: n.id,
-      style: {
-        background: "#fff",
-        borderRadius: 12,
-        border: "1px solid #EEE8E8",
-        overflow: "hidden",
-        boxShadow: "0 1px 4px rgba(0,0,0,0.04)"
-      }
-    }, n.imageUrl && /*#__PURE__*/React.createElement("img", {
-      src: n.imageUrl,
-      alt: "",
-      style: {
-        width: "100%",
-        height: 180,
-        objectFit: "cover"
-      },
-      onError: function onError(e) {
-        return e.target.style.display = "none";
-      }
-    }), /*#__PURE__*/React.createElement("div", {
-      style: {
-        padding: "16px 20px"
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "flex-start",
-        marginBottom: 8
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        flex: 1
-      }
-    }, /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 11,
-        padding: "2px 8px",
-        borderRadius: 10,
-        background: cor + "18",
-        color: cor,
-        fontWeight: 700,
-        marginRight: 8
-      }
-    }, n.categoria || "Geral"), ((_n$createdAt5 = n.createdAt) === null || _n$createdAt5 === void 0 ? void 0 : _n$createdAt5.seconds) && /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: 11,
-        color: "#AAA"
-      }
-    }, new Date(n.createdAt.seconds * 1000).toLocaleDateString("pt-BR", {
-      day: "numeric",
-      month: "long",
-      year: "numeric"
-    }))), (isAdmin || n.autorNome === (user === null || user === void 0 ? void 0 : user.name)) && /*#__PURE__*/React.createElement("button", {
-      onClick: function onClick() {
-        return setModal(n);
-      },
-      style: {
-        background: "none",
-        border: "none",
-        color: cor,
-        fontSize: 12,
-        fontWeight: 600,
-        cursor: "pointer",
-        fontFamily: "inherit",
-        flexShrink: 0
-      }
-    }, "Editar")), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 16,
-        fontWeight: 700,
-        color: "#1A1D23",
-        marginBottom: 8
-      }
-    }, n.titulo), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 14,
-        color: "#555",
-        lineHeight: 1.6
-      }
-    }, n.texto), n.autorNome && /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 12,
-        color: cor,
-        fontWeight: 600,
-        marginTop: 10
-      }
-    }, "\u270D\uFE0F ", n.autorNome)));
-  })), modal && /*#__PURE__*/React.createElement(ModalNoticia, {
-    noticia: modal === "novo" ? null : modal,
-    onClose: function onClose() {
-      return setModal(null);
-    },
-    config: config,
-    autorInicial: (user === null || user === void 0 ? void 0 : user.name) || "Gestão"
-  }));
-}
+// ═══════════════════════════════════════════════════════
+// TERAPIA DE CASAIS
+// ═══════════════════════════════════════════════════════
+function TerapiaCasais() {
+  const { data:pacientes } = useCollection("clinica_pacientes","nome");
+  const [casais, setCasais] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [modal, setModal] = useState(false);
+  const [form, setForm] = useState({nomeCasal:"",p1:"",p2:""});
+  const [salvando, setSalvando] = useState(false);
 
-// ── PIX ───────────────────────────────────────────────────────────────────────
-function PixQRCode(_ref65) {
-  var valor = _ref65.valor,
-    descricao = _ref65.descricao,
-    config = _ref65.config;
-  var cor = config.corPrimaria || COR;
-  var chavePix = "01219270750";
-  var nomePix = "Paulo Sergio Nunes Motta";
-  var cidadePix = "Goiania";
-  function gerarPayloadPix(chave, nome, cidade, valor, desc) {
-    function field(id, val) {
-      return id + String(val.length).padStart(2, "0") + val;
-    }
-    function crc16(str) {
-      var crc = 0xFFFF;
-      for (var i = 0; i < str.length; i++) {
-        crc ^= str.charCodeAt(i) << 8;
-        for (var j = 0; j < 8; j++) crc = crc & 0x8000 ? crc << 1 ^ 0x1021 : crc << 1;
-      }
-      return (crc & 0xFFFF).toString(16).toUpperCase().padStart(4, "0");
-    }
-    var merchantInfo = field("00", "br.gov.bcb.pix") + field("01", chave) + (desc ? field("02", desc.slice(0, 72)) : "");
-    var addInfo = field("05", desc || "Onix Brasil");
-    var payload = field("00", "01") + field("26", merchantInfo) + field("52", "0000") + field("53", "986") + (valor > 0 ? field("54", valor.toFixed(2)) : "") + field("58", "BR") + field("59", nome.slice(0, 25)) + field("60", cidade.slice(0, 15)) + field("62", field("05", addInfo)) + "6304";
-    return payload + crc16(payload);
+  useEffect(()=>{
+    const unsub = db.collection("clinica_casais").onSnapshot(snap=>{
+      setCasais(snap.docs.map(d=>({id:d.id,...d.data()})));
+      setLoading(false);
+    },()=>setLoading(false));
+    return unsub;
+  },[]);
+
+  async function vincular(){
+    if(!form.p1||!form.p2||form.p1===form.p2){alert("Selecione dois pacientes diferentes.");return;}
+    setSalvando(true);
+    const p1 = pacientes.find(p=>p.id===form.p1);
+    const p2 = pacientes.find(p=>p.id===form.p2);
+    await db.collection("clinica_casais").add({
+      nomeCasal:form.nomeCasal||null,
+      p1Id:form.p1, p1Nome:p1?.nome||"",
+      p2Id:form.p2, p2Nome:p2?.nome||"",
+      createdAt:firebase.firestore.FieldValue.serverTimestamp()
+    });
+    setModal(false);setForm({nomeCasal:"",p1:"",p2:""});setSalvando(false);
   }
-  var payload = gerarPayloadPix(chavePix, nomePix, cidadePix, valor, descricao);
-  var qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=".concat(encodeURIComponent(payload));
-  return /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#fff",
-      borderRadius: 12,
-      border: "1px solid ".concat(cor, "22"),
-      padding: "16px",
-      textAlign: "center"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      fontWeight: 700,
-      color: cor,
-      textTransform: "uppercase",
-      letterSpacing: 0.5,
-      marginBottom: 8
-    }
-  }, "PIX \u2014 ", descricao), /*#__PURE__*/React.createElement("img", {
-    src: qrUrl,
-    alt: "QR Code PIX",
-    style: {
-      width: 160,
-      height: 160,
-      borderRadius: 8
-    }
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      fontWeight: 700,
-      color: "#1A1D23",
-      marginTop: 10
-    }
-  }, "R$ ", valor.toFixed(2)), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 11,
-      color: "#AAA",
-      marginTop: 4
-    }
-  }, nomePix), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 11,
-      color: "#888",
-      marginTop: 6,
-      padding: "6px 10px",
-      background: "#F5F5F5",
-      borderRadius: 6,
-      fontFamily: "monospace",
-      wordBreak: "break-all"
-    }
-  }, chavePix));
+
+  async function excluir(id){
+    if(!confirm("Remover vinculo?"))return;
+    await db.collection("clinica_casais").doc(id).delete();
+  }
+
+  const getNomeExibicao = (c) => c.nomeCasal || `${c.p1Nome} & ${c.p2Nome}`;
+
+  if(loading) return <Spinner/>;
+
+  return (
+    <div>
+      <div className="page-header" style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
+        <div>
+          <div className="page-title">Terapia de Casais</div>
+          <div className="page-subtitle">{casais.length} casal{casais.length!==1?"is":""} em acompanhamento</div>
+        </div>
+        <button className="btn btn-purple" onClick={()=>setModal(true)}><Icon name="plus" size={16}/> Vincular Casal</button>
+      </div>
+
+      {casais.length===0?(
+        <div className="card" style={{textAlign:"center",padding:48,color:"var(--text-muted)"}}>
+          <Icon name="heart" size={40}/>
+          <div style={{marginTop:12}}>Nenhum casal vinculado ainda.</div>
+          <button className="btn btn-purple" style={{marginTop:16}} onClick={()=>setModal(true)}><Icon name="plus" size={14}/> Vincular primeiro casal</button>
+        </div>
+      ):(
+        <div style={{display:"flex",flexDirection:"column",gap:12}}>
+          {casais.map(c=>(
+            <div key={c.id} className="card" style={{display:"flex",alignItems:"center",gap:16,padding:"18px 24px"}}>
+              <div style={{width:44,height:44,borderRadius:"50%",background:"var(--purple-soft)",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
+                <Icon name="heart" size={20}/>
+              </div>
+              <div style={{flex:1}}>
+                <div style={{display:"flex",alignItems:"center",gap:8,flexWrap:"wrap"}}>
+                  <span style={{fontWeight:600}}>{c.nomeCasal||`${c.p1Nome} & ${c.p2Nome}`}</span>
+                  {c.nomeCasal&&<span style={{fontSize:13,color:"var(--text-muted)"}}>({c.p1Nome} & {c.p2Nome})</span>}
+                </div>
+                {(c.satisfacao||c.estadoCivil)&&(
+                  <div style={{display:"flex",gap:8,marginTop:4}}>
+                    {c.satisfacao&&<span className="badge badge-purple">Satisfacao: {c.satisfacao}/10</span>}
+                    {c.estadoCivil&&<span className="badge badge-gray">{c.estadoCivil}</span>}
+                  </div>
+                )}
+              </div>
+              <div style={{display:"flex",gap:8,alignItems:"center"}}>
+                <button className="btn btn-ghost" style={{padding:"6px 10px",color:"var(--danger)"}} onClick={()=>excluir(c.id)}><Icon name="trash-2" size={14}/></button>
+                <button className="btn btn-outline" style={{fontSize:13}} onClick={()=>alert("Detalhe do casal — em breve")}>Ver detalhes <Icon name="chevron-right" size={14}/></button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {modal&&(
+        <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.4)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:500,padding:20}} onClick={()=>setModal(false)}>
+          <div style={{background:"white",borderRadius:16,padding:28,width:"100%",maxWidth:440}} onClick={e=>e.stopPropagation()}>
+            <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:6}}>
+              <Icon name="heart" size={18}/>
+              <div style={{fontFamily:"var(--font-display)",fontSize:20,fontWeight:600}}>Vincular Casal</div>
+            </div>
+            <p style={{fontSize:13,color:"var(--text-muted)",marginBottom:20}}>Selecione dois pacientes cadastrados para vincular como casal em terapia.</p>
+            <div className="form-group" style={{marginBottom:14}}>
+              <label className="form-label">Nome do casal (opcional)</label>
+              <input className="form-input" value={form.nomeCasal} onChange={e=>setForm({...form,nomeCasal:e.target.value})} placeholder="Ex: Silva & Costa"/>
+            </div>
+            <div className="form-group" style={{marginBottom:14}}>
+              <label className="form-label">Parceiro(a) 1 *</label>
+              <select className="form-input" value={form.p1} onChange={e=>setForm({...form,p1:e.target.value})}>
+                <option value="">Selecionar paciente...</option>
+                {pacientes.filter(p=>p.status==="ativo").map(p=><option key={p.id} value={p.id}>{p.nome}</option>)}
+              </select>
+            </div>
+            <div className="form-group" style={{marginBottom:20}}>
+              <label className="form-label">Parceiro(a) 2 *</label>
+              <select className="form-input" value={form.p2} onChange={e=>setForm({...form,p2:e.target.value})}>
+                <option value="">Selecionar paciente...</option>
+                {pacientes.filter(p=>p.status==="ativo"&&p.id!==form.p1).map(p=><option key={p.id} value={p.id}>{p.nome}</option>)}
+              </select>
+            </div>
+            <div style={{display:"flex",gap:10,justifyContent:"flex-end"}}>
+              <button className="btn btn-ghost" onClick={()=>setModal(false)}>Cancelar</button>
+              <button className="btn btn-purple" onClick={vincular} disabled={salvando}><Icon name="heart" size={15}/> {salvando?"Salvando...":"Vincular"}</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 
-// ── NAV ───────────────────────────────────────────────────────────────────────
-var NAV_ADMIN = [{
-  key: "painel",
-  label: "Painel",
-  icon: "layout-dashboard"
-}, {
-  key: "integrantes",
-  label: "Integrantes",
-  icon: "users"
-}, {
-  key: "musicas",
-  label: "Músicas",
-  icon: "music"
-}, {
-  key: "estudos",
-  label: "Sala de Estudos",
-  icon: "graduation-cap"
-}, {
-  key: "agenda",
-  label: "Agenda",
-  icon: "calendar"
-}, {
-  key: "avisos",
-  label: "Avisos",
-  icon: "megaphone"
-}, {
-  key: "financeiro",
-  label: "Financeiro",
-  icon: "dollar-sign"
-}, {
-  key: "frequencia",
-  label: "Frequência",
-  icon: "bar-chart-2"
-}, {
-  key: "apresentacao",
-  label: "Apresentação",
-  icon: "mic"
-}, {
-  key: "declaracao",
-  label: "Declaração Digital",
-  icon: "file-text"
-}, {
-  key: "relatorios",
-  label: "Relatórios",
-  icon: "chart-bar"
-}, {
-  key: "blog",
-  label: "Blog / Notícias",
-  icon: "newspaper"
-}, {
-  key: "config",
-  label: "Configurações",
-  icon: "settings"
-}];
-var NAV_CORISTA = [{
-  key: "inicio",
-  label: "Início",
-  icon: "home"
-}, {
-  key: "musicas",
-  label: "Músicas",
-  icon: "music"
-}, {
-  key: "estudos",
-  label: "Sala de Estudos",
-  icon: "graduation-cap"
-}, {
-  key: "meu_financeiro",
-  label: "Meu Financeiro",
-  icon: "dollar-sign"
-}, {
-  key: "blog",
-  label: "Blog / Notícias",
-  icon: "newspaper"
-}, {
-  key: "declaracao",
-  label: "Minha Declaração",
-  icon: "file-text"
-}];
+// ═══════════════════════════════════════════════════════
+// RECURSOS TERAPÊUTICOS
+// ═══════════════════════════════════════════════════════
+const CATEGORIAS_RECURSOS = [
+  {id:"relaxamento",  label:"Relaxamento e Bem-estar",         cor:"#0284c7", bg:"#e0f2fe"},
+  {id:"tcc",          label:"Terapia Cognitivo-Comportamental", cor:"#7c3aed", bg:"#ede9fe"},
+  {id:"avaliacao",    label:"Avaliacao e Anamnese",             cor:"#6d28d9", bg:"#f5f3ff"},
+  {id:"psicoeducacao",label:"Psicoeducacao",                    cor:"#b45309", bg:"#fef3c7"},
+  {id:"mindfulness",  label:"Mindfulness",                      cor:"#059669", bg:"#d1fae5"},
+  {id:"musicoterapia",label:"Musicoterapia",                    cor:"#be185d", bg:"#fce7f3"},
+  {id:"outro",        label:"Outros Recursos",                  cor:"#6b7280", bg:"#f3f4f6"},
+];
 
-// ── APP ───────────────────────────────────────────────────────────────────────
+const FERRAMENTAS_INTERATIVAS = [
+  {key:"breathing-478",       label:"Exercicio de Respiracao 4-7-8"},
+  {key:"abc-record",          label:"Registro ABC de Pensamentos"},
+  {key:"muscle-relaxation",   label:"Relaxamento Muscular Progressivo"},
+  {key:"anxiety-management",  label:"Gestao da Ansiedade"},
+  {key:"entrevista-clinica",  label:"Entrevista Clinica Inicial"},
+  {key:"emotional-eating",    label:"Rastreamento Emocional da Alimentacao"},
+  {key:"treino-neuro-auditivo",label:"Treino Neuro-Auditivo"},
+  {key:"decision-tree",       label:"Arvore da Decisao"},
+  {key:"anamnese",            label:"Anamnese — Marcos do Desenvolvimento"},
+];
+
+
+// ═══════════════════════════════════════════════════════
+// FERRAMENTAS INTERATIVAS — MODAL VISUALIZAR
+// ═══════════════════════════════════════════════════════
+
+// ── helpers compartilhados ──
+function getYouTubeEmbed(url){
+  if(!url||!url.trim()) return null;
+  const m = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/);
+  if(!m) return null;
+  return `https://www.youtube.com/embed/${m[1]}?autoplay=1&loop=1&playlist=${m[1]}&controls=1&rel=0`;
+}
+function falarTexto(txt){
+  if(!("speechSynthesis" in window)) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(txt);
+  u.lang="pt-BR"; u.rate=0.85; u.pitch=1.05;
+  const v = window.speechSynthesis.getVoices().find(x=>x.lang.startsWith("pt"));
+  if(v) u.voice=v;
+  window.speechSynthesis.speak(u);
+}
+
+// ── Respiração 4-7-8 ──
+function FerramentaRespiracao({musicUrl}){
+  const FASES=[{fase:"inhale",label:"Inspire",seg:4,cor:"#6366f1",speech:"Inspire pelo nariz"},
+               {fase:"hold",  label:"Segure", seg:7,cor:"#f59e0b",speech:"Segure o ar"},
+               {fase:"exhale",label:"Expire", seg:8,cor:"#10b981",speech:"Expire pela boca"}];
+  const TOTAL=19;
+  const [running,setRunning]=useState(false);
+  const [elapsed,setElapsed]=useState(0);
+  const [ciclos,setCiclos]=useState(0);
+  const [voz,setVoz]=useState(true);
+  const [showMusic,setShowMusic]=useState(false);
+  const ref=useRef(0); const iv=useRef(null); const faseAnterior=useRef(null);
+  const embedUrl=getYouTubeEmbed(musicUrl||"");
+
+  function getFase(e){
+    let acc=0;
+    for(let i=0;i<FASES.length;i++){acc+=FASES[i].seg;if(e<acc)return{...FASES[i],restante:acc-e};}
+    return{...FASES[0],restante:FASES[0].seg};
+  }
+
+  useEffect(()=>{
+    if(!running){if(iv.current)clearInterval(iv.current);return;}
+    iv.current=setInterval(()=>{
+      ref.current+=1;
+      if(ref.current>=TOTAL){ref.current=0;setCiclos(c=>c+1);}
+      setElapsed(ref.current);
+    },1000);
+    return()=>clearInterval(iv.current);
+  },[running]);
+
+  const fase=getFase(elapsed);
+  useEffect(()=>{
+    if(running&&voz&&fase.fase!==faseAnterior.current){falarTexto(fase.speech);faseAnterior.current=fase.fase;}
+  },[fase.fase,running,voz]);
+
+  const pct=(elapsed/TOTAL)*100;
+  const raio=80; const circ=2*Math.PI*raio;
+  const phaseColors={"inhale":"#6366f1","hold":"#f59e0b","exhale":"#10b981"};
+  const cor=phaseColors[fase.fase];
+
+  return(
+    <div style={{textAlign:"center",padding:"20px 0"}}>
+      {embedUrl&&showMusic&&<iframe src={embedUrl} style={{width:"100%",height:60,border:"none",borderRadius:8,marginBottom:16}} allow="autoplay"/>}
+      <div style={{position:"relative",width:200,height:200,margin:"0 auto 20px"}}>
+        <svg width={200} height={200} style={{transform:"rotate(-90deg)"}}>
+          <circle cx={100} cy={100} r={raio} fill="none" stroke="#e5e7eb" strokeWidth={8}/>
+          <circle cx={100} cy={100} r={raio} fill="none" stroke={cor} strokeWidth={8}
+            strokeDasharray={circ} strokeDashoffset={circ*(1-pct/100)} strokeLinecap="round"
+            style={{transition:"stroke-dashoffset 0.9s linear,stroke 0.3s"}}/>
+        </svg>
+        <div style={{position:"absolute",inset:0,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}}>
+          <div style={{fontSize:28,fontWeight:700,color:cor}}>{fase.restante}</div>
+          <div style={{fontSize:14,fontWeight:600,color:cor}}>{fase.label}</div>
+          <div style={{fontSize:11,color:"#9ca3af",marginTop:2}}>ciclo {ciclos+1}</div>
+        </div>
+      </div>
+      <div style={{display:"flex",gap:6,flexWrap:"wrap",justifyContent:"center",marginBottom:16}}>
+        {FASES.map(f=><span key={f.fase} style={{background:f.fase===fase.fase?f.cor+"20":"#f3f4f6",color:f.fase===fase.fase?f.cor:"#6b7280",borderRadius:20,padding:"4px 12px",fontSize:12,fontWeight:600,border:"1px solid "+(f.fase===fase.fase?f.cor+"40":"#e5e7eb")}}>{f.label} {f.seg}s</span>)}
+      </div>
+      <div style={{display:"flex",gap:10,justifyContent:"center",flexWrap:"wrap"}}>
+        <button className="btn btn-purple" style={{minWidth:120}} onClick={()=>{setRunning(!running);if(!running){ref.current=elapsed;}}}>
+          <Icon name={running?"pause":"play"} size={16}/> {running?"Pausar":"Iniciar"}
+        </button>
+        <button className="btn btn-ghost" onClick={()=>{setRunning(false);setElapsed(0);ref.current=0;setCiclos(0);faseAnterior.current=null;}}>
+          <Icon name="rotate-ccw" size={16}/> Reiniciar
+        </button>
+        <button className="btn btn-ghost" onClick={()=>setVoz(!voz)} title={voz?"Desativar voz":"Ativar voz"}>
+          <Icon name={voz?"volume-2":"volume-x"} size={16}/>
+        </button>
+        {embedUrl&&<button className="btn btn-ghost" onClick={()=>setShowMusic(!showMusic)}><Icon name="music" size={16}/></button>}
+      </div>
+      <div style={{marginTop:16,fontSize:13,color:"#6b7280"}}>Inspire 4s → Segure 7s → Expire 8s · {ciclos} ciclo(s) completo(s)</div>
+    </div>
+  );
+}
+
+// ── Relaxamento Muscular Progressivo ──
+function FerramentaRelaxamento({musicUrl}){
+  const GRUPOS=[
+    {nome:"Pés",         instrucao:"Curve os dedos dos pés para baixo, fortemente.",  tensao:5, relax:15},
+    {nome:"Panturrilhas",instrucao:"Puxe os pés em direção a você, estique.",         tensao:5, relax:15},
+    {nome:"Coxas",       instrucao:"Aperte as coxas juntas, pressione a cadeira.",    tensao:5, relax:15},
+    {nome:"Abdômen",     instrucao:"Contraia o estômago fortemente.",                  tensao:5, relax:15},
+    {nome:"Mãos",        instrucao:"Feche os punhos com toda a sua força.",            tensao:5, relax:15},
+    {nome:"Braços",      instrucao:"Dobre os cotovelos e contraia os bíceps.",         tensao:5, relax:15},
+    {nome:"Ombros",      instrucao:"Levante-os até as orelhas, segure.",               tensao:5, relax:15},
+    {nome:"Rosto",       instrucao:"Feche os olhos com força, aperte os lábios.",      tensao:5, relax:15},
+  ];
+  const [running,setRunning]=useState(false);
+  const [done,setDone]=useState(false);
+  const [concluidos,setConcluidos]=useState([]);
+  const [grupoIdx,setGrupoIdx]=useState(0);
+  const [fase,setFase]=useState("tensao"); // tensao | relax
+  const [elapsed,setElapsed]=useState(0);
+  const [voz,setVoz]=useState(true);
+  const [showMusic,setShowMusic]=useState(false);
+  const stRef=useRef({grupoIdx:0,fase:"tensao",elapsed:0});
+  const concRef=useRef([]);
+  const iv=useRef(null);
+  const embedUrl=getYouTubeEmbed(musicUrl||"");
+
+  function tick(){
+    const s=stRef.current;
+    const g=GRUPOS[s.grupoIdx];
+    const lim=s.fase==="tensao"?g.tensao:g.relax;
+    const ne=s.elapsed+1;
+    if(ne>=lim){
+      if(s.fase==="tensao"){
+        const ns={...s,fase:"relax",elapsed:0};stRef.current=ns;setFase("relax");setElapsed(0);
+        if(voz)falarTexto("Relaxe.");
+      } else {
+        concRef.current=[...concRef.current,s.grupoIdx];setConcluidos([...concRef.current]);
+        const ng=s.grupoIdx+1;
+        if(ng>=GRUPOS.length){clearInterval(iv.current);setRunning(false);setDone(true);if(voz)falarTexto("Parabéns! Você completou o relaxamento muscular.");}
+        else{const ns={grupoIdx:ng,fase:"tensao",elapsed:0};stRef.current=ns;setGrupoIdx(ng);setFase("tensao");setElapsed(0);if(voz)falarTexto(GRUPOS[ng].nome+". Contraia.");}
+      }
+    } else {
+      stRef.current={...s,elapsed:ne};setElapsed(ne);
+    }
+  }
+
+  function iniciar(){
+    if(running){clearInterval(iv.current);setRunning(false);return;}
+    if(voz)falarTexto(GRUPOS[stRef.current.grupoIdx].nome+". Contraia.");
+    iv.current=setInterval(tick,1000);setRunning(true);
+  }
+  function reiniciar(){clearInterval(iv.current);setRunning(false);setDone(false);setConcluidos([]);concRef.current=[];stRef.current={grupoIdx:0,fase:"tensao",elapsed:0};setGrupoIdx(0);setFase("tensao");setElapsed(0);}
+
+  const g=GRUPOS[grupoIdx];
+  const lim=fase==="tensao"?g.tensao:g.relax;
+  const pct=Math.min((elapsed/lim)*100,100);
+
+  if(done) return(
+    <div style={{textAlign:"center",padding:40}}>
+      <div style={{fontSize:48,marginBottom:12}}>✅</div>
+      <div style={{fontFamily:"var(--font-display)",fontSize:20,fontWeight:600,marginBottom:8}}>Relaxamento Completo!</div>
+      <div style={{fontSize:13,color:"#6b7280",marginBottom:20}}>Você completou todos os 8 grupos musculares.</div>
+      <button className="btn btn-purple" onClick={reiniciar}><Icon name="rotate-ccw" size={16}/> Reiniciar</button>
+    </div>
+  );
+
+  return(
+    <div>
+      {embedUrl&&showMusic&&<iframe src={embedUrl} style={{width:"100%",height:60,border:"none",borderRadius:8,marginBottom:16}} allow="autoplay"/>}
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
+        <div style={{fontSize:12,color:"#6b7280"}}>Progresso geral</div>
+        <div style={{fontSize:12,color:"#6b7280"}}>{concluidos.length}/{GRUPOS.length} grupos</div>
+      </div>
+      <div style={{background:"#e5e7eb",borderRadius:20,height:6,marginBottom:20}}>
+        <div style={{background:"var(--purple)",height:6,borderRadius:20,transition:"width .3s",width:(concluidos.length/GRUPOS.length*100)+"%"}}/>
+      </div>
+      <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8,marginBottom:20}}>
+        {GRUPOS.map((g2,i)=>(
+          <div key={i} style={{textAlign:"center",padding:"8px 4px",borderRadius:8,background:concluidos.includes(i)?"#d1fae5":i===grupoIdx?"var(--purple-soft)":"#f9fafb",border:"1px solid",borderColor:concluidos.includes(i)?"#6ee7b7":i===grupoIdx?"var(--purple)":"#e5e7eb"}}>
+            <div style={{fontSize:10,fontWeight:600,color:concluidos.includes(i)?"#059669":i===grupoIdx?"var(--purple)":"#9ca3af"}}>{g2.nome}</div>
+            {concluidos.includes(i)&&<div style={{fontSize:12}}>✓</div>}
+          </div>
+        ))}
+      </div>
+      <div style={{background:fase==="tensao"?"#fef3c7":"#d1fae5",borderRadius:12,padding:24,textAlign:"center",marginBottom:20}}>
+        <div style={{fontSize:14,fontWeight:700,color:fase==="tensao"?"#d97706":"#059669",marginBottom:6,textTransform:"uppercase",letterSpacing:"0.8px"}}>
+          {fase==="tensao"?"🔥 CONTRAIA":"✨ RELAXE"}
+        </div>
+        <div style={{fontFamily:"var(--font-display)",fontSize:20,fontWeight:600,marginBottom:4}}>{g.nome}</div>
+        <div style={{fontSize:13,color:"#6b7280",marginBottom:16}}>{g.instrucao}</div>
+        <div style={{fontSize:48,fontWeight:700,color:fase==="tensao"?"#d97706":"#059669"}}>{lim-elapsed}</div>
+        <div style={{background:"#e5e7eb",borderRadius:20,height:6,marginTop:12}}>
+          <div style={{background:fase==="tensao"?"#f59e0b":"#10b981",height:6,borderRadius:20,transition:"width .9s",width:pct+"%"}}/>
+        </div>
+      </div>
+      <div style={{display:"flex",gap:10,justifyContent:"center",flexWrap:"wrap"}}>
+        <button className="btn btn-purple" style={{minWidth:120}} onClick={iniciar}>
+          <Icon name={running?"pause":"play"} size={16}/> {running?"Pausar":"Iniciar"}
+        </button>
+        <button className="btn btn-ghost" onClick={reiniciar}><Icon name="rotate-ccw" size={16}/> Reiniciar</button>
+        <button className="btn btn-ghost" onClick={()=>setVoz(!voz)}><Icon name={voz?"volume-2":"volume-x"} size={16}/></button>
+        {embedUrl&&<button className="btn btn-ghost" onClick={()=>setShowMusic(!showMusic)}><Icon name="music" size={16}/></button>}
+      </div>
+    </div>
+  );
+}
+
+// ── Árvore da Decisão ──
+function FerramentaArvore(){
+  const [step,setStep]=useState("home");
+  const [preocupacao,setPreocupacao]=useState("");
+  const [acoes,setAcoes]=useState("");
+  const [plano,setPlano]=useState("");
+  const [conclusao,setConclusao]=useState(null);
+  const [historico,setHistorico]=useState([]);
+
+  function reiniciar(){setStep("home");setPreocupacao("");setAcoes("");setPlano("");setConclusao(null);}
+
+  function salvarHistorico(c){
+    setHistorico(h=>[{data:new Date().toLocaleDateString("pt-BR"),preocupacao,conclusao:c},...h].slice(0,10));
+    setConclusao(c);setStep("conclusao");
+  }
+
+  const CONCLUSOES={
+    redirect:{emoji:"🌿",titulo:"Redirecione sua atenção",desc:"Esta situação está fora do seu controle agora. Direcione sua energia para algo que possa fazer.",cor:"#0891b2",bg:"#e0f2fe"},
+    "act-now":{emoji:"⚡",titulo:"Realize esta tarefa agora!",desc:"Você identificou uma ação que pode ser feita agora. Coloque-a em prática!",cor:"#059669",bg:"#d1fae5"},
+    plan:{emoji:"📋",titulo:"Siga o seu plano",desc:"Você tem um plano para agir no momento certo. Confie nele e direcione sua atenção.",cor:"#d97706",bg:"#fef3c7"},
+  };
+
+  if(step==="home") return(
+    <div style={{textAlign:"center",padding:"20px 0"}}>
+      <div style={{fontSize:48,marginBottom:12}}>🌳</div>
+      <div style={{fontFamily:"var(--font-display)",fontSize:20,fontWeight:600,marginBottom:8}}>Árvore da Decisão</div>
+      <p style={{fontSize:13,color:"#6b7280",marginBottom:8}}>Uma técnica da TCC para transformar preocupações em ações concretas — distinguindo o que está ou não no seu controle.</p>
+      <p style={{fontSize:12,color:"#9ca3af",marginBottom:24}}>💡 Preocupações <strong>produtivas</strong> levam à ação. <strong>Improdutivas</strong> paralisam.</p>
+      <button className="btn btn-purple" style={{fontSize:15,padding:"12px 32px"}} onClick={()=>setStep("worry")}>Iniciar exercício →</button>
+      {historico.length>0&&<div style={{marginTop:24,textAlign:"left"}}>
+        <div style={{fontWeight:600,fontSize:13,marginBottom:10}}>Registros anteriores</div>
+        {historico.map((h,i)=><div key={i} style={{padding:"8px 12px",background:"#f9fafb",borderRadius:8,marginBottom:6,fontSize:12,display:"flex",justifyContent:"space-between"}}>
+          <span style={{flex:1,color:"#374151",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{h.preocupacao}</span>
+          <span style={{color:"#9ca3af",marginLeft:8,flexShrink:0}}>{h.data}</span>
+        </div>)}
+      </div>}
+    </div>
+  );
+  if(step==="worry") return(
+    <div>
+      <div style={{fontWeight:600,marginBottom:8}}>Qual é a sua preocupação agora?</div>
+      <textarea className="form-input" rows={3} value={preocupacao} onChange={e=>setPreocupacao(e.target.value)} placeholder="Descreva o que está te preocupando..."/>
+      <div style={{display:"flex",gap:10,marginTop:16,justifyContent:"flex-end"}}>
+        <button className="btn btn-ghost" onClick={()=>setStep("home")}>Voltar</button>
+        <button className="btn btn-purple" onClick={()=>setStep("can-intervene")} disabled={!preocupacao.trim()}>Próximo →</button>
+      </div>
+    </div>
+  );
+  if(step==="can-intervene") return(
+    <div>
+      <div style={{fontWeight:600,marginBottom:8}}>Você pode fazer algo para resolver esta preocupação?</div>
+      <p style={{fontSize:13,color:"#6b7280",marginBottom:20}}>Pense se existe alguma ação concreta que você pode tomar.</p>
+      <div style={{display:"flex",gap:12}}>
+        <button className="btn btn-purple" style={{flex:1,padding:16}} onClick={()=>setStep("actions")}>✅ Sim, posso agir</button>
+        <button className="btn btn-outline" style={{flex:1,padding:16}} onClick={()=>salvarHistorico("redirect")}>❌ Não está no meu controle</button>
+      </div>
+    </div>
+  );
+  if(step==="actions") return(
+    <div>
+      <div style={{fontWeight:600,marginBottom:8}}>Quais ações você pode tomar?</div>
+      <textarea className="form-input" rows={3} value={acoes} onChange={e=>setAcoes(e.target.value)} placeholder="Liste as ações possíveis..."/>
+      <div style={{display:"flex",gap:10,marginTop:16,justifyContent:"flex-end"}}>
+        <button className="btn btn-ghost" onClick={()=>setStep("can-intervene")}>Voltar</button>
+        <button className="btn btn-purple" onClick={()=>setStep("can-act-now")} disabled={!acoes.trim()}>Próximo →</button>
+      </div>
+    </div>
+  );
+  if(step==="can-act-now") return(
+    <div>
+      <div style={{fontWeight:600,marginBottom:8}}>Você pode realizar alguma dessas ações agora?</div>
+      <div style={{display:"flex",gap:12,marginTop:16}}>
+        <button className="btn btn-purple" style={{flex:1,padding:16}} onClick={()=>salvarHistorico("act-now")}>⚡ Sim, agora</button>
+        <button className="btn btn-outline" style={{flex:1,padding:16}} onClick={()=>setStep("plan")}>📋 Preciso planejar</button>
+      </div>
+    </div>
+  );
+  if(step==="plan") return(
+    <div>
+      <div style={{fontWeight:600,marginBottom:8}}>Crie um plano de ação:</div>
+      <textarea className="form-input" rows={3} value={plano} onChange={e=>setPlano(e.target.value)} placeholder="Quando e como você vai agir?"/>
+      <div style={{display:"flex",gap:10,marginTop:16,justifyContent:"flex-end"}}>
+        <button className="btn btn-ghost" onClick={()=>setStep("can-act-now")}>Voltar</button>
+        <button className="btn btn-purple" onClick={()=>salvarHistorico("plan")} disabled={!plano.trim()}>Finalizar →</button>
+      </div>
+    </div>
+  );
+  if(step==="conclusao"&&conclusao){
+    const c=CONCLUSOES[conclusao];
+    return(
+      <div>
+        <div style={{background:c.bg,borderRadius:16,padding:24,textAlign:"center",marginBottom:20}}>
+          <div style={{fontSize:40,marginBottom:8}}>{c.emoji}</div>
+          <div style={{fontFamily:"var(--font-display)",fontSize:18,fontWeight:700,color:c.cor,marginBottom:8}}>{c.titulo}</div>
+          <p style={{fontSize:13,color:"#6b7280"}}>{c.desc}</p>
+        </div>
+        <div style={{background:"#f9fafb",borderRadius:10,padding:14,marginBottom:16,fontSize:13}}>
+          <div style={{fontWeight:600,marginBottom:4}}>Sua preocupação:</div>
+          <div style={{color:"#6b7280"}}>{preocupacao}</div>
+          {acoes&&<><div style={{fontWeight:600,marginBottom:4,marginTop:10}}>Ações identificadas:</div><div style={{color:"#6b7280"}}>{acoes}</div></>}
+          {plano&&<><div style={{fontWeight:600,marginBottom:4,marginTop:10}}>Seu plano:</div><div style={{color:"#6b7280"}}>{plano}</div></>}
+        </div>
+        <button className="btn btn-purple" style={{width:"100%"}} onClick={reiniciar}><Icon name="rotate-ccw" size={16}/> Nova preocupação</button>
+      </div>
+    );
+  }
+  return null;
+}
+
+// ── Ferramenta genérica (placeholder para as demais) ──
+function FerramentaGenerica({recurso}){
+  const INFO={
+    "abc-record":     {emoji:"📋",titulo:"Registro ABC de Pensamentos",   desc:"Identifique a Situação (A), o Pensamento Automático (B) e a Emoção/Consequência (C).",cor:"#7c3aed"},
+    "anxiety-management":{emoji:"🎯",titulo:"Gestão da Ansiedade",        desc:"Monitore seu nível de estresse, atividades anti-ansiedade, pensamentos e roda da vida.",cor:"#6366f1"},
+    "emotional-eating":  {emoji:"🍃",titulo:"Rastreamento Emocional da Alimentação",desc:"Registre a emoção, o gatilho e o comportamento alimentar.",cor:"#059669"},
+    "entrevista-clinica":{emoji:"📝",titulo:"Entrevista Clínica Inicial",  desc:"Instrumento de avaliação clínica inicial com perfil etário e hipóteses DSM-5.",cor:"#0891b2"},
+    "anamnese":          {emoji:"📄",titulo:"Anamnese — Marcos do Desenvolvimento",desc:"Formulário completo de anamnese para histórico do desenvolvimento.",cor:"#7c3aed"},
+    "treino-neuro-auditivo":{emoji:"🎵",titulo:"Treino Neuro-Auditivo",   desc:"Discriminação auditiva: sons graves/agudos, vozes, intensidade, ritmo e melodia.",cor:"#be185d"},
+  };
+  const info = INFO[recurso.formularioKey]||{emoji:"🔧",titulo:recurso.titulo,desc:recurso.descricao,cor:"#7c3aed"};
+  return(
+    <div style={{textAlign:"center",padding:"30px 20px"}}>
+      <div style={{width:80,height:80,borderRadius:20,background:info.cor+"15",display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 16px",fontSize:36}}>{info.emoji}</div>
+      <div style={{fontFamily:"var(--font-display)",fontSize:20,fontWeight:600,marginBottom:8}}>{info.titulo}</div>
+      <p style={{fontSize:13,color:"#6b7280",lineHeight:1.7,marginBottom:24,maxWidth:400,margin:"0 auto 24px"}}>{info.desc}</p>
+      <div style={{background:"#f9f5ff",border:"1px solid #e9d5ff",borderRadius:10,padding:16,fontSize:13,color:"#7c3aed"}}>
+        Esta ferramenta está disponível no portal do paciente. O paciente acessa e preenche diretamente pelo login deles.
+      </div>
+    </div>
+  );
+}
+
+// ── Modal principal ──
+// ── ABC de Pensamentos ──────────────────────────────────────────────────────
+function FerramentaABC(){
+  const EMOCOES=["Ansiedade","Tristeza","Raiva","Medo","Vergonha","Culpa","Frustração","Insegurança"];
+  const [entries,setEntries]=useState([]);
+  const [draft,setDraft]=useState({situacao:"",pensamento:"",emocao:"",intensidade:50,alternativo:"",showAlt:false});
+  const [msg,setMsg]=useState("");
+  function salvar(){
+    if(!draft.situacao||!draft.pensamento||!draft.emocao){alert("Preencha Situação, Pensamento e Emoção.");return;}
+    setEntries(e=>[{...draft,id:Date.now()+"",data:new Date().toLocaleDateString("pt-BR")},...e]);
+    setDraft({situacao:"",pensamento:"",emocao:"",intensidade:50,alternativo:"",showAlt:false});
+    setMsg("✓ Salvo!");setTimeout(()=>setMsg(""),2000);
+  }
+  const intColor=draft.intensidade<34?"#059669":draft.intensidade<67?"#d97706":"#dc2626";
+  return(
+    <div>
+      <div style={{background:"#eff6ff",border:"1px solid #bfdbfe",borderRadius:10,padding:12,marginBottom:16,fontSize:13,lineHeight:1.6}}>
+        <strong style={{color:"#1d4ed8"}}>A</strong><span style={{color:"#3b82f6"}}> (Situação) → </span><strong style={{color:"#7c3aed"}}>B</strong><span style={{color:"#7c3aed"}}> (Pensamento) → </span><strong style={{color:"#d97706"}}>C</strong><span style={{color:"#d97706"}}> (Emoção/Consequência)</span>
+      </div>
+      {[["A","#dbeafe","#1d4ed8","situacao","Situação (Antecedente)","O que aconteceu? Onde, quando, com quem?","Ex: Meu chefe me chamou para conversar..."],
+        ["B","#ede9fe","#7c3aed","pensamento","Pensamento (Belief)","O que passou pela sua cabeça naquele momento?","Ex: Devo ter feito algo errado..."]].map(([letra,bg,cor,campo,titulo,dica,ph])=>(
+        <div key={campo} style={{marginBottom:14}}>
+          <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:6}}>
+            <div style={{width:24,height:24,borderRadius:"50%",background:bg,display:"flex",alignItems:"center",justifyContent:"center",fontWeight:700,color:cor,fontSize:12,flexShrink:0}}>{letra}</div>
+            <div style={{fontWeight:600,fontSize:13}}>{titulo}</div>
+          </div>
+          <div style={{fontSize:11,color:"#9ca3af",marginBottom:6,paddingLeft:32}}>{dica}</div>
+          <textarea className="form-input" rows={2} value={draft[campo]} onChange={e=>setDraft({...draft,[campo]:e.target.value})} placeholder={ph}/>
+        </div>
+      ))}
+      <div style={{marginBottom:14}}>
+        <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:10}}>
+          <div style={{width:24,height:24,borderRadius:"50%",background:"#fef3c7",display:"flex",alignItems:"center",justifyContent:"center",fontWeight:700,color:"#d97706",fontSize:12,flexShrink:0}}>C</div>
+          <div style={{fontWeight:600,fontSize:13}}>Consequência (Emoção)</div>
+        </div>
+        <div style={{display:"flex",flexWrap:"wrap",gap:6,marginBottom:10,paddingLeft:32}}>
+          {EMOCOES.map(em=><button key={em} onClick={()=>setDraft({...draft,emocao:em})} style={{padding:"4px 12px",borderRadius:20,border:"1px solid",borderColor:draft.emocao===em?"var(--purple)":"#e5e7eb",background:draft.emocao===em?"var(--purple)":"white",color:draft.emocao===em?"white":"#6b7280",fontSize:12,cursor:"pointer"}}>{em}</button>)}
+        </div>
+        <div style={{paddingLeft:32}}>
+          <div style={{display:"flex",justifyContent:"space-between",fontSize:12,marginBottom:4}}><span style={{color:"#6b7280"}}>Intensidade</span><span style={{fontWeight:700,color:intColor}}>{draft.intensidade}/100</span></div>
+          <input type="range" min={0} max={100} value={draft.intensidade} onChange={e=>setDraft({...draft,intensidade:+e.target.value})} style={{width:"100%",accentColor:"var(--purple)"}}/>
+        </div>
+      </div>
+      <div style={{marginBottom:16}}>
+        <button onClick={()=>setDraft({...draft,showAlt:!draft.showAlt})} style={{background:"none",border:"none",cursor:"pointer",fontSize:12,color:"#6b7280",padding:0}}>
+          💡 Pensamento alternativo (opcional) {draft.showAlt?"▲":"▼"}
+        </button>
+        {draft.showAlt&&<textarea className="form-input" style={{marginTop:8}} rows={2} value={draft.alternativo} onChange={e=>setDraft({...draft,alternativo:e.target.value})} placeholder="Existe outra forma de ver essa situação?"/>}
+      </div>
+      <button className="btn btn-purple" style={{width:"100%"}} onClick={salvar}>{msg||"Salvar registro"}</button>
+      {entries.length>0&&<div style={{marginTop:16}}>
+        <div style={{fontWeight:600,fontSize:13,marginBottom:8}}>{entries.length} registro(s)</div>
+        {entries.map(en=><div key={en.id} style={{background:"#f9fafb",borderRadius:10,padding:12,marginBottom:8,fontSize:12,border:"1px solid #e5e7eb"}}>
+          <div style={{display:"flex",justifyContent:"space-between",marginBottom:4}}><span style={{color:"#6b7280"}}>{en.data}</span><span style={{background:"var(--purple-soft)",color:"var(--purple)",borderRadius:20,padding:"1px 8px",fontWeight:600}}>{en.emocao} {en.intensidade}%</span></div>
+          <div><strong>A:</strong> {en.situacao}</div><div><strong>B:</strong> {en.pensamento}</div>
+          {en.alternativo&&<div style={{color:"#059669"}}><strong>Alt:</strong> {en.alternativo}</div>}
+        </div>)}
+      </div>}
+    </div>
+  );
+}
+
+// ── Gestão da Ansiedade ──────────────────────────────────────────────────────
+function FerramentaGestaoAnsiedade(){
+  const TECNICAS=[{id:"resp",label:"Respiração Relaxada",desc:"Inspirar → Pausar → Expirar por 2 min"},{id:"visao",label:"Visão Periférica",desc:"Mover os olhos da direita para a esquerda"},{id:"musc",label:"Relaxamento Muscular",desc:"Contrair músculos 5s e relaxar com suspiro"}];
+  const ATIVIDADES=[{id:"caminhada",label:"🚶 Caminhada"},{id:"meditacao",label:"🧘 Meditação"},{id:"diario",label:"📓 Diário"},{id:"musica",label:"🎵 Música"},{id:"alongamento",label:"🤸 Alongamento"},{id:"agua",label:"💧 Hidratação"}];
+  const PERGUNTAS=["Qual situação está me deixando ansioso(a)?","Qual é o meu pensamento ansioso?","Tenho provas reais de que é 100% verdadeiro?","Quais evidências indicam que pode NÃO ser verdadeiro?","Qual a probabilidade real de que o pior aconteça?","O que eu diria a um amigo com esse mesmo pensamento?","Existe uma forma mais útil de ver essa situação?","Preocupar-me está me ajudando ou me machucando?"];
+  const AREAS=[{id:"interior",label:"Cuidado Interior"},{id:"familiar",label:"Vida Familiar"},{id:"carreira",label:"Carreira"},{id:"social",label:"Vida Social"},{id:"qualidade",label:"Qualidade de Vida"},{id:"saudavel",label:"Vida Saudável"},{id:"financeiro",label:"Financeiro"},{id:"espiritualidade",label:"Espiritualidade"}];
+  const DESC={1:"Em paz.",2:"Otimista.",3:"Calmo.",4:"Confortável.",5:"Neutro.",6:"Estressando.",7:"Estressado.",8:"Irritado.",9:"Tenso.",10:"Em pânico."};
+  const [aba,setAba]=useState(0);
+  const [stress,setStress]=useState(5);
+  const [nota,setNota]=useState("");
+  const [track,setTrack]=useState({});
+  const [resp,setResp]=useState(Array(8).fill(""));
+  const [roda,setRoda]=useState({});
+  const [log,setLog]=useState([]);
+  const [msg,setMsg]=useState("");
+  const sc=stress<=3?"#059669":stress<=5?"#d97706":stress<=7?"#f97316":"#dc2626";
+  return(
+    <div>
+      <div style={{display:"flex",gap:0,marginBottom:16,borderBottom:"1px solid #e5e7eb",overflowX:"auto"}}>
+        {["😰 Estresse","✅ Tracking","🧠 Pensamentos","🎯 Roda da Vida"].map((n,i)=>
+          <button key={i} onClick={()=>setAba(i)} style={{padding:"8px 14px",border:"none",background:"none",cursor:"pointer",fontSize:12,fontWeight:aba===i?700:400,color:aba===i?"var(--purple)":"#6b7280",borderBottom:aba===i?"2px solid var(--purple)":"2px solid transparent",whiteSpace:"nowrap",fontFamily:"var(--font-body)"}}>{n}</button>
+        )}
+      </div>
+      {aba===0&&<div>
+        <div style={{textAlign:"center",marginBottom:16}}><div style={{fontSize:64,fontWeight:900,color:sc,lineHeight:1}}>{stress}</div><div style={{fontSize:12,color:"#9ca3af"}}>/10</div><div style={{fontSize:13,fontWeight:600,color:sc}}>{DESC[stress]}</div></div>
+        <input type="range" min={1} max={10} value={stress} onChange={e=>setStress(+e.target.value)} style={{width:"100%",accentColor:sc,marginBottom:12}}/>
+        <textarea className="form-input" rows={2} value={nota} onChange={e=>setNota(e.target.value)} placeholder="Observações..." style={{marginBottom:10}}/>
+        <button className="btn btn-purple" style={{width:"100%"}} onClick={()=>{setLog(l=>[{nivel:stress,nota,data:new Date().toLocaleDateString("pt-BR")},...l].slice(0,20));setMsg("✓ Registrado!");setTimeout(()=>setMsg(""),2000);}}>{msg||"Registrar"}</button>
+        {log.length>0&&<div style={{marginTop:12}}>{log.slice(0,5).map((s,i)=><div key={i} style={{display:"flex",gap:8,padding:"6px 10px",background:"#f9fafb",borderRadius:8,marginBottom:4,fontSize:12}}><span style={{fontWeight:700,color:sc}}>{s.nivel}/10</span><span style={{flex:1,color:"#6b7280"}}>{s.nota||"—"}</span><span style={{color:"#9ca3af"}}>{s.data}</span></div>)}</div>}
+      </div>}
+      {aba===1&&<div>
+        <div style={{fontWeight:600,fontSize:13,marginBottom:10,color:"var(--purple)"}}>Técnicas Anti-Ansiedade</div>
+        {TECNICAS.map(t=><div key={t.id} onClick={()=>setTrack(tr=>({...tr,[t.id]:!tr[t.id]}))} style={{display:"flex",alignItems:"center",gap:10,padding:"12px 14px",borderRadius:10,border:"1.5px solid",borderColor:track[t.id]?"var(--purple)":"#e5e7eb",background:track[t.id]?"var(--purple-soft)":"white",cursor:"pointer",marginBottom:8}}>
+          <span style={{fontSize:16}}>{track[t.id]?"✅":"⭕"}</span><div><div style={{fontWeight:600,fontSize:13}}>{t.label}</div><div style={{fontSize:12,color:"#6b7280"}}>{t.desc}</div></div>
+        </div>)}
+        <div style={{fontWeight:600,fontSize:13,margin:"14px 0 10px",color:"var(--purple)"}}>Atividades</div>
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+          {ATIVIDADES.map(a=><div key={a.id} onClick={()=>setTrack(tr=>({...tr,[a.id]:!tr[a.id]}))} style={{padding:"10px",borderRadius:10,border:"1.5px solid",borderColor:track[a.id]?"var(--purple)":"#e5e7eb",background:track[a.id]?"var(--purple-soft)":"white",cursor:"pointer",fontSize:12,fontWeight:track[a.id]?600:400,color:track[a.id]?"var(--purple)":"#6b7280",textAlign:"center"}}>{a.label}</div>)}
+        </div>
+      </div>}
+      {aba===2&&<div>
+        <div style={{fontSize:13,color:"#6b7280",marginBottom:14,background:"#f9f5ff",padding:"10px 12px",borderRadius:8}}>Responda cada pergunta com honestidade para questionar pensamentos ansiosos.</div>
+        {PERGUNTAS.map((p,i)=><div key={i} style={{marginBottom:14}}>
+          <div style={{display:"flex",gap:8,marginBottom:6}}><div style={{width:22,height:22,borderRadius:"50%",background:"var(--purple-soft)",color:"var(--purple)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:11,fontWeight:700,flexShrink:0}}>{i+1}</div><label style={{fontSize:13,fontWeight:600,lineHeight:1.4}}>{p}</label></div>
+          <textarea className="form-input" rows={2} value={resp[i]} onChange={e=>{const r=[...resp];r[i]=e.target.value;setResp(r);}} placeholder="Sua resposta..."/>
+        </div>)}
+        <button className="btn btn-purple" style={{width:"100%"}} onClick={()=>{setMsg("✓ Salvo!");setTimeout(()=>setMsg(""),2000);}}>{msg||"Salvar respostas"}</button>
+      </div>}
+      {aba===3&&<div>
+        <div style={{fontSize:13,color:"#6b7280",marginBottom:14}}>Avalie cada área de 0 a 10. O gráfico atualiza em tempo real.</div>
+        {AREAS.map(a=><div key={a.id} style={{marginBottom:10}}>
+          <div style={{display:"flex",justifyContent:"space-between",fontSize:12,marginBottom:4}}><span style={{fontWeight:600}}>{a.label}</span><span style={{fontWeight:700,color:"var(--purple)"}}>{roda[a.id]||0}/10</span></div>
+          <input type="range" min={0} max={10} value={roda[a.id]||0} onChange={e=>setRoda(r=>({...r,[a.id]:+e.target.value}))} style={{width:"100%",accentColor:"var(--purple)"}}/>
+        </div>)}
+        <div style={{display:"flex",justifyContent:"center",margin:"16px 0"}}>
+          <canvas id="rodaChart" width="260" height="260" ref={el=>{
+            if(!el||typeof Chart==="undefined")return;
+            const vals=AREAS.map(a=>roda[a.id]||0);
+            const labels=AREAS.map(a=>a.label);
+            if(el._chart)el._chart.destroy();
+            el._chart=new Chart(el,{type:"radar",data:{labels,datasets:[{data:vals,backgroundColor:"rgba(123,0,196,0.15)",borderColor:"#7B00C4",borderWidth:2,pointBackgroundColor:"#7B00C4",pointRadius:4}]},options:{scales:{r:{min:0,max:10,ticks:{stepSize:2,font:{size:9}},pointLabels:{font:{size:10}}}},plugins:{legend:{display:false}}}});
+          }}/>
+        </div>
+        <button className="btn btn-purple" style={{width:"100%"}} onClick={()=>{setMsg("✓ Roda da Vida salva!");setTimeout(()=>setMsg(""),2000);}}>{msg||"Salvar Roda da Vida"}</button>
+      </div>}
+    </div>
+  );
+}
+
+// ── Rastreamento Emocional da Alimentação ───────────────────────────────────
+function FerramentaRastreamento(){
+  const EMOCOES=["Ansiedade","Tédio","Tristeza","Raiva","Solidão","Estresse","Cansaço","Felicidade"];
+  const SENSACOES=["Culpa","Vergonha","Alívio","Indiferença","Satisfação","Arrependimento"];
+  const [fome,setFome]=useState(5);
+  const [emocoes,setEmocoes]=useState([]);
+  const [pensamento,setPensamento]=useState("");
+  const [comeu,setComeu]=useState("");
+  const [alivio,setAlivio]=useState(5);
+  const [duracao,setDuracao]=useState("");
+  const [sensacoes,setSensacoes]=useState([]);
+  const [reflexao,setReflexao]=useState("");
+  const [entries,setEntries]=useState([]);
+  const [msg,setMsg]=useState("");
+  function Chips({opts,sel,toggle}){return(<div style={{display:"flex",flexWrap:"wrap",gap:6}}>{opts.map(o=><button key={o} onClick={()=>toggle(o)} style={{padding:"4px 12px",borderRadius:20,border:"1px solid",borderColor:sel.includes(o)?"var(--purple)":"#e5e7eb",background:sel.includes(o)?"var(--purple)":"white",color:sel.includes(o)?"white":"#6b7280",fontSize:12,cursor:"pointer"}}>{o}</button>)}</div>);}
+  function salvar(){
+    if(!comeu.trim()){alert("Descreva o que você comeu.");return;}
+    setEntries(e=>[{id:Date.now()+"",data:new Date().toLocaleDateString("pt-BR"),fome,emocoes:[...emocoes],pensamento,comeu,alivio,duracao,sensacoes:[...sensacoes],reflexao},...e]);
+    setFome(5);setEmocoes([]);setPensamento("");setComeu("");setAlivio(5);setDuracao("");setSensacoes([]);setReflexao("");
+    setMsg("✓ Salvo!");setTimeout(()=>setMsg(""),2000);
+  }
+  const fc=fome<=3?"#059669":fome<=6?"#d97706":"#dc2626";
+  const ac=alivio<=3?"#059669":alivio<=6?"#d97706":"#dc2626";
+  return(
+    <div>
+      <div style={{background:"#fdf4ff",border:"1px solid #e9d5ff",borderRadius:10,padding:12,marginBottom:16,fontSize:12,color:"#5a007a",lineHeight:1.6}}>Use sempre que sentir urgência de comer ou após um episódio de compulsão. O objetivo é entender o "porquê" — sem julgamento.</div>
+      {[["Nível de Fome Física",fome,setFome,fc],["Nível de Alívio após comer",alivio,setAlivio,ac]].map(([lbl,val,set,col])=><div key={lbl} style={{marginBottom:14}}>
+        <div style={{display:"flex",justifyContent:"space-between",fontSize:12,marginBottom:4}}><span style={{fontWeight:600}}>{lbl}</span><span style={{fontWeight:700,color:col}}>{val}/10</span></div>
+        <input type="range" min={0} max={10} value={val} onChange={e=>set(+e.target.value)} style={{width:"100%",accentColor:"var(--purple)"}}/>
+      </div>)}
+      <div style={{marginBottom:12}}><label style={{fontWeight:600,fontSize:13,display:"block",marginBottom:6}}>Emoções presentes</label><Chips opts={EMOCOES} sel={emocoes} toggle={o=>setEmocoes(v=>v.includes(o)?v.filter(x=>x!==o):[...v,o])}/></div>
+      <div style={{marginBottom:12}}><label style={{fontWeight:600,fontSize:13,display:"block",marginBottom:6}}>Pensamento permissivo</label><textarea className="form-input" rows={2} value={pensamento} onChange={e=>setPensamento(e.target.value)} placeholder="'Só desta vez...' 'Mereço isso...'"/></div>
+      <div style={{marginBottom:12}}><label style={{fontWeight:600,fontSize:13,display:"block",marginBottom:6}}>O que você comeu?</label><textarea className="form-input" rows={2} value={comeu} onChange={e=>setComeu(e.target.value)} placeholder="Descreva os alimentos..."/></div>
+      <div style={{marginBottom:12}}><label style={{fontWeight:600,fontSize:13,display:"block",marginBottom:8}}>Como você se sentiu depois?</label><Chips opts={SENSACOES} sel={sensacoes} toggle={o=>setSensacoes(v=>v.includes(o)?v.filter(x=>x!==o):[...v,o])}/></div>
+      <div style={{marginBottom:16}}><label style={{fontWeight:600,fontSize:13,display:"block",marginBottom:6}}>Reflexão</label><textarea className="form-input" rows={2} value={reflexao} onChange={e=>setReflexao(e.target.value)} placeholder="O que esse episódio revela sobre suas necessidades emocionais?"/></div>
+      <button className="btn btn-purple" style={{width:"100%"}} onClick={salvar}>{msg||"Salvar registro"}</button>
+      {entries.length>0&&<div style={{marginTop:14}}>
+        <div style={{fontWeight:600,fontSize:13,marginBottom:8}}>{entries.length} registro(s)</div>
+        {entries.map(en=><div key={en.id} style={{background:"#f9fafb",borderRadius:10,padding:12,marginBottom:8,fontSize:12,border:"1px solid #e5e7eb"}}>
+          <div style={{display:"flex",justifyContent:"space-between",marginBottom:4}}><span style={{color:"#6b7280"}}>{en.data}</span><span style={{background:"#ede9fe",color:"var(--purple)",borderRadius:20,padding:"1px 8px",fontWeight:600}}>Fome: {en.fome}/10</span></div>
+          <div><strong>Comeu:</strong> {en.comeu}</div>
+          {en.emocoes.length>0&&<div style={{color:"#6b7280"}}><strong>Emoções:</strong> {en.emocoes.join(", ")}</div>}
+        </div>)}
+      </div>}
+    </div>
+  );
+}
+
+// ── Treino Neuro-Auditivo ───────────────────────────────────────────────────
+function FerramentaTreino(){
+  const [modulo,setModulo]=useState(0);
+  const [respostas,setRespostas]=useState({});
+  const [feedbacks,setFeedbacks]=useState({});
+  const [score,setScore]=useState(0);
+  const [total,setTotal]=useState(0);
+  const [tocando,setTocando]=useState(null);
+  const ctxRef=useRef(null);
+  function getCtx(){if(!ctxRef.current)ctxRef.current=new AudioContext();if(ctxRef.current.state==="suspended")ctxRef.current.resume();return ctxRef.current;}
+  function tocarTom(freq,dur=1.5,vol=0.4,wave="sine"){const ctx=getCtx();const osc=ctx.createOscillator();const g=ctx.createGain();osc.type=wave;osc.frequency.value=freq;g.gain.setValueAtTime(vol,ctx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+dur);osc.connect(g);g.connect(ctx.destination);osc.start();osc.stop(ctx.currentTime+dur);}
+  function falar(txt,pitch=1,rate=0.9){if(!("speechSynthesis" in window))return;window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(txt);u.lang="pt-BR";u.pitch=pitch;u.rate=rate;const v=window.speechSynthesis.getVoices().find(x=>x.lang.startsWith("pt"));if(v)u.voice=v;window.speechSynthesis.speak(u);}
+  const MODULOS=[
+    {titulo:"Grave / Agudo",emoji:"🎵",exercicios:[
+      {id:"m0e0",pergunta:"Ouça e diga: GRAVE ou AGUDO?",btn:{label:"▶ Tocar",action:()=>{const f=Math.random()>0.5?180:2200;tocarTom(f);return f>500?"agudo":"grave";}},opcoes:["grave","agudo"],resposta:"grave",dica:"Sons graves têm frequência baixa. Sons agudos têm frequência alta."},
+      {id:"m0e1",pergunta:"Qual som é mais GRAVE?",btn:{label:"▶ Som A (80Hz)",action:()=>tocarTom(80)},btn2:{label:"▶ Som B (800Hz)",action:()=>tocarTom(800)},opcoes:["Som A","Som B"],resposta:"Som A",dica:"O Som A (80Hz) é grave — similar a um contrabaixo."},
+    ]},
+    {titulo:"Vozes",emoji:"🎤",exercicios:[
+      {id:"m1e0",pergunta:"Feminina ou masculina?",btn:{label:"▶ Ouvir",action:()=>falar("Olá, como você está hoje?",1.4,0.95)},opcoes:["Feminina","Masculina"],resposta:"Feminina",dica:"Tom agudo + pitch alto = voz feminina."},
+      {id:"m1e1",pergunta:"Feminina ou masculina?",btn:{label:"▶ Ouvir",action:()=>falar("Bom dia, tudo bem com você?",0.5,0.85)},opcoes:["Feminina","Masculina"],resposta:"Masculina",dica:"Pitch baixo indica voz masculina."},
+    ]},
+    {titulo:"Intensidade",emoji:"🔊",exercicios:[
+      {id:"m2e0",pergunta:"Qual som tem mais VOLUME?",btn:{label:"▶ Som Fraco",action:()=>tocarTom(440,1,0.08)},btn2:{label:"▶ Som Forte",action:()=>tocarTom(440,1,0.7)},opcoes:["Som Fraco","Som Forte"],resposta:"Som Forte",dica:"O Som Forte foi tocado com volume muito maior."},
+    ]},
+    {titulo:"Emoções",emoji:"😊",exercicios:[
+      {id:"m3e0",pergunta:"Que emoção você identifica?",btn:{label:"▶ Ouvir",action:()=>falar("Hoje foi um dia incrível, estou muito feliz!",1.4,1.1)},opcoes:["Alegria","Tristeza","Raiva","Medo"],resposta:"Alegria",dica:"Tom agudo, rápido e animado = alegria."},
+      {id:"m3e1",pergunta:"Que emoção você identifica?",btn:{label:"▶ Ouvir",action:()=>falar("Não sei o que fazer, tudo parece muito difícil.",0.8,0.8)},opcoes:["Alegria","Tristeza","Frustração","Ansiedade"],resposta:"Tristeza",dica:"Tom baixo e pausado = tristeza."},
+    ]},
+  ];
+  function responder(exId,val,correto){
+    const c=val===correto;
+    setRespostas(r=>({...r,[exId]:val}));
+    setFeedbacks(f=>({...f,[exId]:c}));
+    if(!respostas[exId]){setTotal(t=>t+1);if(c)setScore(s=>s+1);}
+  }
+  const mod=MODULOS[modulo];
+  return(
+    <div>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14,padding:"8px 12px",background:"var(--purple-soft)",borderRadius:8}}>
+        <span style={{fontSize:13,fontWeight:600,color:"var(--purple)"}}>🏆 {score}/{total}</span>
+        <span style={{fontSize:12,color:"var(--purple)"}}>{Math.round(total>0?score/total*100:0)}% de acerto</span>
+      </div>
+      <div style={{display:"flex",gap:6,overflowX:"auto",marginBottom:16,paddingBottom:4}}>
+        {MODULOS.map((m,i)=><button key={i} onClick={()=>setModulo(i)} style={{padding:"6px 12px",borderRadius:20,border:"1.5px solid",borderColor:modulo===i?"var(--purple)":"#e5e7eb",background:modulo===i?"var(--purple)":"white",color:modulo===i?"white":"#6b7280",fontSize:12,cursor:"pointer",whiteSpace:"nowrap",flexShrink:0}}>{m.emoji} {m.titulo}</button>)}
+      </div>
+      <div style={{fontWeight:700,fontSize:14,marginBottom:14}}>{mod.emoji} {mod.titulo}</div>
+      {mod.exercicios.map(ex=><div key={ex.id} style={{background:"#f9fafb",borderRadius:12,padding:14,marginBottom:14,border:"1px solid #e5e7eb"}}>
+        <div style={{fontWeight:600,fontSize:13,marginBottom:10}}>{ex.pergunta}</div>
+        <div style={{display:"flex",gap:8,flexWrap:"wrap",marginBottom:10}}>
+          <button className="btn btn-purple" style={{fontSize:12}} onClick={()=>{setTocando(ex.id);ex.btn.action();setTimeout(()=>setTocando(null),2000);}}>{tocando===ex.id?"🔊 Tocando...":ex.btn.label}</button>
+          {ex.btn2&&<button className="btn btn-outline" style={{fontSize:12}} onClick={()=>ex.btn2.action()}>{ex.btn2.label}</button>}
+        </div>
+        <div style={{display:"flex",gap:8,flexWrap:"wrap",marginBottom:8}}>
+          {ex.opcoes.map((op,oi)=><button key={oi} onClick={()=>responder(ex.id,op,ex.resposta)} style={{padding:"8px 16px",borderRadius:10,border:"1.5px solid",fontSize:13,cursor:"pointer",fontWeight:500,borderColor:respostas[ex.id]===op?(feedbacks[ex.id]?"#059669":"#dc2626"):"#e5e7eb",background:respostas[ex.id]===op?(feedbacks[ex.id]?"#d1fae5":"#fee2e2"):"white",color:respostas[ex.id]===op?(feedbacks[ex.id]?"#059669":"#dc2626"):"#374151"}}>{op}</button>)}
+        </div>
+        {respostas[ex.id]&&<div style={{padding:"8px 12px",borderRadius:8,background:feedbacks[ex.id]?"#d1fae5":"#fee2e2",fontSize:12,color:feedbacks[ex.id]?"#059669":"#dc2626",fontWeight:600}}>{feedbacks[ex.id]?"✓ Correto! ":"✗ Incorreto. "}{ex.dica}</div>}
+      </div>)}
+    </div>
+  );
+}
+
+// ── Anamnese ────────────────────────────────────────────────────────────────
+function FerramentaAnamnese(){
+  const PERFIS=["Criança (0-12)","Adolescente (13-17)","Adulto (18-59)","Idoso (60+)"];
+  const SECOES={"Criança (0-12)":["Identificação","Gestação e Parto","Marcos do Desenvolvimento","Alimentação e Sono","Desenvolvimento Motor","Linguagem","Comportamento","Escolaridade","Histórico de Saúde","Dinâmica Familiar"],"Adolescente (13-17)":["Identificação","Histórico Escolar","Relações Sociais","Comportamento e Humor","Sexualidade","Substâncias","Histórico de Saúde","Dinâmica Familiar"],"Adulto (18-59)":["Identificação","Queixa Principal","Histórico da Queixa","Histórico Psicológico","Saúde Física","Relacionamentos","Trabalho e Estudo","Sono e Alimentação","Histórico Familiar"],"Idoso (60+)":["Identificação","Queixa Principal","Histórico Médico","Medicamentos","Cognição","Mobilidade","Sono","Suporte Social","Dinâmica Familiar"]};
+  const [perfil,setPerfil]=useState("");
+  const [secao,setSecao]=useState(0);
+  const [respostas,setRespostas]=useState({});
+  const [concluido,setConcluido]=useState(false);
+  if(!perfil)return(<div style={{textAlign:"center",padding:"20px 0"}}>
+    <div style={{fontSize:44,marginBottom:12}}>📄</div>
+    <div style={{fontFamily:"var(--font-display)",fontSize:18,fontWeight:600,marginBottom:14}}>Selecione o perfil:</div>
+    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,maxWidth:320,margin:"0 auto"}}>
+      {PERFIS.map(p=><button key={p} className="btn btn-outline" style={{padding:"12px 8px",fontSize:12,fontWeight:600}} onClick={()=>setPerfil(p)}>{p}</button>)}
+    </div>
+  </div>);
+  const secs=SECOES[perfil]||[];
+  if(concluido)return(<div style={{textAlign:"center",padding:40}}>
+    <div style={{fontSize:48,marginBottom:12}}>✅</div>
+    <div style={{fontFamily:"var(--font-display)",fontSize:18,fontWeight:600,marginBottom:8}}>Anamnese Concluída!</div>
+    <div style={{fontSize:13,color:"#6b7280",marginBottom:16}}>{perfil} · {secs.length} seções</div>
+    <button className="btn btn-purple" onClick={()=>{setPerfil("");setSecao(0);setRespostas({});setConcluido(false);}}>Nova Anamnese</button>
+  </div>);
+  return(<div>
+    <div style={{display:"flex",justifyContent:"space-between",fontSize:12,color:"#6b7280",marginBottom:8}}><span style={{color:"var(--purple)",fontWeight:600}}>{perfil}</span><span>Seção {secao+1}/{secs.length}</span></div>
+    <div style={{background:"#e5e7eb",borderRadius:20,height:5,marginBottom:16}}><div style={{background:"var(--purple)",height:5,borderRadius:20,width:(secao/secs.length*100)+"%",transition:"width .3s"}}/></div>
+    <div style={{fontFamily:"var(--font-display)",fontSize:17,fontWeight:600,marginBottom:12}}>{secs[secao]}</div>
+    <textarea className="form-input" rows={5} value={respostas[secs[secao]]||""} onChange={e=>setRespostas(r=>({...r,[secs[secao]]:e.target.value}))} placeholder={"Registre as informações sobre "+secs[secao].toLowerCase()+"..."}/>
+    <div style={{display:"flex",gap:10,marginTop:14,justifyContent:"space-between"}}>
+      <button className="btn btn-ghost" onClick={()=>setSecao(s=>Math.max(0,s-1))} disabled={secao===0}>← Anterior</button>
+      {secao<secs.length-1?<button className="btn btn-purple" onClick={()=>setSecao(s=>s+1)}>Próxima →</button>:<button className="btn btn-purple" onClick={()=>setConcluido(true)}>✓ Concluir</button>}
+    </div>
+  </div>);
+}
+
+// ── Modal Visualizar Ferramenta ─────────────────────────────────────────────
+function ModalVisualizarFerramenta({recurso,onClose}){
+  function renderFerramenta(){
+    const k=recurso.formularioKey;
+    if(k==="breathing-478")      return <FerramentaRespiracao musicUrl={recurso.musicUrl}/>;
+    if(k==="muscle-relaxation")  return <FerramentaRelaxamento musicUrl={recurso.musicUrl}/>;
+    if(k==="decision-tree")      return <FerramentaArvore/>;
+    if(k==="abc-record")         return <FerramentaABC/>;
+    if(k==="anxiety-management") return <FerramentaGestaoAnsiedade/>;
+    if(k==="emotional-eating")   return <FerramentaRastreamento/>;
+    if(k==="treino-neuro-auditivo") return <FerramentaTreino/>;
+    if(k==="entrevista-clinica") return(
+      <div style={{textAlign:"center",padding:"30px 20px"}}>
+        <div style={{fontSize:44,marginBottom:12}}>📝</div>
+        <div style={{fontFamily:"var(--font-display)",fontSize:18,fontWeight:600,marginBottom:8}}>Entrevista Clínica Inicial</div>
+        <p style={{fontSize:13,color:"#6b7280",marginBottom:20,lineHeight:1.7}}>Instrumento de avaliação com perfil etário, escalas de observação, questionário de habilidades e hipóteses DSM-5.</p>
+        <a href="https://luciakratz-arch.github.io/entrevista-inicial/" target="_blank" className="btn btn-purple" style={{textDecoration:"none",display:"inline-flex",alignItems:"center",gap:8}}>🔗 Abrir Entrevista Clínica</a>
+      </div>
+    );
+    if(k==="anamnese") return <FerramentaAnamnese/>;
+    return <div style={{textAlign:"center",padding:40,color:"#6b7280"}}>Ferramenta não configurada.</div>;
+  }
+  const EMOJIS={relaxamento:"💨",tcc:"🧠",avaliacao:"📋",musicoterapia:"🎵",outro:"🔧"};
+  const iconeRecurso = ICONES_FERRAMENTA?.[recurso.formularioKey] || EMOJIS[recurso.categoria] || "🔧";
+  return(
+    <div>
+      <button className="btn btn-ghost" style={{marginBottom:16,padding:"8px 12px"}} onClick={onClose}>
+        <Icon name="arrow-left" size={16}/> Voltar para Recursos
+      </button>
+      <div style={{background:"#f9f5ff",border:"1px solid #e9d5ff",borderRadius:8,padding:"10px 16px",marginBottom:16,display:"flex",alignItems:"center",gap:8,fontSize:12,color:"#7c3aed"}}>
+        <Icon name="eye" size={14}/> <strong>Visualização do paciente</strong> — assim a ferramenta aparecerá na área do paciente
+      </div>
+      <div className="card">
+        <div style={{display:"flex",alignItems:"flex-start",gap:12,marginBottom:16,paddingBottom:16,borderBottom:"1px solid #f3f4f6"}}>
+          <div style={{width:52,height:52,borderRadius:12,background:"var(--purple-soft)",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,fontSize:26}}>
+            {iconeRecurso}
+          </div>
+          <div style={{flex:1}}>
+            <div style={{fontFamily:"var(--font-display)",fontSize:18,fontWeight:600}}>{recurso.titulo}</div>
+            <div style={{fontSize:13,color:"#6b7280",marginTop:4}}>{recurso.descricao}</div>
+            {recurso.mediaUrl&&<a href={recurso.mediaUrl} target="_blank" rel="noreferrer" style={{display:"inline-flex",alignItems:"center",gap:6,marginTop:8,padding:"6px 14px",borderRadius:20,background:"var(--purple-soft)",color:"var(--purple)",fontSize:12,fontWeight:600,textDecoration:"none",border:"1px solid #e9d5ff"}}>
+              ▶ Ouvir / Assistir
+            </a>}
+          </div>
+        </div>
+        {renderFerramenta()}
+      </div>
+    </div>
+  );
+}
+
+// ── Protocolo de Terapia de Casais ──────────────────────────────────────────
+const PROTOCOLO_CASAIS = [
+  {
+    stage:0, titulo:"Diagnóstico Inicial de Casal", subtitulo:"Avaliação inicial do bem-estar conjugal antes da jornada", emoji:"🔍", cor:"#7c3aed", bg:"#f5f3ff",
+    atividades:[
+      {id:"inventario-bem-estar", titulo:"Inventário de Bem-Estar de Casais", desc:"42 questões sobre comunicação, resolução de conflitos, intimidade emocional, satisfação sexual e cooperação"},
+      {id:"roda-vida-relacionamento", titulo:"Roda da Vida do Relacionamento", desc:"Avalie 8 dimensões do relacionamento em formato visual"},
+      {id:"3-metas", titulo:"Nossas 3 Metas do Relacionamento", desc:"Definam juntos as 3 principais metas terapêuticas"},
+      {id:"quem-sou", titulo:"Quem Eu Sou no Relacionamento", desc:"Reflexão individual sobre identidade no relacionamento"},
+      {id:"o-que-quero", titulo:"O Que Eu Quero e Não Quero Mais", desc:"Mapeamento de expectativas e limites"}
+    ]
+  },
+  {
+    stage:1, titulo:"Reconexão e Segurança Emocional", subtitulo:"Reduzir defensividade e aumentar conexão emocional", emoji:"💚", cor:"#059669", bg:"#d1fae5",
+    atividades:[
+      {id:"detalhes-dia", titulo:"Detalhes do Dia a Dia", desc:"Compartilhem os pequenos detalhes que fazem diferença na conexão diária"},
+      {id:"plano-casal-ocupado", titulo:"Plano de Ação para um Casal Ocupado Demais", desc:"Estratégias práticas para manter conexão na correria"}
+    ]
+  },
+  {
+    stage:2, titulo:"Identidade e Vínculo do Casal", subtitulo:"Resgatar identidade afetiva e visão compartilhada", emoji:"💜", cor:"#7c3aed", bg:"#ede9fe",
+    atividades:[
+      {id:"renovando-votos", titulo:"Renovando os Votos", desc:"Recontem a história do casal e renovem seus compromissos através de 5 narrativas guiadas"}
+    ]
+  },
+  {
+    stage:3, titulo:"Conceitualização Cognitiva", subtitulo:"Identificar padrões cognitivos e crenças relacionais", emoji:"🧠", cor:"#0891b2", bg:"#e0f2fe",
+    atividades:[
+      {id:"mapa-cognitivo", titulo:"Mapa Cognitivo do Relacionamento", desc:"Identificar pensamentos automáticos, crenças e padrões que afetam o relacionamento"}
+    ]
+  },
+  {
+    stage:4, titulo:"Reestruturação Relacional", subtitulo:"Criar novos padrões emocionais e comportamentais", emoji:"🌱", cor:"#16a34a", bg:"#dcfce7",
+    atividades:[
+      {id:"novos-padroes", titulo:"Novos Padrões Relacionais", desc:"Desenvolver e praticar novos comportamentos e respostas emocionais"}
+    ]
+  }
+];
+
+const CHECKIN_SEMANAL = [
+  "Hoje eu me sinto conectado(a) com meu parceiro(a)",
+  "Sinto que fui ouvido(a) esta semana",
+  "Expressamos afeto um pelo outro",
+  "Resolvemos conflitos de forma saudável",
+  "Dedicamos tempo de qualidade juntos",
+  "Sinto que somos uma equipe",
+  "Me sinto seguro(a) emocionalmente com meu parceiro(a)"
+];
+
+function AbaProtocoloCasais() {
+  const [expandido, setExpandido] = useState(null);
+  const [atividadeAberta, setAtividadeAberta] = useState(null);
+  const [respostas, setRespostas] = useState({});
+  const [checkin, setCheckin] = useState({});
+  const [msg, setMsg] = useState("");
+
+  if(atividadeAberta){
+    const {etapa, at} = atividadeAberta;
+    return(
+      <div>
+        <button className="btn btn-ghost" style={{marginBottom:16,padding:"8px 12px"}} onClick={()=>setAtividadeAberta(null)}>
+          <Icon name="arrow-left" size={16}/> Voltar ao Protocolo
+        </button>
+        <div className="card" style={{marginBottom:16,background:etapa.bg,border:"1.5px solid "+etapa.cor+"40"}}>
+          <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:4}}>
+            <span style={{fontSize:28}}>{etapa.emoji}</span>
+            <div>
+              <div style={{fontWeight:700,fontSize:14,color:etapa.cor}}>{etapa.stage===0?"Diagnóstico":"Etapa "+etapa.stage} — {etapa.titulo}</div>
+              <div style={{fontSize:12,color:"var(--text-muted)"}}>{at.titulo}</div>
+            </div>
+          </div>
+          <p style={{fontSize:13,color:"var(--gray-700)",marginTop:8,paddingLeft:38}}>{at.desc}</p>
+        </div>
+        <div className="card">
+          <div style={{fontWeight:600,fontSize:15,marginBottom:16}}>{at.titulo}</div>
+          <div style={{background:"#f9fafb",borderRadius:10,padding:14,marginBottom:16,fontSize:13,color:"#6b7280",lineHeight:1.7}}>
+            Responda com honestidade e na presença da psicóloga. Esta atividade faz parte do protocolo de Terapia de Casais TCC.
+          </div>
+          <div style={{display:"flex",flexDirection:"column",gap:12}}>
+            {[1,2,3].map(n=>(
+              <div key={n}>
+                <label style={{fontWeight:600,fontSize:13,display:"block",marginBottom:6}}>Reflexão {n}</label>
+                <textarea className="form-input" rows={3}
+                  value={respostas[at.id+"_"+n]||""}
+                  onChange={e=>setRespostas(r=>({...r,[at.id+"_"+n]:e.target.value}))}
+                  placeholder="Escreva sua resposta..."/>
+              </div>
+            ))}
+          </div>
+          <button className="btn btn-purple" style={{width:"100%",marginTop:16}} onClick={()=>{setMsg("✓ Salvo!");setTimeout(()=>setMsg(""),2000);}}>
+            {msg||<><Icon name="save" size={15}/> Salvar respostas</>}
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <div style={{background:"var(--purple-bg)",border:"1px solid var(--purple)30",borderRadius:12,padding:14,marginBottom:20,display:"flex",alignItems:"flex-start",gap:10}}>
+        <Icon name="heart" size={16}/>
+        <div style={{fontSize:13,color:"var(--gray-700)",lineHeight:1.6}}>
+          <strong>Protocolo TCC para Casais</strong> — diagnóstico inicial + 4 etapas progressivas. Clique em cada atividade para acessar.
+        </div>
+      </div>
+
+      {/* Check-in Semanal */}
+      <div style={{borderRadius:12,border:"1.5px solid #fda4af",overflow:"hidden",marginBottom:12}}>
+        <button onClick={()=>setExpandido(expandido==="checkin"?null:"checkin")}
+          style={{width:"100%",display:"flex",alignItems:"center",gap:12,padding:"14px 18px",background:"linear-gradient(to right,#fff1f2,#fdf2f8)",border:"none",cursor:"pointer",textAlign:"left"}}>
+          <span style={{fontSize:22}}>✨</span>
+          <div style={{flex:1}}>
+            <div style={{fontWeight:700,fontSize:14,color:"#be185d"}}>Check-in Semanal do Casal</div>
+            <div style={{fontSize:12,color:"var(--text-muted)"}}>Recorrente · 7 questões de conexão emocional</div>
+          </div>
+          <Icon name={expandido==="checkin"?"chevron-up":"chevron-down"} size={16}/>
+        </button>
+        {expandido==="checkin"&&(
+          <div style={{background:"white",padding:"16px 18px"}}>
+            <div style={{fontSize:12,color:"var(--text-muted)",marginBottom:12}}>Escala: 1=Nunca · 2=Raramente · 3=Às vezes · 4=Frequentemente · 5=Sempre</div>
+            {CHECKIN_SEMANAL.map((q,i)=>(
+              <div key={i} style={{display:"flex",alignItems:"center",gap:10,padding:"10px 0",borderBottom:i<CHECKIN_SEMANAL.length-1?"1px solid var(--gray-100)":"none"}}>
+                <div style={{width:22,height:22,borderRadius:"50%",background:"#ffe4e6",color:"#be185d",display:"flex",alignItems:"center",justifyContent:"center",fontSize:11,fontWeight:700,flexShrink:0}}>{i+1}</div>
+                <div style={{fontSize:13,flex:1,lineHeight:1.4}}>{q}</div>
+                <div style={{display:"flex",gap:4}}>
+                  {[1,2,3,4,5].map(v=>(
+                    <button key={v} onClick={()=>setCheckin(c=>({...c,[i]:v}))} style={{width:28,height:28,borderRadius:"50%",border:"1.5px solid",borderColor:checkin[i]===v?"#be185d":"#e5e7eb",background:checkin[i]===v?"#be185d":"white",color:checkin[i]===v?"white":"#6b7280",fontSize:11,fontWeight:600,cursor:"pointer"}}>{v}</button>
+                  ))}
+                </div>
+              </div>
+            ))}
+            <button className="btn btn-purple" style={{width:"100%",marginTop:12,background:"#be185d",border:"none"}} onClick={()=>{setMsg("✓ Check-in salvo!");setTimeout(()=>setMsg(""),2000);}}>
+              {msg||"Salvar Check-in"}
+            </button>
+          </div>
+        )}
+      </div>
+
+      {PROTOCOLO_CASAIS.map(etapa=>(
+        <div key={etapa.stage} style={{borderRadius:12,border:"1.5px solid",borderColor:etapa.cor+"40",overflow:"hidden",marginBottom:12}}>
+          <button onClick={()=>setExpandido(expandido===etapa.stage?null:etapa.stage)}
+            style={{width:"100%",display:"flex",alignItems:"center",gap:12,padding:"14px 18px",background:etapa.bg,border:"none",cursor:"pointer",textAlign:"left"}}>
+            <span style={{fontSize:22}}>{etapa.emoji}</span>
+            <div style={{flex:1}}>
+              <div style={{fontWeight:700,fontSize:14,color:etapa.cor}}>
+                {etapa.stage===0?"Diagnóstico":"Etapa "+etapa.stage} — {etapa.titulo}
+              </div>
+              <div style={{fontSize:12,color:"var(--text-muted)",marginTop:2}}>{etapa.subtitulo}</div>
+            </div>
+            <span style={{background:"white",color:etapa.cor,borderRadius:20,padding:"2px 10px",fontSize:11,fontWeight:600,border:"1px solid "+etapa.cor+"40"}}>
+              {etapa.atividades.length} ativ.
+            </span>
+            <Icon name={expandido===etapa.stage?"chevron-up":"chevron-down"} size={16}/>
+          </button>
+          {expandido===etapa.stage&&(
+            <div style={{background:"white",padding:"12px 18px",display:"flex",flexDirection:"column",gap:8}}>
+              {etapa.atividades.map(at=>(
+                <div key={at.id} style={{display:"flex",alignItems:"flex-start",gap:12,padding:"12px 14px",background:"var(--gray-50)",borderRadius:10,border:"1px solid var(--gray-200)",cursor:"pointer",transition:"all .15s"}}
+                  onClick={()=>setAtividadeAberta({etapa,at})}
+                  onMouseEnter={e=>{e.currentTarget.style.background=etapa.bg;e.currentTarget.style.borderColor=etapa.cor+"40";}}
+                  onMouseLeave={e=>{e.currentTarget.style.background="var(--gray-50)";e.currentTarget.style.borderColor="var(--gray-200)";}}>
+                  <div style={{width:8,height:8,borderRadius:"50%",background:etapa.cor,marginTop:5,flexShrink:0}}/>
+                  <div style={{flex:1}}>
+                    <div style={{fontWeight:600,fontSize:13}}>{at.titulo}</div>
+                    <div style={{fontSize:12,color:"var(--text-muted)",marginTop:2,lineHeight:1.5}}>{at.desc}</div>
+                  </div>
+                  <span style={{fontSize:12,color:etapa.cor,fontWeight:600,flexShrink:0}}>Acessar →</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ── Aba Fábulas ──────────────────────────────────────────────────────────────
+const CATS_FABULAS = {
+  ansiedade:   {label:"Ansiedade",          cor:"#6366f1", bg:"#eef2ff"},
+  resiliência: {label:"Resiliência",        cor:"#0ea5e9", bg:"#e0f2fe"},
+  crescimento: {label:"Crescimento",        cor:"#16a34a", bg:"#dcfce7"},
+  esperança:   {label:"Esperança",          cor:"#f59e0b", bg:"#fef3c7"},
+  autoconfiança:{label:"Autoconfiança",     cor:"#7c3aed", bg:"#ede9fe"},
+  tcc:         {label:"TCC",               cor:"#84cc16", bg:"#f7fee7"},
+  perdão:      {label:"Perdão",             cor:"#8b5cf6", bg:"#f5f3ff"},
+  autoestima:  {label:"Autoestima",         cor:"#ec4899", bg:"#fdf2f8"},
+  autoconhecimento:{label:"Autoconhecimento",cor:"#374151",bg:"#f9fafb"},
+  mindfulness: {label:"Mindfulness",       cor:"#059669", bg:"#d1fae5"},
+  relacionamentos:{label:"Relacionamentos",cor:"#d97706", bg:"#fef3c7"},
+  perspectiva: {label:"Perspectiva",       cor:"#1e3a5f", bg:"#e0f2fe"},
+  "expressão emocional":{label:"Expressão Emocional",cor:"#0891b2",bg:"#cffafe"},
+  "regulação emocional":{label:"Regulação Emocional",cor:"#2563eb",bg:"#dbeafe"},
+};
+
+function AbaFabulas() {
+  const [fabulas, setFabulas] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [fabulaAberta, setFabulaAberta] = useState(null);
+  const [filtro, setFiltro] = useState("todos");
+
+  useEffect(()=>{
+    const unsub = db.collection("clinica_fabulas").onSnapshot(snap=>{
+      setFabulas(snap.docs.map(d=>({id:d.id,...d.data()})));
+      setLoading(false);
+    },()=>setLoading(false));
+    return unsub;
+  },[]);
+
+  if(loading) return <Spinner/>;
+
+  if(fabulaAberta){
+    const cat = CATS_FABULAS[fabulaAberta.categoria]||{label:fabulaAberta.categoria,cor:"#7c3aed",bg:"#ede9fe"};
+    return (
+      <div>
+        <button className="btn btn-ghost" style={{marginBottom:16,padding:"8px 12px"}} onClick={()=>setFabulaAberta(null)}>
+          <Icon name="arrow-left" size={16}/> Todas as fábulas
+        </button>
+        <div className="card" style={{marginBottom:16,background:cat.cor,color:"white"}}>
+          <div style={{textAlign:"center",padding:"8px 0 16px"}}>
+            <div style={{fontSize:52,marginBottom:12}}>{fabulaAberta.emoji}</div>
+            <div style={{fontFamily:"var(--font-display)",fontSize:22,fontWeight:600,marginBottom:8}}>{fabulaAberta.titulo}</div>
+            <div style={{fontSize:13,fontStyle:"italic",opacity:0.9}}>"{fabulaAberta.moral}"</div>
+            <div style={{marginTop:12,fontSize:12,opacity:0.75}}>{(fabulaAberta.paginas||[]).length} páginas · {(fabulaAberta.perguntas||[]).length} reflexões</div>
+          </div>
+        </div>
+        {(fabulaAberta.paginas||[]).map((pag,i)=>(
+          <div key={i} className="card" style={{marginBottom:12}}>
+            <div style={{fontSize:11,fontWeight:700,color:cat.cor,marginBottom:8,textTransform:"uppercase",letterSpacing:"0.8px"}}>Página {i+1} de {fabulaAberta.paginas.length}</div>
+            <p style={{fontSize:14,lineHeight:1.9,color:"var(--gray-700)"}}>{pag}</p>
+          </div>
+        ))}
+        {(fabulaAberta.perguntas||[]).length>0&&(
+          <div className="card" style={{border:"1.5px solid "+cat.cor+"30",background:cat.bg}}>
+            <div style={{fontWeight:700,marginBottom:14,display:"flex",alignItems:"center",gap:8,color:cat.cor}}>
+              <Icon name="help-circle" size={16}/> Perguntas de Reflexão
+            </div>
+            {fabulaAberta.perguntas.map((p,i)=>(
+              <div key={i} style={{display:"flex",gap:10,padding:"12px 0",borderBottom:i<fabulaAberta.perguntas.length-1?"1px solid "+cat.cor+"20":"none"}}>
+                <div style={{width:26,height:26,borderRadius:"50%",background:cat.cor,color:"white",display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,fontWeight:700,flexShrink:0}}>{i+1}</div>
+                <p style={{fontSize:13,lineHeight:1.6,color:"var(--gray-700)"}}>{p}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  if(fabulas.length===0) return (
+    <div className="card" style={{textAlign:"center",padding:48,color:"var(--text-muted)"}}>
+      <Icon name="book-open" size={40}/>
+      <div style={{marginTop:12,fontWeight:500}}>Nenhuma fábula cadastrada ainda.</div>
+      <div style={{fontSize:13,marginTop:6}}>Execute o arquivo <code>popular-recursos.html</code> para criar as 15 fábulas.</div>
+    </div>
+  );
+
+  // Categorias únicas
+  const cats = ["todos", ...new Set(fabulas.map(f=>f.categoria||"outro"))];
+  const filtradas = filtro==="todos" ? fabulas : fabulas.filter(f=>(f.categoria||"outro")===filtro);
+  const porCat = filtradas.reduce((acc,f)=>{
+    const k = f.categoria||"outro";
+    if(!acc[k]) acc[k]=[];
+    acc[k].push(f);
+    return acc;
+  },{});
+
+  return (
+    <div>
+      {/* Filtros */}
+      <div style={{display:"flex",gap:6,flexWrap:"wrap",marginBottom:20,overflowX:"auto",paddingBottom:4}}>
+        {cats.map(cat=>{
+          const c = CATS_FABULAS[cat]||{label:cat==="todos"?"Todas":cat,cor:"#7c3aed",bg:"#ede9fe"};
+          const n = cat==="todos"?fabulas.length:fabulas.filter(f=>(f.categoria||"outro")===cat).length;
+          const ativo = filtro===cat;
+          return(
+            <button key={cat} onClick={()=>setFiltro(cat)} style={{display:"flex",alignItems:"center",gap:5,padding:"6px 14px",borderRadius:20,border:"1.5px solid",borderColor:ativo?c.cor:"#e5e7eb",background:ativo?c.cor:"white",color:ativo?"white":c.cor,fontSize:12,fontWeight:600,cursor:"pointer",whiteSpace:"nowrap",transition:"all .15s"}}>
+              {cat!=="todos"&&<span style={{fontSize:14}}>{fabulas.find(f=>f.categoria===cat)?.emoji||"📖"}</span>}
+              {cat==="todos"?"📚 Todas":c.label} <span style={{opacity:0.8,fontSize:11}}>{n}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      {Object.entries(porCat).map(([cat,itens])=>{
+        const c = CATS_FABULAS[cat]||{label:cat,cor:"#7c3aed",bg:"#ede9fe"};
+        return (
+          <div key={cat} style={{marginBottom:28}}>
+            <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12,paddingBottom:8,borderBottom:"1px solid var(--gray-100)"}}>
+              <span style={{fontWeight:700,fontSize:11,color:c.cor,textTransform:"uppercase",letterSpacing:"0.8px"}}>{c.label}</span>
+              <span style={{background:c.bg,color:c.cor,borderRadius:20,padding:"2px 8px",fontSize:11,fontWeight:600}}>{itens.length}</span>
+            </div>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(240px,1fr))",gap:12}}>
+              {itens.map(f=>(
+                <div key={f.id} style={{background:"white",border:"1.5px solid",borderColor:c.cor+"40",borderRadius:14,overflow:"hidden",cursor:"pointer",transition:"box-shadow .15s"}}
+                  onClick={()=>setFabulaAberta(f)}
+                  onMouseEnter={e=>e.currentTarget.style.boxShadow="0 4px 16px "+c.cor+"30"}
+                  onMouseLeave={e=>e.currentTarget.style.boxShadow=""}>
+                  <div style={{background:c.cor,padding:"16px",display:"flex",alignItems:"center",gap:10}}>
+                    <span style={{fontSize:28}}>{f.emoji||"📖"}</span>
+                    <div>
+                      <div style={{fontWeight:600,fontSize:13,color:"white",lineHeight:1.3}}>{f.titulo}</div>
+                      <span style={{background:"rgba(255,255,255,0.2)",color:"white",borderRadius:20,padding:"1px 8px",fontSize:10,fontWeight:600}}>{c.label}</span>
+                    </div>
+                  </div>
+                  <div style={{padding:"12px 14px"}}>
+                    <p style={{fontSize:12,color:"var(--text-muted)",fontStyle:"italic",lineHeight:1.5,marginBottom:8}}>"{f.moral}"</p>
+                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",fontSize:11,color:"var(--text-muted)"}}>
+                      <span>{(f.paginas||[]).length} pág. · {(f.perguntas||[]).length} reflexões</span>
+                      <span style={{color:c.cor,fontWeight:600,fontSize:12}}>Começar a ler →</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function RecursosTerapeuticos() {
+  const [recursos, setRecursos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [busca, setBusca] = useState("");
+  const [filtroCateg, setFiltroCateg] = useState("todos");
+  const [modal, setModal] = useState(false);
+  const [editando, setEditando] = useState(null);
+  const [form, setForm] = useState({titulo:"",descricao:"",categoria:"tcc",tipo:"interativa",formularioKey:"",musicUrl:""});
+  const [salvando, setSalvando] = useState(false);
+  const [abaView, setAbaView] = useState("ferramentas");
+
+  useEffect(()=>{
+    const unsub = db.collection("clinica_recursos").onSnapshot(snap=>{
+      setRecursos(snap.docs.map(d=>({id:d.id,...d.data()})));
+      setLoading(false);
+    },()=>setLoading(false));
+    return unsub;
+  },[]);
+
+  const abaRecursos = recursos.filter(r=>abaView==="ferramentas"?r.categoria!=="casal":r.categoria==="casal");
+  const filtrados = abaRecursos.filter(r=>{
+    const cOk = filtroCateg==="todos" || r.categoria===filtroCateg;
+    const bOk = !busca || r.titulo?.toLowerCase().includes(busca.toLowerCase()) || r.descricao?.toLowerCase().includes(busca.toLowerCase());
+    return cOk && bOk;
+  });
+
+  const porCategoria = CATEGORIAS_RECURSOS.reduce((acc,cat)=>{
+    const itens = filtrados.filter(r=>r.categoria===cat.id);
+    if(itens.length>0) acc.push({...cat, itens});
+    return acc;
+  },[]);
+
+  async function salvar(){
+    if(!form.titulo){alert("Titulo obrigatorio.");return;}
+    setSalvando(true);
+    if(editando){
+      await db.collection("clinica_recursos").doc(editando).update(form);
+    } else {
+      await db.collection("clinica_recursos").add({...form,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    }
+    setModal(false);setForm({titulo:"",descricao:"",categoria:"tcc",tipo:"interativa",formularioKey:"",musicUrl:""});setEditando(null);setSalvando(false);
+  }
+
+  async function excluir(id){if(!confirm("Excluir recurso?"))return;await db.collection("clinica_recursos").doc(id).delete();}
+
+  function abrirEditar(r){
+    setForm({titulo:r.titulo||"",descricao:r.descricao||"",categoria:r.categoria||"tcc",tipo:r.tipo||"interativa",formularioKey:r.formularioKey||"",musicUrl:r.musicUrl||""});
+    setEditando(r.id);setModal(true);
+  }
+
+  const getCatInfo = (id) => CATEGORIAS_RECURSOS.find(c=>c.id===id)||CATEGORIAS_RECURSOS[6];
+  const ICONES_FERRAMENTA={"breathing-478":"💨","muscle-relaxation":"💪","decision-tree":"🌳","abc-record":"📋","anxiety-management":"🎯","emotional-eating":"🍃","entrevista-clinica":"📝","anamnese":"📄","treino-neuro-auditivo":"🎵"};
+  const getIcone=(r)=>ICONES_FERRAMENTA[r.formularioKey]||(r.categoria==="relaxamento"?"💨":r.categoria==="tcc"?"🧠":r.categoria==="avaliacao"?"📋":r.categoria==="musicoterapia"?"🎵":"🔧");
+  const [visualizando, setVisualizando] = useState(null);
+
+  if(loading) return <Spinner/>;
+
+  if(visualizando) return <ModalVisualizarFerramenta recurso={visualizando} onClose={()=>setVisualizando(null)}/>;
+  return (
+    <div>
+      <div className="page-header" style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
+        <div>
+          <div className="page-title">Recursos Terapeuticos</div>
+          <div className="page-subtitle">{recursos.length} ferramenta{recursos.length!==1?"s":""} · {recursos.filter(r=>r.tipo==="interativa").length} interativas · {recursos.filter(r=>r.tipo==="conteudo").length} de conteudo</div>
+        </div>
+        <button className="btn btn-purple" onClick={()=>{setForm({titulo:"",descricao:"",categoria:"tcc",tipo:"interativa",formularioKey:"",musicUrl:""});setEditando(null);setModal(true);}}>
+          <Icon name="plus" size={16}/> Nova Ferramenta
+        </button>
+      </div>
+
+      {/* Abas — 3 abas */}
+      <div style={{display:"flex",gap:0,marginBottom:20,borderBottom:"1px solid var(--gray-200)"}}>
+        {[["ferramentas","Ferramentas","wrench"],["fabulas","Fábulas Terapêuticas","book-open"],["casais","Terapia de Casais","heart"]].map(([id,label,ic])=>(
+          <button key={id} onClick={()=>setAbaView(id)} style={{padding:"10px 20px",border:"none",background:"none",cursor:"pointer",fontSize:14,color:abaView===id?"var(--purple)":"var(--gray-600)",borderBottom:abaView===id?"2px solid var(--purple)":"2px solid transparent",fontWeight:abaView===id?600:400,fontFamily:"var(--font-body)",marginBottom:-1,display:"flex",alignItems:"center",gap:6}}>
+            <Icon name={ic} size={15}/>{label}
+          </button>
+        ))}
+      </div>
+
+      {/* Aba Fábulas */}
+      {abaView==="fabulas"&&<AbaFabulas/>}
+
+      {/* Aba Terapia de Casais */}
+      {abaView==="casais"&&<AbaProtocoloCasais/>}
+
+      {/* Aba Ferramentas — busca + filtros + grid */}
+      {abaView==="ferramentas"&&(<>
+      <div style={{display:"flex",gap:12,marginBottom:20,flexWrap:"wrap",alignItems:"center"}}>
+        <input className="form-input" style={{flex:1,minWidth:200}} placeholder="Buscar por nome, descricao ou tipo..." value={busca} onChange={e=>setBusca(e.target.value)}/>
+        <div style={{display:"flex",gap:6,flexWrap:"wrap"}}>
+          <button className={"btn "+(filtroCateg==="todos"?"btn-purple":"btn-ghost")} style={{fontSize:12}} onClick={()=>setFiltroCateg("todos")}>Todas {recursos.length}</button>
+          {CATEGORIAS_RECURSOS.map(c=>{
+            const n = recursos.filter(r=>r.categoria===c.id).length;
+            if(!n) return null;
+            return <button key={c.id} className={"btn "+(filtroCateg===c.id?"btn-purple":"btn-ghost")} style={{fontSize:12}} onClick={()=>setFiltroCateg(c.id)}>{c.label.split(" ")[0]} {n}</button>;
+          })}
+        </div>
+      </div>
+      {filtrados.length===0?(
+        <div className="card" style={{textAlign:"center",padding:48,color:"var(--text-muted)"}}>
+          <Icon name="wrench" size={40}/>
+          <div style={{marginTop:12}}>Nenhuma ferramenta encontrada.</div>
+        </div>
+      ):(
+        porCategoria.map(cat=>(
+          <div key={cat.id} style={{marginBottom:28}}>
+            <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:14,paddingBottom:8,borderBottom:"1px solid var(--gray-100)"}}>
+              <span style={{fontWeight:700,fontSize:12,color:cat.cor,textTransform:"uppercase",letterSpacing:"0.8px"}}>{cat.label}</span>
+              <span style={{background:cat.bg,color:cat.cor,borderRadius:20,padding:"2px 10px",fontSize:12,fontWeight:600}}>{cat.itens.length}</span>
+            </div>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:14}}>
+              {cat.itens.map(r=>(
+                <div key={r.id} style={{background:"white",border:"1.5px solid",borderColor:cat.cor+"40",borderRadius:14,padding:18,display:"flex",flexDirection:"column",gap:10}}>
+                  <div style={{display:"flex",alignItems:"flex-start",gap:8}}>
+                    <div style={{width:44,height:44,borderRadius:10,background:cat.cor,display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,flexShrink:0}}>{getIcone(r)}</div>
+                    <div style={{flex:1}}>
+                      <div style={{display:"flex",gap:6,marginBottom:4,flexWrap:"wrap"}}>
+                        <span style={{background:cat.bg,color:cat.cor,borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:600,border:"1px solid "+cat.cor+"30"}}>{r.tipo==="interativa"?"INTERATIVA":"CONTEÚDO"}</span>
+                        {r.categoria==="musicoterapia"&&<span style={{background:"#fce7f3",color:"#be185d",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:600}}>Música</span>}
+                      </div>
+                      <div style={{fontWeight:600,fontSize:14}}>{r.titulo}</div>
+                    </div>
+                  </div>
+                  <p style={{fontSize:13,color:"var(--text-muted)",lineHeight:1.5,flex:1}}>{r.descricao}</p>
+                  {r.formularioKey&&<span style={{fontSize:11,color:"var(--gray-400)",background:"var(--gray-50)",borderRadius:6,padding:"2px 8px",display:"inline-block",width:"fit-content"}}>{r.formularioKey}</span>}
+                  <div style={{display:"flex",gap:8,borderTop:"1px solid var(--gray-100)",paddingTop:10}}>
+                    <button className="btn btn-ghost" style={{fontSize:12,flex:1,color:"var(--purple)"}} onClick={()=>setVisualizando(r)}><Icon name="eye" size={13}/> Visualizar</button>
+                    <button className="btn btn-ghost" style={{fontSize:12,flex:1}} onClick={()=>abrirEditar(r)}><Icon name="pencil" size={13}/> Editar</button>
+                    <button className="btn btn-ghost" style={{padding:"6px 10px",color:"var(--danger)"}} onClick={()=>excluir(r.id)}><Icon name="trash-2" size={13}/></button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))
+      )}
+      </>)}
+
+      {/* Modal novo/editar recurso */}
+      {modal&&(
+        <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.4)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:500,padding:20}} onClick={()=>setModal(false)}>
+          <div style={{background:"white",borderRadius:16,padding:28,width:"100%",maxWidth:600,maxHeight:"90vh",overflowY:"auto"}} onClick={e=>e.stopPropagation()}>
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20}}>
+              <div style={{fontFamily:"var(--font-display)",fontSize:20,fontWeight:600}}>{editando?"Editar Ferramenta":"Nova Ferramenta"}</div>
+              <button onClick={()=>setModal(false)} style={{background:"none",border:"none",cursor:"pointer",color:"var(--gray-400)"}}><Icon name="x" size={20}/></button>
+            </div>
+            <div className="form-group" style={{marginBottom:14}}>
+              <label className="form-label">Titulo da Ferramenta *</label>
+              <input className="form-input" value={form.titulo} onChange={e=>setForm({...form,titulo:e.target.value})} autoFocus/>
+            </div>
+            <div className="form-group" style={{marginBottom:14}}>
+              <label className="form-label">Descricao curta</label>
+              <textarea className="form-input" rows={2} value={form.descricao} onChange={e=>setForm({...form,descricao:e.target.value})}/>
+            </div>
+            <div className="form-group" style={{marginBottom:14}}>
+              <label className="form-label">Categoria</label>
+              <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(180px,1fr))",gap:8}}>
+                {CATEGORIAS_RECURSOS.map(c=>(
+                  <button key={c.id} onClick={()=>setForm({...form,categoria:c.id})} style={{padding:"10px 12px",borderRadius:8,border:"1.5px solid",borderColor:form.categoria===c.id?c.cor:"var(--gray-200)",background:form.categoria===c.id?c.bg:"white",cursor:"pointer",fontSize:13,textAlign:"left",fontFamily:"var(--font-body)",color:form.categoria===c.id?c.cor:"var(--gray-700)"}}>
+                    {c.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="form-group" style={{marginBottom:14}}>
+              <label className="form-label">Tipo de ferramenta</label>
+              <div style={{display:"flex",gap:10}}>
+                {[["conteudo","Conteudo para leitura","file-text"],["interativa","Formulario interativo","zap"]].map(([v,l,ic])=>(
+                  <button key={v} onClick={()=>setForm({...form,tipo:v})} style={{flex:1,padding:"12px",borderRadius:10,border:"1.5px solid",borderColor:form.tipo===v?"var(--purple)":"var(--gray-200)",background:form.tipo===v?"var(--purple-bg)":"white",cursor:"pointer",fontSize:13,fontFamily:"var(--font-body)",color:form.tipo===v?"var(--purple)":"var(--gray-700)",display:"flex",alignItems:"center",justifyContent:"center",gap:6}}>
+                    <Icon name={ic} size={15}/>{l}
+                  </button>
+                ))}
+              </div>
+            </div>
+            {form.tipo==="interativa"&&(
+              <div className="form-group" style={{marginBottom:14}}>
+                <label className="form-label">Formulario interativo</label>
+                <select className="form-input" value={form.formularioKey} onChange={e=>setForm({...form,formularioKey:e.target.value})}>
+                  <option value="">Selecionar formulario...</option>
+                  {FERRAMENTAS_INTERATIVAS.map(f=><option key={f.key} value={f.key}>{f.label}</option>)}
+                </select>
+              </div>
+            )}
+            {(form.formularioKey==="breathing-478"||form.formularioKey==="muscle-relaxation")&&(
+              <div className="form-group" style={{marginBottom:14}}>
+                <label className="form-label">🎵 Link de Música (YouTube) — opcional</label>
+                <input className="form-input" value={form.musicUrl||""} onChange={e=>setForm({...form,musicUrl:e.target.value})} placeholder="https://www.youtube.com/watch?v=..."/>
+                <div style={{fontSize:11,color:"var(--text-muted)",marginTop:4}}>Tocará em loop durante o exercício no portal do paciente.</div>
+              </div>
+            )}
+            <div className="form-group" style={{marginBottom:14}}>
+              <label className="form-label">🎬 Link de Áudio ou Vídeo complementar — opcional</label>
+              <input className="form-input" value={form.mediaUrl||""} onChange={e=>setForm({...form,mediaUrl:e.target.value})} placeholder="YouTube, Spotify, SoundCloud, Google Drive..."/>
+              <div style={{fontSize:11,color:"var(--text-muted)",marginTop:4}}>Aparecerá como botão "▶ Ouvir / Assistir" no portal do paciente junto com a ferramenta.</div>
+            </div>
+            <div style={{display:"flex",gap:10,justifyContent:"flex-end",marginTop:20}}>
+              <button className="btn btn-ghost" onClick={()=>setModal(false)}>Cancelar</button>
+              <button className="btn btn-purple" onClick={salvar} disabled={salvando}><Icon name="save" size={15}/> {salvando?"Salvando...":"Salvar Alteracoes"}</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════
+// LAUDOS NEUROPSICOLÓGICOS
+// ═══════════════════════════════════════════════════════
+function Laudos() {
+  const { data:pacientes } = useCollection("clinica_pacientes","nome");
+  const [laudos, setLaudos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [modal, setModal] = useState(false);
+  const [form, setForm] = useState({tipo:"Avaliacao Neuropsicologica",pacienteId:"",linkDrive:"",observacoes:""});
+  const [salvando, setSalvando] = useState(false);
+  const [enviando, setEnviando] = useState(null);
+
+  const TIPOS_LAUDO = ["Avaliacao Neuropsicologica","Avaliacao Psicologica","Avaliacao Infantil","Avaliacao de TDAH","Avaliacao de Altas Habilidades","Pericia Psicologica","Demandas Judiciais","Orientacao de Carreira","Relatorio de Acompanhamento","Outro"];
+  const STATUS_CONFIG = {
+    rascunho: {label:"Rascunho",  bg:"#fef3c7", cor:"#b45309", icon:"edit-3"},
+    enviado:  {label:"Enviado",   bg:"#d1fae5", cor:"#065f46", icon:"send"},
+    arquivado:{label:"Arquivado", bg:"#f3f4f6", cor:"#6b7280", icon:"archive"},
+  };
+
+  useEffect(()=>{
+    const unsub = db.collection("clinica_laudos").orderBy("createdAt","desc").onSnapshot(snap=>{
+      setLaudos(snap.docs.map(d=>({id:d.id,...d.data()})));
+      setLoading(false);
+    },()=>setLoading(false));
+    return unsub;
+  },[]);
+
+  async function salvar(){
+    if(!form.tipo||!form.pacienteId||!form.linkDrive){alert("Selecione o tipo, o paciente e cole o link do PDF.");return;}
+    setSalvando(true);
+    const pac = pacientes.find(p=>p.id===form.pacienteId);
+    let link = form.linkDrive.trim();
+    const m = link.match(/\/d\/([a-zA-Z0-9_-]+)/);
+    if(m) link = `https://drive.google.com/file/d/${m[1]}/view`;
+    await db.collection("clinica_laudos").add({
+      tipo:form.tipo, titulo:form.tipo+" — "+(pac?.nome||""),
+      pacienteId:form.pacienteId, pacienteNome:pac?.nome||"",
+      linkDrive:link, observacoes:form.observacoes,
+      status:"rascunho", enviadoEm:null,
+      createdAt:firebase.firestore.FieldValue.serverTimestamp()
+    });
+    setModal(false);setForm({tipo:"Avaliacao Neuropsicologica",pacienteId:"",linkDrive:"",observacoes:""});setSalvando(false);
+  }
+
+  async function enviarParaPaciente(laudo){
+    if(!confirm(`Enviar "${laudo.tipo}" para ${laudo.pacienteNome}?\n\nO paciente verá o documento no portal dele.`))return;
+    setEnviando(laudo.id);
+    await db.collection("clinica_laudos").doc(laudo.id).update({status:"enviado",enviadoEm:new Date().toISOString()});
+    setEnviando(null);
+  }
+
+  async function excluir(id){if(!confirm("Excluir laudo permanentemente?"))return;await db.collection("clinica_laudos").doc(id).delete();}
+  async function arquivar(id){await db.collection("clinica_laudos").doc(id).update({status:"arquivado"});}
+
+  if(loading) return <Spinner/>;
+
+  const totalEnviado = laudos.filter(l=>l.status==="enviado").length;
+  const totalRascunho = laudos.filter(l=>l.status==="rascunho").length;
+
+  return (
+    <div>
+      <div className="page-header" style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
+        <div>
+          <div className="page-title">Laudos</div>
+          <div className="page-subtitle">{laudos.length} laudo(s) · {totalEnviado} enviado(s) ao paciente</div>
+        </div>
+        <button className="btn btn-purple" onClick={()=>setModal(true)}><Icon name="plus" size={16}/> Novo Laudo</button>
+      </div>
+
+      <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12,marginBottom:24}}>
+        {[["Rascunho",totalRascunho,"#b45309","#fef3c7"],["Enviado ao Paciente",totalEnviado,"#065f46","#d1fae5"],["Total",laudos.length,"#7B00C4","var(--purple-soft)"]].map(([l,n,cor,bg])=>(
+          <div key={l} className="metric-card" style={{textAlign:"center",background:bg}}>
+            <div className="metric-value" style={{fontSize:28,color:cor}}>{n}</div>
+            <div className="metric-label" style={{color:cor}}>{l}</div>
+          </div>
+        ))}
+      </div>
+
+      {laudos.length===0?(
+        <div className="card" style={{textAlign:"center",padding:60,color:"var(--text-muted)"}}>
+          <Icon name="file-text" size={48}/>
+          <div style={{marginTop:12,fontWeight:500}}>Nenhum laudo criado ainda</div>
+          <p style={{fontSize:13,marginTop:8,marginBottom:20,color:"var(--text-muted)"}}>Crie o laudo no Word/Google Docs, salve como PDF no Drive, cole o link aqui e envie ao paciente.</p>
+          <button className="btn btn-purple" onClick={()=>setModal(true)}><Icon name="plus" size={14}/> Criar primeiro laudo</button>
+        </div>
+      ):(
+        <div style={{display:"flex",flexDirection:"column",gap:12}}>
+          {laudos.map(l=>{
+            const st = STATUS_CONFIG[l.status]||STATUS_CONFIG.rascunho;
+            return (
+              <div key={l.id} className="card" style={{padding:"18px 20px"}}>
+                <div style={{display:"flex",alignItems:"flex-start",gap:14}}>
+                  <div style={{width:44,height:44,borderRadius:12,background:st.bg,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
+                    <Icon name={st.icon} size={20}/>
+                  </div>
+                  <div style={{flex:1,minWidth:0}}>
+                    <div style={{display:"flex",alignItems:"center",gap:8,flexWrap:"wrap",marginBottom:4}}>
+                      <span style={{fontWeight:700,fontSize:15}}>{l.tipo}</span>
+                      <span style={{background:st.bg,color:st.cor,borderRadius:20,padding:"2px 10px",fontSize:11,fontWeight:600}}>{st.label}</span>
+                    </div>
+                    <div style={{fontSize:13,color:"var(--text-muted)",display:"flex",gap:12,flexWrap:"wrap"}}>
+                      <span>👤 {l.pacienteNome||"—"}</span>
+                      {l.createdAt?.seconds&&<span>📅 {new Date(l.createdAt.seconds*1000).toLocaleDateString("pt-BR")}</span>}
+                      {l.enviadoEm&&<span style={{color:"#059669",fontWeight:600}}>✉ Enviado em {new Date(l.enviadoEm).toLocaleDateString("pt-BR")}</span>}
+                    </div>
+                    {l.observacoes&&<div style={{fontSize:12,color:"var(--text-muted)",marginTop:4,fontStyle:"italic"}}>{l.observacoes}</div>}
+                  </div>
+                </div>
+                <div style={{display:"flex",gap:8,marginTop:14,flexWrap:"wrap",borderTop:"1px solid var(--gray-100)",paddingTop:12}}>
+                  {l.linkDrive&&(
+                    <a href={l.linkDrive} target="_blank" rel="noreferrer" className="btn btn-outline" style={{fontSize:12,textDecoration:"none",display:"flex",alignItems:"center",gap:6}}>
+                      <Icon name="external-link" size={13}/> Ver PDF
+                    </a>
+                  )}
+                  {l.status==="rascunho"&&(
+                    <button className="btn btn-purple" style={{fontSize:12}} onClick={()=>enviarParaPaciente(l)} disabled={enviando===l.id}>
+                      <Icon name="send" size={13}/> {enviando===l.id?"Enviando...":"Enviar ao Paciente"}
+                    </button>
+                  )}
+                  {l.status==="enviado"&&(
+                    <div style={{display:"flex",alignItems:"center",gap:6,fontSize:12,color:"#059669",fontWeight:600}}>
+                      <Icon name="check-circle" size={14}/> Disponível no portal do paciente
+                    </div>
+                  )}
+                  {l.status!=="arquivado"&&(
+                    <button className="btn btn-ghost" style={{fontSize:12}} onClick={()=>arquivar(l.id)}>
+                      <Icon name="archive" size={13}/> Arquivar
+                    </button>
+                  )}
+                  <button className="btn btn-ghost" style={{fontSize:12,color:"var(--danger)",marginLeft:"auto"}} onClick={()=>excluir(l.id)}>
+                    <Icon name="trash-2" size={13}/>
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {modal&&(
+        <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.4)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:500,padding:20}} onClick={()=>setModal(false)}>
+          <div style={{background:"white",borderRadius:16,padding:28,width:"100%",maxWidth:500}} onClick={e=>e.stopPropagation()}>
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20}}>
+              <div style={{fontFamily:"var(--font-display)",fontSize:20,fontWeight:600}}>Novo Laudo</div>
+              <button onClick={()=>setModal(false)} style={{background:"none",border:"none",cursor:"pointer",color:"var(--gray-400)"}}><Icon name="x" size={20}/></button>
+            </div>
+            <div className="form-group" style={{marginBottom:14}}>
+              <label className="form-label">Tipo de Laudo *</label>
+              <select className="form-input" value={form.tipo} onChange={e=>setForm({...form,tipo:e.target.value})}>
+                {TIPOS_LAUDO.map(t=><option key={t} value={t}>{t}</option>)}
+              </select>
+            </div>
+            <div className="form-group" style={{marginBottom:14}}>
+              <label className="form-label">Paciente *</label>
+              <select className="form-input" value={form.pacienteId} onChange={e=>setForm({...form,pacienteId:e.target.value})}>
+                <option value="">Selecionar paciente...</option>
+                {pacientes.filter(p=>p.status==="ativo").map(p=><option key={p.id} value={p.id}>{p.nome}</option>)}
+              </select>
+            </div>
+            <div className="form-group" style={{marginBottom:14}}>
+              <label className="form-label">Link do PDF (Google Drive) *</label>
+              <input className="form-input" value={form.linkDrive} onChange={e=>setForm({...form,linkDrive:e.target.value})} placeholder="https://drive.google.com/file/d/..."/>
+              <div style={{fontSize:11,color:"var(--text-muted)",marginTop:4}}>No Drive: botão direito no arquivo → "Obter link" → cole aqui</div>
+            </div>
+            <div className="form-group" style={{marginBottom:20}}>
+              <label className="form-label">Observações internas (opcional)</label>
+              <textarea className="form-input" rows={2} value={form.observacoes} onChange={e=>setForm({...form,observacoes:e.target.value})} placeholder="Notas internas sobre este laudo..."/>
+            </div>
+            <div style={{display:"flex",gap:10,justifyContent:"flex-end"}}>
+              <button className="btn btn-ghost" onClick={()=>setModal(false)}>Cancelar</button>
+              <button className="btn btn-purple" onClick={salvar} disabled={salvando}><Icon name="save" size={15}/> {salvando?"Salvando...":"Salvar Laudo"}</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+// ═══════════════════════════════════════════════════════
+// CONFIGURAÇÕES
+// ═══════════════════════════════════════════════════════
+function Configuracoes() {
+  const [tiposLaudo, setTiposLaudo] = useState([
+    "Avaliacao Neuropsicologica","Avaliacao Psicologica","Avaliacao Infantil",
+    "Avaliacao de TDAH","Avaliacao de Altas Habilidades","Pericia Psicologica",
+    "Demandas Judiciais","Orientacao de Carreira","Relatorio de Acompanhamento","Outro"
+  ]);
+  const [novoTipo, setNovoTipo] = useState("");
+  const [logoUrl, setLogoUrl] = useState("../logo-transparente.png");
+  const [senhaAtual, setSenhaAtual] = useState("");
+  const [novaSenha, setNovaSenha] = useState("");
+  const [confirmSenha, setConfirmSenha] = useState("");
+  const [salvando, setSalvando] = useState(false);
+  const [msg, setMsg] = useState("");
+
+  function adicionarTipo(){
+    const t = novoTipo.trim();
+    if(!t||tiposLaudo.includes(t))return;
+    setTiposLaudo(prev=>[...prev,t]);
+    setNovoTipo("");
+  }
+
+  async function salvarTipos(){
+    setSalvando(true);
+    await db.collection("clinica_config").doc("laudoTypes").set({tipos:tiposLaudo});
+    setMsg("Tipos de laudo salvos!");
+    setSalvando(false);
+    setTimeout(()=>setMsg(""),3000);
+  }
+
+  async function alterarSenha(){
+    if(senhaAtual!=="1234"){setMsg("Senha atual incorreta.");return;}
+    if(novaSenha.length<4){setMsg("Nova senha deve ter ao menos 4 caracteres.");return;}
+    if(novaSenha!==confirmSenha){setMsg("Senhas nao conferem.");return;}
+    await db.collection("clinica_config").doc("admin").set({senha:novaSenha});
+    setMsg("Senha alterada! Atualize o arquivo app.js com a nova senha.");
+    setSenhaAtual("");setNovaSenha("");setConfirmSenha("");
+  }
+
+  return (
+    <div>
+      <div className="page-header">
+        <div className="page-title">Configuracoes</div>
+        <div className="page-subtitle">Personalize sua identidade clinica e documentos</div>
+      </div>
+
+      {msg&&<div style={{background:"var(--purple-bg)",border:"1px solid var(--purple)",borderRadius:10,padding:"12px 16px",marginBottom:20,fontSize:14,color:"var(--purple)",fontWeight:500}}>{msg}</div>}
+
+      {/* Identidade Visual */}
+      <div className="card" style={{marginBottom:20}}>
+        <div style={{fontWeight:700,fontSize:16,marginBottom:4}}>Identidade Visual</div>
+        <p style={{fontSize:13,color:"var(--text-muted)",marginBottom:20}}>Logotipo e assinatura digital para laudos e documentos oficiais.</p>
+        <div style={{display:"flex",flexDirection:"column",gap:14}}>
+          <div style={{display:"flex",alignItems:"center",gap:16,padding:16,borderRadius:12,border:"1px solid var(--gray-200)"}}>
+            <div style={{width:44,height:44,background:"var(--purple-soft)",borderRadius:10,display:"flex",alignItems:"center",justifyContent:"center"}}>
+              <Icon name="image" size={22}/>
+            </div>
+            <div style={{flex:1}}>
+              <div style={{fontWeight:600}}>Logo / Identidade Visual</div>
+              <div style={{fontSize:13,color:"var(--text-muted)"}}>Logotipo que aparecera no cabecalho dos laudos e documentos oficiais. Formatos aceitos: PNG, JPG, SVG.</div>
+            </div>
+            <button className="btn btn-outline" style={{fontSize:13}}><Icon name="upload" size={14}/> Enviar Logo</button>
+          </div>
+          <div style={{display:"flex",alignItems:"center",gap:16,padding:16,borderRadius:12,border:"1px solid var(--gray-200)"}}>
+            <div style={{width:44,height:44,background:"#f5f3ff",borderRadius:10,display:"flex",alignItems:"center",justifyContent:"center"}}>
+              <Icon name="pen-line" size={22}/>
+            </div>
+            <div style={{flex:1}}>
+              <div style={{fontWeight:600}}>Assinatura Digital</div>
+              <div style={{fontSize:13,color:"var(--text-muted)"}}>Imagem da sua assinatura manuscrita para uso nos laudos assinados. Recomendado fundo transparente (PNG).</div>
+            </div>
+            <button className="btn btn-outline" style={{fontSize:13}}><Icon name="upload" size={14}/> Enviar Assinatura</button>
+          </div>
+          <div style={{display:"flex",alignItems:"center",gap:16,padding:16,borderRadius:12,border:"1px solid var(--gray-200)",background:"var(--gray-50)"}}>
+            <img src="../logo-transparente.png" alt="Logo padrao" style={{width:56,height:56,borderRadius:10,objectFit:"contain",background:"var(--purple)",padding:6}} onError={e=>e.target.style.display="none"}/>
+            <div style={{flex:1}}>
+              <div style={{fontWeight:600}}>Logo Padrao do Sistema</div>
+              <div style={{fontSize:13,color:"var(--text-muted)"}}>Esta e a logo padrao. Ela e usada automaticamente enquanto voce nao enviar uma logo personalizada.</div>
+              <div style={{fontSize:12,marginTop:4}}><strong>Dra. Lucia Kratz</strong> · Psicologa Doutora · CRP 09/20590</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Sobre os Laudos */}
+      <div className="card" style={{marginBottom:20}}>
+        <div style={{fontWeight:700,fontSize:16,marginBottom:4}}>Sobre os Laudos</div>
+        <p style={{fontSize:13,color:"var(--text-muted)",marginBottom:16,lineHeight:1.7}}>Os laudos gerados seguem a Resolucao CFP no 06/2019. Ao clicar em "Assinar Laudo", o documento recebe um registro de data/hora da assinatura e sua assinatura digital.</p>
+        <div style={{background:"var(--purple-bg)",borderRadius:10,padding:16}}>
+          <div style={{fontWeight:600,marginBottom:12}}>Tipos de Laudo disponíveis</div>
+          <div style={{display:"flex",flexDirection:"column",gap:8,marginBottom:14}}>
+            {tiposLaudo.map((t,i)=>(
+              <div key={i} style={{display:"flex",alignItems:"center",gap:10,background:"white",borderRadius:8,padding:"10px 14px",border:"1px solid var(--gray-200)"}}>
+                <span style={{flex:1,fontSize:14}}>{t}</span>
+                <button style={{background:"none",border:"none",cursor:"pointer",color:"var(--gray-400)",padding:4}} onClick={()=>setTiposLaudo(prev=>prev.filter((_,idx)=>idx!==i))}>
+                  <Icon name="x" size={14}/>
+                </button>
+              </div>
+            ))}
+          </div>
+          <div style={{display:"flex",gap:10}}>
+            <input className="form-input" style={{flex:1}} placeholder="Adicionar novo tipo..." value={novoTipo} onChange={e=>setNovoTipo(e.target.value)} onKeyDown={e=>e.key==="Enter"&&adicionarTipo()}/>
+            <button className="btn btn-outline" onClick={adicionarTipo}><Icon name="plus" size={16}/></button>
+          </div>
+          <button className="btn btn-purple" style={{marginTop:14,width:"100%"}} onClick={salvarTipos} disabled={salvando}>{salvando?"Salvando...":"Salvar tipos de laudo"}</button>
+        </div>
+      </div>
+
+      {/* Senha */}
+      <div className="card">
+        <div style={{fontWeight:700,fontSize:16,marginBottom:4}}>Segurança</div>
+        <p style={{fontSize:13,color:"var(--text-muted)",marginBottom:16}}>Alterar senha de acesso da Psicologa.</p>
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:14,marginBottom:14}}>
+          <div className="form-group">
+            <label className="form-label">Senha atual</label>
+            <input className="form-input" type="password" value={senhaAtual} onChange={e=>setSenhaAtual(e.target.value)}/>
+          </div>
+          <div className="form-group">
+            <label className="form-label">Nova senha</label>
+            <input className="form-input" type="password" value={novaSenha} onChange={e=>setNovaSenha(e.target.value)}/>
+          </div>
+          <div className="form-group">
+            <label className="form-label">Confirmar nova senha</label>
+            <input className="form-input" type="password" value={confirmSenha} onChange={e=>setConfirmSenha(e.target.value)}/>
+          </div>
+        </div>
+        <button className="btn btn-purple" onClick={alterarSenha}><Icon name="key" size={15}/> Alterar Senha</button>
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════
+// AGENDA — Doctoralia integrado via iframe
+// ═══════════════════════════════════════════════════════
+function Agenda() {
+  const { data:pacientes } = useCollection("clinica_pacientes","nome");
+  const [sessoes, setSessoes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [modal, setModal] = useState(false);
+  const [editando, setEditando] = useState(null);
+  const [semanaOffset, setSemanaOffset] = useState(0);
+  const [form, setForm] = useState({pacienteId:"",data:"",hora:"09:00",duracao:"50",tipo:"Psicoterapia",status:"agendado",obs:""});
+  const [salvando, setSalvando] = useState(false);
+
+  const TIPOS = ["Psicoterapia","Avaliacao Neuropsicologica","Avaliacao Psicologica","Terapia de Casais","Musicoterapia","Orientacao de Carreira","Retorno","Outro"];
+  const STATUS_CONFIG = {
+    agendado:  {label:"Agendado",   cor:"#7B00C4", bg:"#f5f0ff"},
+    confirmado:{label:"Confirmado", cor:"#059669", bg:"#d1fae5"},
+    realizado: {label:"Realizado",  cor:"#0891b2", bg:"#e0f2fe"},
+    cancelado: {label:"Cancelado",  cor:"#dc2626", bg:"#fee2e2"},
+    falta:     {label:"Falta",      cor:"#d97706", bg:"#fef3c7"},
+  };
+  const DIAS_SEMANA = ["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"];
+
+  useEffect(()=>{
+    const unsub = db.collection("clinica_sessoes").orderBy("data").onSnapshot(snap=>{
+      setSessoes(snap.docs.map(d=>({id:d.id,...d.data()})));
+      setLoading(false);
+    },()=>setLoading(false));
+    return unsub;
+  },[]);
+
+  // Calcular semana atual
+  function getInicioSemana(offset=0){
+    const hoje = new Date();
+    const dia = hoje.getDay();
+    const inicio = new Date(hoje);
+    inicio.setDate(hoje.getDate() - dia + (offset*7));
+    inicio.setHours(0,0,0,0);
+    return inicio;
+  }
+
+  function getDiasSemana(offset=0){
+    const inicio = getInicioSemana(offset);
+    return Array.from({length:7},(_,i)=>{
+      const d = new Date(inicio);
+      d.setDate(inicio.getDate()+i);
+      return d;
+    });
+  }
+
+  const dias = getDiasSemana(semanaOffset);
+  const hoje = new Date(); hoje.setHours(0,0,0,0);
+
+  function formatData(d){
+    return d.toISOString().split("T")[0];
+  }
+
+  function sessoesNoDia(dia){
+    const str = formatData(dia);
+    return sessoes.filter(s=>s.data===str).sort((a,b)=>a.hora.localeCompare(b.hora));
+  }
+
+  async function salvar(){
+    if(!form.pacienteId||!form.data||!form.hora){alert("Preencha paciente, data e hora.");return;}
+    setSalvando(true);
+    const pac = pacientes.find(p=>p.id===form.pacienteId);
+    const dados = {...form, pacienteNome:pac?.nome||"", updatedAt:firebase.firestore.FieldValue.serverTimestamp()};
+    if(editando){
+      await db.collection("clinica_sessoes").doc(editando).update(dados);
+    } else {
+      await db.collection("clinica_sessoes").add({...dados, createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    }
+    setModal(false);setEditando(null);setForm({pacienteId:"",data:"",hora:"09:00",duracao:"50",tipo:"Psicoterapia",status:"agendado",obs:""});setSalvando(false);
+  }
+
+  function abrirEditar(s){
+    setForm({pacienteId:s.pacienteId||"",data:s.data||"",hora:s.hora||"09:00",duracao:s.duracao||"50",tipo:s.tipo||"Psicoterapia",status:s.status||"agendado",obs:s.obs||""});
+    setEditando(s.id);setModal(true);
+  }
+
+  async function mudarStatus(id,status){
+    await db.collection("clinica_sessoes").doc(id).update({status});
+  }
+
+  async function excluir(id){
+    if(!confirm("Excluir esta sessão?"))return;
+    await db.collection("clinica_sessoes").doc(id).delete();
+  }
+
+  // Sessões de hoje para o painel
+  const sessoesHoje = sessoesNoDia(hoje);
+  const proximas = sessoes.filter(s=>{
+    const d = new Date(s.data+"T00:00:00");
+    return d >= hoje && s.status!=="cancelado" && s.status!=="realizado";
+  }).slice(0,5);
+
+  if(loading) return <Spinner/>;
+
+  return (
+    <div>
+      {/* Header */}
+      <div className="page-header" style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
+        <div>
+          <div className="page-title">Agenda</div>
+          <div className="page-subtitle">{sessoes.filter(s=>s.status==="agendado"||s.status==="confirmado").length} sessões agendadas</div>
+        </div>
+        <div style={{display:"flex",gap:8}}>
+          <a href="https://docplanner.doctoralia.com.br/#/calendar/week" target="_blank" rel="noreferrer"
+            className="btn btn-ghost" style={{fontSize:13,textDecoration:"none",display:"flex",alignItems:"center",gap:6}}>
+            <Icon name="external-link" size={13}/> Doctoralia
+          </a>
+          <button className="btn btn-purple" onClick={()=>{setForm({pacienteId:"",data:formatData(hoje),hora:"09:00",duracao:"50",tipo:"Psicoterapia",status:"agendado",obs:""});setEditando(null);setModal(true);}}>
+            <Icon name="plus" size={16}/> Nova Sessão
+          </button>
+        </div>
+      </div>
+
+      {/* Métricas rápidas */}
+      <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:10,marginBottom:20}}>
+        {[["Hoje",sessoesHoje.length,"#7B00C4","var(--purple-soft)"],["Agendadas",sessoes.filter(s=>s.status==="agendado").length,"#0891b2","#e0f2fe"],["Confirmadas",sessoes.filter(s=>s.status==="confirmado").length,"#059669","#d1fae5"],["Este mês",sessoes.filter(s=>s.data?.startsWith(new Date().toISOString().slice(0,7))).length,"#d97706","#fef3c7"]].map(([l,n,cor,bg])=>(
+          <div key={l} style={{background:bg,borderRadius:12,padding:"12px 16px",textAlign:"center"}}>
+            <div style={{fontSize:24,fontWeight:800,color:cor}}>{n}</div>
+            <div style={{fontSize:12,color:cor,fontWeight:500}}>{l}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Navegação semana */}
+      <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:16}}>
+        <button className="btn btn-ghost" style={{padding:"8px 12px"}} onClick={()=>setSemanaOffset(s=>s-1)}><Icon name="chevron-left" size={18}/></button>
+        <div style={{flex:1,textAlign:"center",fontWeight:600,fontSize:15}}>
+          {dias[0].toLocaleDateString("pt-BR",{day:"2-digit",month:"short"})} — {dias[6].toLocaleDateString("pt-BR",{day:"2-digit",month:"short",year:"numeric"})}
+        </div>
+        <button className="btn btn-ghost" style={{padding:"8px 10px",fontSize:12}} onClick={()=>setSemanaOffset(0)}>Hoje</button>
+        <button className="btn btn-ghost" style={{padding:"8px 12px"}} onClick={()=>setSemanaOffset(s=>s+1)}><Icon name="chevron-right" size={18}/></button>
+      </div>
+
+      {/* Grade semanal */}
+      <div style={{display:"grid",gridTemplateColumns:"repeat(7,1fr)",gap:6,marginBottom:24}}>
+        {dias.map((dia,i)=>{
+          const isHoje = formatData(dia)===formatData(hoje);
+          const sessDia = sessoesNoDia(dia);
+          const isPassado = dia < hoje;
+          return (
+            <div key={i} style={{minHeight:120,background:isHoje?"var(--purple-soft)":"white",border:"1.5px solid",borderColor:isHoje?"var(--purple)":"var(--gray-200)",borderRadius:12,overflow:"hidden"}}>
+              {/* Cabeçalho do dia */}
+              <div style={{padding:"8px 8px 6px",borderBottom:"1px solid",borderColor:isHoje?"var(--purple)20":"var(--gray-100)",background:isHoje?"var(--purple)":"transparent",textAlign:"center"}}>
+                <div style={{fontSize:11,fontWeight:600,color:isHoje?"white":isPassado?"#9ca3af":"var(--gray-600)",textTransform:"uppercase"}}>{DIAS_SEMANA[i]}</div>
+                <div style={{fontSize:18,fontWeight:800,color:isHoje?"white":isPassado?"#9ca3af":"var(--gray-800)"}}>{dia.getDate()}</div>
+              </div>
+              {/* Sessões do dia */}
+              <div style={{padding:4,display:"flex",flexDirection:"column",gap:3}}>
+                {sessDia.map(s=>{
+                  const st = STATUS_CONFIG[s.status]||STATUS_CONFIG.agendado;
+                  return (
+                    <div key={s.id} onClick={()=>abrirEditar(s)}
+                      style={{background:st.bg,borderLeft:"3px solid "+st.cor,borderRadius:4,padding:"3px 5px",cursor:"pointer",fontSize:10,lineHeight:1.3}}>
+                      <div style={{fontWeight:700,color:st.cor}}>{s.hora}</div>
+                      <div style={{color:"#374151",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{s.pacienteNome?.split(" ")[0]||"—"}</div>
+                      <div style={{color:"#6b7280",fontSize:9}}>{s.tipo}</div>
+                    </div>
+                  );
+                })}
+                {/* Adicionar */}
+                <button onClick={()=>{setForm({pacienteId:"",data:formatData(dia),hora:"09:00",duracao:"50",tipo:"Psicoterapia",status:"agendado",obs:""});setEditando(null);setModal(true);}}
+                  style={{background:"none",border:"1px dashed #d1d5db",borderRadius:4,padding:"4px",cursor:"pointer",color:"#9ca3af",fontSize:11,width:"100%",marginTop:2}}>
+                  + 
+                </button>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Lista próximas sessões */}
+      {proximas.length>0&&(
+        <div className="card">
+          <div style={{fontWeight:700,fontSize:14,marginBottom:14,display:"flex",alignItems:"center",gap:6}}>
+            <Icon name="clock" size={16}/> Próximas Sessões
+          </div>
+          {proximas.map(s=>{
+            const st = STATUS_CONFIG[s.status]||STATUS_CONFIG.agendado;
+            const dataFmt = new Date(s.data+"T00:00:00").toLocaleDateString("pt-BR",{weekday:"short",day:"2-digit",month:"short"});
+            return (
+              <div key={s.id} style={{display:"flex",alignItems:"center",gap:12,padding:"10px 0",borderBottom:"1px solid var(--gray-100)"}}>
+                <div style={{width:48,height:48,borderRadius:10,background:st.bg,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",flexShrink:0}}>
+                  <div style={{fontSize:11,fontWeight:700,color:st.cor}}>{s.hora}</div>
+                  <div style={{fontSize:9,color:st.cor}}>{s.duracao}min</div>
+                </div>
+                <div style={{flex:1,minWidth:0}}>
+                  <div style={{fontWeight:600,fontSize:13}}>{s.pacienteNome}</div>
+                  <div style={{fontSize:12,color:"var(--text-muted)"}}>{dataFmt} · {s.tipo}</div>
+                </div>
+                <div style={{display:"flex",gap:4,alignItems:"center"}}>
+                  <span style={{background:st.bg,color:st.cor,borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:600}}>{st.label}</span>
+                  <select value={s.status} onChange={e=>mudarStatus(s.id,e.target.value)}
+                    style={{fontSize:11,border:"1px solid #e5e7eb",borderRadius:6,padding:"2px 4px",cursor:"pointer",background:"white",color:"#374151"}}>
+                    {Object.entries(STATUS_CONFIG).map(([k,v])=><option key={k} value={k}>{v.label}</option>)}
+                  </select>
+                  <button onClick={()=>excluir(s.id)} style={{background:"none",border:"none",cursor:"pointer",color:"#dc2626",padding:4}}><Icon name="trash-2" size={13}/></button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Modal nova/editar sessão */}
+      {modal&&(
+        <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.4)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:500,padding:20}} onClick={()=>setModal(false)}>
+          <div style={{background:"white",borderRadius:16,padding:28,width:"100%",maxWidth:480}} onClick={e=>e.stopPropagation()}>
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20}}>
+              <div style={{fontFamily:"var(--font-display)",fontSize:20,fontWeight:600}}>{editando?"Editar Sessão":"Nova Sessão"}</div>
+              <button onClick={()=>setModal(false)} style={{background:"none",border:"none",cursor:"pointer",color:"var(--gray-400)"}}><Icon name="x" size={20}/></button>
+            </div>
+            <div className="form-group" style={{marginBottom:14}}>
+              <label className="form-label">Paciente *</label>
+              <select className="form-input" value={form.pacienteId} onChange={e=>setForm({...form,pacienteId:e.target.value})}>
+                <option value="">Selecionar paciente...</option>
+                {pacientes.filter(p=>p.status==="ativo").map(p=><option key={p.id} value={p.id}>{p.nome}</option>)}
+              </select>
+            </div>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:12,marginBottom:14}}>
+              <div className="form-group">
+                <label className="form-label">Data *</label>
+                <input className="form-input" type="date" value={form.data} onChange={e=>setForm({...form,data:e.target.value})}/>
+              </div>
+              <div className="form-group">
+                <label className="form-label">Hora *</label>
+                <input className="form-input" type="time" value={form.hora} onChange={e=>setForm({...form,hora:e.target.value})}/>
+              </div>
+              <div className="form-group">
+                <label className="form-label">Duração (min)</label>
+                <select className="form-input" value={form.duracao} onChange={e=>setForm({...form,duracao:e.target.value})}>
+                  {["30","45","50","60","90"].map(d=><option key={d} value={d}>{d} min</option>)}
+                </select>
+              </div>
+            </div>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:14}}>
+              <div className="form-group">
+                <label className="form-label">Tipo</label>
+                <select className="form-input" value={form.tipo} onChange={e=>setForm({...form,tipo:e.target.value})}>
+                  {TIPOS.map(t=><option key={t} value={t}>{t}</option>)}
+                </select>
+              </div>
+              <div className="form-group">
+                <label className="form-label">Status</label>
+                <select className="form-input" value={form.status} onChange={e=>setForm({...form,status:e.target.value})}>
+                  {Object.entries(STATUS_CONFIG).map(([k,v])=><option key={k} value={k}>{v.label}</option>)}
+                </select>
+              </div>
+            </div>
+            <div className="form-group" style={{marginBottom:20}}>
+              <label className="form-label">Observações</label>
+              <textarea className="form-input" rows={2} value={form.obs} onChange={e=>setForm({...form,obs:e.target.value})} placeholder="Notas sobre a sessão..."/>
+            </div>
+            <div style={{display:"flex",gap:10,justifyContent:"flex-end"}}>
+              <button className="btn btn-ghost" onClick={()=>setModal(false)}>Cancelar</button>
+              <button className="btn btn-purple" onClick={salvar} disabled={salvando}>
+                <Icon name="save" size={15}/> {salvando?"Salvando...":"Salvar"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// APP
 function App() {
-  var _useState269 = useState(function () {
-      try {
-        return JSON.parse(localStorage.getItem("onix_user"));
-      } catch (_unused) {
-        return null;
-      }
-    }),
-    _useState270 = _slicedToArray(_useState269, 2),
-    user = _useState270[0],
-    setUser = _useState270[1];
-  var _useState271 = useState([]),
-    _useState272 = _slicedToArray(_useState271, 2),
-    members = _useState272[0],
-    setMembers = _useState272[1];
-  var _useState273 = useState("painel"),
-    _useState274 = _slicedToArray(_useState273, 2),
-    tab = _useState274[0],
-    setTab = _useState274[1];
-  var _useConfig = useConfig(),
-    config = _useConfig.config,
-    save = _useConfig.save;
-  useEffect(function () {
-    var unsub = db.collection("onix_members").onSnapshot(function (snap) {
-      return setMembers(snap.docs.map(function (d) {
-        return _objectSpread({
-          id: d.id
-        }, d.data());
-      }));
-    });
-    return unsub;
-  }, []);
-  function handleLogin(u) {
-    localStorage.setItem("onix_user", JSON.stringify(u));
-    setUser(u);
-    setTab(u.isAdmin ? "painel" : "inicio");
-    // Registrar acesso do corista
-    if (u.role === "corista" && u.name) {
-      var agora = new Date();
-      db.collection("onix_acessos").add({
-        nome: u.name,
-        dataHora: firebase.firestore.FieldValue.serverTimestamp(),
-        data: agora.toISOString().split("T")[0]
-      });
-    }
-  }
-  function handleLogout() {
-    localStorage.removeItem("onix_user");
-    setUser(null);
-  }
-  var params = new URLSearchParams(window.location.search);
-  var isCadastro = params.get("cadastro") === "1";
-  var mesaId = params.get("mesa");
-  var checkinId = params.get("checkin");
-  if (isCadastro) return /*#__PURE__*/React.createElement(CadastroPublico, {
-    config: config
-  });
-  if (mesaId) return /*#__PURE__*/React.createElement(MesaSom, {
-    eventoId: mesaId,
-    config: config
-  });
-  if (checkinId) return /*#__PURE__*/React.createElement(CheckinPublico, {
-    sessaoId: checkinId,
-    config: config
-  });
-  if (!user) return /*#__PURE__*/React.createElement(Login, {
-    members: members,
-    onLogin: handleLogin,
-    config: config
-  });
-  var isAdmin = user.isAdmin;
-  var cor = config.corPrimaria || COR;
-  var fundo = config.corFundo || COR_FUNDO;
-  var navItems = isAdmin ? NAV_ADMIN : NAV_CORISTA;
-  var pages = {
-    painel: /*#__PURE__*/React.createElement(Painel, {
-      user: user,
-      config: config,
-      setTab: setTab
-    }),
-    integrantes: /*#__PURE__*/React.createElement(Integrantes, {
-      config: config
-    }),
-    musicas: /*#__PURE__*/React.createElement(Repertorio, {
-      config: config,
-      isAdmin: isAdmin
-    }),
-    estudos: /*#__PURE__*/React.createElement(SalaEstudos, {
-      config: config,
-      isAdmin: isAdmin
-    }),
-    agenda: /*#__PURE__*/React.createElement(Agenda, {
-      config: config,
-      isAdmin: isAdmin
-    }),
-    avisos: /*#__PURE__*/React.createElement(Avisos, {
-      config: config,
-      isAdmin: isAdmin
-    }),
-    frequencia: /*#__PURE__*/React.createElement(Frequencia, {
-      config: config
-    }),
-    apresentacao: /*#__PURE__*/React.createElement(Apresentacao, {
-      config: config
-    }),
-    declaracao: isAdmin ? /*#__PURE__*/React.createElement(Declaracao, {
-      config: config
-    }) : /*#__PURE__*/React.createElement(MinhaDeclaracao, {
-      user: user,
-      config: config
-    }),
-    relatorios: /*#__PURE__*/React.createElement(Relatorios, {
-      config: config
-    }),
-    financeiro: /*#__PURE__*/React.createElement(Financeiro, {
-      config: config
-    }),
-    blog: /*#__PURE__*/React.createElement(Blog, {
-      config: config,
-      user: user
-    }),
-    config: /*#__PURE__*/React.createElement(Configuracoes, {
-      config: config,
-      save: save
-    }),
-    inicio: /*#__PURE__*/React.createElement(PainelCorista, {
-      user: user,
-      config: config
-    }),
-    meu_financeiro: /*#__PURE__*/React.createElement(FinanceiroCorista, {
-      user: user,
-      config: config
-    })
-  };
-  var mobileNav = isAdmin ? [NAV_ADMIN[0], NAV_ADMIN[1], NAV_ADMIN[4], NAV_ADMIN[5], NAV_ADMIN[10]] : [NAV_CORISTA[0], NAV_CORISTA[1], NAV_CORISTA[2], NAV_CORISTA[3]];
-  return /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      minHeight: "100vh",
-      background: fundo
-    }
-  }, /*#__PURE__*/React.createElement("aside", {
-    style: {
-      width: 260,
-      background: "#fff",
-      borderRight: "1px solid #EEE0E0",
-      display: "flex",
-      flexDirection: "column",
-      position: "fixed",
-      top: 0,
-      left: 0,
-      height: "100vh",
-      zIndex: 200,
-      boxShadow: "2px 0 12px rgba(0,0,0,0.04)"
-    },
-    className: "sidebar-desktop"
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      padding: "20px 20px 16px",
-      borderBottom: "1px solid #F3EEF9"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 12
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: 40,
-      height: 40,
-      background: fundo,
-      borderRadius: 10,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    }
-  }, /*#__PURE__*/React.createElement("img", {
-    src: config.logoUrl || LOGO_URL,
-    alt: "",
-    style: {
-      width: 36,
-      height: 36,
-      objectFit: "cover",
-      borderRadius: 8
-    },
-    onError: function onError(e) {
-      return e.target.style.display = "none";
-    }
-  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      fontSize: 15,
-      fontWeight: 700,
-      color: cor,
-      lineHeight: 1.2
-    }
-  }, config.nomeApp || "Onix Brasil Vocal Internacional"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 11,
-      color: "#AAA"
-    }
-  }, isAdmin ? config.subtitulo || "Portal de Gestão" : "Área do Corista")))), /*#__PURE__*/React.createElement("nav", {
-    style: {
-      flex: 1,
-      padding: "12px 10px",
-      overflowY: "auto"
-    }
-  }, navItems.map(function (item) {
-    return /*#__PURE__*/React.createElement("button", {
-      key: item.key,
-      onClick: function onClick() {
-        return setTab(item.key);
-      },
-      style: {
-        display: "flex",
-        alignItems: "center",
-        gap: 12,
-        width: "100%",
-        padding: "10px 12px",
-        borderRadius: 10,
-        border: "none",
-        background: tab === item.key ? cor : "none",
-        color: tab === item.key ? "#fff" : "#444",
-        cursor: "pointer",
-        fontFamily: "inherit",
-        fontSize: 14,
-        fontWeight: tab === item.key ? 700 : 500,
-        marginBottom: 2,
-        textAlign: "left",
-        transition: "background 0.15s"
-      }
-    }, /*#__PURE__*/React.createElement(Icon, {
-      name: item.icon,
-      size: 16,
-      color: tab === item.key ? "#fff" : "#888"
-    }), item.label);
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      padding: "12px 16px",
-      borderTop: "1px solid #F3EEF9"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#AAA",
-      marginBottom: 2
-    }
-  }, isAdmin ? "Administrador" : user.voice || "Corista"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 14,
-      fontWeight: 600,
-      color: "#1A1D23",
-      marginBottom: 10
-    }
-  }, user.name), /*#__PURE__*/React.createElement("button", {
-    onClick: handleLogout,
-    style: {
-      width: "100%",
-      padding: "9px",
-      background: fundo,
-      color: cor,
-      border: "1px solid ".concat(cor, "33"),
-      borderRadius: 8,
-      fontSize: 13,
-      fontWeight: 700,
-      cursor: "pointer",
-      fontFamily: "inherit"
-    }
-  }, "Sair"))), /*#__PURE__*/React.createElement("main", {
-    style: {
-      flex: 1,
-      paddingBottom: 72,
-      minHeight: "100vh"
-    },
-    className: "main-content"
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: cor,
-      padding: "12px 16px",
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      position: "sticky",
-      top: 0,
-      zIndex: 100
-    },
-    className: "header-mobile"
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 10
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: 32,
-      height: 32,
-      background: "rgba(255,255,255,0.15)",
-      borderRadius: 8,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    }
-  }, /*#__PURE__*/React.createElement("img", {
-    src: config.logoUrl || LOGO_URL,
-    alt: "",
-    style: {
-      width: 28,
-      height: 28,
-      objectFit: "cover",
-      borderRadius: 6
-    },
-    onError: function onError(e) {
-      return e.target.style.display = "none";
-    }
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Playfair Display',serif",
-      color: "#fff",
-      fontSize: 15,
-      fontWeight: 700
-    }
-  }, config.nomeApp || "Onix Brasil Vocal Internacional")), /*#__PURE__*/React.createElement("button", {
-    onClick: handleLogout,
-    style: {
-      background: "rgba(255,255,255,0.15)",
-      border: "1px solid rgba(255,255,255,0.3)",
-      color: "#fff",
-      borderRadius: 6,
-      padding: "5px 12px",
-      fontSize: 10,
-      cursor: "pointer",
-      fontFamily: "inherit",
-      textTransform: "uppercase",
-      letterSpacing: 0.8
-    }
-  }, "Sair")), /*#__PURE__*/React.createElement("div", {
-    style: {
-      padding: "24px 20px",
-      maxWidth: 900
-    }
-  }, pages[tab] || /*#__PURE__*/React.createElement(EmBreve, {
-    label: tab,
-    icon: "layout-dashboard"
-  }))), /*#__PURE__*/React.createElement("nav", {
-    style: {
-      position: "fixed",
-      bottom: 0,
-      left: 0,
-      right: 0,
-      background: "#fff",
-      borderTop: "1px solid #EEE0E0",
-      display: "flex",
-      zIndex: 150
-    },
-    className: "nav-mobile"
-  }, mobileNav.map(function (item) {
-    return /*#__PURE__*/React.createElement("button", {
-      key: item.key,
-      onClick: function onClick() {
-        return setTab(item.key);
-      },
-      style: {
-        flex: 1,
-        padding: "9px 0 7px",
-        border: "none",
-        background: "none",
-        cursor: "pointer",
-        fontSize: 9,
-        fontWeight: 700,
-        textTransform: "uppercase",
-        letterSpacing: 0.4,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: 3,
-        fontFamily: "inherit",
-        color: tab === item.key ? cor : "#CCC",
-        borderTop: "2px solid ".concat(tab === item.key ? cor : "transparent"),
-        transition: "color 0.15s"
-      }
-    }, /*#__PURE__*/React.createElement(Icon, {
-      name: item.icon,
-      size: 18,
-      color: tab === item.key ? cor : "#CCC"
-    }), item.label);
-  })));
+  const [user, setUser] = useState(null);
+  const [tab, setTab] = useState(null);
+  function handleLogin(u){setUser(u);if(u.tipo==="psicologa")setTab("dashboard");if(u.tipo==="secretaria")setTab("pacientes");if(u.tipo==="paulo")setTab("fin-pessoal");}
+  function handleLogout(){setUser(null);setTab(null);}
+  if(!user) return <Login onLogin={handleLogin}/>;
+  return (
+    <div>
+      <Sidebar user={user} tab={tab} setTab={setTab} onLogout={handleLogout}/>
+      <div className="header-mobile"><div className="header-mobile-logo">Administracao</div><button className="header-mobile-btn" onClick={handleLogout}><Icon name="log-out" size={18}/></button></div>
+      <div className="main-content">
+        {user.tipo==="psicologa"  &&tab==="dashboard"   &&<DashboardAdmin user={user}/>}
+        {user.tipo==="psicologa"  &&tab==="pacientes"   &&<Pacientes user={user}/>}
+        {user.tipo==="psicologa"  &&tab==="alunos"      &&<Alunos/>}
+        {user.tipo==="psicologa"  &&tab==="casais"      &&<TerapiaCasais/>}
+        {user.tipo==="psicologa"  &&tab==="recursos"    &&<RecursosTerapeuticos/>}
+        {user.tipo==="psicologa"  &&tab==="laudos"      &&<Laudos/>}
+        {user.tipo==="psicologa"  &&tab==="agenda"      &&<Agenda/>}
+        {user.tipo==="psicologa"  &&tab==="fin-clinica" &&<FinanceiroClinica/>}
+        {user.tipo==="psicologa"  &&tab==="fin-pessoal" &&<FinanceiroPessoal somenteLeitura={false}/>}
+        {user.tipo==="psicologa"  &&tab==="config"      &&<Configuracoes/>}
+        {user.tipo==="secretaria" &&tab==="pacientes"   &&<Pacientes user={user}/>}
+        {user.tipo==="secretaria" &&tab==="agenda"      &&<Agenda/>}
+        {user.tipo==="secretaria" &&tab==="fin-clinica" &&<FinanceiroClinica/>}
+        {user.tipo==="paulo"      &&tab==="fin-pessoal" &&<FinanceiroPessoal somenteLeitura={true}/>}
+      </div>
+      <div className="nav-mobile">
+        {(user.tipo==="psicologa"?NAV_PSICOLOGA.slice(0,5):user.tipo==="secretaria"?NAV_SECRETARIA:NAV_PAULO).map(item=>(
+          <button key={item.id} className={"nav-mobile-item "+(tab===item.id?"active":"")} onClick={()=>setTab(item.id)}><Icon name={item.icon} size={20}/><span>{item.label.split(" ")[0]}</span></button>
+        ))}
+      </div>
+    </div>
+  );
 }
-ReactDOM.render(React.createElement(App), document.getElementById("root"));
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App/>);
