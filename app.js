@@ -13130,6 +13130,7 @@ function Financeiro(_ref58) {
     var total = 0,
       pagos = 0,
       aguard = 0,
+      isentos = 0,
       y = sy,
       m = sm;
     var _loop = function _loop() {
