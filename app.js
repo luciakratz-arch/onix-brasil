@@ -1031,7 +1031,7 @@ function ModalEvento({ evento, onClose, config }) {
                         onChange={e=>{
                             const song = songs.find(s=>s.id===e.target.value);
                             if (song && !(form.setlist||[]).find(s=>s.id===song.id)) {
-                                setForm(f=>({...f, setlist:[...(f.setlist||[]), {id:song.id, title:song.title, compositor:song.compositor||"", playback:song.playback||"", audioOriginal:song.audioOriginal||""}]}));
+                                setForm(f=>({...f, setlist:[...(f.setlist||[]), {id:song.id, title:song.title, compositor:song.compositor||"", playback:song.playback||"", playbackB:song.playbackB||"", audioOriginal:song.audioOriginal||"", plano:"A"}]}));
                             }
                             e.target.value = "";
                         }}>
@@ -1407,7 +1407,7 @@ const CAT_COLORS = { MPB:"#2E7D32", Natal:"#1565C0", Regionais:"#E65100", Sacro:
 
 function ModalMusica({ musica, onClose, config }) {
     const cor = config.corPrimaria||COR;
-    const vazio = { title:"", categoria:"MPB", compositor:"", partitura:"", audioOriginal:"", audioArranjo:"", playback:"", soprano:"", mezzoSoprano:"", contralto:"", tenor:"", baritono:"", baixo:"", letra:"", notes:"" };
+    const vazio = { title:"", categoria:"MPB", compositor:"", partitura:"", audioOriginal:"", audioArranjo:"", playback:"", playbackB:"", soprano:"", mezzoSoprano:"", contralto:"", tenor:"", baritono:"", baixo:"", letra:"", notes:"" };
     const [form, setForm]         = useState(musica?{...vazio,...musica}:vazio);
     const [salvando, setSalvando] = useState(false);
     const [erro, setErro]         = useState("");
@@ -1418,7 +1418,7 @@ function ModalMusica({ musica, onClose, config }) {
     async function salvar() {
         if (!form.title.trim()) { setErro("Título é obrigatório."); return; }
         setSalvando(true);
-        const d = { title:form.title, categoria:form.categoria, compositor:form.compositor||"", partitura:form.partitura||"", audioOriginal:form.audioOriginal||"", audioArranjo:form.audioArranjo||"", playback:form.playback||"", soprano:form.soprano||"", mezzoSoprano:form.mezzoSoprano||"", contralto:form.contralto||"", tenor:form.tenor||"", baritono:form.baritono||"", baixo:form.baixo||"", letra:form.letra||"", notes:form.notes||"" };
+        const d = { title:form.title, categoria:form.categoria, compositor:form.compositor||"", partitura:form.partitura||"", audioOriginal:form.audioOriginal||"", audioArranjo:form.audioArranjo||"", playback:form.playback||"", playbackB:form.playbackB||"", soprano:form.soprano||"", mezzoSoprano:form.mezzoSoprano||"", contralto:form.contralto||"", tenor:form.tenor||"", baritono:form.baritono||"", baixo:form.baixo||"", letra:form.letra||"", notes:form.notes||"" };
         if (musica) {
             await db.collection("onix_songs").doc(musica.id).update({...d, updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
         } else {
@@ -1491,9 +1491,9 @@ function ModalMusica({ musica, onClose, config }) {
                     <div><label style={lbl}>🎵 Áudio Original</label><input style={inp} value={form.audioOriginal||""} onChange={e=>setForm(f=>({...f,audioOriginal:e.target.value}))} placeholder="Drive ou YouTube (https://...)" /></div>
                     <div><label style={lbl}>🎵 Áudio/Arranjo</label><input style={inp} value={form.audioArranjo||""} onChange={e=>setForm(f=>({...f,audioArranjo:e.target.value}))} placeholder="Drive ou YouTube (https://...)" /></div>
                 </div>
-                <div style={{ marginBottom:14 }}>
-                    <label style={lbl}>🎧 Playback</label>
-                    <input style={inp} value={form.playback||""} onChange={e=>setForm(f=>({...f,playback:e.target.value}))} placeholder="Drive ou YouTube (https://...)" />
+                <div style={g2}>
+                    <div><label style={lbl}>🎧 Playback — Plano A</label><input style={inp} value={form.playback||""} onChange={e=>setForm(f=>({...f,playback:e.target.value}))} placeholder="Drive ou YouTube (https://...)" /></div>
+                    <div><label style={lbl}>🎧 Playback — Plano B</label><input style={inp} value={form.playbackB||""} onChange={e=>setForm(f=>({...f,playbackB:e.target.value}))} placeholder="Drive ou YouTube (https://...)" /></div>
                 </div>
 
                 <div style={sec}>Áudios por naipe</div>
@@ -1830,6 +1830,7 @@ function Apresentacao({ config }) {
     const [setlist, setSetlist]   = useState([]);
     const [tocando, setTocando]   = useState(null);
     const [dragIdx, setDragIdx]   = useState(null);
+    const [planos, setPlanos]     = useState({}); // { [musicaId]: "A" | "B" }
     const cor = config.corPrimaria||COR;
     const today = todayStr();
 
@@ -1837,7 +1838,20 @@ function Apresentacao({ config }) {
         if (eventoSel) setSetlist(eventoSel.setlist||[]);
         else setSetlist([]);
         setTocando(null);
+        setPlanos({});
     },[eventoSel?.id]);
+
+    function togglePlano(id) {
+        setPlanos(p => ({ ...p, [id]: p[id]==="B" ? "A" : "B" }));
+        // Se está tocando esta música, atualiza o tocando também
+        setTocando(t => t?.id===id ? {...t, _plano: planos[id]==="B" ? "A" : "B"} : t);
+    }
+
+    function getUrlParaTocar(s) {
+        const plano = planos[s.id] || "A";
+        const url = plano==="B" ? (s.playbackB||s.playback||s.audioOriginal) : (s.playback||s.audioOriginal);
+        return url;
+    }
 
     const proximos = events.filter(e=>e.date>=today && e.setlist?.length>0).sort((a,b)=>a.date>b.date?1:-1);
     const passados = events.filter(e=>e.date<today  && e.setlist?.length>0).sort((a,b)=>a.date>b.date?-1:1).slice(0,10);
@@ -1937,6 +1951,12 @@ function Apresentacao({ config }) {
                                     <div style={{ fontSize:13, fontWeight:600, color:"#1A1D23" }}>{s.title}</div>
                                     {s.compositor && <div style={{ fontSize:11, color:"#AAA" }}>{s.compositor}</div>}
                                 </div>
+                                {/* Botão Plano A/B */}
+                                <button onClick={e=>{ e.stopPropagation(); togglePlano(s.id); }}
+                                    title={(planos[s.id]||"A")==="A" ? "Usando Plano A — clique para Plano B" : "Usando Plano B — clique para Plano A"}
+                                    style={{ padding:"3px 8px", borderRadius:6, border:`1.5px solid ${(planos[s.id]||"A")==="B"?"#E65100":cor}`, background:(planos[s.id]||"A")==="B"?"#E65100":cor, color:"#fff", fontSize:11, fontWeight:700, cursor:"pointer", fontFamily:"inherit", minWidth:32, transition:"all 0.15s" }}>
+                                    {(planos[s.id]||"A")==="B" ? "B" : "A"}
+                                </button>
                                 <div style={{ display:"flex", flexDirection:"column", gap:2 }}>
                                     <button onClick={e=>{e.stopPropagation();moverCima(i);}}
                                         style={{ background:"none", border:"none", cursor:"pointer", padding:2, color: i===0?"#EEE":"#888" }}>
@@ -1963,11 +1983,17 @@ function Apresentacao({ config }) {
                                 <div style={{ fontSize:13 }}>Clique em uma música para reproduzir</div>
                               </div>
                             : <div>
-                                <div style={{ fontSize:14, fontWeight:700, color:"#1A1D23", marginBottom:4 }}>{tocando.title}</div>
+                                <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:4 }}>
+                                    <div style={{ fontSize:14, fontWeight:700, color:"#1A1D23", flex:1 }}>{tocando.title}</div>
+                                    {/* Indicador do plano ativo */}
+                                    <span style={{ padding:"3px 10px", borderRadius:6, border:`1.5px solid ${(planos[tocando.id]||"A")==="B"?"#E65100":cor}`, background:(planos[tocando.id]||"A")==="B"?"#E65100":cor, color:"#fff", fontSize:11, fontWeight:700 }}>
+                                        Plano {planos[tocando.id]||"A"}
+                                    </span>
+                                </div>
                                 {tocando.compositor && <div style={{ fontSize:12, color:"#AAA", marginBottom:12 }}>{tocando.compositor}</div>}
-                                {(tocando.playback||tocando.audioOriginal)
-                                    ? <iframe src={(()=>{
-                                        const url = tocando.playback||tocando.audioOriginal;
+                                {getUrlParaTocar(tocando)
+                                    ? <iframe key={`${tocando.id}-${planos[tocando.id]||"A"}`} src={(()=>{
+                                        const url = getUrlParaTocar(tocando);
                                         const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
                                         if (yt) return `https://www.youtube.com/embed/${yt[1]}?autoplay=1`;
                                         const dr = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
@@ -1975,7 +2001,7 @@ function Apresentacao({ config }) {
                                         return url;
                                       })()} style={{ width:"100%", height:200, border:"none", borderRadius:8 }} allow="autoplay; fullscreen" title={tocando.title} />
                                     : <div style={{ padding:"20px", background:"#F5F5F5", borderRadius:8, textAlign:"center", color:"#AAA", fontSize:13 }}>
-                                        Esta música não tem playback cadastrado.
+                                        Esta música não tem Playback Plano {planos[tocando.id]||"A"} cadastrado.
                                       </div>
                                 }
                                 {/* Próxima */}
