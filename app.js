@@ -6546,31 +6546,33 @@ function Apresentacao(_ref21) {
   }
   function _prepararOffline() {
     _prepararOffline = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee16() {
-      var novoOffline, _iterator, _step, _loop, _ret, _t3;
+      var _iterator, _step, _loop, _ret, _t2;
       return _regenerator().w(function (_context17) {
         while (1) switch (_context17.p = _context17.n) {
           case 0:
             setPreparando(true);
-            novoOffline = _objectSpread({}, offline);
             _iterator = _createForOfIteratorHelper(setlist);
             _context17.p = 1;
             _loop = /*#__PURE__*/_regenerator().m(function _loop() {
-              var s, plano, key, urlDown, resp, blob, blobUrl, _t2;
+              var s, plano, key, url, yt, dr, urlAbrir;
               return _regenerator().w(function (_context16) {
-                while (1) switch (_context16.p = _context16.n) {
+                while (1) switch (_context16.n) {
                   case 0:
                     s = _step.value;
                     plano = planos[s.id] || "A";
                     key = s.id + "-" + plano;
-                    if (!novoOffline[key]) {
+                    url = plano === "B" ? s.playbackB || s.playback || s.audioOriginal : s.playback || s.audioOriginal;
+                    if (url) {
                       _context16.n = 1;
                       break;
                     }
+                    setProgresso(function (p) {
+                      return _objectSpread(_objectSpread({}, p), {}, _defineProperty({}, key, "sem-link"));
+                    });
                     return _context16.a(2, 0);
                   case 1:
-                    // já baixado
-                    urlDown = getUrlDownload(s, plano);
-                    if (urlDown) {
+                    yt = url.match(/(?:youtube\.com|youtu\.be)/);
+                    if (!yt) {
                       _context16.n = 2;
                       break;
                     }
@@ -6579,41 +6581,20 @@ function Apresentacao(_ref21) {
                     });
                     return _context16.a(2, 0);
                   case 2:
-                    _context16.p = 2;
+                    dr = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+                    urlAbrir = dr ? "https://drive.google.com/file/d/" + dr[1] + "/view" : url;
+                    window.open(urlAbrir, "_blank");
                     setProgresso(function (p) {
-                      return _objectSpread(_objectSpread({}, p), {}, _defineProperty({}, key, "baixando"));
+                      return _objectSpread(_objectSpread({}, p), {}, _defineProperty({}, key, "aberto"));
                     });
                     _context16.n = 3;
-                    return fetch(urlDown);
+                    return new Promise(function (r) {
+                      return setTimeout(r, 800);
+                    });
                   case 3:
-                    resp = _context16.v;
-                    if (resp.ok) {
-                      _context16.n = 4;
-                      break;
-                    }
-                    throw new Error("Erro " + resp.status);
-                  case 4:
-                    _context16.n = 5;
-                    return resp.blob();
-                  case 5:
-                    blob = _context16.v;
-                    blobUrl = URL.createObjectURL(blob);
-                    novoOffline[key] = blobUrl;
-                    setProgresso(function (p) {
-                      return _objectSpread(_objectSpread({}, p), {}, _defineProperty({}, key, "ok"));
-                    });
-                    _context16.n = 7;
-                    break;
-                  case 6:
-                    _context16.p = 6;
-                    _t2 = _context16.v;
-                    setProgresso(function (p) {
-                      return _objectSpread(_objectSpread({}, p), {}, _defineProperty({}, key, "erro"));
-                    });
-                  case 7:
                     return _context16.a(2);
                 }
-              }, _loop, null, [[2, 6]]);
+              }, _loop);
             });
             _iterator.s();
           case 2:
@@ -6637,14 +6618,13 @@ function Apresentacao(_ref21) {
             break;
           case 6:
             _context17.p = 6;
-            _t3 = _context17.v;
-            _iterator.e(_t3);
+            _t2 = _context17.v;
+            _iterator.e(_t2);
           case 7:
             _context17.p = 7;
             _iterator.f();
             return _context17.f(7);
           case 8:
-            setOffline(novoOffline);
             setPreparando(false);
           case 9:
             return _context17.a(2);
@@ -6886,13 +6866,13 @@ function Apresentacao(_ref21) {
       fontWeight: 700,
       color: "#1A1D23"
     }
-  }, totalOffline === totalMusicas && totalMusicas > 0 ? "✅ Apresentação pronta para uso offline!" : "📥 Preparar para uso offline"), /*#__PURE__*/React.createElement("div", {
+  }, "\uD83D\uDCE5 Salvar \xE1udios para uso offline"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: 12,
       color: "#888",
       marginTop: 2
     }
-  }, totalOffline === totalMusicas && totalMusicas > 0 ? "Todos os áudios estão salvos. Pode desligar o Wi-Fi!" : "Baixe os áudios agora enquanto tem internet. Na hora do show não precisa de conexão."), Object.keys(progresso).length > 0 && /*#__PURE__*/React.createElement("div", {
+  }, "Abre cada arquivo do Drive para voc\xEA salvar no dispositivo antes do show."), Object.keys(progresso).length > 0 && /*#__PURE__*/React.createElement("div", {
     style: {
       display: "flex",
       flexWrap: "wrap",
@@ -6910,11 +6890,11 @@ function Apresentacao(_ref21) {
         padding: "2px 8px",
         borderRadius: 12,
         fontWeight: 700,
-        background: st === "ok" ? "#E8F5E9" : st === "baixando" ? "#E3F2FD" : st === "erro" ? "#FFEBEE" : st === "youtube" ? "#F3E5F5" : "#F5F5F5",
-        color: st === "ok" ? "#2E7D32" : st === "baixando" ? "#1565C0" : st === "erro" ? "#C62828" : st === "youtube" ? "#6A1B9A" : "#888"
+        background: st === "aberto" ? "#E8F5E9" : st === "youtube" ? "#F3E5F5" : st === "sem-link" ? "#FFF3E0" : "#F5F5F5",
+        color: st === "aberto" ? "#2E7D32" : st === "youtube" ? "#6A1B9A" : st === "sem-link" ? "#E65100" : "#888"
       }
-    }, s.title, ": ", st === "ok" ? "✓ salvo" : st === "baixando" ? "⏳ baixando..." : st === "erro" ? "✗ erro (tente novamente)" : st === "youtube" ? "▶ YouTube (online)" : "—");
-  }))), !(totalOffline === totalMusicas && totalMusicas > 0) && /*#__PURE__*/React.createElement("button", {
+    }, s.title, ": ", st === "aberto" ? "✓ aberto para salvar" : st === "youtube" ? "▶ YouTube (salve manualmente)" : st === "sem-link" ? "⚠ sem link" : "—");
+  }))), /*#__PURE__*/React.createElement("button", {
     onClick: prepararOffline,
     disabled: preparando,
     style: {
@@ -6929,7 +6909,7 @@ function Apresentacao(_ref21) {
       fontFamily: "inherit",
       whiteSpace: "nowrap"
     }
-  }, preparando ? "⏳ Baixando..." : "📥 Baixar áudios"))), eventoSel && setlist.length > 0 && /*#__PURE__*/React.createElement("div", {
+  }, preparando ? "⏳ Abrindo..." : "📂 Abrir áudios"))), eventoSel && setlist.length > 0 && /*#__PURE__*/React.createElement("div", {
     style: {
       display: "grid",
       gridTemplateColumns: "1fr 1fr",
