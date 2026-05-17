@@ -1,4 +1,6 @@
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorValues(e) { if (null != e) { var t = e["function" == typeof Symbol && Symbol.iterator || "@@iterator"], r = 0; if (t) return t.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) return { next: function next() { return e && r >= e.length && (e = void 0), { value: e && e[r++], done: !e }; } }; } throw new TypeError(_typeof(e) + " is not iterable"); }
+function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t.return || t.return(); } finally { if (u) throw o; } } }; }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
@@ -6492,12 +6494,26 @@ function Apresentacao(_ref21) {
     _useState124 = _slicedToArray(_useState123, 2),
     planos = _useState124[0],
     setPlanos = _useState124[1];
+  var _useState125 = useState({}),
+    _useState126 = _slicedToArray(_useState125, 2),
+    offline = _useState126[0],
+    setOffline = _useState126[1]; // { [musicaId]: blob URL }
+  var _useState127 = useState(false),
+    _useState128 = _slicedToArray(_useState127, 2),
+    preparando = _useState128[0],
+    setPreparando = _useState128[1];
+  var _useState129 = useState({}),
+    _useState130 = _slicedToArray(_useState129, 2),
+    progresso = _useState130[0],
+    setProgresso = _useState130[1];
   var cor = config.corPrimaria || COR;
   var today = todayStr();
   useEffect(function () {
     if (eventoSel) setSetlist(eventoSel.setlist || []);else setSetlist([]);
     setTocando(null);
     setPlanos({});
+    setOffline({});
+    setProgresso({});
   }, [eventoSel === null || eventoSel === void 0 ? void 0 : eventoSel.id]);
   function togglePlano(id) {
     setPlanos(function (p) {
@@ -6513,6 +6529,135 @@ function Apresentacao(_ref21) {
     var yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
     if (yt) return "https://www.youtube.com/embed/" + yt[1] + "?autoplay=1";
     return url;
+  }
+  function getUrlDownload(s, plano) {
+    var p = plano || "A";
+    var url = p === "B" ? s.playbackB || s.playback || s.audioOriginal : s.playback || s.audioOriginal;
+    if (!url) return null;
+    // Só funciona para Drive e URLs diretas — YouTube não pode ser baixado
+    var yt = url.match(/(?:youtube\.com|youtu\.be)/);
+    if (yt) return null;
+    var dr = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+    if (dr) return "https://drive.google.com/uc?export=download&id=" + dr[1];
+    return url;
+  }
+  function prepararOffline() {
+    return _prepararOffline.apply(this, arguments);
+  }
+  function _prepararOffline() {
+    _prepararOffline = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee16() {
+      var novoOffline, _iterator, _step, _loop, _ret, _t3;
+      return _regenerator().w(function (_context17) {
+        while (1) switch (_context17.p = _context17.n) {
+          case 0:
+            setPreparando(true);
+            novoOffline = _objectSpread({}, offline);
+            _iterator = _createForOfIteratorHelper(setlist);
+            _context17.p = 1;
+            _loop = /*#__PURE__*/_regenerator().m(function _loop() {
+              var s, plano, key, urlDown, resp, blob, blobUrl, _t2;
+              return _regenerator().w(function (_context16) {
+                while (1) switch (_context16.p = _context16.n) {
+                  case 0:
+                    s = _step.value;
+                    plano = planos[s.id] || "A";
+                    key = s.id + "-" + plano;
+                    if (!novoOffline[key]) {
+                      _context16.n = 1;
+                      break;
+                    }
+                    return _context16.a(2, 0);
+                  case 1:
+                    // já baixado
+                    urlDown = getUrlDownload(s, plano);
+                    if (urlDown) {
+                      _context16.n = 2;
+                      break;
+                    }
+                    setProgresso(function (p) {
+                      return _objectSpread(_objectSpread({}, p), {}, _defineProperty({}, key, "youtube"));
+                    });
+                    return _context16.a(2, 0);
+                  case 2:
+                    _context16.p = 2;
+                    setProgresso(function (p) {
+                      return _objectSpread(_objectSpread({}, p), {}, _defineProperty({}, key, "baixando"));
+                    });
+                    _context16.n = 3;
+                    return fetch(urlDown);
+                  case 3:
+                    resp = _context16.v;
+                    if (resp.ok) {
+                      _context16.n = 4;
+                      break;
+                    }
+                    throw new Error("Erro " + resp.status);
+                  case 4:
+                    _context16.n = 5;
+                    return resp.blob();
+                  case 5:
+                    blob = _context16.v;
+                    blobUrl = URL.createObjectURL(blob);
+                    novoOffline[key] = blobUrl;
+                    setProgresso(function (p) {
+                      return _objectSpread(_objectSpread({}, p), {}, _defineProperty({}, key, "ok"));
+                    });
+                    _context16.n = 7;
+                    break;
+                  case 6:
+                    _context16.p = 6;
+                    _t2 = _context16.v;
+                    setProgresso(function (p) {
+                      return _objectSpread(_objectSpread({}, p), {}, _defineProperty({}, key, "erro"));
+                    });
+                  case 7:
+                    return _context16.a(2);
+                }
+              }, _loop, null, [[2, 6]]);
+            });
+            _iterator.s();
+          case 2:
+            if ((_step = _iterator.n()).done) {
+              _context17.n = 5;
+              break;
+            }
+            return _context17.d(_regeneratorValues(_loop()), 3);
+          case 3:
+            _ret = _context17.v;
+            if (!(_ret === 0)) {
+              _context17.n = 4;
+              break;
+            }
+            return _context17.a(3, 4);
+          case 4:
+            _context17.n = 2;
+            break;
+          case 5:
+            _context17.n = 7;
+            break;
+          case 6:
+            _context17.p = 6;
+            _t3 = _context17.v;
+            _iterator.e(_t3);
+          case 7:
+            _context17.p = 7;
+            _iterator.f();
+            return _context17.f(7);
+          case 8:
+            setOffline(novoOffline);
+            setPreparando(false);
+          case 9:
+            return _context17.a(2);
+        }
+      }, _callee16, null, [[1, 6, 7, 8]]);
+    }));
+    return _prepararOffline.apply(this, arguments);
+  }
+  function getUrlFinal(s) {
+    var plano = planos[s.id] || "A";
+    var key = s.id + "-" + plano;
+    if (offline[key]) return offline[key]; // usa versão offline
+    return getUrl(s); // usa online
   }
   var proximos = events.filter(function (e) {
     var _e$setlist;
@@ -6530,26 +6675,26 @@ function Apresentacao(_ref21) {
     return _salvarOrdem.apply(this, arguments);
   }
   function _salvarOrdem() {
-    _salvarOrdem = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee16(nova) {
-      return _regenerator().w(function (_context16) {
-        while (1) switch (_context16.n) {
+    _salvarOrdem = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee17(nova) {
+      return _regenerator().w(function (_context18) {
+        while (1) switch (_context18.n) {
           case 0:
             if (eventoSel) {
-              _context16.n = 1;
+              _context18.n = 1;
               break;
             }
-            return _context16.a(2);
+            return _context18.a(2);
           case 1:
             setSetlist(nova);
-            _context16.n = 2;
+            _context18.n = 2;
             return db.collection("onix_events").doc(eventoSel.id).update({
               setlist: nova,
               updatedAt: firebase.firestore.FieldValue.serverTimestamp()
             });
           case 2:
-            return _context16.a(2);
+            return _context18.a(2);
         }
-      }, _callee16);
+      }, _callee17);
     }));
     return _salvarOrdem.apply(this, arguments);
   }
@@ -6588,6 +6733,10 @@ function Apresentacao(_ref21) {
     color: "#1A1D23",
     background: "#FAFAFA"
   };
+  var totalOffline = Object.values(progresso).filter(function (v) {
+    return v === "ok";
+  }).length;
+  var totalMusicas = setlist.length;
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       marginBottom: 6
@@ -6716,6 +6865,71 @@ function Apresentacao(_ref21) {
       textDecoration: "none"
     }
   }, "Abrir"))), eventoSel && setlist.length > 0 && /*#__PURE__*/React.createElement("div", {
+    style: _objectSpread(_objectSpread({}, card), {}, {
+      background: totalOffline === totalMusicas && totalMusicas > 0 ? "#E8F5E9" : "#FFF8E1",
+      border: "1px solid ".concat(totalOffline === totalMusicas && totalMusicas > 0 ? "#A5D6A7" : "#FFE082")
+    })
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: 12,
+      flexWrap: "wrap"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 13,
+      fontWeight: 700,
+      color: "#1A1D23"
+    }
+  }, totalOffline === totalMusicas && totalMusicas > 0 ? "✅ Apresentação pronta para uso offline!" : "📥 Preparar para uso offline"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12,
+      color: "#888",
+      marginTop: 2
+    }
+  }, totalOffline === totalMusicas && totalMusicas > 0 ? "Todos os áudios estão salvos. Pode desligar o Wi-Fi!" : "Baixe os áudios agora enquanto tem internet. Na hora do show não precisa de conexão."), Object.keys(progresso).length > 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      flexWrap: "wrap",
+      gap: 6,
+      marginTop: 8
+    }
+  }, setlist.map(function (s) {
+    var plano = planos[s.id] || "A";
+    var key = s.id + "-" + plano;
+    var st = progresso[key];
+    return /*#__PURE__*/React.createElement("span", {
+      key: key,
+      style: {
+        fontSize: 11,
+        padding: "2px 8px",
+        borderRadius: 12,
+        fontWeight: 700,
+        background: st === "ok" ? "#E8F5E9" : st === "baixando" ? "#E3F2FD" : st === "erro" ? "#FFEBEE" : st === "youtube" ? "#F3E5F5" : "#F5F5F5",
+        color: st === "ok" ? "#2E7D32" : st === "baixando" ? "#1565C0" : st === "erro" ? "#C62828" : st === "youtube" ? "#6A1B9A" : "#888"
+      }
+    }, s.title, ": ", st === "ok" ? "✓ salvo" : st === "baixando" ? "⏳ baixando..." : st === "erro" ? "✗ erro (tente novamente)" : st === "youtube" ? "▶ YouTube (online)" : "—");
+  }))), !(totalOffline === totalMusicas && totalMusicas > 0) && /*#__PURE__*/React.createElement("button", {
+    onClick: prepararOffline,
+    disabled: preparando,
+    style: {
+      padding: "10px 20px",
+      background: preparando ? "#CCC" : cor,
+      color: "#fff",
+      border: "none",
+      borderRadius: 10,
+      fontSize: 13,
+      fontWeight: 700,
+      cursor: preparando ? "not-allowed" : "pointer",
+      fontFamily: "inherit",
+      whiteSpace: "nowrap"
+    }
+  }, preparando ? "⏳ Baixando..." : "📥 Baixar áudios"))), eventoSel && setlist.length > 0 && /*#__PURE__*/React.createElement("div", {
     style: {
       display: "grid",
       gridTemplateColumns: "1fr 1fr",
@@ -6748,6 +6962,9 @@ function Apresentacao(_ref21) {
       marginLeft: "auto"
     }
   }, "\u2191\u2193 reordenar")), setlist.map(function (s, i) {
+    var plano = planos[s.id] || "A";
+    var key = s.id + "-" + plano;
+    var isOffline = !!offline[key];
     return /*#__PURE__*/React.createElement("div", {
       key: s.id || i,
       onClick: function onClick() {
@@ -6762,8 +6979,7 @@ function Apresentacao(_ref21) {
         marginBottom: 6,
         cursor: "pointer",
         background: (tocando === null || tocando === void 0 ? void 0 : tocando.id) === s.id ? cor + "15" : "#F9F5F5",
-        border: (tocando === null || tocando === void 0 ? void 0 : tocando.id) === s.id ? "1px solid " + cor + "33" : "1px solid transparent",
-        transition: "background 0.15s"
+        border: (tocando === null || tocando === void 0 ? void 0 : tocando.id) === s.id ? "1px solid " + cor + "33" : "1px solid transparent"
       }
     }, /*#__PURE__*/React.createElement("span", {
       style: {
@@ -6783,12 +6999,13 @@ function Apresentacao(_ref21) {
         fontWeight: 600,
         color: "#1A1D23"
       }
-    }, s.title), s.compositor && /*#__PURE__*/React.createElement("div", {
+    }, s.title), /*#__PURE__*/React.createElement("div", {
       style: {
-        fontSize: 11,
-        color: "#AAA"
+        fontSize: 10,
+        color: isOffline ? "#2E7D32" : "#CCC",
+        fontWeight: 600
       }
-    }, s.compositor)), /*#__PURE__*/React.createElement("button", {
+    }, isOffline ? "📥 offline" : "🌐 online")), /*#__PURE__*/React.createElement("button", {
       onClick: function onClick(e) {
         e.stopPropagation();
         togglePlano(s.id);
@@ -6891,9 +7108,9 @@ function Apresentacao(_ref21) {
       color: "#AAA",
       marginBottom: 8
     }
-  }, tocando.compositor), getUrl(tocando) ? /*#__PURE__*/React.createElement("iframe", {
-    key: tocando.id + "-" + (planos[tocando.id] || "A"),
-    src: getUrl(tocando),
+  }, tocando.compositor), getUrlFinal(tocando) ? /*#__PURE__*/React.createElement("iframe", {
+    key: tocando.id + "-" + (planos[tocando.id] || "A") + "-" + (offline[tocando.id + "-" + (planos[tocando.id] || "A")] ? "off" : "on"),
+    src: getUrlFinal(tocando),
     style: {
       width: "100%",
       height: 80,
@@ -7076,10 +7293,10 @@ function FrequenciaEventos(_ref24) {
 // ── FREQUÊNCIA DE ACESSO ──────────────────────────────────────────────────────
 function FrequenciaAcesso(_ref25) {
   var config = _ref25.config;
-  var _useState125 = useState([]),
-    _useState126 = _slicedToArray(_useState125, 2),
-    acessos = _useState126[0],
-    setAcessos = _useState126[1];
+  var _useState131 = useState([]),
+    _useState132 = _slicedToArray(_useState131, 2),
+    acessos = _useState132[0],
+    setAcessos = _useState132[1];
   var cor = config.corPrimaria || COR;
   useEffect(function () {
     db.collection("onix_acessos").onSnapshot(function (snap) {
@@ -7361,34 +7578,34 @@ function Relatorios(_ref32) {
   var _useCollection15 = useCollection("onix_noticias"),
     noticias = _useCollection15.data;
   var cor = config.corPrimaria || COR;
-  var _useState127 = useState(new Date().getFullYear() + "-01-01"),
-    _useState128 = _slicedToArray(_useState127, 2),
-    dataInicio = _useState128[0],
-    setDataInicio = _useState128[1];
-  var _useState129 = useState(todayStr()),
-    _useState130 = _slicedToArray(_useState129, 2),
-    dataFim = _useState130[0],
-    setDataFim = _useState130[1];
-  var _useState131 = useState("todos"),
-    _useState132 = _slicedToArray(_useState131, 2),
-    eventoFiltro = _useState132[0],
-    setEventoFiltro = _useState132[1];
-  var _useState133 = useState({}),
+  var _useState133 = useState(new Date().getFullYear() + "-01-01"),
     _useState134 = _slicedToArray(_useState133, 2),
-    textos = _useState134[0],
-    setTextos = _useState134[1];
-  var _useState135 = useState(false),
+    dataInicio = _useState134[0],
+    setDataInicio = _useState134[1];
+  var _useState135 = useState(todayStr()),
     _useState136 = _slicedToArray(_useState135, 2),
-    editTextos = _useState136[0],
-    setEditTextos = _useState136[1];
-  var _useState137 = useState({}),
+    dataFim = _useState136[0],
+    setDataFim = _useState136[1];
+  var _useState137 = useState("todos"),
     _useState138 = _slicedToArray(_useState137, 2),
-    formTextos = _useState138[0],
-    setFormTextos = _useState138[1];
-  var _useState139 = useState(false),
+    eventoFiltro = _useState138[0],
+    setEventoFiltro = _useState138[1];
+  var _useState139 = useState({}),
     _useState140 = _slicedToArray(_useState139, 2),
-    salvandoTextos = _useState140[0],
-    setSalvandoTextos = _useState140[1];
+    textos = _useState140[0],
+    setTextos = _useState140[1];
+  var _useState141 = useState(false),
+    _useState142 = _slicedToArray(_useState141, 2),
+    editTextos = _useState142[0],
+    setEditTextos = _useState142[1];
+  var _useState143 = useState({}),
+    _useState144 = _slicedToArray(_useState143, 2),
+    formTextos = _useState144[0],
+    setFormTextos = _useState144[1];
+  var _useState145 = useState(false),
+    _useState146 = _slicedToArray(_useState145, 2),
+    salvandoTextos = _useState146[0],
+    setSalvandoTextos = _useState146[1];
 
   // Carregar textos qualitativos do Firebase
   useEffect(function () {
@@ -7403,12 +7620,12 @@ function Relatorios(_ref32) {
     return _salvarTextos.apply(this, arguments);
   } // Filtrar eventos por período
   function _salvarTextos() {
-    _salvarTextos = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee17() {
-      return _regenerator().w(function (_context17) {
-        while (1) switch (_context17.n) {
+    _salvarTextos = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee18() {
+      return _regenerator().w(function (_context19) {
+        while (1) switch (_context19.n) {
           case 0:
             setSalvandoTextos(true);
-            _context17.n = 1;
+            _context19.n = 1;
             return db.collection("onix_config").doc("relatorio").set(formTextos, {
               merge: true
             });
@@ -7417,9 +7634,9 @@ function Relatorios(_ref32) {
             setSalvandoTextos(false);
             setEditTextos(false);
           case 2:
-            return _context17.a(2);
+            return _context19.a(2);
         }
-      }, _callee17);
+      }, _callee18);
     }));
     return _salvarTextos.apply(this, arguments);
   }
@@ -8432,34 +8649,34 @@ function Relatorios(_ref32) {
 function CheckinPublico(_ref41) {
   var sessaoId = _ref41.sessaoId,
     config = _ref41.config;
-  var _useState141 = useState(null),
-    _useState142 = _slicedToArray(_useState141, 2),
-    sessao = _useState142[0],
-    setSessao = _useState142[1];
-  var _useState143 = useState(null),
-    _useState144 = _slicedToArray(_useState143, 2),
-    membro = _useState144[0],
-    setMembro = _useState144[1];
-  var _useState145 = useState([]),
-    _useState146 = _slicedToArray(_useState145, 2),
-    members = _useState146[0],
-    setMembers = _useState146[1];
-  var _useState147 = useState(""),
+  var _useState147 = useState(null),
     _useState148 = _slicedToArray(_useState147, 2),
-    busca = _useState148[0],
-    setBusca = _useState148[1];
-  var _useState149 = useState([]),
+    sessao = _useState148[0],
+    setSessao = _useState148[1];
+  var _useState149 = useState(null),
     _useState150 = _slicedToArray(_useState149, 2),
-    sugestoes = _useState150[0],
-    setSugestoes = _useState150[1];
-  var _useState151 = useState(null),
+    membro = _useState150[0],
+    setMembro = _useState150[1];
+  var _useState151 = useState([]),
     _useState152 = _slicedToArray(_useState151, 2),
-    status = _useState152[0],
-    setStatus = _useState152[1]; // null | 'ok' | 'erro' | 'expirado'
-  var _useState153 = useState(true),
+    members = _useState152[0],
+    setMembers = _useState152[1];
+  var _useState153 = useState(""),
     _useState154 = _slicedToArray(_useState153, 2),
-    loading = _useState154[0],
-    setLoading = _useState154[1];
+    busca = _useState154[0],
+    setBusca = _useState154[1];
+  var _useState155 = useState([]),
+    _useState156 = _slicedToArray(_useState155, 2),
+    sugestoes = _useState156[0],
+    setSugestoes = _useState156[1];
+  var _useState157 = useState(null),
+    _useState158 = _slicedToArray(_useState157, 2),
+    status = _useState158[0],
+    setStatus = _useState158[1]; // null | 'ok' | 'erro' | 'expirado'
+  var _useState159 = useState(true),
+    _useState160 = _slicedToArray(_useState159, 2),
+    loading = _useState160[0],
+    setLoading = _useState160[1];
   var cor = config.corPrimaria || COR;
   useEffect(function () {
     // Carregar sessão
@@ -8504,24 +8721,24 @@ function CheckinPublico(_ref41) {
     return _confirmarPresenca.apply(this, arguments);
   }
   function _confirmarPresenca() {
-    _confirmarPresenca = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee18(m) {
+    _confirmarPresenca = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee19(m) {
       var snap;
-      return _regenerator().w(function (_context18) {
-        while (1) switch (_context18.n) {
+      return _regenerator().w(function (_context20) {
+        while (1) switch (_context20.n) {
           case 0:
-            _context18.n = 1;
+            _context20.n = 1;
             return db.collection("onix_frequencias").where("sessaoId", "==", sessaoId).where("membroId", "==", m.id).get();
           case 1:
-            snap = _context18.v;
+            snap = _context20.v;
             if (snap.empty) {
-              _context18.n = 2;
+              _context20.n = 2;
               break;
             }
             setMembro(m);
             setStatus("jaRegistrado");
-            return _context18.a(2);
+            return _context20.a(2);
           case 2:
-            _context18.n = 3;
+            _context20.n = 3;
             return db.collection("onix_frequencias").add({
               sessaoId: sessaoId,
               eventoId: sessao.eventoId,
@@ -8537,9 +8754,9 @@ function CheckinPublico(_ref41) {
             setMembro(m);
             setStatus("ok");
           case 4:
-            return _context18.a(2);
+            return _context20.a(2);
         }
-      }, _callee18);
+      }, _callee19);
     }));
     return _confirmarPresenca.apply(this, arguments);
   }
@@ -8832,30 +9049,30 @@ function Frequencia(_ref42) {
   var config = _ref42.config;
   var _useCollection16 = useCollection("onix_events", "date"),
     events = _useCollection16.data;
-  var _useState155 = useState(""),
-    _useState156 = _slicedToArray(_useState155, 2),
-    eventoSel = _useState156[0],
-    setEventoSel = _useState156[1];
-  var _useState157 = useState(null),
-    _useState158 = _slicedToArray(_useState157, 2),
-    sessaoAtiva = _useState158[0],
-    setSessaoAtiva = _useState158[1];
-  var _useState159 = useState([]),
-    _useState160 = _slicedToArray(_useState159, 2),
-    frequencias = _useState160[0],
-    setFrequencias = _useState160[1];
   var _useState161 = useState(""),
     _useState162 = _slicedToArray(_useState161, 2),
-    qrUrl = _useState162[0],
-    setQrUrl = _useState162[1];
-  var _useState163 = useState(false),
+    eventoSel = _useState162[0],
+    setEventoSel = _useState162[1];
+  var _useState163 = useState(null),
     _useState164 = _slicedToArray(_useState163, 2),
-    gerando = _useState164[0],
-    setGerando = _useState164[1];
-  var _useState165 = useState(false),
+    sessaoAtiva = _useState164[0],
+    setSessaoAtiva = _useState164[1];
+  var _useState165 = useState([]),
     _useState166 = _slicedToArray(_useState165, 2),
-    showQR = _useState166[0],
-    setShowQR = _useState166[1];
+    frequencias = _useState166[0],
+    setFrequencias = _useState166[1];
+  var _useState167 = useState(""),
+    _useState168 = _slicedToArray(_useState167, 2),
+    qrUrl = _useState168[0],
+    setQrUrl = _useState168[1];
+  var _useState169 = useState(false),
+    _useState170 = _slicedToArray(_useState169, 2),
+    gerando = _useState170[0],
+    setGerando = _useState170[1];
+  var _useState171 = useState(false),
+    _useState172 = _slicedToArray(_useState171, 2),
+    showQR = _useState172[0],
+    setShowQR = _useState172[1];
   var cor = config.corPrimaria || COR;
   var today = todayStr();
 
@@ -8905,29 +9122,29 @@ function Frequencia(_ref42) {
     return _gerarQR.apply(this, arguments);
   }
   function _gerarQR() {
-    _gerarQR = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee19() {
+    _gerarQR = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee20() {
       var evento, expiraEm, ref, url;
-      return _regenerator().w(function (_context19) {
-        while (1) switch (_context19.n) {
+      return _regenerator().w(function (_context21) {
+        while (1) switch (_context21.n) {
           case 0:
             if (eventoSel) {
-              _context19.n = 1;
+              _context21.n = 1;
               break;
             }
-            return _context19.a(2);
+            return _context21.a(2);
           case 1:
             evento = events.find(function (e) {
               return e.id === eventoSel;
             });
             if (evento) {
-              _context19.n = 2;
+              _context21.n = 2;
               break;
             }
-            return _context19.a(2);
+            return _context21.a(2);
           case 2:
             setGerando(true);
             expiraEm = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 horas
-            _context19.n = 3;
+            _context21.n = 3;
             return db.collection("onix_sessoes_checkin").add({
               eventoId: eventoSel,
               eventoTitulo: evento.title,
@@ -8936,15 +9153,15 @@ function Frequencia(_ref42) {
               expiraEm: firebase.firestore.Timestamp.fromDate(expiraEm)
             });
           case 3:
-            ref = _context19.v;
+            ref = _context21.v;
             url = "".concat(window.location.origin).concat(window.location.pathname, "?checkin=").concat(ref.id);
             setQrUrl("https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=".concat(encodeURIComponent(url)));
             setShowQR(true);
             setGerando(false);
           case 4:
-            return _context19.a(2);
+            return _context21.a(2);
         }
-      }, _callee19);
+      }, _callee20);
     }));
     return _gerarQR.apply(this, arguments);
   }
@@ -8952,23 +9169,23 @@ function Frequencia(_ref42) {
     return _encerrarSessao.apply(this, arguments);
   }
   function _encerrarSessao() {
-    _encerrarSessao = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee20() {
-      return _regenerator().w(function (_context20) {
-        while (1) switch (_context20.n) {
+    _encerrarSessao = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee21() {
+      return _regenerator().w(function (_context22) {
+        while (1) switch (_context22.n) {
           case 0:
             if (sessaoAtiva) {
-              _context20.n = 1;
+              _context22.n = 1;
               break;
             }
-            return _context20.a(2);
+            return _context22.a(2);
           case 1:
             if (window.confirm("Encerrar sessão de check-in?")) {
-              _context20.n = 2;
+              _context22.n = 2;
               break;
             }
-            return _context20.a(2);
+            return _context22.a(2);
           case 2:
-            _context20.n = 3;
+            _context22.n = 3;
             return db.collection("onix_sessoes_checkin").doc(sessaoAtiva.id).update({
               expiraEm: firebase.firestore.Timestamp.fromDate(new Date(0))
             });
@@ -8977,9 +9194,9 @@ function Frequencia(_ref42) {
             setShowQR(false);
             setQrUrl("");
           case 4:
-            return _context20.a(2);
+            return _context22.a(2);
         }
-      }, _callee20);
+      }, _callee21);
     }));
     return _encerrarSessao.apply(this, arguments);
   }
@@ -9368,30 +9585,30 @@ function Declaracao(_ref43) {
     members = _useCollection18.data;
   var _useCollection19 = useCollection("onix_frequencias", "dataHora"),
     frequencias = _useCollection19.data;
-  var _useState167 = useState("evento"),
-    _useState168 = _slicedToArray(_useState167, 2),
-    tipo = _useState168[0],
-    setTipo = _useState168[1]; // 'evento' | 'corista'
-  var _useState169 = useState(""),
-    _useState170 = _slicedToArray(_useState169, 2),
-    eventoSel = _useState170[0],
-    setEventoSel = _useState170[1];
-  var _useState171 = useState(""),
-    _useState172 = _slicedToArray(_useState171, 2),
-    coristaId = _useState172[0],
-    setCoristaId = _useState172[1];
-  var _useState173 = useState(new Date().getFullYear() + "-01-01"),
+  var _useState173 = useState("evento"),
     _useState174 = _slicedToArray(_useState173, 2),
-    dataInicio = _useState174[0],
-    setDataInicio = _useState174[1];
-  var _useState175 = useState(todayStr()),
+    tipo = _useState174[0],
+    setTipo = _useState174[1]; // 'evento' | 'corista'
+  var _useState175 = useState(""),
     _useState176 = _slicedToArray(_useState175, 2),
-    dataFim = _useState176[0],
-    setDataFim = _useState176[1];
-  var _useState177 = useState({}),
+    eventoSel = _useState176[0],
+    setEventoSel = _useState176[1];
+  var _useState177 = useState(""),
     _useState178 = _slicedToArray(_useState177, 2),
-    textos = _useState178[0],
-    setTextos = _useState178[1];
+    coristaId = _useState178[0],
+    setCoristaId = _useState178[1];
+  var _useState179 = useState(new Date().getFullYear() + "-01-01"),
+    _useState180 = _slicedToArray(_useState179, 2),
+    dataInicio = _useState180[0],
+    setDataInicio = _useState180[1];
+  var _useState181 = useState(todayStr()),
+    _useState182 = _slicedToArray(_useState181, 2),
+    dataFim = _useState182[0],
+    setDataFim = _useState182[1];
+  var _useState183 = useState({}),
+    _useState184 = _slicedToArray(_useState183, 2),
+    textos = _useState184[0],
+    setTextos = _useState184[1];
   var cor = config.corPrimaria || COR;
   useEffect(function () {
     db.collection("onix_config").doc("relatorio").get().then(function (doc) {
@@ -9842,26 +10059,26 @@ function PainelCorista(_ref45) {
     songs = _useCollection22.data;
   var _useCollection23 = useCollection("onix_noticias"),
     noticias = _useCollection23.data;
-  var _useState179 = useState(new Date().getMonth()),
-    _useState180 = _slicedToArray(_useState179, 2),
-    mes = _useState180[0],
-    setMes = _useState180[1];
-  var _useState181 = useState(new Date().getFullYear()),
-    _useState182 = _slicedToArray(_useState181, 2),
-    ano = _useState182[0],
-    setAno = _useState182[1];
-  var _useState183 = useState({}),
-    _useState184 = _slicedToArray(_useState183, 2),
-    confirmacoes = _useState184[0],
-    setConfirmacoes = _useState184[1];
-  var _useState185 = useState(null),
+  var _useState185 = useState(new Date().getMonth()),
     _useState186 = _slicedToArray(_useState185, 2),
-    naipeOpen = _useState186[0],
-    setNaipeOpen = _useState186[1];
-  var _useState187 = useState(false),
+    mes = _useState186[0],
+    setMes = _useState186[1];
+  var _useState187 = useState(new Date().getFullYear()),
     _useState188 = _slicedToArray(_useState187, 2),
-    modalNoticiaCorista = _useState188[0],
-    setModalNoticiaCorista = _useState188[1];
+    ano = _useState188[0],
+    setAno = _useState188[1];
+  var _useState189 = useState({}),
+    _useState190 = _slicedToArray(_useState189, 2),
+    confirmacoes = _useState190[0],
+    setConfirmacoes = _useState190[1];
+  var _useState191 = useState(null),
+    _useState192 = _slicedToArray(_useState191, 2),
+    naipeOpen = _useState192[0],
+    setNaipeOpen = _useState192[1];
+  var _useState193 = useState(false),
+    _useState194 = _slicedToArray(_useState193, 2),
+    modalNoticiaCorista = _useState194[0],
+    setModalNoticiaCorista = _useState194[1];
   var cor = config.corPrimaria || COR;
   var naipe = user.voice || "";
   var naipeKey = {
@@ -9888,29 +10105,29 @@ function PainelCorista(_ref45) {
     return _confirmar.apply(this, arguments);
   }
   function _confirmar() {
-    _confirmar = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee21(eventoId, status) {
+    _confirmar = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee22(eventoId, status) {
       var snap;
-      return _regenerator().w(function (_context21) {
-        while (1) switch (_context21.n) {
+      return _regenerator().w(function (_context23) {
+        while (1) switch (_context23.n) {
           case 0:
-            _context21.n = 1;
+            _context23.n = 1;
             return db.collection("onix_confirmacoes").where("membroNome", "==", user.name).where("eventoId", "==", eventoId).get();
           case 1:
-            snap = _context21.v;
+            snap = _context23.v;
             if (snap.empty) {
-              _context21.n = 3;
+              _context23.n = 3;
               break;
             }
-            _context21.n = 2;
+            _context23.n = 2;
             return snap.docs[0].ref.update({
               status: status,
               updatedAt: firebase.firestore.FieldValue.serverTimestamp()
             });
           case 2:
-            _context21.n = 4;
+            _context23.n = 4;
             break;
           case 3:
-            _context21.n = 4;
+            _context23.n = 4;
             return db.collection("onix_confirmacoes").add({
               membroNome: user.name,
               eventoId: eventoId,
@@ -9918,9 +10135,9 @@ function PainelCorista(_ref45) {
               createdAt: firebase.firestore.FieldValue.serverTimestamp()
             });
           case 4:
-            return _context21.a(2);
+            return _context23.a(2);
         }
-      }, _callee21);
+      }, _callee22);
     }));
     return _confirmar.apply(this, arguments);
   }
@@ -10513,18 +10730,18 @@ function MinhaDeclaracao(_ref46) {
     config = _ref46.config;
   var _useCollection24 = useCollection("onix_frequencias", "dataHora"),
     frequencias = _useCollection24.data;
-  var _useState189 = useState(new Date().getFullYear() + "-01-01"),
-    _useState190 = _slicedToArray(_useState189, 2),
-    dataInicio = _useState190[0],
-    setDataInicio = _useState190[1];
-  var _useState191 = useState(todayStr()),
-    _useState192 = _slicedToArray(_useState191, 2),
-    dataFim = _useState192[0],
-    setDataFim = _useState192[1];
-  var _useState193 = useState({}),
-    _useState194 = _slicedToArray(_useState193, 2),
-    textos = _useState194[0],
-    setTextos = _useState194[1];
+  var _useState195 = useState(new Date().getFullYear() + "-01-01"),
+    _useState196 = _slicedToArray(_useState195, 2),
+    dataInicio = _useState196[0],
+    setDataInicio = _useState196[1];
+  var _useState197 = useState(todayStr()),
+    _useState198 = _slicedToArray(_useState197, 2),
+    dataFim = _useState198[0],
+    setDataFim = _useState198[1];
+  var _useState199 = useState({}),
+    _useState200 = _slicedToArray(_useState199, 2),
+    textos = _useState200[0],
+    setTextos = _useState200[1];
   var cor = config.corPrimaria || COR;
   useEffect(function () {
     db.collection("onix_config").doc("relatorio").get().then(function (doc) {
@@ -10715,40 +10932,40 @@ function ModalNoticia(_ref47) {
     categoria: "Geral",
     autorNome: autorInicial || "Gestão"
   };
-  var _useState195 = useState(noticia ? _objectSpread(_objectSpread({}, vazio), noticia) : vazio),
-    _useState196 = _slicedToArray(_useState195, 2),
-    form = _useState196[0],
-    setForm = _useState196[1];
-  var _useState197 = useState(false),
-    _useState198 = _slicedToArray(_useState197, 2),
-    salvando = _useState198[0],
-    setSalvando = _useState198[1];
-  var _useState199 = useState(""),
-    _useState200 = _slicedToArray(_useState199, 2),
-    erro = _useState200[0],
-    setErro = _useState200[1];
+  var _useState201 = useState(noticia ? _objectSpread(_objectSpread({}, vazio), noticia) : vazio),
+    _useState202 = _slicedToArray(_useState201, 2),
+    form = _useState202[0],
+    setForm = _useState202[1];
+  var _useState203 = useState(false),
+    _useState204 = _slicedToArray(_useState203, 2),
+    salvando = _useState204[0],
+    setSalvando = _useState204[1];
+  var _useState205 = useState(""),
+    _useState206 = _slicedToArray(_useState205, 2),
+    erro = _useState206[0],
+    setErro = _useState206[1];
   function salvar() {
     return _salvar7.apply(this, arguments);
   }
   function _salvar7() {
-    _salvar7 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee22() {
+    _salvar7 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee23() {
       var d;
-      return _regenerator().w(function (_context22) {
-        while (1) switch (_context22.n) {
+      return _regenerator().w(function (_context24) {
+        while (1) switch (_context24.n) {
           case 0:
             if (form.titulo.trim()) {
-              _context22.n = 1;
+              _context24.n = 1;
               break;
             }
             setErro("Título é obrigatório.");
-            return _context22.a(2);
+            return _context24.a(2);
           case 1:
             if (form.texto.trim()) {
-              _context22.n = 2;
+              _context24.n = 2;
               break;
             }
             setErro("Texto é obrigatório.");
-            return _context22.a(2);
+            return _context24.a(2);
           case 2:
             setSalvando(true);
             d = {
@@ -10760,26 +10977,26 @@ function ModalNoticia(_ref47) {
               createdAt: noticia ? noticia.createdAt : firebase.firestore.FieldValue.serverTimestamp()
             };
             if (!noticia) {
-              _context22.n = 4;
+              _context24.n = 4;
               break;
             }
-            _context22.n = 3;
+            _context24.n = 3;
             return db.collection("onix_noticias").doc(noticia.id).update(_objectSpread(_objectSpread({}, d), {}, {
               updatedAt: firebase.firestore.FieldValue.serverTimestamp()
             }));
           case 3:
-            _context22.n = 5;
+            _context24.n = 5;
             break;
           case 4:
-            _context22.n = 5;
+            _context24.n = 5;
             return db.collection("onix_noticias").add(d);
           case 5:
             setSalvando(false);
             onClose();
           case 6:
-            return _context22.a(2);
+            return _context24.a(2);
         }
-      }, _callee22);
+      }, _callee23);
     }));
     return _salvar7.apply(this, arguments);
   }
@@ -10787,24 +11004,24 @@ function ModalNoticia(_ref47) {
     return _excluir6.apply(this, arguments);
   }
   function _excluir6() {
-    _excluir6 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee23() {
-      return _regenerator().w(function (_context23) {
-        while (1) switch (_context23.n) {
+    _excluir6 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee24() {
+      return _regenerator().w(function (_context25) {
+        while (1) switch (_context25.n) {
           case 0:
             if (window.confirm("Excluir esta notícia?")) {
-              _context23.n = 1;
+              _context25.n = 1;
               break;
             }
-            return _context23.a(2);
+            return _context25.a(2);
           case 1:
-            _context23.n = 2;
+            _context25.n = 2;
             return db.collection("onix_noticias").doc(noticia.id).delete();
           case 2:
             onClose();
           case 3:
-            return _context23.a(2);
+            return _context25.a(2);
         }
-      }, _callee23);
+      }, _callee24);
     }));
     return _excluir6.apply(this, arguments);
   }
@@ -11026,21 +11243,21 @@ function AreaRH(_ref48) {
     noticias = _useCollection28.data;
   var _useCollection29 = useCollection("onix_relatorios_historico"),
     relatorios = _useCollection29.data;
-  var _useState201 = useState(abaInicial || "dashboard"),
-    _useState202 = _slicedToArray(_useState201, 2),
-    aba = _useState202[0],
-    setAba = _useState202[1];
+  var _useState207 = useState(abaInicial || "dashboard"),
+    _useState208 = _slicedToArray(_useState207, 2),
+    aba = _useState208[0],
+    setAba = _useState208[1];
   useEffect(function () {
     if (abaInicial) setAba(abaInicial);
   }, [abaInicial]);
-  var _useState203 = useState(null),
-    _useState204 = _slicedToArray(_useState203, 2),
-    modalNoticia = _useState204[0],
-    setModalNoticia = _useState204[1];
-  var _useState205 = useState({}),
-    _useState206 = _slicedToArray(_useState205, 2),
-    textos = _useState206[0],
-    setTextos = _useState206[1];
+  var _useState209 = useState(null),
+    _useState210 = _slicedToArray(_useState209, 2),
+    modalNoticia = _useState210[0],
+    setModalNoticia = _useState210[1];
+  var _useState211 = useState({}),
+    _useState212 = _slicedToArray(_useState211, 2),
+    textos = _useState212[0],
+    setTextos = _useState212[1];
   var cor = config.corPrimaria || COR;
   var today = todayStr();
   useEffect(function () {
@@ -11099,10 +11316,10 @@ function AreaRH(_ref48) {
   })).concat([1]));
 
   // Confirmações
-  var _useState207 = useState([]),
-    _useState208 = _slicedToArray(_useState207, 2),
-    confirmacoes = _useState208[0],
-    setConfirmacoes = _useState208[1];
+  var _useState213 = useState([]),
+    _useState214 = _slicedToArray(_useState213, 2),
+    confirmacoes = _useState214[0],
+    setConfirmacoes = _useState214[1];
   useEffect(function () {
     db.collection("onix_confirmacoes").onSnapshot(function (snap) {
       return setConfirmacoes(snap.docs.map(function (d) {
@@ -11145,18 +11362,18 @@ function AreaRH(_ref48) {
   }];
 
   // ── DECLARAÇÕES POR CORISTA ──
-  var _useState209 = useState(""),
-    _useState210 = _slicedToArray(_useState209, 2),
-    coristaDecl = _useState210[0],
-    setCoristaDecl = _useState210[1];
-  var _useState211 = useState(new Date().getFullYear() + "-01-01"),
-    _useState212 = _slicedToArray(_useState211, 2),
-    dataInicio = _useState212[0],
-    setDataInicio = _useState212[1];
-  var _useState213 = useState(todayStr()),
-    _useState214 = _slicedToArray(_useState213, 2),
-    dataFim = _useState214[0],
-    setDataFim = _useState214[1];
+  var _useState215 = useState(""),
+    _useState216 = _slicedToArray(_useState215, 2),
+    coristaDecl = _useState216[0],
+    setCoristaDecl = _useState216[1];
+  var _useState217 = useState(new Date().getFullYear() + "-01-01"),
+    _useState218 = _slicedToArray(_useState217, 2),
+    dataInicio = _useState218[0],
+    setDataInicio = _useState218[1];
+  var _useState219 = useState(todayStr()),
+    _useState220 = _slicedToArray(_useState219, 2),
+    dataFim = _useState220[0],
+    setDataFim = _useState220[1];
   var coristaAtual = members.find(function (m) {
     return m.id === coristaDecl;
   });
@@ -11800,13 +12017,13 @@ var WPP_LUCIA = "5562991546757";
 var CATS_GASTO_PADRAO = ["Transporte", "Aluguel de carro", "Pedágio", "Gasolina", "Hotel", "Alimentação", "Passagem aérea", "Passagem rodoviária", "Figurino", "Material de ensaio", "Gravação", "Divulgação", "Outros"];
 var CATS_RECEITA_PADRAO = ["Mensalidade", "Campanha", "Doação", "Serviço prestado", "Rifa", "Evento", "Patrocínio", "Outros"];
 function useCatsFinanceiro() {
-  var _useState215 = useState({
+  var _useState221 = useState({
       gasto: CATS_GASTO_PADRAO,
       receita: CATS_RECEITA_PADRAO
     }),
-    _useState216 = _slicedToArray(_useState215, 2),
-    cats = _useState216[0],
-    setCats = _useState216[1];
+    _useState222 = _slicedToArray(_useState221, 2),
+    cats = _useState222[0],
+    setCats = _useState222[1];
   useEffect(function () {
     var unsub = db.collection("onix_config").doc("cats_financeiro").onSnapshot(function (snap) {
       if (snap.exists) setCats(function (d) {
@@ -11819,20 +12036,20 @@ function useCatsFinanceiro() {
     return _addCat.apply(this, arguments);
   }
   function _addCat() {
-    _addCat = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee24(tipo, nome) {
+    _addCat = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee25(tipo, nome) {
       var nova;
-      return _regenerator().w(function (_context24) {
-        while (1) switch (_context24.n) {
+      return _regenerator().w(function (_context26) {
+        while (1) switch (_context26.n) {
           case 0:
             nova = [].concat(_toConsumableArray(cats[tipo]), [nome]);
-            _context24.n = 1;
+            _context26.n = 1;
             return db.collection("onix_config").doc("cats_financeiro").set(_defineProperty({}, tipo, nova), {
               merge: true
             });
           case 1:
-            return _context24.a(2);
+            return _context26.a(2);
         }
-      }, _callee24);
+      }, _callee25);
     }));
     return _addCat.apply(this, arguments);
   }
@@ -11845,22 +12062,22 @@ function ModalMensalidade(_ref55) {
   var config = _ref55.config,
     onClose = _ref55.onClose;
   var cor = config.corPrimaria || COR;
-  var _useState217 = useState({
+  var _useState223 = useState({
       dataInicio: "",
       dataFim: "",
       valorMensal: "25.00"
     }),
-    _useState218 = _slicedToArray(_useState217, 2),
-    cfg = _useState218[0],
-    setCfg = _useState218[1];
-  var _useState219 = useState(false),
-    _useState220 = _slicedToArray(_useState219, 2),
-    salvando = _useState220[0],
-    setSalvando = _useState220[1];
-  var _useState221 = useState(false),
-    _useState222 = _slicedToArray(_useState221, 2),
-    ok = _useState222[0],
-    setOk = _useState222[1];
+    _useState224 = _slicedToArray(_useState223, 2),
+    cfg = _useState224[0],
+    setCfg = _useState224[1];
+  var _useState225 = useState(false),
+    _useState226 = _slicedToArray(_useState225, 2),
+    salvando = _useState226[0],
+    setSalvando = _useState226[1];
+  var _useState227 = useState(false),
+    _useState228 = _slicedToArray(_useState227, 2),
+    ok = _useState228[0],
+    setOk = _useState228[1];
   useEffect(function () {
     db.collection("onix_config").doc("mensalidade").get().then(function (d) {
       if (d.exists) setCfg(function (x) {
@@ -11874,19 +12091,19 @@ function ModalMensalidade(_ref55) {
     return _salvar8.apply(this, arguments);
   }
   function _salvar8() {
-    _salvar8 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee25() {
-      return _regenerator().w(function (_context25) {
-        while (1) switch (_context25.n) {
+    _salvar8 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee26() {
+      return _regenerator().w(function (_context27) {
+        while (1) switch (_context27.n) {
           case 0:
             if (!(!cfg.dataInicio || !cfg.dataFim)) {
-              _context25.n = 1;
+              _context27.n = 1;
               break;
             }
             alert("Preencha início e fim.");
-            return _context25.a(2);
+            return _context27.a(2);
           case 1:
             setSalvando(true);
-            _context25.n = 2;
+            _context27.n = 2;
             return db.collection("onix_config").doc("mensalidade").set({
               dataInicio: cfg.dataInicio,
               dataFim: cfg.dataFim,
@@ -11903,9 +12120,9 @@ function ModalMensalidade(_ref55) {
               onClose();
             }, 1200);
           case 3:
-            return _context25.a(2);
+            return _context27.a(2);
         }
-      }, _callee25);
+      }, _callee26);
     }));
     return _salvar8.apply(this, arguments);
   }
@@ -12083,14 +12300,14 @@ function ModalPagamento(_ref56) {
     config = _ref56.config,
     onClose = _ref56.onClose;
   var cor = config.corPrimaria || COR;
-  var _useState223 = useState([]),
-    _useState224 = _slicedToArray(_useState223, 2),
-    meses = _useState224[0],
-    setMeses = _useState224[1];
-  var _useState225 = useState(false),
-    _useState226 = _slicedToArray(_useState225, 2),
-    salvando = _useState226[0],
-    setSalvando = _useState226[1];
+  var _useState229 = useState([]),
+    _useState230 = _slicedToArray(_useState229, 2),
+    meses = _useState230[0],
+    setMeses = _useState230[1];
+  var _useState231 = useState(false),
+    _useState232 = _slicedToArray(_useState231, 2),
+    salvando = _useState232[0],
+    setSalvando = _useState232[1];
   useEffect(function () {
     if (!(mesalidade !== null && mesalidade !== void 0 && mesalidade.dataInicio) || !(mesalidade !== null && mesalidade !== void 0 && mesalidade.dataFim)) return;
     var unsub = db.collection("onix_pagamentos").where("membroId", "==", membro.id).onSnapshot(function (snap) {
@@ -12135,29 +12352,29 @@ function ModalPagamento(_ref56) {
     return _marcarAguardando.apply(this, arguments);
   }
   function _marcarAguardando() {
-    _marcarAguardando = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee26(mes) {
+    _marcarAguardando = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee27(mes) {
       var existing, msg;
-      return _regenerator().w(function (_context26) {
-        while (1) switch (_context26.n) {
+      return _regenerator().w(function (_context28) {
+        while (1) switch (_context28.n) {
           case 0:
             setSalvando(true);
             existing = meses.find(function (x) {
               return x.key === mes.key;
             });
             if (!existing.docId) {
-              _context26.n = 2;
+              _context28.n = 2;
               break;
             }
-            _context26.n = 1;
+            _context28.n = 1;
             return db.collection("onix_pagamentos").doc(existing.docId).update({
               status: "aguardando",
               updatedAt: firebase.firestore.FieldValue.serverTimestamp()
             });
           case 1:
-            _context26.n = 3;
+            _context28.n = 3;
             break;
           case 2:
-            _context26.n = 3;
+            _context28.n = 3;
             return db.collection("onix_pagamentos").add({
               membroId: membro.id,
               membroNome: membro.name,
@@ -12172,9 +12389,9 @@ function ModalPagamento(_ref56) {
             msg = encodeURIComponent("Ol\xE1! Sou ".concat(membro.name, " (").concat(membro.voice || "Corista", ") do Onix Brasil Vocal Internacional. Segue comprovante de pagamento da mensalidade de ").concat(mes.label, ". Por favor, validar no sistema."));
             setSalvando(false);
           case 4:
-            return _context26.a(2);
+            return _context28.a(2);
         }
-      }, _callee26);
+      }, _callee27);
     }));
     return _marcarAguardando.apply(this, arguments);
   }
@@ -12182,24 +12399,24 @@ function ModalPagamento(_ref56) {
     return _validar.apply(this, arguments);
   }
   function _validar() {
-    _validar = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee27(mes) {
-      return _regenerator().w(function (_context27) {
-        while (1) switch (_context27.n) {
+    _validar = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee28(mes) {
+      return _regenerator().w(function (_context29) {
+        while (1) switch (_context29.n) {
           case 0:
             if (mes.docId) {
-              _context27.n = 1;
+              _context29.n = 1;
               break;
             }
-            return _context27.a(2);
+            return _context29.a(2);
           case 1:
             setSalvando(true);
-            _context27.n = 2;
+            _context29.n = 2;
             return db.collection("onix_pagamentos").doc(mes.docId).update({
               status: "pago",
               validadoEm: firebase.firestore.FieldValue.serverTimestamp()
             });
           case 2:
-            _context27.n = 3;
+            _context29.n = 3;
             return db.collection("onix_financeiro").add({
               descricao: "Mensalidade ".concat(mes.label, " \u2014 ").concat(membro.name),
               categoria: "Mensalidade",
@@ -12214,9 +12431,9 @@ function ModalPagamento(_ref56) {
           case 3:
             setSalvando(false);
           case 4:
-            return _context27.a(2);
+            return _context29.a(2);
         }
-      }, _callee27);
+      }, _callee28);
     }));
     return _validar.apply(this, arguments);
   }
@@ -12224,25 +12441,25 @@ function ModalPagamento(_ref56) {
     return _recusar.apply(this, arguments);
   }
   function _recusar() {
-    _recusar = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee28(mes) {
-      return _regenerator().w(function (_context28) {
-        while (1) switch (_context28.n) {
+    _recusar = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee29(mes) {
+      return _regenerator().w(function (_context30) {
+        while (1) switch (_context30.n) {
           case 0:
             if (mes.docId) {
-              _context28.n = 1;
+              _context30.n = 1;
               break;
             }
-            return _context28.a(2);
+            return _context30.a(2);
           case 1:
-            _context28.n = 2;
+            _context30.n = 2;
             return db.collection("onix_pagamentos").doc(mes.docId).update({
               status: "pendente",
               updatedAt: firebase.firestore.FieldValue.serverTimestamp()
             });
           case 2:
-            return _context28.a(2);
+            return _context30.a(2);
         }
-      }, _callee28);
+      }, _callee29);
     }));
     return _recusar.apply(this, arguments);
   }
@@ -12453,50 +12670,50 @@ function ModalLancamento(_ref57) {
     membroId: "",
     membroNome: ""
   };
-  var _useState227 = useState(lancamento ? _objectSpread(_objectSpread(_objectSpread({}, vazio), lancamento), {}, {
+  var _useState233 = useState(lancamento ? _objectSpread(_objectSpread(_objectSpread({}, vazio), lancamento), {}, {
       valor: String(lancamento.valor || "")
     }) : vazio),
-    _useState228 = _slicedToArray(_useState227, 2),
-    form = _useState228[0],
-    setForm = _useState228[1];
-  var _useState229 = useState(false),
-    _useState230 = _slicedToArray(_useState229, 2),
-    salvando = _useState230[0],
-    setSalvando = _useState230[1];
-  var _useState231 = useState(""),
-    _useState232 = _slicedToArray(_useState231, 2),
-    erro = _useState232[0],
-    setErro = _useState232[1];
-  var _useState233 = useState(""),
     _useState234 = _slicedToArray(_useState233, 2),
-    novaCat = _useState234[0],
-    setNovaCat = _useState234[1];
+    form = _useState234[0],
+    setForm = _useState234[1];
   var _useState235 = useState(false),
     _useState236 = _slicedToArray(_useState235, 2),
-    showNovaCat = _useState236[0],
-    setShowNovaCat = _useState236[1];
+    salvando = _useState236[0],
+    setSalvando = _useState236[1];
+  var _useState237 = useState(""),
+    _useState238 = _slicedToArray(_useState237, 2),
+    erro = _useState238[0],
+    setErro = _useState238[1];
+  var _useState239 = useState(""),
+    _useState240 = _slicedToArray(_useState239, 2),
+    novaCat = _useState240[0],
+    setNovaCat = _useState240[1];
+  var _useState241 = useState(false),
+    _useState242 = _slicedToArray(_useState241, 2),
+    showNovaCat = _useState242[0],
+    setShowNovaCat = _useState242[1];
   function salvar() {
     return _salvar9.apply(this, arguments);
   }
   function _salvar9() {
-    _salvar9 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee29() {
+    _salvar9 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee30() {
       var membro, d;
-      return _regenerator().w(function (_context29) {
-        while (1) switch (_context29.n) {
+      return _regenerator().w(function (_context31) {
+        while (1) switch (_context31.n) {
           case 0:
             if (form.descricao.trim()) {
-              _context29.n = 1;
+              _context31.n = 1;
               break;
             }
             setErro("Descrição obrigatória.");
-            return _context29.a(2);
+            return _context31.a(2);
           case 1:
             if (!(!form.valor || isNaN(parseFloat(form.valor)))) {
-              _context29.n = 2;
+              _context31.n = 2;
               break;
             }
             setErro("Valor inválido.");
-            return _context29.a(2);
+            return _context31.a(2);
           case 2:
             setSalvando(true);
             membro = members.find(function (m) {
@@ -12513,18 +12730,18 @@ function ModalLancamento(_ref57) {
               membroNome: form.membroId ? (membro === null || membro === void 0 ? void 0 : membro.name) || form.membroNome : "Onix Brasil Vocal"
             };
             if (!lancamento) {
-              _context29.n = 4;
+              _context31.n = 4;
               break;
             }
-            _context29.n = 3;
+            _context31.n = 3;
             return db.collection("onix_financeiro").doc(lancamento.id).update(_objectSpread(_objectSpread({}, d), {}, {
               updatedAt: firebase.firestore.FieldValue.serverTimestamp()
             }));
           case 3:
-            _context29.n = 5;
+            _context31.n = 5;
             break;
           case 4:
-            _context29.n = 5;
+            _context31.n = 5;
             return db.collection("onix_financeiro").add(_objectSpread(_objectSpread({}, d), {}, {
               createdAt: firebase.firestore.FieldValue.serverTimestamp()
             }));
@@ -12532,9 +12749,9 @@ function ModalLancamento(_ref57) {
             setSalvando(false);
             onClose();
           case 6:
-            return _context29.a(2);
+            return _context31.a(2);
         }
-      }, _callee29);
+      }, _callee30);
     }));
     return _salvar9.apply(this, arguments);
   }
@@ -12542,24 +12759,24 @@ function ModalLancamento(_ref57) {
     return _excluir7.apply(this, arguments);
   }
   function _excluir7() {
-    _excluir7 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee30() {
-      return _regenerator().w(function (_context30) {
-        while (1) switch (_context30.n) {
+    _excluir7 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee31() {
+      return _regenerator().w(function (_context32) {
+        while (1) switch (_context32.n) {
           case 0:
             if (window.confirm("Excluir lançamento?")) {
-              _context30.n = 1;
+              _context32.n = 1;
               break;
             }
-            return _context30.a(2);
+            return _context32.a(2);
           case 1:
-            _context30.n = 2;
+            _context32.n = 2;
             return db.collection("onix_financeiro").doc(lancamento.id).delete();
           case 2:
             onClose();
           case 3:
-            return _context30.a(2);
+            return _context32.a(2);
         }
-      }, _callee30);
+      }, _callee31);
     }));
     return _excluir7.apply(this, arguments);
   }
@@ -12567,17 +12784,17 @@ function ModalLancamento(_ref57) {
     return _criarCategoria.apply(this, arguments);
   }
   function _criarCategoria() {
-    _criarCategoria = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee31() {
-      return _regenerator().w(function (_context31) {
-        while (1) switch (_context31.n) {
+    _criarCategoria = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee32() {
+      return _regenerator().w(function (_context33) {
+        while (1) switch (_context33.n) {
           case 0:
             if (novaCat.trim()) {
-              _context31.n = 1;
+              _context33.n = 1;
               break;
             }
-            return _context31.a(2);
+            return _context33.a(2);
           case 1:
-            _context31.n = 2;
+            _context33.n = 2;
             return addCat(tipo, novaCat.trim());
           case 2:
             setForm(function (f) {
@@ -12588,9 +12805,9 @@ function ModalLancamento(_ref57) {
             setNovaCat("");
             setShowNovaCat(false);
           case 3:
-            return _context31.a(2);
+            return _context33.a(2);
         }
-      }, _callee31);
+      }, _callee32);
     }));
     return _criarCategoria.apply(this, arguments);
   }
@@ -12910,41 +13127,41 @@ function Financeiro(_ref58) {
   var _useCatsFinanceiro = useCatsFinanceiro(),
     cats = _useCatsFinanceiro.cats,
     addCat = _useCatsFinanceiro.addCat;
-  var _useState237 = useState("resumo"),
-    _useState238 = _slicedToArray(_useState237, 2),
-    aba = _useState238[0],
-    setAba = _useState238[1];
-  var _useState239 = useState(function () {
+  var _useState243 = useState("resumo"),
+    _useState244 = _slicedToArray(_useState243, 2),
+    aba = _useState244[0],
+    setAba = _useState244[1];
+  var _useState245 = useState(function () {
       var d = new Date();
       return "".concat(d.getFullYear(), "-").concat(String(d.getMonth() + 1).padStart(2, "0"));
     }),
-    _useState240 = _slicedToArray(_useState239, 2),
-    mesAtual = _useState240[0],
-    setMesAtual = _useState240[1];
-  var _useState241 = useState(false),
-    _useState242 = _slicedToArray(_useState241, 2),
-    modalMens = _useState242[0],
-    setModalMens = _useState242[1];
-  var _useState243 = useState(null),
-    _useState244 = _slicedToArray(_useState243, 2),
-    modalLanc = _useState244[0],
-    setModalLanc = _useState244[1];
-  var _useState245 = useState(null),
     _useState246 = _slicedToArray(_useState245, 2),
-    modalPag = _useState246[0],
-    setModalPag = _useState246[1];
-  var _useState247 = useState("gasto"),
+    mesAtual = _useState246[0],
+    setMesAtual = _useState246[1];
+  var _useState247 = useState(false),
     _useState248 = _slicedToArray(_useState247, 2),
-    tipoLanc = _useState248[0],
-    setTipoLanc = _useState248[1];
+    modalMens = _useState248[0],
+    setModalMens = _useState248[1];
   var _useState249 = useState(null),
     _useState250 = _slicedToArray(_useState249, 2),
-    mesalidade = _useState250[0],
-    setMesalidade = _useState250[1];
-  var _useState251 = useState([]),
+    modalLanc = _useState250[0],
+    setModalLanc = _useState250[1];
+  var _useState251 = useState(null),
     _useState252 = _slicedToArray(_useState251, 2),
-    pagamentos = _useState252[0],
-    setPagamentos = _useState252[1];
+    modalPag = _useState252[0],
+    setModalPag = _useState252[1];
+  var _useState253 = useState("gasto"),
+    _useState254 = _slicedToArray(_useState253, 2),
+    tipoLanc = _useState254[0],
+    setTipoLanc = _useState254[1];
+  var _useState255 = useState(null),
+    _useState256 = _slicedToArray(_useState255, 2),
+    mesalidade = _useState256[0],
+    setMesalidade = _useState256[1];
+  var _useState257 = useState([]),
+    _useState258 = _slicedToArray(_useState257, 2),
+    pagamentos = _useState258[0],
+    setPagamentos = _useState258[1];
   var cor = config.corPrimaria || COR;
   useEffect(function () {
     var u1 = db.collection("onix_config").doc("mensalidade").onSnapshot(function (s) {
@@ -13034,7 +13251,7 @@ function Financeiro(_ref58) {
       aguard = 0,
       y = sy,
       m = sm;
-    var _loop = function _loop() {
+    var _loop2 = function _loop2() {
       if (y * 100 + m <= ym * 100 + mm) {
         total++;
         var key = "".concat(y, "-").concat(String(m).padStart(2, "0"));
@@ -13050,7 +13267,7 @@ function Financeiro(_ref58) {
       }
     };
     while (y < ey || y === ey && m <= em) {
-      _loop();
+      _loop2();
     }
     return {
       total: total,
@@ -13064,7 +13281,7 @@ function Financeiro(_ref58) {
   function ultimos6Meses() {
     var meses = [];
     var d = new Date();
-    var _loop2 = function _loop2() {
+    var _loop3 = function _loop3() {
       var nd = new Date(d.getFullYear(), d.getMonth() - i, 1);
       var key = "".concat(nd.getFullYear(), "-").concat(String(nd.getMonth() + 1).padStart(2, "0"));
       var r = lancamentos.filter(function (l) {
@@ -13087,7 +13304,7 @@ function Financeiro(_ref58) {
       });
     };
     for (var i = 5; i >= 0; i--) {
-      _loop2();
+      _loop3();
     }
     return meses;
   }
@@ -13811,22 +14028,22 @@ function FinanceiroCorista(_ref62) {
     config = _ref62.config,
     setTab = _ref62.setTab;
   var cor = config.corPrimaria || COR;
-  var _useState253 = useState(null),
-    _useState254 = _slicedToArray(_useState253, 2),
-    mesalidade = _useState254[0],
-    setMesalidade = _useState254[1];
-  var _useState255 = useState([]),
-    _useState256 = _slicedToArray(_useState255, 2),
-    pagamentos = _useState256[0],
-    setPagamentos = _useState256[1];
-  var _useState257 = useState(null),
-    _useState258 = _slicedToArray(_useState257, 2),
-    salvando = _useState258[0],
-    setSalvando = _useState258[1];
-  var _useState259 = useState([]),
+  var _useState259 = useState(null),
     _useState260 = _slicedToArray(_useState259, 2),
-    meses = _useState260[0],
-    setMeses = _useState260[1];
+    mesalidade = _useState260[0],
+    setMesalidade = _useState260[1];
+  var _useState261 = useState([]),
+    _useState262 = _slicedToArray(_useState261, 2),
+    pagamentos = _useState262[0],
+    setPagamentos = _useState262[1];
+  var _useState263 = useState(null),
+    _useState264 = _slicedToArray(_useState263, 2),
+    salvando = _useState264[0],
+    setSalvando = _useState264[1];
+  var _useState265 = useState([]),
+    _useState266 = _slicedToArray(_useState265, 2),
+    meses = _useState266[0],
+    setMeses = _useState266[1];
   useEffect(function () {
     var u1 = db.collection("onix_config").doc("mensalidade").onSnapshot(function (s) {
       if (s.exists) setMesalidade(s.data());
@@ -13845,10 +14062,10 @@ function FinanceiroCorista(_ref62) {
   }, [user.memberId]);
 
   // Buscar memberId do corista pelo nome
-  var _useState261 = useState(null),
-    _useState262 = _slicedToArray(_useState261, 2),
-    memberId = _useState262[0],
-    setMemberId = _useState262[1];
+  var _useState267 = useState(null),
+    _useState268 = _slicedToArray(_useState267, 2),
+    memberId = _useState268[0],
+    setMemberId = _useState268[1];
   useEffect(function () {
     if (!user.name) return;
     db.collection("onix_members").where("name", "==", user.name).get().then(function (s) {
@@ -13903,32 +14120,32 @@ function FinanceiroCorista(_ref62) {
     return _marcarPago.apply(this, arguments);
   }
   function _marcarPago() {
-    _marcarPago = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee32(mes) {
+    _marcarPago = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee33(mes) {
       var mesLabel, valor, msgMaestro, msgLucia;
-      return _regenerator().w(function (_context32) {
-        while (1) switch (_context32.n) {
+      return _regenerator().w(function (_context34) {
+        while (1) switch (_context34.n) {
           case 0:
             if (memberId) {
-              _context32.n = 1;
+              _context34.n = 1;
               break;
             }
-            return _context32.a(2);
+            return _context34.a(2);
           case 1:
             setSalvando(mes.key);
             if (!mes.docId) {
-              _context32.n = 3;
+              _context34.n = 3;
               break;
             }
-            _context32.n = 2;
+            _context34.n = 2;
             return db.collection("onix_pagamentos").doc(mes.docId).update({
               status: "aguardando",
               updatedAt: firebase.firestore.FieldValue.serverTimestamp()
             });
           case 2:
-            _context32.n = 4;
+            _context34.n = 4;
             break;
           case 3:
-            _context32.n = 4;
+            _context34.n = 4;
             return db.collection("onix_pagamentos").add({
               membroId: memberId,
               membroNome: user.name,
@@ -13950,9 +14167,9 @@ function FinanceiroCorista(_ref62) {
               return window.open("https://wa.me/".concat(WPP_LUCIA, "?text=").concat(msgLucia), "_blank");
             }, 800);
           case 5:
-            return _context32.a(2);
+            return _context34.a(2);
         }
-      }, _callee32);
+      }, _callee33);
     }));
     return _marcarPago.apply(this, arguments);
   }
@@ -14115,18 +14332,18 @@ function RifaBanner(_ref63) {
   var config = _ref63.config,
     isAdmin = _ref63.isAdmin;
   var cor = config.corPrimaria || COR;
-  var _useState263 = useState("https://luciakratz-arch.github.io/RIFA-ONIX/"),
-    _useState264 = _slicedToArray(_useState263, 2),
-    rifaUrl = _useState264[0],
-    setRifaUrl = _useState264[1];
-  var _useState265 = useState(false),
-    _useState266 = _slicedToArray(_useState265, 2),
-    editando = _useState266[0],
-    setEditando = _useState266[1];
-  var _useState267 = useState(""),
-    _useState268 = _slicedToArray(_useState267, 2),
-    urlTemp = _useState268[0],
-    setUrlTemp = _useState268[1];
+  var _useState269 = useState("https://luciakratz-arch.github.io/RIFA-ONIX/"),
+    _useState270 = _slicedToArray(_useState269, 2),
+    rifaUrl = _useState270[0],
+    setRifaUrl = _useState270[1];
+  var _useState271 = useState(false),
+    _useState272 = _slicedToArray(_useState271, 2),
+    editando = _useState272[0],
+    setEditando = _useState272[1];
+  var _useState273 = useState(""),
+    _useState274 = _slicedToArray(_useState273, 2),
+    urlTemp = _useState274[0],
+    setUrlTemp = _useState274[1];
   useEffect(function () {
     var unsub = db.collection("onix_config").doc("rifa").onSnapshot(function (s) {
       if (s.exists && s.data().url) setRifaUrl(s.data().url);
@@ -14137,11 +14354,11 @@ function RifaBanner(_ref63) {
     return _salvarUrl.apply(this, arguments);
   }
   function _salvarUrl() {
-    _salvarUrl = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee33() {
-      return _regenerator().w(function (_context33) {
-        while (1) switch (_context33.n) {
+    _salvarUrl = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee34() {
+      return _regenerator().w(function (_context35) {
+        while (1) switch (_context35.n) {
           case 0:
-            _context33.n = 1;
+            _context35.n = 1;
             return db.collection("onix_config").doc("rifa").set({
               url: urlTemp
             }, {
@@ -14150,9 +14367,9 @@ function RifaBanner(_ref63) {
           case 1:
             setEditando(false);
           case 2:
-            return _context33.a(2);
+            return _context35.a(2);
         }
-      }, _callee33);
+      }, _callee34);
     }));
     return _salvarUrl.apply(this, arguments);
   }
@@ -14286,10 +14503,10 @@ function Blog(_ref64) {
   var _useCollection33 = useCollection("onix_noticias"),
     noticias = _useCollection33.data,
     loading = _useCollection33.loading;
-  var _useState269 = useState(null),
-    _useState270 = _slicedToArray(_useState269, 2),
-    modal = _useState270[0],
-    setModal = _useState270[1];
+  var _useState275 = useState(null),
+    _useState276 = _slicedToArray(_useState275, 2),
+    modal = _useState276[0],
+    setModal = _useState276[1];
   var cor = config.corPrimaria || COR;
   var isAdmin = user === null || user === void 0 ? void 0 : user.isAdmin;
   if (loading) return /*#__PURE__*/React.createElement(Spinner, null);
@@ -14614,24 +14831,24 @@ var NAV_CORISTA = [{
 
 // ── APP ───────────────────────────────────────────────────────────────────────
 function App() {
-  var _useState271 = useState(function () {
+  var _useState277 = useState(function () {
       try {
         return JSON.parse(localStorage.getItem("onix_user"));
       } catch (_unused) {
         return null;
       }
     }),
-    _useState272 = _slicedToArray(_useState271, 2),
-    user = _useState272[0],
-    setUser = _useState272[1];
-  var _useState273 = useState([]),
-    _useState274 = _slicedToArray(_useState273, 2),
-    members = _useState274[0],
-    setMembers = _useState274[1];
-  var _useState275 = useState("painel"),
-    _useState276 = _slicedToArray(_useState275, 2),
-    tab = _useState276[0],
-    setTab = _useState276[1];
+    _useState278 = _slicedToArray(_useState277, 2),
+    user = _useState278[0],
+    setUser = _useState278[1];
+  var _useState279 = useState([]),
+    _useState280 = _slicedToArray(_useState279, 2),
+    members = _useState280[0],
+    setMembers = _useState280[1];
+  var _useState281 = useState("painel"),
+    _useState282 = _slicedToArray(_useState281, 2),
+    tab = _useState282[0],
+    setTab = _useState282[1];
   var _useConfig = useConfig(),
     config = _useConfig.config,
     save = _useConfig.save;
