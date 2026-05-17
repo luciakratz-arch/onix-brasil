@@ -44,10 +44,10 @@ function useCollection(col, orderField="createdAt") {
 function useConfig() {
     const [config, setConfig] = useState({ nomeApp:"Onix Brasil Vocal Internacional", subtitulo:"Portal de Gestão", logoUrl:LOGO_URL, corPrimaria:COR, corFundo:COR_FUNDO });
     useEffect(() => {
-        const unsub = db.collection("config").doc("app").onSnapshot(snap => { if (snap.exists) setConfig(c=>({...c,...snap.data()})); });
+        const unsub = db.collection("onix_config").doc("app").onSnapshot(snap => { if (snap.exists) setConfig(c=>({...c,...snap.data()})); });
         return unsub;
     }, []);
-    return { config, save:(d)=>db.collection("config").doc("app").set(d,{merge:true}) };
+    return { config, save:(d)=>db.collection("onix_config").doc("app").set(d,{merge:true}) };
 }
 
 const Icon = ({ name, size=16, color }) => {
@@ -74,7 +74,7 @@ function CadastroPublico({ config }) {
         if (!form.name.trim())  { setErro("Nome é obrigatório.");     return; }
         if (!form.phone.trim()) { setErro("Telefone é obrigatório."); return; }
         setSalvando(true);
-        await db.collection("members").add({
+        await db.collection("onix_members").add({
             ...form,
             active:    true,
             startDate: todayStr(),
@@ -265,7 +265,7 @@ function MesaSom({ eventoId, config }) {
     const cor = config.corPrimaria || COR;
 
     useEffect(() => {
-        db.collection("events").doc(eventoId).get().then(doc => {
+        db.collection("onix_events").doc(eventoId).get().then(doc => {
             if (doc.exists) setEvento({ id: doc.id, ...doc.data() });
             setLoading(false);
         });
@@ -500,7 +500,7 @@ function Painel({ user, config, setTab }) {
     const { data:avisos,  loading:lA } = useCollection("avisos");
     const [pendentes, setPendentes] = useState([]);
     useEffect(()=>{
-        const unsub = db.collection("pagamentos").where("status","==","aguardando")
+        const unsub = db.collection("onix_pagamentos").where("status","==","aguardando")
             .onSnapshot(snap=>setPendentes(snap.docs.map(d=>({id:d.id,...d.data()}))));
         return unsub;
     },[]);
@@ -623,15 +623,15 @@ function ModalIntegrante({ membro, onClose, config }) {
         if (!form.name.trim()) { setErro("Nome é obrigatório."); return; }
         setSalvando(true);
         const d = { name:form.name, funcao:form.funcao, voice:form.voice, email:form.email||"", phone:form.phone||"", cpf:form.cpf||"", rg:form.rg||"", birthday:form.birthday||"", startDate:form.startDate||"", notes:form.notes||"", active:form.active };
-        if (membro) await db.collection("members").doc(membro.id).update({...d, updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
-        else await db.collection("members").add({...d, createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+        if (membro) await db.collection("onix_members").doc(membro.id).update({...d, updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
+        else await db.collection("onix_members").add({...d, createdAt:firebase.firestore.FieldValue.serverTimestamp()});
         setSalvando(false);
         onClose();
     }
 
     async function excluir() {
         if (!window.confirm("Excluir este integrante permanentemente?")) return;
-        await db.collection("members").doc(membro.id).delete();
+        await db.collection("onix_members").doc(membro.id).delete();
         onClose();
     }
 
@@ -709,17 +709,29 @@ function Integrantes({ config }) {
     const { data:members, loading } = useCollection("members");
     const [busca, setBusca]   = useState("");
     const [filtro, setFiltro] = useState("Todos");
+    const [letraFiltro, setLetraFiltro] = useState("");
     const [modal, setModal]   = useState(null);
     const cor = config.corPrimaria||COR;
 
     if (loading) return <Spinner />;
 
-    const filtrados = members.filter(m => {
+    // Ordenar sempre alfabeticamente
+    const membersOrdenados = [...members].sort((a,b) => (a.name||"").localeCompare(b.name||"", "pt-BR"));
+
+    const filtrados = membersOrdenados.filter(m => {
         const q  = busca.toLowerCase();
         const ok = !busca || m.name.toLowerCase().includes(q) || (m.voice||"").toLowerCase().includes(q) || (m.funcao||"").toLowerCase().includes(q);
         const of = filtro==="Todos" || (filtro==="Ativos"?m.active:filtro==="Inativos"?!m.active:m.voice===filtro);
-        return ok && of;
+        const ol = !letraFiltro || (m.name||"").toUpperCase().startsWith(letraFiltro);
+        return ok && of && ol;
     });
+
+    // Letras disponíveis entre os membros filtrados por status/naipe (sem filtro de letra)
+    const membrosParaLetras = membersOrdenados.filter(m => {
+        const of = filtro==="Todos" || (filtro==="Ativos"?m.active:filtro==="Inativos"?!m.active:m.voice===filtro);
+        return of;
+    });
+    const letrasDisponiveis = [...new Set(membrosParaLetras.map(m => (m.name||"").toUpperCase().charAt(0)).filter(Boolean))].sort();
 
     const naipeColor = { Soprano:COR, Contralto:"#7B1FA2", "Mezzo-soprano":"#9C27B0", Alto:"#E8A020", Tenor:"#1565C0", Barítono:"#4527A0", Baixo:"#1B5E20" };
 
@@ -744,14 +756,28 @@ function Integrantes({ config }) {
                 </div>
             </div>
 
-            <div style={{ background:"#fff", borderRadius:12, border:"1px solid #EEE8E8", padding:"12px 16px", marginBottom:16, display:"flex", gap:12, alignItems:"center", boxShadow:"0 1px 4px rgba(0,0,0,0.04)" }}>
+            <div style={{ background:"#fff", borderRadius:12, border:"1px solid #EEE8E8", padding:"12px 16px", marginBottom:10, display:"flex", gap:12, alignItems:"center", boxShadow:"0 1px 4px rgba(0,0,0,0.04)" }}>
                 <Icon name="search" size={16} color="#AAA" />
-                <input value={busca} onChange={e=>setBusca(e.target.value)} placeholder="Buscar por nome, naipe ou função..."
+                <input value={busca} onChange={e=>{ setBusca(e.target.value); setLetraFiltro(""); }} placeholder="Buscar por nome, naipe ou função..."
                     style={{ flex:1, border:"none", outline:"none", fontSize:14, fontFamily:"inherit", color:"#1A1D23", background:"none" }} />
-                <select value={filtro} onChange={e=>setFiltro(e.target.value)}
+                <select value={filtro} onChange={e=>{ setFiltro(e.target.value); setLetraFiltro(""); }}
                     style={{ border:"1px solid #EEE8E8", borderRadius:8, padding:"7px 12px", fontSize:13, fontFamily:"inherit", color:"#1A1D23", outline:"none", background:"#fff", cursor:"pointer" }}>
                     {["Todos","Ativos","Inativos",...NAIPES].map(f=><option key={f}>{f}</option>)}
                 </select>
+            </div>
+
+            {/* Filtro por letra */}
+            <div style={{ display:"flex", flexWrap:"wrap", gap:4, marginBottom:16, alignItems:"center" }}>
+                <button onClick={()=>setLetraFiltro("")}
+                    style={{ padding:"4px 10px", borderRadius:20, border:`1px solid ${letraFiltro===""?cor:"#DDD"}`, background:letraFiltro===""?cor:"#fff", color:letraFiltro===""?"#fff":"#666", fontSize:11, fontWeight:700, cursor:"pointer", fontFamily:"inherit", transition:"all 0.15s" }}>
+                    Todas
+                </button>
+                {letrasDisponiveis.map(letra=>(
+                    <button key={letra} onClick={()=>setLetraFiltro(letraFiltro===letra?"":letra)}
+                        style={{ width:30, height:30, borderRadius:8, border:`1px solid ${letraFiltro===letra?cor:"#DDD"}`, background:letraFiltro===letra?cor:"#fff", color:letraFiltro===letra?"#fff":"#555", fontSize:12, fontWeight:700, cursor:"pointer", fontFamily:"inherit", transition:"all 0.15s", display:"flex", alignItems:"center", justifyContent:"center" }}>
+                        {letra}
+                    </button>
+                ))}
             </div>
 
             <div style={{ background:"#fff", borderRadius:12, border:"1px solid #EEE8E8", overflow:"hidden", boxShadow:"0 1px 4px rgba(0,0,0,0.04)" }}>
@@ -867,7 +893,7 @@ function ModalEvento({ evento, onClose, config }) {
         const grupoId = Date.now().toString(36) + Math.random().toString(36).substr(2);
         const d = { title:form.title, date:form.date, tipo:form.tipo, status:form.status, timeChegada:form.timeChegada||"", timeApresentacao:form.timeApresentacao||"", local:form.local||"", mapsUrl:form.mapsUrl||"", notes:form.notes||"", recorrencia:form.recorrencia, setlist:form.setlist||[] };
         if (evento) {
-            await db.collection("events").doc(evento.id).update({...d, updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
+            await db.collection("onix_events").doc(evento.id).update({...d, updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
         } else {
             const datas = [form.date];
             if (form.recorrencia !== "Sem recorrência" && form.date) {
@@ -883,14 +909,14 @@ function ModalEvento({ evento, onClose, config }) {
             }
             const temGrupo = datas.length > 1;
             for (const dt of datas) {
-                await db.collection("events").add({...d, date:dt, ...(temGrupo?{grupoId}:{}), createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+                await db.collection("onix_events").add({...d, date:dt, ...(temGrupo?{grupoId}:{}), createdAt:firebase.firestore.FieldValue.serverTimestamp()});
             }
             // Aviso automático — unificado para recorrentes
             const isRecorrente = form.recorrencia !== "Sem recorrência";
             const avisoText = isRecorrente
                 ? `Novo evento recorrente (${form.recorrencia}): "${form.title}" a partir de ${fmtDate(form.date)}${form.local?" — "+form.local:""}. Total de ${datas.length} ocorrência${datas.length!==1?"s":""}.`
                 : `Um novo evento foi adicionado à agenda: "${form.title}" em ${fmtDate(form.date)}${form.local?" — "+form.local:""}.`;
-            await db.collection("avisos").add({
+            await db.collection("onix_avisos").add({
                 title: `📅 ${isRecorrente?"Evento recorrente":"Novo evento"}: ${form.title}`,
                 text: avisoText,
                 tipo: "auto_evento",
@@ -905,18 +931,18 @@ function ModalEvento({ evento, onClose, config }) {
     async function excluir() {
         if (!evento.grupoId) {
             if (!window.confirm("Excluir este evento?")) return;
-            await db.collection("events").doc(evento.id).delete();
+            await db.collection("onix_events").doc(evento.id).delete();
         } else {
             const opcao = window.confirm("Clique OK para excluir ESTE E OS FUTUROS eventos da série.\nClique Cancelar para excluir SÓ ESTE evento.");
             if (opcao === null) return;
             if (opcao) {
                 // Excluir este e futuros do mesmo grupo
-                const snap = await db.collection("events").where("grupoId","==",evento.grupoId).get();
+                const snap = await db.collection("onix_events").where("grupoId","==",evento.grupoId).get();
                 const batch = db.batch();
                 snap.docs.forEach(doc => { if (doc.data().date >= evento.date) batch.delete(doc.ref); });
                 await batch.commit();
             } else {
-                await db.collection("events").doc(evento.id).delete();
+                await db.collection("onix_events").doc(evento.id).delete();
             }
         }
         onClose();
@@ -1043,12 +1069,12 @@ function ModalExcluirEvento({ evento, onClose }) {
 
     async function excluirSoEste() {
         setExcluindo(true);
-        await db.collection("events").doc(evento.id).delete();
+        await db.collection("onix_events").doc(evento.id).delete();
         onClose();
     }
     async function excluirFuturos() {
         setExcluindo(true);
-        const snap = await db.collection("events").where("grupoId","==",evento.grupoId).get();
+        const snap = await db.collection("onix_events").where("grupoId","==",evento.grupoId).get();
         const batch = db.batch();
         snap.docs.forEach(doc => { if (doc.data().date >= evento.date) batch.delete(doc.ref); });
         await batch.commit();
@@ -1056,7 +1082,7 @@ function ModalExcluirEvento({ evento, onClose }) {
     }
     async function excluirTodos() {
         setExcluindo(true);
-        const snap = await db.collection("events").where("grupoId","==",evento.grupoId).get();
+        const snap = await db.collection("onix_events").where("grupoId","==",evento.grupoId).get();
         const batch = db.batch();
         snap.docs.forEach(doc => batch.delete(doc.ref));
         await batch.commit();
@@ -1179,7 +1205,7 @@ function Agenda({ config, isAdmin }) {
                                         style={{ padding:"7px 14px", background:cor, color:"#fff", border:"none", borderRadius:8, fontSize:12, fontWeight:700, cursor:"pointer", fontFamily:"inherit" }}>
                                         Detalhes
                                     </button>
-                                    <button onClick={()=>{ e.grupoId ? setExcluirEvento(e) : (window.confirm("Excluir este evento?") && db.collection("events").doc(e.id).delete()); }}
+                                    <button onClick={()=>{ e.grupoId ? setExcluirEvento(e) : (window.confirm("Excluir este evento?") && db.collection("onix_events").doc(e.id).delete()); }}
                                         style={{ width:32, height:32, background:"#FFF0F0", border:"1px solid #F5DADA", borderRadius:8, cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center" }}>
                                         <Icon name="trash-2" size={14} color="#5B2D8E" />
                                     </button>
@@ -1210,9 +1236,9 @@ function ModalAviso({ aviso, onClose, config }) {
         if (!form.text.trim())  { setErro("Mensagem é obrigatória."); return; }
         setSalvando(true);
         if (aviso) {
-            await db.collection("avisos").doc(aviso.id).update({ title:form.title, prioridade:form.prioridade, text:form.text, updatedAt:firebase.firestore.FieldValue.serverTimestamp() });
+            await db.collection("onix_avisos").doc(aviso.id).update({ title:form.title, prioridade:form.prioridade, text:form.text, updatedAt:firebase.firestore.FieldValue.serverTimestamp() });
         } else {
-            await db.collection("avisos").add({ title:form.title, prioridade:form.prioridade, text:form.text, tipo:"manual", createdAt:firebase.firestore.FieldValue.serverTimestamp() });
+            await db.collection("onix_avisos").add({ title:form.title, prioridade:form.prioridade, text:form.text, tipo:"manual", createdAt:firebase.firestore.FieldValue.serverTimestamp() });
         }
         setSalvando(false);
         onClose();
@@ -1290,7 +1316,7 @@ function Avisos({ config, isAdmin }) {
 
     async function excluir(id) {
         if (!window.confirm("Excluir este aviso?")) return;
-        await db.collection("avisos").doc(id).delete();
+        await db.collection("onix_avisos").doc(id).delete();
     }
 
     return (
@@ -1394,11 +1420,11 @@ function ModalMusica({ musica, onClose, config }) {
         setSalvando(true);
         const d = { title:form.title, categoria:form.categoria, compositor:form.compositor||"", partitura:form.partitura||"", audioOriginal:form.audioOriginal||"", audioArranjo:form.audioArranjo||"", playback:form.playback||"", soprano:form.soprano||"", mezzoSoprano:form.mezzoSoprano||"", contralto:form.contralto||"", tenor:form.tenor||"", baritono:form.baritono||"", baixo:form.baixo||"", letra:form.letra||"", notes:form.notes||"" };
         if (musica) {
-            await db.collection("songs").doc(musica.id).update({...d, updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
+            await db.collection("onix_songs").doc(musica.id).update({...d, updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
         } else {
-            await db.collection("songs").add({...d, createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+            await db.collection("onix_songs").add({...d, createdAt:firebase.firestore.FieldValue.serverTimestamp()});
             // Aviso automático
-            await db.collection("avisos").add({ title:`🎵 Nova música: ${form.title}`, text:`"${form.title}"${form.compositor?" de "+form.compositor:""} foi adicionada ao repertório na categoria ${form.categoria}.`, tipo:"auto_musica", prioridade:"Normal", createdAt:firebase.firestore.FieldValue.serverTimestamp() });
+            await db.collection("onix_avisos").add({ title:`🎵 Nova música: ${form.title}`, text:`"${form.title}"${form.compositor?" de "+form.compositor:""} foi adicionada ao repertório na categoria ${form.categoria}.`, tipo:"auto_musica", prioridade:"Normal", createdAt:firebase.firestore.FieldValue.serverTimestamp() });
         }
         setSalvando(false);
         onClose();
@@ -1406,7 +1432,7 @@ function ModalMusica({ musica, onClose, config }) {
 
     async function excluir() {
         if (!window.confirm("Excluir esta música do repertório?")) return;
-        await db.collection("songs").doc(musica.id).delete();
+        await db.collection("onix_songs").doc(musica.id).delete();
         onClose();
     }
 
@@ -1618,10 +1644,10 @@ function ModalEstudo({ estudo, onClose, config }) {
         setSalvando(true);
         const d = { tipo:form.tipo, categoria:form.categoria, title:form.title, descricao:form.descricao||"", url:form.url };
         if (estudo) {
-            await db.collection("estudos").doc(estudo.id).update({...d, updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
+            await db.collection("onix_estudos").doc(estudo.id).update({...d, updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
         } else {
-            await db.collection("estudos").add({...d, createdAt:firebase.firestore.FieldValue.serverTimestamp()});
-            await db.collection("avisos").add({ title:`📚 Novo material: ${form.title}`, text:`Um novo material foi adicionado à Sala de Estudos: "${form.title}" (${TIPOS_MIDIA.find(t=>t.key===form.tipo)?.label||form.tipo} — ${form.categoria}).`, tipo:"auto_estudo", prioridade:"Normal", createdAt:firebase.firestore.FieldValue.serverTimestamp() });
+            await db.collection("onix_estudos").add({...d, createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+            await db.collection("onix_avisos").add({ title:`📚 Novo material: ${form.title}`, text:`Um novo material foi adicionado à Sala de Estudos: "${form.title}" (${TIPOS_MIDIA.find(t=>t.key===form.tipo)?.label||form.tipo} — ${form.categoria}).`, tipo:"auto_estudo", prioridade:"Normal", createdAt:firebase.firestore.FieldValue.serverTimestamp() });
         }
         setSalvando(false);
         onClose();
@@ -1629,7 +1655,7 @@ function ModalEstudo({ estudo, onClose, config }) {
 
     async function excluir() {
         if (!window.confirm("Excluir este material?")) return;
-        await db.collection("estudos").doc(estudo.id).delete();
+        await db.collection("onix_estudos").doc(estudo.id).delete();
         onClose();
     }
 
@@ -1776,7 +1802,7 @@ function SalaEstudos({ config, isAdmin }) {
                                             <button onClick={()=>setModal(e)} style={{ width:32, height:32, background:"#F5F5F5", border:"none", borderRadius:8, cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center" }}>
                                                 <Icon name="pencil" size={13} color="#888" />
                                             </button>
-                                            <button onClick={async()=>{ if(window.confirm("Excluir este material?")) await db.collection("estudos").doc(e.id).delete(); }}
+                                            <button onClick={async()=>{ if(window.confirm("Excluir este material?")) await db.collection("onix_estudos").doc(e.id).delete(); }}
                                                 style={{ width:32, height:32, background:"#FFF0F0", border:"none", borderRadius:8, cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center" }}>
                                                 <Icon name="trash-2" size={13} color="#5B2D8E" />
                                             </button>
@@ -1819,7 +1845,7 @@ function Apresentacao({ config }) {
     async function salvarOrdem(nova) {
         if (!eventoSel) return;
         setSetlist(nova);
-        await db.collection("events").doc(eventoSel.id).update({
+        await db.collection("onix_events").doc(eventoSel.id).update({
             setlist: nova,
             updatedAt: firebase.firestore.FieldValue.serverTimestamp()
         });
@@ -2037,7 +2063,7 @@ function FrequenciaAcesso({ config }) {
     const cor = config.corPrimaria||COR;
 
     useEffect(()=>{
-        db.collection("acessos").onSnapshot(snap=>{
+        db.collection("onix_acessos").onSnapshot(snap=>{
             setAcessos(snap.docs.map(d=>({id:d.id,...d.data()})));
         });
     },[]);
@@ -2142,14 +2168,14 @@ function Relatorios({ config }) {
 
     // Carregar textos qualitativos do Firebase
     useEffect(()=>{
-        db.collection("config").doc("relatorio").get().then(doc=>{
+        db.collection("onix_config").doc("relatorio").get().then(doc=>{
             if (doc.exists) { setTextos(doc.data()); setFormTextos(doc.data()); }
         });
     },[]);
 
     async function salvarTextos() {
         setSalvandoTextos(true);
-        await db.collection("config").doc("relatorio").set(formTextos, {merge:true});
+        await db.collection("onix_config").doc("relatorio").set(formTextos, {merge:true});
         setTextos(formTextos);
         setSalvandoTextos(false);
         setEditTextos(false);
@@ -2380,7 +2406,7 @@ ${blocosPresenca?`<div class="secao">Listas de Presença por Evento</div>${bloco
         win.document.close();
         setTimeout(()=>win.print(), 800);
         // Salvar no histórico
-        db.collection("relatorios_historico").add({ tipo:"Relatório Completo", periodo:`${dataInicio} a ${dataFim}`, geradoEm:firebase.firestore.FieldValue.serverTimestamp(), geradoPor:"Gestor" });
+        db.collection("onix_relatorios_historico").add({ tipo:"Relatório Completo", periodo:`${dataInicio} a ${dataFim}`, geradoEm:firebase.firestore.FieldValue.serverTimestamp(), geradoPor:"Gestor" });
     }
 
     function gerarPDF() {
@@ -2697,7 +2723,7 @@ function CheckinPublico({ sessaoId, config }) {
 
     useEffect(()=>{
         // Carregar sessão
-        db.collection("sessoes_checkin").doc(sessaoId).get().then(doc=>{
+        db.collection("onix_sessoes_checkin").doc(sessaoId).get().then(doc=>{
             if (!doc.exists) { setStatus("erro"); setLoading(false); return; }
             const d = { id:doc.id, ...doc.data() };
             // Verificar validade 24h
@@ -2708,7 +2734,7 @@ function CheckinPublico({ sessaoId, config }) {
             setLoading(false);
         });
         // Carregar membros
-        db.collection("members").onSnapshot(snap=>{
+        db.collection("onix_members").onSnapshot(snap=>{
             setMembers(snap.docs.map(d=>({id:d.id,...d.data()})));
         });
     },[sessaoId]);
@@ -2721,9 +2747,9 @@ function CheckinPublico({ sessaoId, config }) {
 
     async function confirmarPresenca(m) {
         // Verificar se já fez check-in
-        const snap = await db.collection("frequencias").where("sessaoId","==",sessaoId).where("membroId","==",m.id).get();
+        const snap = await db.collection("onix_frequencias").where("sessaoId","==",sessaoId).where("membroId","==",m.id).get();
         if (!snap.empty) { setMembro(m); setStatus("jaRegistrado"); return; }
-        await db.collection("frequencias").add({
+        await db.collection("onix_frequencias").add({
             sessaoId,
             eventoId:  sessao.eventoId,
             eventoTitulo: sessao.eventoTitulo,
@@ -2823,7 +2849,7 @@ function Frequencia({ config }) {
     // Carregar sessão ativa do evento selecionado
     useEffect(()=>{
         if (!eventoSel) { setSessaoAtiva(null); setQrUrl(""); setShowQR(false); return; }
-        const unsub = db.collection("sessoes_checkin")
+        const unsub = db.collection("onix_sessoes_checkin")
             .where("eventoId","==",eventoSel)
             .onSnapshot(snap=>{
                 const ativas = snap.docs.map(d=>({id:d.id,...d.data()}))
@@ -2841,7 +2867,7 @@ function Frequencia({ config }) {
     // Carregar frequências do evento selecionado
     useEffect(()=>{
         if (!eventoSel) { setFrequencias([]); return; }
-        const unsub = db.collection("frequencias")
+        const unsub = db.collection("onix_frequencias")
             .where("eventoId","==",eventoSel)
             .onSnapshot(snap=>setFrequencias(snap.docs.map(d=>({id:d.id,...d.data()}))));
         return unsub;
@@ -2853,7 +2879,7 @@ function Frequencia({ config }) {
         if (!evento) return;
         setGerando(true);
         const expiraEm = new Date(Date.now() + 24*60*60*1000); // 24 horas
-        const ref = await db.collection("sessoes_checkin").add({
+        const ref = await db.collection("onix_sessoes_checkin").add({
             eventoId: eventoSel,
             eventoTitulo: evento.title,
             eventoData: evento.date,
@@ -2869,7 +2895,7 @@ function Frequencia({ config }) {
     async function encerrarSessao() {
         if (!sessaoAtiva) return;
         if (!window.confirm("Encerrar sessão de check-in?")) return;
-        await db.collection("sessoes_checkin").doc(sessaoAtiva.id).update({
+        await db.collection("onix_sessoes_checkin").doc(sessaoAtiva.id).update({
             expiraEm: firebase.firestore.Timestamp.fromDate(new Date(0))
         });
         setSessaoAtiva(null); setShowQR(false); setQrUrl("");
@@ -3013,7 +3039,7 @@ function Declaracao({ config }) {
     const cor = config.corPrimaria||COR;
 
     useEffect(()=>{
-        db.collection("config").doc("relatorio").get().then(doc=>{
+        db.collection("onix_config").doc("relatorio").get().then(doc=>{
             if (doc.exists) setTextos(doc.data());
         });
     },[]);
@@ -3343,7 +3369,7 @@ function PainelCorista({ user, config }) {
     // Carregar confirmações do corista
     useEffect(()=>{
         if (!user.name) return;
-        db.collection("confirmacoes").where("membroNome","==",user.name)
+        db.collection("onix_confirmacoes").where("membroNome","==",user.name)
             .onSnapshot(snap=>{
                 const m = {};
                 snap.docs.forEach(d=>{ m[d.data().eventoId] = d.data().status; });
@@ -3352,12 +3378,12 @@ function PainelCorista({ user, config }) {
     },[user.name]);
 
     async function confirmar(eventoId, status) {
-        const snap = await db.collection("confirmacoes")
+        const snap = await db.collection("onix_confirmacoes")
             .where("membroNome","==",user.name).where("eventoId","==",eventoId).get();
         if (!snap.empty) {
             await snap.docs[0].ref.update({ status, updatedAt:firebase.firestore.FieldValue.serverTimestamp() });
         } else {
-            await db.collection("confirmacoes").add({
+            await db.collection("onix_confirmacoes").add({
                 membroNome: user.name, eventoId, status,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
             });
@@ -3564,7 +3590,7 @@ function MinhaDeclaracao({ user, config }) {
     const cor = config.corPrimaria||COR;
 
     useEffect(()=>{
-        db.collection("config").doc("relatorio").get().then(doc=>{ if(doc.exists) setTextos(doc.data()); });
+        db.collection("onix_config").doc("relatorio").get().then(doc=>{ if(doc.exists) setTextos(doc.data()); });
     },[]);
 
     const freqCorista = frequencias.filter(f=>
@@ -3699,15 +3725,15 @@ function ModalNoticia({ noticia, onClose, config, autorInicial }) {
         if (!form.texto.trim())  { setErro("Texto é obrigatório."); return; }
         setSalvando(true);
         const d = { titulo:form.titulo, texto:form.texto, imageUrl:form.imageUrl||"", categoria:form.categoria, autorNome:form.autorNome||"Gestão", createdAt: noticia ? noticia.createdAt : firebase.firestore.FieldValue.serverTimestamp() };
-        if (noticia) await db.collection("noticias").doc(noticia.id).update({...d, updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
-        else await db.collection("noticias").add(d);
+        if (noticia) await db.collection("onix_noticias").doc(noticia.id).update({...d, updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
+        else await db.collection("onix_noticias").add(d);
         setSalvando(false);
         onClose();
     }
 
     async function excluir() {
         if (!window.confirm("Excluir esta notícia?")) return;
-        await db.collection("noticias").doc(noticia.id).delete();
+        await db.collection("onix_noticias").doc(noticia.id).delete();
         onClose();
     }
 
@@ -3770,7 +3796,7 @@ function AreaRH({ config, abaInicial }) {
     const today = todayStr();
 
     useEffect(()=>{
-        db.collection("config").doc("relatorio").get().then(doc=>{ if(doc.exists) setTextos(doc.data()); });
+        db.collection("onix_config").doc("relatorio").get().then(doc=>{ if(doc.exists) setTextos(doc.data()); });
     },[]);
 
     const ativos      = members.filter(m=>m.active);
@@ -3794,7 +3820,7 @@ function AreaRH({ config, abaInicial }) {
 
     // Confirmações
     const [confirmacoes, setConfirmacoes] = useState([]);
-    useEffect(()=>{ db.collection("confirmacoes").onSnapshot(snap=>setConfirmacoes(snap.docs.map(d=>({id:d.id,...d.data()})))); },[]);
+    useEffect(()=>{ db.collection("onix_confirmacoes").onSnapshot(snap=>setConfirmacoes(snap.docs.map(d=>({id:d.id,...d.data()})))); },[]);
     const vaiParticipiar = confirmacoes.filter(c=>c.status==="vou").length;
     const naoVai = confirmacoes.filter(c=>c.status==="nao").length;
 
@@ -3843,7 +3869,7 @@ function AreaRH({ config, abaInicial }) {
 </body></html>`;
         const win=window.open("","_blank"); win.document.write(html); win.document.close(); setTimeout(()=>win.print(),800);
         // Salvar no histórico
-        db.collection("relatorios_historico").add({ tipo:"Declaração Individual", corista:coristaAtual.name, periodo:`${dataInicio} a ${dataFim}`, geradoEm:firebase.firestore.FieldValue.serverTimestamp(), geradoPor:"RH" });
+        db.collection("onix_relatorios_historico").add({ tipo:"Declaração Individual", corista:coristaAtual.name, periodo:`${dataInicio} a ${dataFim}`, geradoEm:firebase.firestore.FieldValue.serverTimestamp(), geradoPor:"RH" });
     }
 
     const inp = { padding:"10px 14px", border:"1px solid #E8E0E0", borderRadius:10, fontSize:13, outline:"none", fontFamily:"inherit", color:"#1A1D23", background:"#FAFAFA" };
@@ -4041,13 +4067,13 @@ const CATS_RECEITA_PADRAO = [
 function useCatsFinanceiro() {
     const [cats, setCats] = useState({ gasto: CATS_GASTO_PADRAO, receita: CATS_RECEITA_PADRAO });
     useEffect(()=>{
-        const unsub = db.collection("config").doc("cats_financeiro")
+        const unsub = db.collection("onix_config").doc("cats_financeiro")
             .onSnapshot(snap=>{ if(snap.exists) setCats(d=>({...d,...snap.data()})); });
         return unsub;
     },[]);
     async function addCat(tipo, nome) {
         const nova = [...cats[tipo], nome];
-        await db.collection("config").doc("cats_financeiro").set({ [tipo]: nova }, {merge:true});
+        await db.collection("onix_config").doc("cats_financeiro").set({ [tipo]: nova }, {merge:true});
     }
     return { cats, addCat };
 }
@@ -4058,12 +4084,12 @@ function ModalMensalidade({ config, onClose }) {
     const [salvando, setSalvando] = useState(false);
     const [ok, setOk] = useState(false);
     useEffect(()=>{
-        db.collection("config").doc("mensalidade").get().then(d=>{ if(d.exists) setCfg(x=>({...x,...d.data(), valorMensal:String(d.data().valorMensal||25)})); });
+        db.collection("onix_config").doc("mensalidade").get().then(d=>{ if(d.exists) setCfg(x=>({...x,...d.data(), valorMensal:String(d.data().valorMensal||25)})); });
     },[]);
     async function salvar() {
         if (!cfg.dataInicio||!cfg.dataFim) { alert("Preencha início e fim."); return; }
         setSalvando(true);
-        await db.collection("config").doc("mensalidade").set({ dataInicio:cfg.dataInicio, dataFim:cfg.dataFim, valorMensal:parseFloat(cfg.valorMensal)||25, updatedAt:firebase.firestore.FieldValue.serverTimestamp() },{merge:true});
+        await db.collection("onix_config").doc("mensalidade").set({ dataInicio:cfg.dataInicio, dataFim:cfg.dataFim, valorMensal:parseFloat(cfg.valorMensal)||25, updatedAt:firebase.firestore.FieldValue.serverTimestamp() },{merge:true});
         setSalvando(false); setOk(true); setTimeout(()=>{ setOk(false); onClose(); },1200);
     }
     const inp = { width:"100%", padding:"11px 14px", border:"1px solid #E8E0E0", borderRadius:10, fontSize:14, outline:"none", fontFamily:"inherit", color:"#1A1D23", background:"#FAFAFA" };
@@ -4101,7 +4127,7 @@ function ModalPagamento({ membro, mesalidade, config, onClose }) {
 
     useEffect(()=>{
         if (!mesalidade?.dataInicio||!mesalidade?.dataFim) return;
-        const unsub = db.collection("pagamentos").where("membroId","==",membro.id)
+        const unsub = db.collection("onix_pagamentos").where("membroId","==",membro.id)
             .onSnapshot(snap=>{
                 const pagos = {};
                 snap.docs.forEach(d=>{ const p=d.data(); pagos[p.mes]={docId:d.id,...p}; });
@@ -4124,9 +4150,9 @@ function ModalPagamento({ membro, mesalidade, config, onClose }) {
         setSalvando(true);
         const existing = meses.find(x=>x.key===mes.key);
         if (existing.docId) {
-            await db.collection("pagamentos").doc(existing.docId).update({ status:"aguardando", updatedAt:firebase.firestore.FieldValue.serverTimestamp() });
+            await db.collection("onix_pagamentos").doc(existing.docId).update({ status:"aguardando", updatedAt:firebase.firestore.FieldValue.serverTimestamp() });
         } else {
-            await db.collection("pagamentos").add({
+            await db.collection("onix_pagamentos").add({
                 membroId:membro.id, membroNome:membro.name, naipe:membro.voice||"",
                 mes:mes.key, valor:mesalidade.valorMensal||25,
                 status:"aguardando", createdAt:firebase.firestore.FieldValue.serverTimestamp()
@@ -4140,9 +4166,9 @@ function ModalPagamento({ membro, mesalidade, config, onClose }) {
     async function validar(mes) {
         if (!mes.docId) return;
         setSalvando(true);
-        await db.collection("pagamentos").doc(mes.docId).update({ status:"pago", validadoEm:firebase.firestore.FieldValue.serverTimestamp() });
+        await db.collection("onix_pagamentos").doc(mes.docId).update({ status:"pago", validadoEm:firebase.firestore.FieldValue.serverTimestamp() });
         // Lançar no financeiro automaticamente
-        await db.collection("financeiro").add({
+        await db.collection("onix_financeiro").add({
             descricao:`Mensalidade ${mes.label} — ${membro.name}`,
             categoria:"Mensalidade", valor:mesalidade.valorMensal||25,
             data:`${mes.key}-01`, tipo:"receita",
@@ -4155,7 +4181,7 @@ function ModalPagamento({ membro, mesalidade, config, onClose }) {
 
     async function recusar(mes) {
         if (!mes.docId) return;
-        await db.collection("pagamentos").doc(mes.docId).update({ status:"pendente", updatedAt:firebase.firestore.FieldValue.serverTimestamp() });
+        await db.collection("onix_pagamentos").doc(mes.docId).update({ status:"pendente", updatedAt:firebase.firestore.FieldValue.serverTimestamp() });
     }
 
     const statusInfo = {
@@ -4221,13 +4247,13 @@ function ModalLancamento({ lancamento, tipo, config, cats, addCat, onClose }) {
         setSalvando(true);
         const membro = members.find(m=>m.id===form.membroId);
         const d = { descricao:form.descricao, categoria:form.categoria, valor:parseFloat(form.valor), data:form.data, observacao:form.observacao||"", tipo, membroId:form.membroId||"grupo", membroNome:form.membroId?(membro?.name||form.membroNome):"Onix Brasil Vocal" };
-        if (lancamento) await db.collection("financeiro").doc(lancamento.id).update({...d, updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
-        else await db.collection("financeiro").add({...d, createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+        if (lancamento) await db.collection("onix_financeiro").doc(lancamento.id).update({...d, updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
+        else await db.collection("onix_financeiro").add({...d, createdAt:firebase.firestore.FieldValue.serverTimestamp()});
         setSalvando(false); onClose();
     }
     async function excluir() {
         if (!window.confirm("Excluir lançamento?")) return;
-        await db.collection("financeiro").doc(lancamento.id).delete(); onClose();
+        await db.collection("onix_financeiro").doc(lancamento.id).delete(); onClose();
     }
     async function criarCategoria() {
         if (!novaCat.trim()) return;
@@ -4314,8 +4340,8 @@ function Financeiro({ config }) {
     const cor = config.corPrimaria||COR;
 
     useEffect(()=>{
-        const u1 = db.collection("config").doc("mensalidade").onSnapshot(s=>{ if(s.exists) setMesalidade(s.data()); });
-        const u2 = db.collection("pagamentos").onSnapshot(s=>setPagamentos(s.docs.map(d=>({id:d.id,...d.data()}))));
+        const u1 = db.collection("onix_config").doc("mensalidade").onSnapshot(s=>{ if(s.exists) setMesalidade(s.data()); });
+        const u2 = db.collection("onix_pagamentos").onSnapshot(s=>setPagamentos(s.docs.map(d=>({id:d.id,...d.data()}))));
         return ()=>{ u1(); u2(); };
     },[]);
 
@@ -4570,8 +4596,8 @@ function FinanceiroCorista({ user, config, setTab }) {
     const [meses, setMeses]           = useState([]);
 
     useEffect(()=>{
-        const u1 = db.collection("config").doc("mensalidade").onSnapshot(s=>{ if(s.exists) setMesalidade(s.data()); });
-        const u2 = db.collection("pagamentos").where("membroId","==",user.memberId||"")
+        const u1 = db.collection("onix_config").doc("mensalidade").onSnapshot(s=>{ if(s.exists) setMesalidade(s.data()); });
+        const u2 = db.collection("onix_pagamentos").where("membroId","==",user.memberId||"")
             .onSnapshot(s=>setPagamentos(s.docs.map(d=>({id:d.id,...d.data()}))));
         return ()=>{ u1(); u2(); };
     },[user.memberId]);
@@ -4580,14 +4606,14 @@ function FinanceiroCorista({ user, config, setTab }) {
     const [memberId, setMemberId] = useState(null);
     useEffect(()=>{
         if (!user.name) return;
-        db.collection("members").where("name","==",user.name).get().then(s=>{
+        db.collection("onix_members").where("name","==",user.name).get().then(s=>{
             if (!s.empty) setMemberId(s.docs[0].id);
         });
     },[user.name]);
 
     useEffect(()=>{
         if (!mesalidade?.dataInicio||!mesalidade?.dataFim||!memberId) return;
-        db.collection("pagamentos").where("membroId","==",memberId)
+        db.collection("onix_pagamentos").where("membroId","==",memberId)
             .onSnapshot(snap=>{
                 const pagos = {};
                 snap.docs.forEach(d=>{ const p=d.data(); pagos[p.mes]={docId:d.id,...p}; });
@@ -4612,9 +4638,9 @@ function FinanceiroCorista({ user, config, setTab }) {
         if (!memberId) return;
         setSalvando(mes.key);
         if (mes.docId) {
-            await db.collection("pagamentos").doc(mes.docId).update({ status:"aguardando", updatedAt:firebase.firestore.FieldValue.serverTimestamp() });
+            await db.collection("onix_pagamentos").doc(mes.docId).update({ status:"aguardando", updatedAt:firebase.firestore.FieldValue.serverTimestamp() });
         } else {
-            await db.collection("pagamentos").add({
+            await db.collection("onix_pagamentos").add({
                 membroId:memberId, membroNome:user.name, naipe:user.voice||"",
                 mes:mes.key, valor:mesalidade?.valorMensal||25,
                 status:"aguardando", createdAt:firebase.firestore.FieldValue.serverTimestamp()
@@ -4699,12 +4725,12 @@ function RifaBanner({ config, isAdmin }) {
     const [urlTemp, setUrlTemp]   = useState("");
 
     useEffect(()=>{
-        const unsub = db.collection("config").doc("rifa").onSnapshot(s=>{ if(s.exists&&s.data().url) setRifaUrl(s.data().url); });
+        const unsub = db.collection("onix_config").doc("rifa").onSnapshot(s=>{ if(s.exists&&s.data().url) setRifaUrl(s.data().url); });
         return unsub;
     },[]);
 
     async function salvarUrl() {
-        await db.collection("config").doc("rifa").set({ url: urlTemp },{merge:true});
+        await db.collection("onix_config").doc("rifa").set({ url: urlTemp },{merge:true});
         setEditando(false);
     }
 
@@ -4874,7 +4900,7 @@ function App() {
     const { config, save }      = useConfig();
 
     useEffect(()=>{
-        const unsub = db.collection("members").onSnapshot(snap=>setMembers(snap.docs.map(d=>({id:d.id,...d.data()}))));
+        const unsub = db.collection("onix_members").onSnapshot(snap=>setMembers(snap.docs.map(d=>({id:d.id,...d.data()}))));
         return unsub;
     },[]);
 
@@ -4885,7 +4911,7 @@ function App() {
         // Registrar acesso do corista
         if (u.role === "corista" && u.name) {
             const agora = new Date();
-            db.collection("acessos").add({
+            db.collection("onix_acessos").add({
                 nome: u.name,
                 dataHora: firebase.firestore.FieldValue.serverTimestamp(),
                 data: agora.toISOString().split("T")[0]
