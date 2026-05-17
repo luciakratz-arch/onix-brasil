@@ -9512,7 +9512,7 @@ function Declaracao(_ref43) {
     }, 800);
   }
   function gerarPDFCorista() {
-    if (!coristaAtual || freqCorista.length === 0) return;
+    if (!coristaAtual) return;
     var nomeApp = config.nomeApp || "Onix Brasil Vocal Internacional";
     var logoUrl = config.logoUrl || LOGO_URL;
     var maestro = textos.maestro || "Maestro";
@@ -9526,10 +9526,17 @@ function Declaracao(_ref43) {
       year: "numeric"
     });
     var periodoFmt = "".concat(new Date(dataInicio + "T12:00:00").toLocaleDateString("pt-BR"), " a ").concat(new Date(dataFim + "T12:00:00").toLocaleDateString("pt-BR"));
-    var linhas = freqCorista.map(function (f, i) {
+    var admissao = coristaAtual.startDate ? new Date(coristaAtual.startDate + "T12:00:00").toLocaleDateString("pt-BR", {
+      month: "long",
+      year: "numeric"
+    }) : "—";
+    var temFreq = freqCorista.length > 0;
+    var linhas = temFreq ? freqCorista.map(function (f, i) {
       return "\n            <tr>\n                <td style=\"text-align:center\">".concat(i + 1, "</td>\n                <td>").concat(f.eventoData ? new Date(f.eventoData + "T12:00:00").toLocaleDateString("pt-BR") : "", "</td>\n                <td>").concat(f.eventoTitulo || "—", "</td>\n            </tr>");
-    }).join("");
-    var html = "<!DOCTYPE html><html lang=\"pt-BR\"><head><meta charset=\"UTF-8\">\n<style>\n  body { font-family: Arial, sans-serif; font-size: 12px; color: #222; margin:0; padding:0; }\n  @media print { @page { margin: 2cm; } }\n  .header { display:flex; justify-content:space-between; align-items:flex-start; border-bottom:2px solid ".concat(cor, "; padding-bottom:14px; margin-bottom:24px; }\n  .logo { width:50px; height:50px; object-fit:contain; }\n  .titulo { text-align:center; font-size:16px; font-weight:bold; color:").concat(cor, "; text-transform:uppercase; letter-spacing:2px; margin-bottom:6px; }\n  .subtitulo { text-align:center; font-size:13px; color:#444; margin-bottom:8px; }\n  .info-box { border:1px solid #EEE; border-radius:6px; padding:12px 16px; margin-bottom:20px; background:#FAFAFA; }\n  .info-row { display:flex; gap:8px; margin-bottom:4px; }\n  .info-label { font-weight:bold; color:").concat(cor, "; min-width:80px; font-size:11px; text-transform:uppercase; }\n  .info-valor { font-size:12px; color:#333; }\n  .declaracao { border-left:3px solid ").concat(cor, "; padding:10px 14px; margin:20px 0; background:#FAFAFA; font-size:13px; line-height:1.7; color:#333; }\n  table { width:100%; border-collapse:collapse; margin-bottom:24px; }\n  th { background:").concat(cor, "; color:#fff; padding:8px 10px; text-align:left; font-size:11px; text-transform:uppercase; }\n  td { padding:8px 10px; border-bottom:1px solid #EEE; font-size:12px; }\n  tr:nth-child(even) td { background:#FAFAFA; }\n  .assinaturas { display:flex; justify-content:space-around; margin-top:48px; text-align:center; }\n  .assin img { height:50px; object-fit:contain; display:block; margin:0 auto 6px; }\n  .assin-linha { border-top:1px solid #333; padding-top:6px; min-width:180px; }\n  .assin-nome { font-weight:bold; font-size:12px; }\n  .assin-cargo { font-size:10px; color:#888; }\n  .rodape { text-align:center; font-size:10px; color:#AAA; margin-top:32px; border-top:1px solid #EEE; padding-top:8px; }\n</style></head><body>\n<div class=\"header\">\n  <img src=\"").concat(logoUrl, "\" class=\"logo\" />\n  <div style=\"text-align:right;font-size:11px;color:#666\"><strong>").concat(nomeApp, "</strong><br>").concat(cidade, "</div>\n</div>\n<div class=\"titulo\">Declara\xE7\xE3o de Participa\xE7\xE3o</div>\n<div class=\"subtitulo\">").concat(nomeApp, "</div>\n<div class=\"info-box\">\n  <div class=\"info-row\"><span class=\"info-label\">Corista:</span><span class=\"info-valor\"><strong>").concat(coristaAtual.name, "</strong></span></div>\n  <div class=\"info-row\"><span class=\"info-label\">Naipe:</span><span class=\"info-valor\">").concat(coristaAtual.voice || "—", "</span></div>\n  <div class=\"info-row\"><span class=\"info-label\">Per\xEDodo:</span><span class=\"info-valor\">").concat(periodoFmt, "</span></div>\n  <div class=\"info-row\"><span class=\"info-label\">Participa\xE7\xF5es:</span><span class=\"info-valor\">").concat(freqCorista.length, " evento").concat(freqCorista.length !== 1 ? "s" : "", "</span></div>\n</div>\n<div class=\"declaracao\">\n  Declaramos para os devidos fins que <strong>").concat(coristaAtual.name, "</strong> \xE9 integrante do ").concat(nomeApp, ",\n  participando ativamente das atividades do grupo no per\xEDodo de ").concat(periodoFmt, ",\n  com registro de presen\xE7a em ").concat(freqCorista.length, " evento").concat(freqCorista.length !== 1 ? "s" : "", " conforme detalhado abaixo.\n</div>\n<table>\n  <thead><tr><th style=\"width:40px;text-align:center\">#</th><th>Data</th><th>Evento</th></tr></thead>\n  <tbody>").concat(linhas, "</tbody>\n</table>\n<div class=\"assinaturas\">\n  <div class=\"assin\">\n    ").concat(sigMaestro ? "<img src=\"".concat(sigMaestro, "\" />") : "<div style='height:50px'></div>", "\n    <div class=\"assin-linha\"><div class=\"assin-nome\">").concat(maestro, "</div><div class=\"assin-cargo\">Maestro \u2013 ").concat(nomeApp, "</div></div>\n  </div>\n  <div class=\"assin\">\n    ").concat(sigLucia ? "<img src=\"".concat(sigLucia, "\" />") : "<div style='height:50px'></div>", "\n    <div class=\"assin-linha\"><div class=\"assin-nome\">").concat(produtora, "</div><div class=\"assin-cargo\">Produtora \u2013 ").concat(nomeApp, "</div></div>\n  </div>\n</div>\n<div class=\"rodape\">Documento gerado em ").concat(hoje, " pelo sistema de gest\xE3o do ").concat(nomeApp, ".</div>\n</body></html>");
+    }).join("") : "";
+    var tabelaHTML = temFreq ? "\n<table>\n  <thead><tr><th style=\"width:40px;text-align:center\">#</th><th>Data</th><th>Evento</th></tr></thead>\n  <tbody>".concat(linhas, "</tbody>\n</table>") : "";
+    var textoDeclaracao = temFreq ? "Declaramos para os devidos fins que <strong>".concat(coristaAtual.name, "</strong> \xE9 integrante do ").concat(nomeApp, ",\n  participando ativamente das atividades do grupo desde ").concat(admissao, ",\n  com registro de presen\xE7a em ").concat(freqCorista.length, " evento").concat(freqCorista.length !== 1 ? "s" : "", " no per\xEDodo de ").concat(periodoFmt, ", conforme detalhado abaixo.") : "Declaramos para os devidos fins que <strong>".concat(coristaAtual.name, "</strong> \xE9 integrante do ").concat(nomeApp, ",\n  participando ativamente das atividades do grupo desde ").concat(admissao, ",\n  exercendo a fun\xE7\xE3o de <strong>").concat(coristaAtual.funcao || "Corista", "</strong> no naipe de <strong>").concat(coristaAtual.voice || "—", "</strong>.");
+    var html = "<!DOCTYPE html><html lang=\"pt-BR\"><head><meta charset=\"UTF-8\">\n<style>\n  body { font-family: Arial, sans-serif; font-size: 12px; color: #222; margin:0; padding:0; }\n  @media print { @page { margin: 2cm; } }\n  .header { display:flex; justify-content:space-between; align-items:flex-start; border-bottom:2px solid ".concat(cor, "; padding-bottom:14px; margin-bottom:24px; }\n  .logo { width:50px; height:50px; object-fit:contain; }\n  .titulo { text-align:center; font-size:16px; font-weight:bold; color:").concat(cor, "; text-transform:uppercase; letter-spacing:2px; margin-bottom:6px; }\n  .subtitulo { text-align:center; font-size:13px; color:#444; margin-bottom:8px; }\n  .info-box { border:1px solid #EEE; border-radius:6px; padding:12px 16px; margin-bottom:20px; background:#FAFAFA; }\n  .info-row { display:flex; gap:8px; margin-bottom:4px; }\n  .info-label { font-weight:bold; color:").concat(cor, "; min-width:80px; font-size:11px; text-transform:uppercase; }\n  .info-valor { font-size:12px; color:#333; }\n  .declaracao { border-left:3px solid ").concat(cor, "; padding:10px 14px; margin:20px 0; background:#FAFAFA; font-size:13px; line-height:1.7; color:#333; }\n  table { width:100%; border-collapse:collapse; margin-bottom:24px; }\n  th { background:").concat(cor, "; color:#fff; padding:8px 10px; text-align:left; font-size:11px; text-transform:uppercase; }\n  td { padding:8px 10px; border-bottom:1px solid #EEE; font-size:12px; }\n  tr:nth-child(even) td { background:#FAFAFA; }\n  .assinaturas { display:flex; justify-content:space-around; margin-top:48px; text-align:center; }\n  .assin img { height:50px; object-fit:contain; display:block; margin:0 auto 6px; }\n  .assin-linha { border-top:1px solid #333; padding-top:6px; min-width:180px; }\n  .assin-nome { font-weight:bold; font-size:12px; }\n  .assin-cargo { font-size:10px; color:#888; }\n  .rodape { text-align:center; font-size:10px; color:#AAA; margin-top:32px; border-top:1px solid #EEE; padding-top:8px; }\n</style></head><body>\n<div class=\"header\">\n  <img src=\"").concat(logoUrl, "\" class=\"logo\" />\n  <div style=\"text-align:right;font-size:11px;color:#666\"><strong>").concat(nomeApp, "</strong><br>").concat(cidade, "</div>\n</div>\n<div class=\"titulo\">Declara\xE7\xE3o de Participa\xE7\xE3o</div>\n<div class=\"subtitulo\">").concat(nomeApp, "</div>\n<div class=\"info-box\">\n  <div class=\"info-row\"><span class=\"info-label\">Corista:</span><span class=\"info-valor\"><strong>").concat(coristaAtual.name, "</strong></span></div>\n  <div class=\"info-row\"><span class=\"info-label\">Fun\xE7\xE3o:</span><span class=\"info-valor\">").concat(coristaAtual.funcao || "Corista", "</span></div>\n  <div class=\"info-row\"><span class=\"info-label\">Naipe:</span><span class=\"info-valor\">").concat(coristaAtual.voice || "—", "</span></div>\n  <div class=\"info-row\"><span class=\"info-label\">Membro desde:</span><span class=\"info-valor\">").concat(admissao, "</span></div>\n  <div class=\"info-row\"><span class=\"info-label\">Per\xEDodo:</span><span class=\"info-valor\">").concat(periodoFmt, "</span></div>\n  ").concat(temFreq ? "<div class=\"info-row\"><span class=\"info-label\">Participa\xE7\xF5es:</span><span class=\"info-valor\">".concat(freqCorista.length, " evento").concat(freqCorista.length !== 1 ? "s" : "", "</span></div>") : "", "\n</div>\n<div class=\"declaracao\">").concat(textoDeclaracao, "</div>\n").concat(tabelaHTML, "\n<div class=\"assinaturas\">\n  <div class=\"assin\">\n    ").concat(sigMaestro ? "<img src=\"".concat(sigMaestro, "\" />") : "<div style='height:50px'></div>", "\n    <div class=\"assin-linha\"><div class=\"assin-nome\">").concat(maestro, "</div><div class=\"assin-cargo\">Maestro \u2013 ").concat(nomeApp, "</div></div>\n  </div>\n  <div class=\"assin\">\n    ").concat(sigLucia ? "<img src=\"".concat(sigLucia, "\" />") : "<div style='height:50px'></div>", "\n    <div class=\"assin-linha\"><div class=\"assin-nome\">").concat(produtora, "</div><div class=\"assin-cargo\">Produtora \u2013 ").concat(nomeApp, "</div></div>\n  </div>\n</div>\n<div class=\"rodape\">Documento gerado em ").concat(hoje, " pelo sistema de gest\xE3o do ").concat(nomeApp, ".</div>\n</body></html>");
     var win = window.open("", "_blank");
     win.document.write(html);
     win.document.close();
@@ -9785,14 +9792,7 @@ function Declaracao(_ref43) {
     onChange: function onChange(e) {
       return setDataFim(e.target.value);
     }
-  }))), coristaId && /*#__PURE__*/React.createElement(React.Fragment, null, freqCorista.length === 0 ? /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#CCC",
-      textAlign: "center",
-      padding: "16px 0"
-    }
-  }, "Nenhuma participa\xE7\xE3o registrada no per\xEDodo.") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+  }))), coristaId && /*#__PURE__*/React.createElement(React.Fragment, null, freqCorista.length > 0 && /*#__PURE__*/React.createElement("div", {
     style: {
       marginBottom: 12
     }
@@ -9826,7 +9826,14 @@ function Declaracao(_ref43) {
         flex: 1
       }
     }, f.eventoTitulo));
-  })), /*#__PURE__*/React.createElement("button", {
+  })), freqCorista.length === 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12,
+      color: "#888",
+      padding: "8px 0 12px",
+      fontStyle: "italic"
+    }
+  }, "Nenhuma participa\xE7\xE3o em eventos no per\xEDodo \u2014 a declara\xE7\xE3o ser\xE1 gerada com os dados de v\xEDnculo do corista."), /*#__PURE__*/React.createElement("button", {
     onClick: gerarPDFCorista,
     style: {
       display: "flex",
@@ -9846,7 +9853,7 @@ function Declaracao(_ref43) {
     name: "printer",
     size: 14,
     color: "#fff"
-  }), " Gerar PDF \u2014 Declara\xE7\xE3o Individual")))));
+  }), " Gerar PDF \u2014 Declara\xE7\xE3o Individual"))));
 }
 
 // ── PLACEHOLDER ───────────────────────────────────────────────────────────────
