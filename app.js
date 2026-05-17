@@ -14072,6 +14072,12 @@ function FinanceiroCorista(_ref62) {
       bg: "#E8F5E9",
       cor: "#2E7D32",
       icon: "check-circle"
+    },
+    isento: {
+      label: "Isento",
+      bg: "#F5F5F5",
+      cor: "#888",
+      icon: "minus-circle"
     }
   };
   var card = {
