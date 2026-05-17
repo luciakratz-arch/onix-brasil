@@ -6710,37 +6710,10 @@ function Apresentacao(_ref21) {
       marginLeft: "auto"
     }
   }, "\u2191\u2193 para reordenar")), setlist.map(function (s, i) {
-    var urlA = function () {
-      var u = s.playback || s.audioOriginal;
-      if (!u) return null;
-      var dr = u.match(/\/d\/([a-zA-Z0-9_-]+)/);
-      if (dr) return "https://drive.google.com/file/d/".concat(dr[1], "/preview");
-      var yt = u.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
-      if (yt) return "https://www.youtube.com/embed/".concat(yt[1], "?autoplay=1");
-      return u;
-    }();
-    var urlB = function () {
-      var u = s.playbackB;
-      if (!u) return urlA;
-      var dr = u.match(/\/d\/([a-zA-Z0-9_-]+)/);
-      if (dr) return "https://drive.google.com/file/d/".concat(dr[1], "/preview");
-      var yt = u.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
-      if (yt) return "https://www.youtube.com/embed/".concat(yt[1], "?autoplay=1");
-      return u;
-    }();
     return /*#__PURE__*/React.createElement("div", {
-      key: i,
+      key: s.id || i,
       onClick: function onClick() {
-        setTocando(s);
-        // Força update do iframe diretamente
-        setTimeout(function () {
-          var iframe = document.getElementById("player-iframe");
-          var titulo = document.getElementById("player-titulo");
-          var plano = planos[s.id] || "A";
-          var url = plano === "B" ? urlB : urlA;
-          if (titulo) titulo.textContent = s.title;
-          if (iframe && url) iframe.src = url;
-        }, 50);
+        return setTocando(_objectSpread({}, s));
       },
       style: {
         display: "flex",
@@ -6781,14 +6754,6 @@ function Apresentacao(_ref21) {
       onClick: function onClick(e) {
         e.stopPropagation();
         togglePlano(s.id);
-        setTimeout(function () {
-          if ((tocando === null || tocando === void 0 ? void 0 : tocando.id) === s.id) {
-            var iframe = document.getElementById("player-iframe");
-            var novoPlano = (planos[s.id] || "A") === "B" ? "A" : "B";
-            var url = novoPlano === "B" ? urlB : urlA;
-            if (iframe && url) iframe.src = url;
-          }
-        }, 50);
       },
       style: {
         padding: "3px 8px",
@@ -6885,7 +6850,6 @@ function Apresentacao(_ref21) {
       marginBottom: 4
     }
   }, /*#__PURE__*/React.createElement("div", {
-    id: "player-titulo",
     style: {
       fontSize: 14,
       fontWeight: 700,
@@ -6896,7 +6860,6 @@ function Apresentacao(_ref21) {
     style: {
       padding: "3px 10px",
       borderRadius: 6,
-      border: "1.5px solid ".concat((planos[tocando.id] || "A") === "B" ? "#E65100" : cor),
       background: (planos[tocando.id] || "A") === "B" ? "#E65100" : cor,
       color: "#fff",
       fontSize: 11,
@@ -6908,19 +6871,27 @@ function Apresentacao(_ref21) {
       color: "#AAA",
       marginBottom: 12
     }
-  }, tocando.compositor), /*#__PURE__*/React.createElement("iframe", {
-    id: "player-iframe",
-    src: getUrlParaTocar(tocando) || "",
+  }, tocando.compositor), getUrlParaTocar(tocando) ? /*#__PURE__*/React.createElement("iframe", {
+    key: tocando.id + (planos[tocando.id] || "A"),
+    src: getUrlParaTocar(tocando),
     style: {
       width: "100%",
       height: 200,
       border: "none",
-      borderRadius: 8,
-      display: getUrlParaTocar(tocando) ? "block" : "none"
+      borderRadius: 8
     },
     allow: "autoplay; fullscreen",
     title: tocando.title
-  }), ": ", /*#__PURE__*/React.createElement("div", {
+  }) : /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "20px",
+      background: "#F5F5F5",
+      borderRadius: 8,
+      textAlign: "center",
+      color: "#AAA",
+      fontSize: 13
+    }
+  }, "Esta m\xFAsica n\xE3o tem Playback Plano ", planos[tocando.id] || "A", " cadastrado."), ": ", /*#__PURE__*/React.createElement("div", {
     style: {
       padding: "20px",
       background: "#F5F5F5",
