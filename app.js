@@ -10337,13 +10337,15 @@ function PainelCorista(_ref45) {
       Reunião: "#E65100",
       Gravação: "#7B1FA2"
     }[e.tipo] || "#888";
-    // Áudio do naipe
+    // Áudio do naipe — busca em todas as músicas do setlist
     var audioNaipe = e[naipeKey] || null;
-    var songNaipe = songs.find(function (s) {
-      var _e$setlist3;
-      return s.id === ((_e$setlist3 = e.setlist) === null || _e$setlist3 === void 0 || (_e$setlist3 = _e$setlist3[0]) === null || _e$setlist3 === void 0 ? void 0 : _e$setlist3.id);
-    });
-    var urlNaipe = (songNaipe === null || songNaipe === void 0 ? void 0 : songNaipe[naipeKey]) || null;
+    var urlsNaipe = (e.setlist || []).map(function (item) {
+      return songs.find(function (s) {
+        return s.id === item.id;
+      });
+    }).filter(Boolean).map(function (s) {
+      return s[naipeKey];
+    }).filter(Boolean);
     return /*#__PURE__*/React.createElement("div", {
       key: e.id,
       style: {
@@ -10453,7 +10455,7 @@ function PainelCorista(_ref45) {
         fontStyle: "italic",
         marginBottom: 8
       }
-    }, e.notes), urlNaipe && /*#__PURE__*/React.createElement("div", {
+    }, e.notes), urlsNaipe.length > 0 && /*#__PURE__*/React.createElement("div", {
       style: {
         marginBottom: 8
       }
@@ -10479,31 +10481,50 @@ function PainelCorista(_ref45) {
       name: "music",
       size: 12,
       color: cor
-    }), "Estudar meu naipe (", naipe, ")", /*#__PURE__*/React.createElement(Icon, {
+    }), "Estudar meu naipe (", naipe, ") \u2014 ", urlsNaipe.length, " m\xFAsica", urlsNaipe.length !== 1 ? "s" : "", /*#__PURE__*/React.createElement(Icon, {
       name: naipeOpen === e.id ? "chevron-up" : "chevron-down",
       size: 12,
       color: cor
     })), naipeOpen === e.id && /*#__PURE__*/React.createElement("div", {
       style: {
-        marginTop: 8
+        marginTop: 8,
+        display: "flex",
+        flexDirection: "column",
+        gap: 8
       }
-    }, /*#__PURE__*/React.createElement("iframe", {
-      src: function () {
-        var url = urlNaipe;
-        var yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
-        if (yt) return "https://www.youtube.com/embed/".concat(yt[1], "?autoplay=1");
-        var dr = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+    }, (e.setlist || []).map(function (item, idx) {
+      var song = songs.find(function (s) {
+        return s.id === item.id;
+      });
+      var urlN = song === null || song === void 0 ? void 0 : song[naipeKey];
+      if (!urlN) return null;
+      var embedUrl = function () {
+        var yt = urlN.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+        if (yt) return "https://www.youtube.com/embed/".concat(yt[1], "?autoplay=0");
+        var dr = urlN.match(/\/d\/([a-zA-Z0-9_-]+)/);
         if (dr) return "https://drive.google.com/file/d/".concat(dr[1], "/preview");
-        return url;
-      }(),
-      style: {
-        width: "100%",
-        height: 120,
-        border: "none",
-        borderRadius: 8
-      },
-      allow: "autoplay",
-      title: "Naipe"
+        return urlN;
+      }();
+      return /*#__PURE__*/React.createElement("div", {
+        key: item.id || idx
+      }, /*#__PURE__*/React.createElement("div", {
+        style: {
+          fontSize: 12,
+          fontWeight: 600,
+          color: "#888",
+          marginBottom: 4
+        }
+      }, idx + 1, ". ", item.title), /*#__PURE__*/React.createElement("iframe", {
+        src: embedUrl,
+        style: {
+          width: "100%",
+          height: 80,
+          border: "none",
+          borderRadius: 8
+        },
+        allow: "autoplay",
+        title: item.title
+      }));
     }))), /*#__PURE__*/React.createElement("div", {
       style: {
         display: "flex",
@@ -10621,10 +10642,6 @@ function MinhaDeclaracao(_ref46) {
     letterSpacing: 0.8
   };
   function gerarPDF() {
-    if (freqCorista.length === 0) {
-      alert("Nenhuma participação registrada no período.");
-      return;
-    }
     var nomeApp = config.nomeApp || "Onix Brasil Vocal Internacional";
     var logoUrl = config.logoUrl || LOGO_URL;
     var cidade = textos.cidade || "Goiânia – GO";
@@ -10638,10 +10655,17 @@ function MinhaDeclaracao(_ref46) {
       year: "numeric"
     });
     var periodoFmt = "".concat(new Date(dataInicio + "T12:00:00").toLocaleDateString("pt-BR"), " a ").concat(new Date(dataFim + "T12:00:00").toLocaleDateString("pt-BR"));
-    var linhas = freqCorista.map(function (f, i) {
+    var admissao = user.startDate ? new Date(user.startDate + "T12:00:00").toLocaleDateString("pt-BR", {
+      month: "long",
+      year: "numeric"
+    }) : "—";
+    var temFreq = freqCorista.length > 0;
+    var linhas = temFreq ? freqCorista.map(function (f, i) {
       return "\n            <tr><td>".concat(i + 1, "</td>\n            <td>").concat(f.eventoData ? new Date(f.eventoData + "T12:00:00").toLocaleDateString("pt-BR") : "", "</td>\n            <td>").concat(f.eventoTitulo || "—", "</td></tr>");
-    }).join("");
-    var html = "<!DOCTYPE html><html lang=\"pt-BR\"><head><meta charset=\"UTF-8\">\n<style>\n  body{font-family:Arial,sans-serif;font-size:12px;color:#222;margin:0;padding:0}\n  @media print{@page{margin:2cm}}\n  .header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid ".concat(cor, ";padding-bottom:14px;margin-bottom:20px}\n  .logo{width:54px;height:54px;object-fit:contain}\n  .titulo{text-align:center;font-size:17px;font-weight:bold;color:").concat(cor, ";text-transform:uppercase;letter-spacing:2px;margin-bottom:6px}\n  .subtitulo{text-align:center;font-size:12px;color:#666;margin-bottom:20px}\n  .info-box{border:1px solid #EEE;border-radius:6px;padding:12px 16px;margin-bottom:16px;background:#FAFAFA}\n  .info-row{display:flex;gap:8px;margin-bottom:4px;font-size:12px}\n  .info-lbl{font-weight:bold;color:").concat(cor, ";min-width:100px;font-size:11px;text-transform:uppercase}\n  .decl{border-left:3px solid ").concat(cor, ";padding:10px 14px;margin:16px 0;background:#FAFAFA;font-size:13px;line-height:1.7}\n  table{width:100%;border-collapse:collapse;margin-bottom:20px}\n  th{background:").concat(cor, ";color:#fff;padding:7px 10px;text-align:left;font-size:10px;text-transform:uppercase}\n  td{padding:7px 10px;border-bottom:1px solid #EEE;font-size:12px}\n  tr:nth-child(even) td{background:#FAFAFA}\n  .assinaturas{display:flex;justify-content:space-around;margin-top:48px;text-align:center}\n  .assin img{height:52px;object-fit:contain;display:block;margin:0 auto 6px}\n  .assin-linha{border-top:1px solid #333;padding-top:5px;min-width:180px}\n  .assin-nome{font-weight:bold;font-size:12px}\n  .assin-cargo{font-size:10px;color:#888}\n  .rodape{text-align:center;font-size:10px;color:#AAA;margin-top:28px;border-top:1px solid #EEE;padding-top:8px}\n</style></head><body>\n<div class=\"header\">\n  <img src=\"").concat(logoUrl, "\" class=\"logo\"/>\n  <div style=\"text-align:right;font-size:11px;color:#666\"><strong>").concat(nomeApp, "</strong><br>").concat(cidade, "</div>\n</div>\n<div class=\"titulo\">Declara\xE7\xE3o de Participa\xE7\xE3o</div>\n<div class=\"subtitulo\">").concat(nomeApp, "</div>\n<div class=\"info-box\">\n  <div class=\"info-row\"><span class=\"info-lbl\">Nome:</span><span><strong>").concat(user.name, "</strong></span></div>\n  <div class=\"info-row\"><span class=\"info-lbl\">Naipe:</span><span>").concat(user.voice || "—", "</span></div>\n  <div class=\"info-row\"><span class=\"info-lbl\">Per\xEDodo:</span><span>").concat(periodoFmt, "</span></div>\n  <div class=\"info-row\"><span class=\"info-lbl\">Participa\xE7\xF5es:</span><span>").concat(freqCorista.length, " evento").concat(freqCorista.length !== 1 ? "s" : "", "</span></div>\n</div>\n<div class=\"decl\">\n  Declaramos para os devidos fins que <strong>").concat(user.name, "</strong>").concat(user.voice ? ", " + user.voice : "", ", \n  \xE9 integrante do ").concat(nomeApp, ", participando ativamente das atividades do grupo no per\xEDodo de ").concat(periodoFmt, ",\n  com registro de presen\xE7a em <strong>").concat(freqCorista.length, " evento").concat(freqCorista.length !== 1 ? "s" : "", "</strong> conforme detalhado abaixo.\n</div>\n<table><thead><tr><th>#</th><th>Data</th><th>Evento</th></tr></thead>\n<tbody>").concat(linhas, "</tbody></table>\n<div class=\"assinaturas\">\n  <div class=\"assin\">").concat(sigMaestro ? "<img src=\"".concat(sigMaestro, "\"/>") : "<div style='height:52px'></div>", "\n    <div class=\"assin-linha\"><div class=\"assin-nome\">").concat(maestro, "</div><div class=\"assin-cargo\">Maestro \u2013 ").concat(nomeApp, "</div></div>\n  </div>\n  <div class=\"assin\">").concat(sigLucia ? "<img src=\"".concat(sigLucia, "\"/>") : "<div style='height:52px'></div>", "\n    <div class=\"assin-linha\"><div class=\"assin-nome\">").concat(produtora, "</div><div class=\"assin-cargo\">Produtora \u2013 ").concat(nomeApp, "</div></div>\n  </div>\n</div>\n<div class=\"rodape\">Documento gerado em ").concat(hoje, " pelo sistema de gest\xE3o do ").concat(nomeApp, ".</div>\n</body></html>");
+    }).join("") : "";
+    var tabelaHTML = temFreq ? "\n<table><thead><tr><th>#</th><th>Data</th><th>Evento</th></tr></thead>\n<tbody>".concat(linhas, "</tbody></table>") : "";
+    var textoDecl = temFreq ? "Declaramos para os devidos fins que <strong>".concat(user.name, "</strong>").concat(user.voice ? ", " + user.voice : "", ", \n  \xE9 integrante do ").concat(nomeApp, ", participando ativamente das atividades do grupo desde ").concat(admissao, ",\n  com registro de presen\xE7a em <strong>").concat(freqCorista.length, " evento").concat(freqCorista.length !== 1 ? "s" : "", "</strong> no per\xEDodo de ").concat(periodoFmt, ", conforme detalhado abaixo.") : "Declaramos para os devidos fins que <strong>".concat(user.name, "</strong>").concat(user.voice ? ", " + user.voice : "", ", \n  \xE9 integrante do ").concat(nomeApp, ", participando ativamente das atividades do grupo desde ").concat(admissao, ",\n  exercendo a fun\xE7\xE3o de <strong>").concat(user.funcao || "Corista", "</strong>.");
+    var html = "<!DOCTYPE html><html lang=\"pt-BR\"><head><meta charset=\"UTF-8\">\n<style>\n  body{font-family:Arial,sans-serif;font-size:12px;color:#222;margin:0;padding:0}\n  @media print{@page{margin:2cm}}\n  .header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid ".concat(cor, ";padding-bottom:14px;margin-bottom:20px}\n  .logo{width:54px;height:54px;object-fit:contain}\n  .titulo{text-align:center;font-size:17px;font-weight:bold;color:").concat(cor, ";text-transform:uppercase;letter-spacing:2px;margin-bottom:6px}\n  .subtitulo{text-align:center;font-size:12px;color:#666;margin-bottom:20px}\n  .info-box{border:1px solid #EEE;border-radius:6px;padding:12px 16px;margin-bottom:16px;background:#FAFAFA}\n  .info-row{display:flex;gap:8px;margin-bottom:4px;font-size:12px}\n  .info-lbl{font-weight:bold;color:").concat(cor, ";min-width:100px;font-size:11px;text-transform:uppercase}\n  .decl{border-left:3px solid ").concat(cor, ";padding:10px 14px;margin:16px 0;background:#FAFAFA;font-size:13px;line-height:1.7}\n  table{width:100%;border-collapse:collapse;margin-bottom:20px}\n  th{background:").concat(cor, ";color:#fff;padding:7px 10px;text-align:left;font-size:10px;text-transform:uppercase}\n  td{padding:7px 10px;border-bottom:1px solid #EEE;font-size:12px}\n  tr:nth-child(even) td{background:#FAFAFA}\n  .assinaturas{display:flex;justify-content:space-around;margin-top:48px;text-align:center}\n  .assin img{height:52px;object-fit:contain;display:block;margin:0 auto 6px}\n  .assin-linha{border-top:1px solid #333;padding-top:5px;min-width:180px}\n  .assin-nome{font-weight:bold;font-size:12px}\n  .assin-cargo{font-size:10px;color:#888}\n  .rodape{text-align:center;font-size:10px;color:#AAA;margin-top:28px;border-top:1px solid #EEE;padding-top:8px}\n</style></head><body>\n<div class=\"header\">\n  <img src=\"").concat(logoUrl, "\" class=\"logo\"/>\n  <div style=\"text-align:right;font-size:11px;color:#666\"><strong>").concat(nomeApp, "</strong><br>").concat(cidade, "</div>\n</div>\n<div class=\"titulo\">Declara\xE7\xE3o de Participa\xE7\xE3o</div>\n<div class=\"subtitulo\">").concat(nomeApp, "</div>\n<div class=\"info-box\">\n  <div class=\"info-row\"><span class=\"info-lbl\">Nome:</span><span><strong>").concat(user.name, "</strong></span></div>\n  <div class=\"info-row\"><span class=\"info-lbl\">Naipe:</span><span>").concat(user.voice || "—", "</span></div>\n  <div class=\"info-row\"><span class=\"info-lbl\">Membro desde:</span><span>").concat(admissao, "</span></div>\n  <div class=\"info-row\"><span class=\"info-lbl\">Per\xEDodo:</span><span>").concat(periodoFmt, "</span></div>\n  ").concat(temFreq ? "<div class=\"info-row\"><span class=\"info-lbl\">Participa\xE7\xF5es:</span><span>".concat(freqCorista.length, " evento").concat(freqCorista.length !== 1 ? "s" : "", "</span></div>") : "", "\n</div>\n<div class=\"decl\">").concat(textoDecl, "</div>\n").concat(tabelaHTML, "\n<div class=\"assinaturas\">\n  <div class=\"assin\">").concat(sigMaestro ? "<img src=\"".concat(sigMaestro, "\"/>") : "<div style='height:52px'></div>", "\n    <div class=\"assin-linha\"><div class=\"assin-nome\">").concat(maestro, "</div><div class=\"assin-cargo\">Maestro \u2013 ").concat(nomeApp, "</div></div>\n  </div>\n  <div class=\"assin\">").concat(sigLucia ? "<img src=\"".concat(sigLucia, "\"/>") : "<div style='height:52px'></div>", "\n    <div class=\"assin-linha\"><div class=\"assin-nome\">").concat(produtora, "</div><div class=\"assin-cargo\">Produtora \u2013 ").concat(nomeApp, "</div></div>\n  </div>\n</div>\n<div class=\"rodape\">Documento gerado em ").concat(hoje, " pelo sistema de gest\xE3o do ").concat(nomeApp, ".</div>\n</body></html>");
     var win = window.open("", "_blank");
     win.document.write(html);
     win.document.close();
@@ -10694,14 +10718,7 @@ function MinhaDeclaracao(_ref46) {
     onChange: function onChange(e) {
       return setDataFim(e.target.value);
     }
-  }))), freqCorista.length === 0 ? /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 13,
-      color: "#CCC",
-      textAlign: "center",
-      padding: "20px 0"
-    }
-  }, "Nenhuma participa\xE7\xE3o registrada no per\xEDodo.") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+  }))), freqCorista.length > 0 && /*#__PURE__*/React.createElement("div", {
     style: {
       marginBottom: 14
     }
@@ -10735,7 +10752,14 @@ function MinhaDeclaracao(_ref46) {
         flex: 1
       }
     }, f.eventoTitulo));
-  })), /*#__PURE__*/React.createElement("button", {
+  })), freqCorista.length === 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12,
+      color: "#888",
+      padding: "8px 0 12px",
+      fontStyle: "italic"
+    }
+  }, "Nenhuma participa\xE7\xE3o no per\xEDodo \u2014 a declara\xE7\xE3o ser\xE1 gerada com seus dados de v\xEDnculo."), /*#__PURE__*/React.createElement("button", {
     onClick: gerarPDF,
     style: {
       display: "flex",
@@ -10755,7 +10779,7 @@ function MinhaDeclaracao(_ref46) {
     name: "printer",
     size: 14,
     color: "#fff"
-  }), " Gerar Declara\xE7\xE3o PDF"))));
+  }), " Gerar Declara\xE7\xE3o PDF")));
 }
 
 // ── NOTÍCIAS / BLOG ───────────────────────────────────────────────────────────
