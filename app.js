@@ -1826,6 +1826,7 @@ function SalaEstudos({ config, isAdmin }) {
 // ── APRESENTAÇÃO ──────────────────────────────────────────────────────────────
 function Apresentacao({ config }) {
     const { data:events }         = useCollection("onix_events","date");
+    const { data:songs }          = useCollection("onix_songs");
     const [eventoSel, setEventoSel] = useState(null);
     const [setlist, setSetlist]   = useState([]);
     const [tocando, setTocando]   = useState(null);
@@ -1843,18 +1844,16 @@ function Apresentacao({ config }) {
 
     function togglePlano(id) {
         setPlanos(p => ({ ...p, [id]: p[id]==="B" ? "A" : "B" }));
-        // Se está tocando esta música, atualiza o tocando também
-        setTocando(t => t?.id===id ? {...t, _plano: planos[id]==="B" ? "A" : "B"} : t);
     }
 
     function getUrlParaTocar(s) {
+        // Busca dados atualizados da música no Firebase
+        const songAtual = songs.find(sg => sg.id === s.id) || s;
         const plano = planos[s.id] || "A";
-        const url = plano==="B" ? (s.playbackB||s.playback||s.audioOriginal) : (s.playback||s.audioOriginal);
+        const url = plano==="B" ? (songAtual.playbackB||songAtual.playback||songAtual.audioOriginal) : (songAtual.playback||songAtual.audioOriginal);
         if (!url) return null;
-        // Normaliza link do Drive
         const dr = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
         if (dr) return `https://drive.google.com/file/d/${dr[1]}/preview`;
-        // Normaliza YouTube
         const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
         if (yt) return `https://www.youtube.com/embed/${yt[1]}?autoplay=1`;
         return url;
