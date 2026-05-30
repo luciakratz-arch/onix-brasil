@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rifa Onix Brasil Vocal Internacional</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--rx:#1e0035;--rm:#2d0050;--la:#E8A020;--ll:#f5c040;}
@@ -116,6 +117,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--rx);color:#faf9f7;min-hei
 .cmbt{display:flex;gap:7px;padding:11px 16px;background:#f5f0ff;}
 .cmbt button{flex:1;padding:8px;font-size:12px;border-radius:7px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;}
 @media(max-width:500px){.adm-grid{grid-template-columns:1fr;}.grid{gap:5px;}.nb{min-height:60px;}.nn{font-size:15px;}}
+
+.share-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:500;align-items:center;justify-content:center;padding:14px;flex-direction:column;gap:12px;}
+.share-ov.open{display:flex;}
+.share-img-wrap{background:#1e0035;border-radius:0;overflow:hidden;max-width:480px;width:100%;}
+.share-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
 </style>
 </head>
 <body>
@@ -318,6 +324,7 @@ function rMain(){
     '<div class="grid">'+g+'</div>'+
     '<div class="acoes">'+
       '<button class="btn bla" onclick="window._pdfCartela('+ci+')">&#128196; PDF da cartela</button>'+
+      '<button class="btn" style="background:#25D366;color:#fff;" onclick="window._compartilhar('+ci+')">&#128247; Compartilhar cartela</button>'+
       '<button class="btn br" onclick="window._limpar('+ci+')">Limpar cartela</button>'+
     '</div>'+
     '<div class="lista-wrap"><div class="lista-tit">&#128101; Compradores <span>'+compradores.length+'</span></div>'+listaHTML+'</div>';
@@ -483,5 +490,15 @@ window._pdfCartela=function(ci){
 };
 
 </script>
+
+<div class="share-ov" id="shareOv">
+  <div style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:4px;">Prévia para compartilhar</div>
+  <div class="share-img-wrap" id="shareImgWrap"></div>
+  <div class="share-actions">
+    <button onclick="baixarImagem()" style="background:#E8A020;color:#1e0035;border:none;border-radius:8px;padding:10px 20px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;">&#128229; Baixar imagem</button>
+    <button onclick="document.getElementById('shareOv').classList.remove('open')" style="background:transparent;border:1.5px solid rgba(255,255,255,0.3);color:#fff;border-radius:8px;padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;">Fechar</button>
+  </div>
+</div>
+
 </body>
 </html>
