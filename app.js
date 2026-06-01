@@ -15025,4 +15025,4 @@ function App() {
     }), item.label);
   })));
 }
-ReactDOM.createRoot(document.getElementById("root")).render(/*#__PURE__*/React.createElement(App, null));
+ReactDOM.render(React.createElement(App), document.getElementById("root"));
