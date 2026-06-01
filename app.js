@@ -5490,7 +5490,14 @@ function Repertorio(_ref16) {
       )
     );
   }));
-})(), filtradas.length, " m\xFAsica", filtradas.length !== 1 ? "s" : ""), modal && /*#__PURE__*/React.createElement(ModalMusica, {
+})(), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12,
+      color: "#AAA",
+      marginTop: 12,
+      textAlign: "right"
+    }
+  }, filtradas.length, " m\xFAsica", filtradas.length !== 1 ? "s" : ""), modal && /*#__PURE__*/React.createElement(ModalMusica, {
     musica: modal === "novo" ? null : modal,
     onClose: function onClose() {
       return setModal(null);
