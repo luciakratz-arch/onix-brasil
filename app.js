@@ -5450,47 +5450,150 @@ function Repertorio(_ref16) {
     return /*#__PURE__*/React.createElement("option", {
       key: c
     }, c);
-    }))), (function() {
-  var sorted = filtradas.slice().sort(function(a,b){ return (a.title||"").localeCompare(b.title||"","pt"); });
-  if (sorted.length === 0) return React.createElement("div", {style:{background:"#fff",borderRadius:12,border:"1px solid #EEE8E8",padding:"32px",textAlign:"center",color:"#CCC",fontSize:14}}, "Nenhuma música encontrada.");
-  var grupos = [];
-  if (filtro === "Todas as Categorias") {
-    var porCat = {};
-    sorted.forEach(function(s){ var c = s.categoria||"Sem categoria"; if(!porCat[c]) porCat[c]=[]; porCat[c].push(s); });
-    Object.keys(porCat).sort().forEach(function(cat){
-      var ms = porCat[cat]; var porL = {};
-      ms.forEach(function(s){ var l=(s.title||"?")[0].toUpperCase(); if(!porL[l]) porL[l]=[]; porL[l].push(s); });
-      grupos.push({t:"cat",v:cat});
-      Object.keys(porL).sort().forEach(function(lt){ grupos.push({t:"lt",v:lt}); porL[lt].forEach(function(s){ grupos.push({t:"s",v:s}); }); });
-    });
-  } else {
-    var porL2 = {};
-    sorted.forEach(function(s){ var l=(s.title||"?")[0].toUpperCase(); if(!porL2[l]) porL2[l]=[]; porL2[l].push(s); });
-    Object.keys(porL2).sort().forEach(function(lt){ grupos.push({t:"lt",v:lt}); porL2[lt].forEach(function(s){ grupos.push({t:"s",v:s}); }); });
-  }
-  var cl = config.corPrimaria || COR;
-  return React.createElement("div", null, grupos.map(function(item, idx){
-    if (item.t === "cat") return React.createElement("div", {key:"c"+idx, style:{marginTop:24,marginBottom:8,padding:"8px 14px",background:cl,color:"#fff",borderRadius:8,fontSize:14,fontWeight:700}}, item.v);
-    if (item.t === "lt") return React.createElement("div", {key:"l"+idx, style:{marginTop:16,marginBottom:6,fontSize:22,fontWeight:800,color:cl,borderBottom:"2px solid "+cl+"44",paddingBottom:2}}, item.v);
-    var s = item.v;
-    var cc = CAT_COLORS[s.categoria] || "#616161";
-    return React.createElement("div", {key:s.id, style:{background:"#fff",borderRadius:12,border:"1px solid #EEE8E8",borderLeft:"4px solid "+cc,padding:"14px 16px",marginBottom:8,boxShadow:"0 1px 4px rgba(0,0,0,0.04)",cursor:isAdmin?"pointer":"default"}, onClick:isAdmin?function(){ setModal(s); }:undefined},
-      React.createElement("div", {style:{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:4}},
-        React.createElement("div", {style:{fontSize:15,fontWeight:700,color:"#1A1D23",flex:1,paddingRight:8}}, s.title),
-        React.createElement("span", {style:{fontSize:11,padding:"2px 8px",borderRadius:10,background:cc+"22",color:cc,fontWeight:700,flexShrink:0}}, s.categoria)
-      ),
-      s.compositor && React.createElement("div", {style:{fontSize:12,color:"#AAA",marginBottom:8}}, s.compositor),
-      React.createElement("div", {style:{display:"flex",flexWrap:"wrap",marginTop:6}},
-        React.createElement(MaterialBadge, {label:"Partitura",icon:"\uD83C\uDFBC",url:s.partitura}),
-        React.createElement(MaterialBadge, {label:"\xC1udio Original",icon:"\uD83C\uDFB5",url:s.audioOriginal}),
-        React.createElement(MaterialBadge, {label:"Arranjo",icon:"\uD83C\uDFB5",url:s.audioArranjo}),
-        React.createElement(MaterialBadge, {label:"Playback",icon:"\uD83C\uDFA7",url:s.playback}),
-        temNaipes(s) && React.createElement("button", {onClick:function(e){e.stopPropagation();setPlayer({url:s.soprano||s.mezzoSoprano||s.contralto||s.tenor||s.baritono||s.baixo,title:"Naipes \u2014 "+s.title,naipes:{soprano:s.soprano,mezzoSoprano:s.mezzoSoprano,contralto:s.contralto,tenor:s.tenor,baritono:s.baritono,baixo:s.baixo}});},style:{display:"inline-flex",alignItems:"center",gap:4,padding:"3px 8px",borderRadius:10,background:"#F5EAEA",color:cl,fontSize:11,fontWeight:600,border:"none",cursor:"pointer",fontFamily:"inherit",marginRight:4,marginBottom:4}}, "\uD83C\uDFB6 Naipes"),
-        s.letra && React.createElement("button", {onClick:function(e){e.stopPropagation();setPlayer({url:"letra",title:s.title,letra:s.letra});},style:{display:"inline-flex",alignItems:"center",gap:4,padding:"3px 8px",borderRadius:10,background:"#F5F5F5",color:"#666",fontSize:11,fontWeight:600,border:"none",cursor:"pointer",fontFamily:"inherit",marginRight:4,marginBottom:4}}, "\uD83D\uDCC4 Letra")
-      )
-    );
-  }));
-})(), /*#__PURE__*/React.createElement("div", {
+  }))), filtradas.length === 0 ? /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "#fff",
+      borderRadius: 12,
+      border: "1px solid #EEE8E8",
+      padding: "32px",
+      textAlign: "center",
+      color: "#CCC",
+      fontSize: 14
+    }
+  }, "Nenhuma m\xFAsica encontrada.") : /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
+      gap: 14
+    }
+  }, filtradas.map(function (s) {
+    var catColor = CAT_COLORS[s.categoria] || "#616161";
+    return /*#__PURE__*/React.createElement("div", {
+      key: s.id,
+      style: {
+        background: "#fff",
+        borderRadius: 12,
+        border: "1px solid #EEE8E8",
+        borderTop: "3px solid ".concat(catColor),
+        padding: "16px",
+        boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
+        cursor: isAdmin ? "pointer" : "default"
+      },
+      onClick: isAdmin ? function () {
+        return setModal(s);
+      } : undefined
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "flex-start",
+        marginBottom: 4
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 15,
+        fontWeight: 700,
+        color: "#1A1D23",
+        flex: 1,
+        paddingRight: 8
+      }
+    }, s.title), /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontSize: 11,
+        padding: "2px 8px",
+        borderRadius: 10,
+        background: catColor + "18",
+        color: catColor,
+        fontWeight: 700,
+        flexShrink: 0
+      }
+    }, s.categoria)), s.compositor && /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 12,
+        color: "#AAA",
+        marginBottom: 10
+      }
+    }, s.compositor), /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "flex",
+        flexWrap: "wrap",
+        marginTop: 8
+      }
+    }, /*#__PURE__*/React.createElement(MaterialBadge, {
+      label: "Partitura",
+      icon: "\uD83C\uDFBC",
+      url: s.partitura
+    }), /*#__PURE__*/React.createElement(MaterialBadge, {
+      label: "\xC1udio Original",
+      icon: "\uD83C\uDFB5",
+      url: s.audioOriginal
+    }), /*#__PURE__*/React.createElement(MaterialBadge, {
+      label: "Arranjo",
+      icon: "\uD83C\uDFB5",
+      url: s.audioArranjo
+    }), /*#__PURE__*/React.createElement(MaterialBadge, {
+      label: "Playback",
+      icon: "\uD83C\uDFA7",
+      url: s.playback
+    }), temNaipes(s) && /*#__PURE__*/React.createElement("button", {
+      onClick: function onClick(e) {
+        e.stopPropagation();
+        setPlayer({
+          url: s.soprano || s.mezzoSoprano || s.contralto || s.tenor || s.baritono || s.baixo,
+          title: "Naipes — " + s.title,
+          naipes: {
+            soprano: s.soprano,
+            mezzoSoprano: s.mezzoSoprano,
+            contralto: s.contralto,
+            tenor: s.tenor,
+            baritono: s.baritono,
+            baixo: s.baixo
+          }
+        });
+      },
+      style: {
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 4,
+        padding: "3px 8px",
+        borderRadius: 10,
+        background: "#F3EEF9",
+        color: cor,
+        fontSize: 11,
+        fontWeight: 600,
+        border: "none",
+        cursor: "pointer",
+        fontFamily: "inherit",
+        marginRight: 4,
+        marginBottom: 4
+      }
+    }, "\uD83C\uDFB6 Naipes"), s.letra && /*#__PURE__*/React.createElement("button", {
+      onClick: function onClick(e) {
+        e.stopPropagation();
+        setPlayer({
+          url: "letra",
+          title: s.title,
+          letra: s.letra
+        });
+      },
+      style: {
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 4,
+        padding: "3px 8px",
+        borderRadius: 10,
+        background: "#F5F5F5",
+        color: "#666",
+        fontSize: 11,
+        fontWeight: 600,
+        border: "none",
+        cursor: "pointer",
+        fontFamily: "inherit",
+        marginRight: 4,
+        marginBottom: 4
+      }
+    }, "\uD83D\uDCC4 Letra")));
+  })), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: 12,
       color: "#AAA",
