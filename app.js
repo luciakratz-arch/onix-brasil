@@ -105,7 +105,7 @@ function useConfig() {
     config = _useState6[0],
     setConfig = _useState6[1];
   useEffect(function () {
-    var unsub = db.collection("config").doc("app").onSnapshot(function (snap) {
+    var unsub = db.collection("onix_config").doc("app").onSnapshot(function (snap) {
       if (snap.exists) setConfig(function (c) {
         return _objectSpread(_objectSpread({}, c), snap.data());
       });
@@ -115,7 +115,7 @@ function useConfig() {
   return {
     config: config,
     save: function save(d) {
-      return db.collection("config").doc("app").set(d, {
+      return db.collection("onix_config").doc("app").set(d, {
         merge: true
       });
     }
@@ -212,7 +212,7 @@ function CadastroPublico(_ref2) {
           case 2:
             setSalvando(true);
             _context.n = 3;
-            return db.collection("members").add(_objectSpread(_objectSpread({}, form), {}, {
+            return db.collection("onix_members").add(_objectSpread(_objectSpread({}, form), {}, {
               active: true,
               startDate: todayStr(),
               createdAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -793,7 +793,7 @@ function MesaSom(_ref6) {
     setLoading = _useState18[1];
   var cor = config.corPrimaria || COR;
   useEffect(function () {
-    db.collection("events").doc(eventoId).get().then(function (doc) {
+    db.collection("onix_events").doc(eventoId).get().then(function (doc) {
       if (doc.exists) setEvento(_objectSpread({
         id: doc.id
       }, doc.data()));
@@ -1604,16 +1604,16 @@ function Painel(_ref8) {
   var user = _ref8.user,
     config = _ref8.config,
     setTab = _ref8.setTab;
-  var _useCollection = useCollection("members"),
+  var _useCollection = useCollection("onix_members"),
     members = _useCollection.data,
     lM = _useCollection.loading;
-  var _useCollection2 = useCollection("events", "date"),
+  var _useCollection2 = useCollection("onix_events", "date"),
     events = _useCollection2.data,
     lE = _useCollection2.loading;
-  var _useCollection3 = useCollection("songs"),
+  var _useCollection3 = useCollection("onix_songs"),
     songs = _useCollection3.data,
     lS = _useCollection3.loading;
-  var _useCollection4 = useCollection("avisos"),
+  var _useCollection4 = useCollection("onix_avisos"),
     avisos = _useCollection4.data,
     lA = _useCollection4.loading;
   var _useState31 = useState([]),
@@ -1621,7 +1621,7 @@ function Painel(_ref8) {
     pendentes = _useState32[0],
     setPendentes = _useState32[1];
   useEffect(function () {
-    var unsub = db.collection("pagamentos").where("status", "==", "aguardando").onSnapshot(function (snap) {
+    var unsub = db.collection("onix_pagamentos").where("status", "==", "aguardando").onSnapshot(function (snap) {
       return setPendentes(snap.docs.map(function (d) {
         return _objectSpread({
           id: d.id
@@ -2027,7 +2027,7 @@ function ModalIntegrante(_ref9) {
               break;
             }
             _context2.n = 2;
-            return db.collection("members").doc(membro.id).update(_objectSpread(_objectSpread({}, d), {}, {
+            return db.collection("onix_members").doc(membro.id).update(_objectSpread(_objectSpread({}, d), {}, {
               updatedAt: firebase.firestore.FieldValue.serverTimestamp()
             }));
           case 2:
@@ -2035,7 +2035,7 @@ function ModalIntegrante(_ref9) {
             break;
           case 3:
             _context2.n = 4;
-            return db.collection("members").add(_objectSpread(_objectSpread({}, d), {}, {
+            return db.collection("onix_members").add(_objectSpread(_objectSpread({}, d), {}, {
               createdAt: firebase.firestore.FieldValue.serverTimestamp()
             }));
           case 4:
@@ -2063,7 +2063,7 @@ function ModalIntegrante(_ref9) {
             return _context3.a(2);
           case 1:
             _context3.n = 2;
-            return db.collection("members").doc(membro.id).delete();
+            return db.collection("onix_members").doc(membro.id).delete();
           case 2:
             onClose();
           case 3:
@@ -2385,7 +2385,7 @@ function ModalIntegrante(_ref9) {
 // ── INTEGRANTES ───────────────────────────────────────────────────────────────
 function Integrantes(_ref0) {
   var config = _ref0.config;
-  var _useCollection5 = useCollection("members"),
+  var _useCollection5 = useCollection("onix_members"),
     members = _useCollection5.data,
     loading = _useCollection5.loading;
   var _useState39 = useState(""),
@@ -2998,7 +2998,7 @@ function ModalEvento(_ref10) {
     onClose = _ref10.onClose,
     config = _ref10.config;
   var cor = config.corPrimaria || COR;
-  var _useCollection6 = useCollection("songs"),
+  var _useCollection6 = useCollection("onix_songs"),
     songs = _useCollection6.data;
   var vazio = {
     title: "",
@@ -3070,7 +3070,7 @@ function ModalEvento(_ref10) {
               break;
             }
             _context5.n = 3;
-            return db.collection("events").doc(evento.id).update(_objectSpread(_objectSpread({}, d), {}, {
+            return db.collection("onix_events").doc(evento.id).update(_objectSpread(_objectSpread({}, d), {}, {
               updatedAt: firebase.firestore.FieldValue.serverTimestamp()
             }));
           case 3:
@@ -3098,7 +3098,7 @@ function ModalEvento(_ref10) {
             }
             dt = _datas[_i];
             _context5.n = 6;
-            return db.collection("events").add(_objectSpread(_objectSpread(_objectSpread({}, d), {}, {
+            return db.collection("onix_events").add(_objectSpread(_objectSpread(_objectSpread({}, d), {}, {
               date: dt
             }, temGrupo ? {
               grupoId: grupoId
@@ -3114,7 +3114,7 @@ function ModalEvento(_ref10) {
             isRecorrente = form.recorrencia !== "Sem recorrência";
             avisoText = isRecorrente ? "Novo evento recorrente (".concat(form.recorrencia, "): \"").concat(form.title, "\" a partir de ").concat(fmtDate(form.date)).concat(form.local ? " — " + form.local : "", ". Total de ").concat(datas.length, " ocorr\xEAncia").concat(datas.length !== 1 ? "s" : "", ".") : "Um novo evento foi adicionado \xE0 agenda: \"".concat(form.title, "\" em ").concat(fmtDate(form.date)).concat(form.local ? " — " + form.local : "", ".");
             _context5.n = 8;
-            return db.collection("avisos").add({
+            return db.collection("onix_avisos").add({
               title: "\uD83D\uDCC5 ".concat(isRecorrente ? "Evento recorrente" : "Novo evento", ": ").concat(form.title),
               text: avisoText,
               tipo: "auto_evento",
@@ -3151,7 +3151,7 @@ function ModalEvento(_ref10) {
             return _context6.a(2);
           case 1:
             _context6.n = 2;
-            return db.collection("events").doc(evento.id).delete();
+            return db.collection("onix_events").doc(evento.id).delete();
           case 2:
             _context6.n = 8;
             break;
@@ -3168,7 +3168,7 @@ function ModalEvento(_ref10) {
               break;
             }
             _context6.n = 5;
-            return db.collection("events").where("grupoId", "==", evento.grupoId).get();
+            return db.collection("onix_events").where("grupoId", "==", evento.grupoId).get();
           case 5:
             snap = _context6.v;
             batch = db.batch();
@@ -3182,7 +3182,7 @@ function ModalEvento(_ref10) {
             break;
           case 7:
             _context6.n = 8;
-            return db.collection("events").doc(evento.id).delete();
+            return db.collection("onix_events").doc(evento.id).delete();
           case 8:
             onClose();
           case 9:
@@ -3645,7 +3645,7 @@ function ModalExcluirEvento(_ref11) {
           case 0:
             setExcluindo(true);
             _context7.n = 1;
-            return db.collection("events").doc(evento.id).delete();
+            return db.collection("onix_events").doc(evento.id).delete();
           case 1:
             onClose();
           case 2:
@@ -3666,7 +3666,7 @@ function ModalExcluirEvento(_ref11) {
           case 0:
             setExcluindo(true);
             _context8.n = 1;
-            return db.collection("events").where("grupoId", "==", evento.grupoId).get();
+            return db.collection("onix_events").where("grupoId", "==", evento.grupoId).get();
           case 1:
             snap = _context8.v;
             batch = db.batch();
@@ -3695,7 +3695,7 @@ function ModalExcluirEvento(_ref11) {
           case 0:
             setExcluindo(true);
             _context9.n = 1;
-            return db.collection("events").where("grupoId", "==", evento.grupoId).get();
+            return db.collection("onix_events").where("grupoId", "==", evento.grupoId).get();
           case 1:
             snap = _context9.v;
             batch = db.batch();
@@ -3796,7 +3796,7 @@ function ModalExcluirEvento(_ref11) {
 function Agenda(_ref12) {
   var config = _ref12.config,
     isAdmin = _ref12.isAdmin;
-  var _useCollection7 = useCollection("events", "date"),
+  var _useCollection7 = useCollection("onix_events", "date"),
     events = _useCollection7.data,
     loading = _useCollection7.loading;
   var _useState59 = useState(new Date().getMonth()),
@@ -4104,7 +4104,7 @@ function Agenda(_ref12) {
       }
     }, "Detalhes"), /*#__PURE__*/React.createElement("button", {
       onClick: function onClick() {
-        e.grupoId ? setExcluirEvento(e) : window.confirm("Excluir este evento?") && db.collection("events").doc(e.id).delete();
+        e.grupoId ? setExcluirEvento(e) : window.confirm("Excluir este evento?") && db.collection("onix_events").doc(e.id).delete();
       },
       style: {
         width: 32,
@@ -4190,7 +4190,7 @@ function ModalAviso(_ref13) {
               break;
             }
             _context0.n = 3;
-            return db.collection("avisos").doc(aviso.id).update({
+            return db.collection("onix_avisos").doc(aviso.id).update({
               title: form.title,
               prioridade: form.prioridade,
               text: form.text,
@@ -4201,7 +4201,7 @@ function ModalAviso(_ref13) {
             break;
           case 4:
             _context0.n = 5;
-            return db.collection("avisos").add({
+            return db.collection("onix_avisos").add({
               title: form.title,
               prioridade: form.prioridade,
               text: form.text,
@@ -4392,10 +4392,10 @@ function ModalAviso(_ref13) {
 function Avisos(_ref14) {
   var config = _ref14.config,
     isAdmin = _ref14.isAdmin;
-  var _useCollection8 = useCollection("avisos"),
+  var _useCollection8 = useCollection("onix_avisos"),
     avisos = _useCollection8.data,
     lA = _useCollection8.loading;
-  var _useCollection9 = useCollection("members"),
+  var _useCollection9 = useCollection("onix_members"),
     members = _useCollection9.data;
   var _useState75 = useState(false),
     _useState76 = _slicedToArray(_useState75, 2),
@@ -4456,7 +4456,7 @@ function Avisos(_ref14) {
             return _context1.a(2);
           case 1:
             _context1.n = 2;
-            return db.collection("avisos").doc(id).delete();
+            return db.collection("onix_avisos").doc(id).delete();
           case 2:
             return _context1.a(2);
         }
@@ -4783,7 +4783,7 @@ function ModalMusica(_ref15) {
               break;
             }
             _context10.n = 2;
-            return db.collection("songs").doc(musica.id).update(_objectSpread(_objectSpread({}, d), {}, {
+            return db.collection("onix_songs").doc(musica.id).update(_objectSpread(_objectSpread({}, d), {}, {
               updatedAt: firebase.firestore.FieldValue.serverTimestamp()
             }));
           case 2:
@@ -4791,12 +4791,12 @@ function ModalMusica(_ref15) {
             break;
           case 3:
             _context10.n = 4;
-            return db.collection("songs").add(_objectSpread(_objectSpread({}, d), {}, {
+            return db.collection("onix_songs").add(_objectSpread(_objectSpread({}, d), {}, {
               createdAt: firebase.firestore.FieldValue.serverTimestamp()
             }));
           case 4:
             _context10.n = 5;
-            return db.collection("avisos").add({
+            return db.collection("onix_avisos").add({
               title: "\uD83C\uDFB5 Nova m\xFAsica: ".concat(form.title),
               text: "\"".concat(form.title, "\"").concat(form.compositor ? " de " + form.compositor : "", " foi adicionada ao repert\xF3rio na categoria ").concat(form.categoria, "."),
               tipo: "auto_musica",
@@ -4828,7 +4828,7 @@ function ModalMusica(_ref15) {
             return _context11.a(2);
           case 1:
             _context11.n = 2;
-            return db.collection("songs").doc(musica.id).delete();
+            return db.collection("onix_songs").doc(musica.id).delete();
           case 2:
             onClose();
           case 3:
@@ -5295,7 +5295,7 @@ function ModalMusica(_ref15) {
 function Repertorio(_ref16) {
   var config = _ref16.config,
     isAdmin = _ref16.isAdmin;
-  var _useCollection0 = useCollection("songs"),
+  var _useCollection0 = useCollection("onix_songs"),
     songs = _useCollection0.data,
     loading = _useCollection0.loading;
   var _useState91 = useState(""),
@@ -5710,7 +5710,7 @@ function ModalEstudo(_ref18) {
               break;
             }
             _context12.n = 3;
-            return db.collection("estudos").doc(estudo.id).update(_objectSpread(_objectSpread({}, d), {}, {
+            return db.collection("onix_estudos").doc(estudo.id).update(_objectSpread(_objectSpread({}, d), {}, {
               updatedAt: firebase.firestore.FieldValue.serverTimestamp()
             }));
           case 3:
@@ -5718,12 +5718,12 @@ function ModalEstudo(_ref18) {
             break;
           case 4:
             _context12.n = 5;
-            return db.collection("estudos").add(_objectSpread(_objectSpread({}, d), {}, {
+            return db.collection("onix_estudos").add(_objectSpread(_objectSpread({}, d), {}, {
               createdAt: firebase.firestore.FieldValue.serverTimestamp()
             }));
           case 5:
             _context12.n = 6;
-            return db.collection("avisos").add({
+            return db.collection("onix_avisos").add({
               title: "\uD83D\uDCDA Novo material: ".concat(form.title),
               text: "Um novo material foi adicionado \xE0 Sala de Estudos: \"".concat(form.title, "\" (").concat(((_TIPOS_MIDIA$find = TIPOS_MIDIA.find(function (t) {
                 return t.key === form.tipo;
@@ -5757,7 +5757,7 @@ function ModalEstudo(_ref18) {
             return _context13.a(2);
           case 1:
             _context13.n = 2;
-            return db.collection("estudos").doc(estudo.id).delete();
+            return db.collection("onix_estudos").doc(estudo.id).delete();
           case 2:
             onClose();
           case 3:
@@ -6036,7 +6036,7 @@ function ModalEstudo(_ref18) {
 function SalaEstudos(_ref19) {
   var config = _ref19.config,
     isAdmin = _ref19.isAdmin;
-  var _useCollection1 = useCollection("estudos"),
+  var _useCollection1 = useCollection("onix_estudos"),
     estudos = _useCollection1.data,
     loading = _useCollection1.loading;
   var _useState105 = useState("Todos"),
@@ -6287,7 +6287,7 @@ function SalaEstudos(_ref19) {
                 break;
               }
               _context14.n = 1;
-              return db.collection("estudos").doc(e.id).delete();
+              return db.collection("onix_estudos").doc(e.id).delete();
             case 1:
               return _context14.a(2);
           }
@@ -6327,7 +6327,7 @@ function SalaEstudos(_ref19) {
 // ── APRESENTAÇÃO ──────────────────────────────────────────────────────────────
 function Apresentacao(_ref21) {
   var config = _ref21.config;
-  var _useCollection10 = useCollection("events", "date"),
+  var _useCollection10 = useCollection("onix_events", "date"),
     events = _useCollection10.data;
   var _useState111 = useState(null),
     _useState112 = _slicedToArray(_useState111, 2),
@@ -6379,7 +6379,7 @@ function Apresentacao(_ref21) {
           case 1:
             setSetlist(nova);
             _context15.n = 2;
-            return db.collection("events").doc(eventoSel.id).update({
+            return db.collection("onix_events").doc(eventoSel.id).update({
               setlist: nova,
               updatedAt: firebase.firestore.FieldValue.serverTimestamp()
             });
@@ -6943,7 +6943,7 @@ function FrequenciaAcesso(_ref25) {
     setAcessos = _useState120[1];
   var cor = config.corPrimaria || COR;
   useEffect(function () {
-    db.collection("acessos").onSnapshot(function (snap) {
+    db.collection("onix_acessos").onSnapshot(function (snap) {
       setAcessos(snap.docs.map(function (d) {
         return _objectSpread({
           id: d.id
@@ -7211,15 +7211,15 @@ function FrequenciaAcesso(_ref25) {
 // ── RELATÓRIOS ────────────────────────────────────────────────────────────────
 function Relatorios(_ref32) {
   var config = _ref32.config;
-  var _useCollection11 = useCollection("events", "date"),
+  var _useCollection11 = useCollection("onix_events", "date"),
     events = _useCollection11.data;
-  var _useCollection12 = useCollection("members"),
+  var _useCollection12 = useCollection("onix_members"),
     members = _useCollection12.data;
-  var _useCollection13 = useCollection("songs"),
+  var _useCollection13 = useCollection("onix_songs"),
     songs = _useCollection13.data;
-  var _useCollection14 = useCollection("frequencias", "dataHora"),
+  var _useCollection14 = useCollection("onix_frequencias", "dataHora"),
     frequencias = _useCollection14.data;
-  var _useCollection15 = useCollection("noticias"),
+  var _useCollection15 = useCollection("onix_noticias"),
     noticias = _useCollection15.data;
   var cor = config.corPrimaria || COR;
   var _useState121 = useState(new Date().getFullYear() + "-01-01"),
@@ -7253,7 +7253,7 @@ function Relatorios(_ref32) {
 
   // Carregar textos qualitativos do Firebase
   useEffect(function () {
-    db.collection("config").doc("relatorio").get().then(function (doc) {
+    db.collection("onix_config").doc("relatorio").get().then(function (doc) {
       if (doc.exists) {
         setTextos(doc.data());
         setFormTextos(doc.data());
@@ -7270,7 +7270,7 @@ function Relatorios(_ref32) {
           case 0:
             setSalvandoTextos(true);
             _context16.n = 1;
-            return db.collection("config").doc("relatorio").set(formTextos, {
+            return db.collection("onix_config").doc("relatorio").set(formTextos, {
               merge: true
             });
           case 1:
@@ -7451,7 +7451,7 @@ function Relatorios(_ref32) {
       return win.print();
     }, 800);
     // Salvar no histórico
-    db.collection("relatorios_historico").add({
+    db.collection("onix_relatorios_historico").add({
       tipo: "Relatório Completo",
       periodo: "".concat(dataInicio, " a ").concat(dataFim),
       geradoEm: firebase.firestore.FieldValue.serverTimestamp(),
@@ -8324,7 +8324,7 @@ function CheckinPublico(_ref41) {
   var cor = config.corPrimaria || COR;
   useEffect(function () {
     // Carregar sessão
-    db.collection("sessoes_checkin").doc(sessaoId).get().then(function (doc) {
+    db.collection("onix_sessoes_checkin").doc(sessaoId).get().then(function (doc) {
       if (!doc.exists) {
         setStatus("erro");
         setLoading(false);
@@ -8343,7 +8343,7 @@ function CheckinPublico(_ref41) {
       setLoading(false);
     });
     // Carregar membros
-    db.collection("members").onSnapshot(function (snap) {
+    db.collection("onix_members").onSnapshot(function (snap) {
       setMembers(snap.docs.map(function (d) {
         return _objectSpread({
           id: d.id
@@ -8371,7 +8371,7 @@ function CheckinPublico(_ref41) {
         while (1) switch (_context17.n) {
           case 0:
             _context17.n = 1;
-            return db.collection("frequencias").where("sessaoId", "==", sessaoId).where("membroId", "==", m.id).get();
+            return db.collection("onix_frequencias").where("sessaoId", "==", sessaoId).where("membroId", "==", m.id).get();
           case 1:
             snap = _context17.v;
             if (snap.empty) {
@@ -8383,7 +8383,7 @@ function CheckinPublico(_ref41) {
             return _context17.a(2);
           case 2:
             _context17.n = 3;
-            return db.collection("frequencias").add({
+            return db.collection("onix_frequencias").add({
               sessaoId: sessaoId,
               eventoId: sessao.eventoId,
               eventoTitulo: sessao.eventoTitulo,
@@ -8691,7 +8691,7 @@ function CheckinPublico(_ref41) {
 }
 function Frequencia(_ref42) {
   var config = _ref42.config;
-  var _useCollection16 = useCollection("events", "date"),
+  var _useCollection16 = useCollection("onix_events", "date"),
     events = _useCollection16.data;
   var _useState149 = useState(""),
     _useState150 = _slicedToArray(_useState149, 2),
@@ -8728,7 +8728,7 @@ function Frequencia(_ref42) {
       setShowQR(false);
       return;
     }
-    var unsub = db.collection("sessoes_checkin").where("eventoId", "==", eventoSel).onSnapshot(function (snap) {
+    var unsub = db.collection("onix_sessoes_checkin").where("eventoId", "==", eventoSel).onSnapshot(function (snap) {
       var ativas = snap.docs.map(function (d) {
         return _objectSpread({
           id: d.id
@@ -8753,7 +8753,7 @@ function Frequencia(_ref42) {
       setFrequencias([]);
       return;
     }
-    var unsub = db.collection("frequencias").where("eventoId", "==", eventoSel).onSnapshot(function (snap) {
+    var unsub = db.collection("onix_frequencias").where("eventoId", "==", eventoSel).onSnapshot(function (snap) {
       return setFrequencias(snap.docs.map(function (d) {
         return _objectSpread({
           id: d.id
@@ -8789,7 +8789,7 @@ function Frequencia(_ref42) {
             setGerando(true);
             expiraEm = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 horas
             _context18.n = 3;
-            return db.collection("sessoes_checkin").add({
+            return db.collection("onix_sessoes_checkin").add({
               eventoId: eventoSel,
               eventoTitulo: evento.title,
               eventoData: evento.date,
@@ -8830,7 +8830,7 @@ function Frequencia(_ref42) {
             return _context19.a(2);
           case 2:
             _context19.n = 3;
-            return db.collection("sessoes_checkin").doc(sessaoAtiva.id).update({
+            return db.collection("onix_sessoes_checkin").doc(sessaoAtiva.id).update({
               expiraEm: firebase.firestore.Timestamp.fromDate(new Date(0))
             });
           case 3:
@@ -9223,11 +9223,11 @@ function Frequencia(_ref42) {
 // ── DECLARAÇÃO DIGITAL ────────────────────────────────────────────────────────
 function Declaracao(_ref43) {
   var config = _ref43.config;
-  var _useCollection17 = useCollection("events", "date"),
+  var _useCollection17 = useCollection("onix_events", "date"),
     events = _useCollection17.data;
-  var _useCollection18 = useCollection("members"),
+  var _useCollection18 = useCollection("onix_members"),
     members = _useCollection18.data;
-  var _useCollection19 = useCollection("frequencias", "dataHora"),
+  var _useCollection19 = useCollection("onix_frequencias", "dataHora"),
     frequencias = _useCollection19.data;
   var _useState161 = useState("evento"),
     _useState162 = _slicedToArray(_useState161, 2),
@@ -9255,7 +9255,7 @@ function Declaracao(_ref43) {
     setTextos = _useState172[1];
   var cor = config.corPrimaria || COR;
   useEffect(function () {
-    db.collection("config").doc("relatorio").get().then(function (doc) {
+    db.collection("onix_config").doc("relatorio").get().then(function (doc) {
       if (doc.exists) setTextos(doc.data());
     });
   }, []);
@@ -9695,13 +9695,13 @@ function EmBreve(_ref44) {
 function PainelCorista(_ref45) {
   var user = _ref45.user,
     config = _ref45.config;
-  var _useCollection20 = useCollection("avisos"),
+  var _useCollection20 = useCollection("onix_avisos"),
     avisos = _useCollection20.data;
-  var _useCollection21 = useCollection("events", "date"),
+  var _useCollection21 = useCollection("onix_events", "date"),
     events = _useCollection21.data;
-  var _useCollection22 = useCollection("songs"),
+  var _useCollection22 = useCollection("onix_songs"),
     songs = _useCollection22.data;
-  var _useCollection23 = useCollection("noticias"),
+  var _useCollection23 = useCollection("onix_noticias"),
     noticias = _useCollection23.data;
   var _useState173 = useState(new Date().getMonth()),
     _useState174 = _slicedToArray(_useState173, 2),
@@ -9737,7 +9737,7 @@ function PainelCorista(_ref45) {
   // Carregar confirmações do corista
   useEffect(function () {
     if (!user.name) return;
-    db.collection("confirmacoes").where("membroNome", "==", user.name).onSnapshot(function (snap) {
+    db.collection("onix_confirmacoes").where("membroNome", "==", user.name).onSnapshot(function (snap) {
       var m = {};
       snap.docs.forEach(function (d) {
         m[d.data().eventoId] = d.data().status;
@@ -9755,7 +9755,7 @@ function PainelCorista(_ref45) {
         while (1) switch (_context20.n) {
           case 0:
             _context20.n = 1;
-            return db.collection("confirmacoes").where("membroNome", "==", user.name).where("eventoId", "==", eventoId).get();
+            return db.collection("onix_confirmacoes").where("membroNome", "==", user.name).where("eventoId", "==", eventoId).get();
           case 1:
             snap = _context20.v;
             if (snap.empty) {
@@ -9772,7 +9772,7 @@ function PainelCorista(_ref45) {
             break;
           case 3:
             _context20.n = 4;
-            return db.collection("confirmacoes").add({
+            return db.collection("onix_confirmacoes").add({
               membroNome: user.name,
               eventoId: eventoId,
               status: status,
@@ -10372,7 +10372,7 @@ function PainelCorista(_ref45) {
 function MinhaDeclaracao(_ref46) {
   var user = _ref46.user,
     config = _ref46.config;
-  var _useCollection24 = useCollection("frequencias", "dataHora"),
+  var _useCollection24 = useCollection("onix_frequencias", "dataHora"),
     frequencias = _useCollection24.data;
   var _useState183 = useState(new Date().getFullYear() + "-01-01"),
     _useState184 = _slicedToArray(_useState183, 2),
@@ -10388,7 +10388,7 @@ function MinhaDeclaracao(_ref46) {
     setTextos = _useState188[1];
   var cor = config.corPrimaria || COR;
   useEffect(function () {
-    db.collection("config").doc("relatorio").get().then(function (doc) {
+    db.collection("onix_config").doc("relatorio").get().then(function (doc) {
       if (doc.exists) setTextos(doc.data());
     });
   }, []);
@@ -10625,7 +10625,7 @@ function ModalNoticia(_ref47) {
               break;
             }
             _context21.n = 3;
-            return db.collection("noticias").doc(noticia.id).update(_objectSpread(_objectSpread({}, d), {}, {
+            return db.collection("onix_noticias").doc(noticia.id).update(_objectSpread(_objectSpread({}, d), {}, {
               updatedAt: firebase.firestore.FieldValue.serverTimestamp()
             }));
           case 3:
@@ -10633,7 +10633,7 @@ function ModalNoticia(_ref47) {
             break;
           case 4:
             _context21.n = 5;
-            return db.collection("noticias").add(d);
+            return db.collection("onix_noticias").add(d);
           case 5:
             setSalvando(false);
             onClose();
@@ -10659,7 +10659,7 @@ function ModalNoticia(_ref47) {
             return _context22.a(2);
           case 1:
             _context22.n = 2;
-            return db.collection("noticias").doc(noticia.id).delete();
+            return db.collection("onix_noticias").doc(noticia.id).delete();
           case 2:
             onClose();
           case 3:
@@ -10877,13 +10877,13 @@ function ModalNoticia(_ref47) {
 function AreaRH(_ref48) {
   var config = _ref48.config,
     abaInicial = _ref48.abaInicial;
-  var _useCollection25 = useCollection("members"),
+  var _useCollection25 = useCollection("onix_members"),
     members = _useCollection25.data;
-  var _useCollection26 = useCollection("events", "date"),
+  var _useCollection26 = useCollection("onix_events", "date"),
     events = _useCollection26.data;
-  var _useCollection27 = useCollection("frequencias", "dataHora"),
+  var _useCollection27 = useCollection("onix_frequencias", "dataHora"),
     frequencias = _useCollection27.data;
-  var _useCollection28 = useCollection("noticias"),
+  var _useCollection28 = useCollection("onix_noticias"),
     noticias = _useCollection28.data;
   var _useCollection29 = useCollection("relatorios_historico"),
     relatorios = _useCollection29.data;
@@ -10905,7 +10905,7 @@ function AreaRH(_ref48) {
   var cor = config.corPrimaria || COR;
   var today = todayStr();
   useEffect(function () {
-    db.collection("config").doc("relatorio").get().then(function (doc) {
+    db.collection("onix_config").doc("relatorio").get().then(function (doc) {
       if (doc.exists) setTextos(doc.data());
     });
   }, []);
@@ -10965,7 +10965,7 @@ function AreaRH(_ref48) {
     confirmacoes = _useState202[0],
     setConfirmacoes = _useState202[1];
   useEffect(function () {
-    db.collection("confirmacoes").onSnapshot(function (snap) {
+    db.collection("onix_confirmacoes").onSnapshot(function (snap) {
       return setConfirmacoes(snap.docs.map(function (d) {
         return _objectSpread({
           id: d.id
@@ -11052,7 +11052,7 @@ function AreaRH(_ref48) {
       return win.print();
     }, 800);
     // Salvar no histórico
-    db.collection("relatorios_historico").add({
+    db.collection("onix_relatorios_historico").add({
       tipo: "Declaração Individual",
       corista: coristaAtual.name,
       periodo: "".concat(dataInicio, " a ").concat(dataFim),
@@ -11669,7 +11669,7 @@ function useCatsFinanceiro() {
     cats = _useState210[0],
     setCats = _useState210[1];
   useEffect(function () {
-    var unsub = db.collection("config").doc("cats_financeiro").onSnapshot(function (snap) {
+    var unsub = db.collection("onix_config").doc("cats_financeiro").onSnapshot(function (snap) {
       if (snap.exists) setCats(function (d) {
         return _objectSpread(_objectSpread({}, d), snap.data());
       });
@@ -11687,7 +11687,7 @@ function useCatsFinanceiro() {
           case 0:
             nova = [].concat(_toConsumableArray(cats[tipo]), [nome]);
             _context23.n = 1;
-            return db.collection("config").doc("cats_financeiro").set(_defineProperty({}, tipo, nova), {
+            return db.collection("onix_config").doc("cats_financeiro").set(_defineProperty({}, tipo, nova), {
               merge: true
             });
           case 1:
@@ -11723,7 +11723,7 @@ function ModalMensalidade(_ref55) {
     ok = _useState216[0],
     setOk = _useState216[1];
   useEffect(function () {
-    db.collection("config").doc("mensalidade").get().then(function (d) {
+    db.collection("onix_config").doc("mensalidade").get().then(function (d) {
       if (d.exists) setCfg(function (x) {
         return _objectSpread(_objectSpread(_objectSpread({}, x), d.data()), {}, {
           valorMensal: String(d.data().valorMensal || 25)
@@ -11748,7 +11748,7 @@ function ModalMensalidade(_ref55) {
           case 1:
             setSalvando(true);
             _context24.n = 2;
-            return db.collection("config").doc("mensalidade").set({
+            return db.collection("onix_config").doc("mensalidade").set({
               dataInicio: cfg.dataInicio,
               dataFim: cfg.dataFim,
               valorMensal: parseFloat(cfg.valorMensal) || 25,
@@ -11954,7 +11954,7 @@ function ModalPagamento(_ref56) {
     setSalvando = _useState220[1];
   useEffect(function () {
     if (!(mesalidade !== null && mesalidade !== void 0 && mesalidade.dataInicio) || !(mesalidade !== null && mesalidade !== void 0 && mesalidade.dataFim)) return;
-    var unsub = db.collection("pagamentos").where("membroId", "==", membro.id).onSnapshot(function (snap) {
+    var unsub = db.collection("onix_pagamentos").where("membroId", "==", membro.id).onSnapshot(function (snap) {
       var pagos = {};
       snap.docs.forEach(function (d) {
         var p = d.data();
@@ -12010,7 +12010,7 @@ function ModalPagamento(_ref56) {
               break;
             }
             _context25.n = 1;
-            return db.collection("pagamentos").doc(existing.docId).update({
+            return db.collection("onix_pagamentos").doc(existing.docId).update({
               status: "aguardando",
               updatedAt: firebase.firestore.FieldValue.serverTimestamp()
             });
@@ -12019,7 +12019,7 @@ function ModalPagamento(_ref56) {
             break;
           case 2:
             _context25.n = 3;
-            return db.collection("pagamentos").add({
+            return db.collection("onix_pagamentos").add({
               membroId: membro.id,
               membroNome: membro.name,
               naipe: membro.voice || "",
@@ -12055,13 +12055,13 @@ function ModalPagamento(_ref56) {
           case 1:
             setSalvando(true);
             _context26.n = 2;
-            return db.collection("pagamentos").doc(mes.docId).update({
+            return db.collection("onix_pagamentos").doc(mes.docId).update({
               status: "pago",
               validadoEm: firebase.firestore.FieldValue.serverTimestamp()
             });
           case 2:
             _context26.n = 3;
-            return db.collection("financeiro").add({
+            return db.collection("onix_financeiro").add({
               descricao: "Mensalidade ".concat(mes.label, " \u2014 ").concat(membro.name),
               categoria: "Mensalidade",
               valor: mesalidade.valorMensal || 25,
@@ -12096,7 +12096,7 @@ function ModalPagamento(_ref56) {
             return _context27.a(2);
           case 1:
             _context27.n = 2;
-            return db.collection("pagamentos").doc(mes.docId).update({
+            return db.collection("onix_pagamentos").doc(mes.docId).update({
               status: "pendente",
               updatedAt: firebase.firestore.FieldValue.serverTimestamp()
             });
@@ -12122,7 +12122,7 @@ function ModalPagamento(_ref56) {
               break;
             }
             _context28.n = 1;
-            return db.collection("pagamentos").doc(mes.docId).update({
+            return db.collection("onix_pagamentos").doc(mes.docId).update({
               status: "pago",
               validadoEm: firebase.firestore.FieldValue.serverTimestamp()
             });
@@ -12131,7 +12131,7 @@ function ModalPagamento(_ref56) {
             break;
           case 2:
             _context28.n = 3;
-            return db.collection("pagamentos").add({
+            return db.collection("onix_pagamentos").add({
               membroId: membro.id,
               membroNome: membro.name,
               mes: mes.key,
@@ -12172,7 +12172,7 @@ function ModalPagamento(_ref56) {
               break;
             }
             _context29.n = 1;
-            return db.collection("pagamentos").doc(mes.docId).update({
+            return db.collection("onix_pagamentos").doc(mes.docId).update({
               status: "isento",
               updatedAt: firebase.firestore.FieldValue.serverTimestamp()
             });
@@ -12181,7 +12181,7 @@ function ModalPagamento(_ref56) {
             break;
           case 2:
             _context29.n = 3;
-            return db.collection("pagamentos").add({
+            return db.collection("onix_pagamentos").add({
               membroId: membro.id,
               membroNome: membro.name,
               mes: mes.key,
@@ -12450,7 +12450,7 @@ function ModalLancamento(_ref57) {
     addCat = _ref57.addCat,
     onClose = _ref57.onClose;
   var cor = config.corPrimaria || COR;
-  var _useCollection30 = useCollection("members"),
+  var _useCollection30 = useCollection("onix_members"),
     members = _useCollection30.data;
   var categorias = tipo === "gasto" ? (cats === null || cats === void 0 ? void 0 : cats.gasto) || CATS_GASTO_PADRAO : (cats === null || cats === void 0 ? void 0 : cats.receita) || CATS_RECEITA_PADRAO;
   var vazio = {
@@ -12526,7 +12526,7 @@ function ModalLancamento(_ref57) {
               break;
             }
             _context30.n = 3;
-            return db.collection("financeiro").doc(lancamento.id).update(_objectSpread(_objectSpread({}, d), {}, {
+            return db.collection("onix_financeiro").doc(lancamento.id).update(_objectSpread(_objectSpread({}, d), {}, {
               updatedAt: firebase.firestore.FieldValue.serverTimestamp()
             }));
           case 3:
@@ -12534,7 +12534,7 @@ function ModalLancamento(_ref57) {
             break;
           case 4:
             _context30.n = 5;
-            return db.collection("financeiro").add(_objectSpread(_objectSpread({}, d), {}, {
+            return db.collection("onix_financeiro").add(_objectSpread(_objectSpread({}, d), {}, {
               createdAt: firebase.firestore.FieldValue.serverTimestamp()
             }));
           case 5:
@@ -12562,7 +12562,7 @@ function ModalLancamento(_ref57) {
             return _context31.a(2);
           case 1:
             _context31.n = 2;
-            return db.collection("financeiro").doc(lancamento.id).delete();
+            return db.collection("onix_financeiro").doc(lancamento.id).delete();
           case 2:
             onClose();
           case 3:
@@ -12912,9 +12912,9 @@ function ModalLancamento(_ref57) {
 function Financeiro(_ref58) {
   var _MONTHS_PT, _MONTHS_PT2;
   var config = _ref58.config;
-  var _useCollection31 = useCollection("members"),
+  var _useCollection31 = useCollection("onix_members"),
     members = _useCollection31.data;
-  var _useCollection32 = useCollection("financeiro", "createdAt"),
+  var _useCollection32 = useCollection("onix_financeiro", "createdAt"),
     lancamentos = _useCollection32.data;
   var _useCatsFinanceiro = useCatsFinanceiro(),
     cats = _useCatsFinanceiro.cats,
@@ -12956,10 +12956,10 @@ function Financeiro(_ref58) {
     setPagamentos = _useState246[1];
   var cor = config.corPrimaria || COR;
   useEffect(function () {
-    var u1 = db.collection("config").doc("mensalidade").onSnapshot(function (s) {
+    var u1 = db.collection("onix_config").doc("mensalidade").onSnapshot(function (s) {
       if (s.exists) setMesalidade(s.data());
     });
-    var u2 = db.collection("pagamentos").onSnapshot(function (s) {
+    var u2 = db.collection("onix_pagamentos").onSnapshot(function (s) {
       return setPagamentos(s.docs.map(function (d) {
         return _objectSpread({
           id: d.id
@@ -13845,10 +13845,10 @@ function FinanceiroCorista(_ref62) {
     meses = _useState254[0],
     setMeses = _useState254[1];
   useEffect(function () {
-    var u1 = db.collection("config").doc("mensalidade").onSnapshot(function (s) {
+    var u1 = db.collection("onix_config").doc("mensalidade").onSnapshot(function (s) {
       if (s.exists) setMesalidade(s.data());
     });
-    var u2 = db.collection("pagamentos").where("membroId", "==", user.memberId || "").onSnapshot(function (s) {
+    var u2 = db.collection("onix_pagamentos").where("membroId", "==", user.memberId || "").onSnapshot(function (s) {
       return setPagamentos(s.docs.map(function (d) {
         return _objectSpread({
           id: d.id
@@ -13868,13 +13868,13 @@ function FinanceiroCorista(_ref62) {
     setMemberId = _useState256[1];
   useEffect(function () {
     if (!user.name) return;
-    db.collection("members").where("name", "==", user.name).get().then(function (s) {
+    db.collection("onix_members").where("name", "==", user.name).get().then(function (s) {
       if (!s.empty) setMemberId(s.docs[0].id);
     });
   }, [user.name]);
   useEffect(function () {
     if (!(mesalidade !== null && mesalidade !== void 0 && mesalidade.dataInicio) || !(mesalidade !== null && mesalidade !== void 0 && mesalidade.dataFim) || !memberId) return;
-    db.collection("pagamentos").where("membroId", "==", memberId).onSnapshot(function (snap) {
+    db.collection("onix_pagamentos").where("membroId", "==", memberId).onSnapshot(function (snap) {
       var pagos = {};
       snap.docs.forEach(function (d) {
         var p = d.data();
@@ -13937,7 +13937,7 @@ function FinanceiroCorista(_ref62) {
               break;
             }
             _context33.n = 2;
-            return db.collection("pagamentos").doc(mes.docId).update({
+            return db.collection("onix_pagamentos").doc(mes.docId).update({
               status: "aguardando",
               updatedAt: firebase.firestore.FieldValue.serverTimestamp()
             });
@@ -13946,7 +13946,7 @@ function FinanceiroCorista(_ref62) {
             break;
           case 3:
             _context33.n = 4;
-            return db.collection("pagamentos").add({
+            return db.collection("onix_pagamentos").add({
               membroId: memberId,
               membroNome: user.name,
               naipe: user.voice || "",
@@ -14151,7 +14151,7 @@ function RifaBanner(_ref63) {
     urlTemp = _useState262[0],
     setUrlTemp = _useState262[1];
   useEffect(function () {
-    var unsub = db.collection("config").doc("rifa").onSnapshot(function (s) {
+    var unsub = db.collection("onix_config").doc("rifa").onSnapshot(function (s) {
       if (s.exists && s.data().url) setRifaUrl(s.data().url);
     });
     return unsub;
@@ -14165,7 +14165,7 @@ function RifaBanner(_ref63) {
         while (1) switch (_context34.n) {
           case 0:
             _context34.n = 1;
-            return db.collection("config").doc("rifa").set({
+            return db.collection("onix_config").doc("rifa").set({
               url: urlTemp
             }, {
               merge: true
@@ -14306,7 +14306,7 @@ function RifaBanner(_ref63) {
 function Blog(_ref64) {
   var config = _ref64.config,
     user = _ref64.user;
-  var _useCollection33 = useCollection("noticias"),
+  var _useCollection33 = useCollection("onix_noticias"),
     noticias = _useCollection33.data,
     loading = _useCollection33.loading;
   var _useState263 = useState(null),
@@ -14659,7 +14659,7 @@ function App() {
     config = _useConfig.config,
     save = _useConfig.save;
   useEffect(function () {
-    var unsub = db.collection("members").onSnapshot(function (snap) {
+    var unsub = db.collection("onix_members").onSnapshot(function (snap) {
       return setMembers(snap.docs.map(function (d) {
         return _objectSpread({
           id: d.id
@@ -14675,7 +14675,7 @@ function App() {
     // Registrar acesso do corista
     if (u.role === "corista" && u.name) {
       var agora = new Date();
-      db.collection("acessos").add({
+      db.collection("onix_acessos").add({
         nome: u.name,
         dataHora: firebase.firestore.FieldValue.serverTimestamp(),
         data: agora.toISOString().split("T")[0]
