@@ -509,271 +509,112 @@ function PlayerModal(_ref3) {
     letra = _ref3.letra,
     naipes = _ref3.naipes;
   if (!url) return null;
+  var _useState_split = React.useState(false),
+    showSplit = _useState_split[0],
+    setShowSplit = _useState_split[1];
   function getEmbedUrl(url) {
-    // YouTube
     var ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
-    if (ytMatch) return {
-      type: "youtube",
-      embed: "https://www.youtube.com/embed/".concat(ytMatch[1], "?autoplay=1")
-    };
-
-    // Google Drive — vídeo/áudio/pdf
+    if (ytMatch) return { type: "youtube", embed: "https://www.youtube.com/embed/" + ytMatch[1] + "?autoplay=1" };
     var driveMatch = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
     if (driveMatch) {
       var id = driveMatch[1];
-      if (url.includes("export=view") || url.match(/\.(jpg|jpeg|png|gif|webp)/i)) return {
-        type: "image",
-        embed: "https://drive.google.com/uc?export=view&id=".concat(id)
-      };
-      if (url.match(/\.(mp3|wav|ogg|m4a)/i)) return {
-        type: "audio",
-        embed: "https://drive.google.com/file/d/".concat(id, "/preview")
-      };
-      // PDF ou vídeo do Drive
-      return {
-        type: "iframe",
-        embed: "https://drive.google.com/file/d/".concat(id, "/preview")
-      };
+      if (url.match(/\.(mp3|wav|ogg|m4a)/i)) return { type: "audio", embed: "https://drive.google.com/file/d/" + id + "/preview" };
+      return { type: "iframe", embed: "https://drive.google.com/file/d/" + id + "/preview" };
     }
-
-    // Link direto de áudio
-    if (url.match(/\.(mp3|wav|ogg|m4a)/i)) return {
-      type: "audio",
-      embed: url
-    };
-
-    // Link direto de PDF
-    if (url.match(/\.pdf/i)) return {
-      type: "pdf",
-      embed: url
-    };
-
-    // Link direto de imagem
-    if (url.match(/\.(jpg|jpeg|png|gif|webp)/i)) return {
-      type: "image",
-      embed: url
-    };
-
-    // Qualquer outro link — iframe genérico
-    return {
-      type: "iframe",
-      embed: url
-    };
+    if (url.match(/\.(mp3|wav|ogg|m4a)/i)) return { type: "audio", embed: url };
+    if (url.match(/\.pdf/i)) return { type: "pdf", embed: url };
+    if (url.match(/\.(jpg|jpeg|png|gif|webp)/i)) return { type: "image", embed: url };
+    return { type: "iframe", embed: url };
   }
-  var _getEmbedUrl = getEmbedUrl(url),
-    type = _getEmbedUrl.type,
-    embed = _getEmbedUrl.embed;
-  return /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: "fixed",
-      inset: 0,
-      background: "rgba(0,0,0,0.85)",
-      zIndex: 500,
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      padding: 16
+  var hasMedia = url && url !== "letra";
+  var hasLetra = !!letra;
+  var canSplit = hasMedia && hasLetra;
+  var isMobile = window.innerWidth < 600;
+  var _embed = hasMedia ? getEmbedUrl(url) : null;
+  var type = _embed ? _embed.type : null;
+  var embed = _embed ? _embed.embed : null;
+  return React.createElement("div", {
+    style: { position: "fixed", inset: 0, background: "rgba(0,0,0,0.9)", zIndex: 500, display: "flex", flexDirection: "column" },
+    onClick: function(e) { e.target === e.currentTarget && onClose(); }
+  },
+    React.createElement("div", {
+      style: { width: "100%", maxWidth: canSplit && showSplit ? "100%" : 860, margin: "0 auto", background: "#1A1D23", borderRadius: isMobile ? 0 : 16, overflow: "hidden", display: "flex", flexDirection: "column", height: isMobile ? "100%" : "auto", maxHeight: "96vh", marginTop: isMobile ? 0 : "2vh", boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }
     },
-    onClick: function onClick(e) {
-      return e.target === e.currentTarget && onClose();
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: "100%",
-      maxWidth: 800,
-      background: "#1A1D23",
-      borderRadius: 16,
-      overflow: "hidden",
-      boxShadow: "0 20px 60px rgba(0,0,0,0.5)"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      padding: "14px 18px",
-      borderBottom: "1px solid #333"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 14,
-      fontWeight: 600,
-      color: "#fff",
-      flex: 1,
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-      whiteSpace: "nowrap",
-      paddingRight: 12
-    }
-  }, title || "Reproduzindo"), /*#__PURE__*/React.createElement("button", {
-    onClick: onClose,
-    style: {
-      background: "rgba(255,255,255,0.1)",
-      border: "none",
-      borderRadius: 8,
-      width: 32,
-      height: 32,
-      cursor: "pointer",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      flexShrink: 0
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "x",
-    size: 16,
-    color: "#fff"
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#000"
-    }
-  }, (type === "youtube" || type === "iframe") && url !== "letra" && /*#__PURE__*/React.createElement("iframe", {
-    src: embed,
-    style: {
-      width: "100%",
-      height: window.innerWidth < 600 ? 220 : 450,
-      border: "none",
-      display: "block"
-    },
-    allow: "autoplay; fullscreen",
-    allowFullScreen: true,
-    title: title
-  }), type === "audio" && /*#__PURE__*/React.createElement("div", {
-    style: {
-      padding: "32px 24px",
-      textAlign: "center",
-      background: "#1A1D23"
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "music",
-    size: 48,
-    color: "#555"
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginTop: 16
-    }
-  }, /*#__PURE__*/React.createElement("iframe", {
-    src: embed,
-    style: {
-      width: "100%",
-      height: 80,
-      border: "none"
-    },
-    allow: "autoplay",
-    title: title
-  }))), type === "image" && /*#__PURE__*/React.createElement("div", {
-    style: {
-      padding: 16,
-      textAlign: "center",
-      background: "#111"
-    }
-  }, /*#__PURE__*/React.createElement("img", {
-    src: embed,
-    alt: title,
-    style: {
-      maxWidth: "100%",
-      maxHeight: 500,
-      objectFit: "contain",
-      borderRadius: 8
-    }
-  })), type === "pdf" && /*#__PURE__*/React.createElement("iframe", {
-    src: embed,
-    style: {
-      width: "100%",
-      height: window.innerWidth < 600 ? 400 : 600,
-      border: "none",
-      display: "block"
-    },
-    title: title
-  })), letra && /*#__PURE__*/React.createElement("div", {
-    style: {
-      padding: "20px 24px",
-      background: "#1A1D23",
-      maxHeight: 400,
-      overflowY: "auto"
-    }
-  }, /*#__PURE__*/React.createElement("pre", {
-    style: {
-      fontSize: 14,
-      color: "#EEE",
-      lineHeight: 1.8,
-      fontFamily: "inherit",
-      whiteSpace: "pre-wrap",
-      margin: 0
-    }
-  }, letra)), naipes && /*#__PURE__*/React.createElement("div", {
-    style: {
-      padding: "16px 18px",
-      background: "#1A1D23"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      color: "#AAA",
-      marginBottom: 12,
-      textTransform: "uppercase",
-      letterSpacing: 1
-    }
-  }, "\xC1udios por naipe"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "grid",
-      gridTemplateColumns: "1fr 1fr",
-      gap: 8
-    }
-  }, [["soprano", "Soprano"], ["mezzoSoprano", "Mezzo-soprano"], ["contralto", "Contralto"], ["tenor", "Tenor"], ["baritono", "Barítono"], ["baixo", "Baixo"]].map(function (_ref4) {
-    var _ref5 = _slicedToArray(_ref4, 2),
-      key = _ref5[0],
-      label = _ref5[1];
-    return naipes[key] ? /*#__PURE__*/React.createElement("button", {
-      key: key,
-      onClick: function onClick() {
-        return window.open(naipes[key], "_blank");
+      React.createElement("div", {
+        style: { display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 16px", borderBottom: "1px solid #333", gap: 8, flexShrink: 0 }
       },
-      style: {
-        padding: "8px 12px",
-        background: "rgba(255,255,255,0.08)",
-        border: "1px solid rgba(255,255,255,0.1)",
-        borderRadius: 8,
-        color: "#EEE",
-        fontSize: 12,
-        fontWeight: 600,
-        cursor: "pointer",
-        fontFamily: "inherit",
-        textAlign: "left",
-        display: "flex",
-        alignItems: "center",
-        gap: 6
-      }
-    }, /*#__PURE__*/React.createElement(Icon, {
-      name: "play-circle",
-      size: 14,
-      color: "#AAA"
-    }), " ", label) : null;
-  }))), url && url !== "letra" && /*#__PURE__*/React.createElement("div", {
-    style: {
-      padding: "10px 18px",
-      textAlign: "right",
-      borderTop: "1px solid #333"
-    }
-  }, /*#__PURE__*/React.createElement("a", {
-    href: url,
-    target: "_blank",
-    rel: "noreferrer",
-    style: {
-      fontSize: 12,
-      color: "#AAA",
-      textDecoration: "none",
-      display: "inline-flex",
-      alignItems: "center",
-      gap: 5
-    }
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "external-link",
-    size: 12,
-    color: "#AAA"
-  }), " Abrir em nova aba"))));
+        React.createElement("button", {
+          onClick: onClose,
+          style: { background: "rgba(255,255,255,0.08)", border: "none", borderRadius: 8, width: 34, height: 34, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }
+        }, React.createElement(Icon, { name: "arrow-left", size: 16, color: "#fff" })),
+        React.createElement("div", {
+          style: { fontSize: 13, fontWeight: 600, color: "#fff", flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }
+        }, title || "Reproduzindo"),
+        canSplit && React.createElement("button", {
+          onClick: function() { setShowSplit(!showSplit); },
+          title: showSplit ? "Ver separado" : "Ver letra e música juntos",
+          style: { background: showSplit ? "rgba(201,162,39,0.25)" : "rgba(255,255,255,0.08)", border: "none", borderRadius: 8, padding: "6px 10px", cursor: "pointer", display: "flex", alignItems: "center", gap: 5, color: "#fff", fontSize: 12, fontWeight: 600, flexShrink: 0 }
+        }, React.createElement(Icon, { name: "columns", size: 14, color: "#fff" }), !isMobile && " Dividir"),
+        React.createElement("button", {
+          onClick: onClose,
+          style: { background: "rgba(255,255,255,0.08)", border: "none", borderRadius: 8, width: 34, height: 34, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }
+        }, React.createElement(Icon, { name: "x", size: 16, color: "#fff" }))
+      ),
+      React.createElement("div", {
+        style: { display: "flex", flexDirection: canSplit && showSplit ? (isMobile ? "column" : "row") : "column", flex: 1, overflow: "hidden", minHeight: 0 }
+      },
+        hasMedia && React.createElement("div", {
+          style: { flex: 1, minHeight: 0, overflow: "hidden", background: "#000" }
+        },
+          (type === "youtube" || type === "iframe") && React.createElement("iframe", {
+            src: embed,
+            style: { width: "100%", height: "100%", minHeight: canSplit && showSplit ? (isMobile ? 220 : 400) : (isMobile ? 220 : 450), border: "none", display: "block" },
+            allow: "autoplay; fullscreen", allowFullScreen: true, title: title
+          }),
+          type === "audio" && React.createElement("div", {
+            style: { padding: "32px 24px", textAlign: "center", background: "#1A1D23" }
+          },
+            React.createElement(Icon, { name: "music", size: 48, color: "#555" }),
+            React.createElement("div", { style: { marginTop: 16 } },
+              React.createElement("iframe", { src: embed, style: { width: "100%", height: 80, border: "none" }, allow: "autoplay", title: title })
+            )
+          ),
+          type === "image" && React.createElement("div", { style: { padding: 16, textAlign: "center" } },
+            React.createElement("img", { src: embed, alt: title, style: { maxWidth: "100%", maxHeight: 400, objectFit: "contain", borderRadius: 8 } })
+          ),
+          type === "pdf" && React.createElement("iframe", {
+            src: embed, style: { width: "100%", height: isMobile ? 400 : 500, border: "none", display: "block" }, title: title
+          })
+        ),
+        hasLetra && React.createElement("div", {
+          style: { flex: canSplit && showSplit ? 1 : "none", minHeight: 0, padding: "18px 22px", background: "#1A1D23", overflowY: "auto", maxHeight: canSplit && showSplit ? "100%" : (isMobile ? 280 : 350), borderLeft: canSplit && showSplit && !isMobile ? "1px solid #333" : "none", borderTop: canSplit && showSplit && isMobile ? "1px solid #333" : "none" }
+        },
+          React.createElement("div", { style: { fontSize: 11, color: "#888", textTransform: "uppercase", letterSpacing: 1, marginBottom: 10 } }, "Letra"),
+          React.createElement("pre", {
+            style: { fontSize: 14, color: "#EEE", lineHeight: 1.85, fontFamily: "inherit", whiteSpace: "pre-wrap", margin: 0 }
+          }, letra)
+        ),
+        !hasMedia && !hasLetra && naipes && null,
+        naipes && React.createElement("div", {
+          style: { padding: "14px 16px", background: "#1A1D23", borderTop: "1px solid #333", flexShrink: 0 }
+        },
+          React.createElement("div", { style: { fontSize: 11, color: "#AAA", marginBottom: 10, textTransform: "uppercase", letterSpacing: 1 } }, "Áudios por naipe"),
+          React.createElement("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 } },
+            [["soprano","Soprano"],["mezzoSoprano","Mezzo-soprano"],["contralto","Contralto"],["tenor","Tenor"],["baritono","Barítono"],["baixo","Baixo"]].map(function(_ref4) {
+              var key = _ref4[0], label = _ref4[1];
+              return naipes[key] ? React.createElement("button", {
+                key: key,
+                onClick: function() { window.open(naipes[key], "_blank"); },
+                style: { padding: "8px 12px", background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, color: "#EEE", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "inherit", textAlign: "left", display: "flex", alignItems: "center", gap: 6 }
+              }, React.createElement(Icon, { name: "play-circle", size: 14, color: "#AAA" }), label) : null;
+            })
+          )
+        )
+      )
+    )
+  );
 }
+
 
 // ── MESA DE SOM (página pública para sonoplasta) ──────────────────────────────
 function MesaSom(_ref6) {
@@ -14770,7 +14611,7 @@ function App() {
       config: config
     })
   };
-  var mobileNav = isAdmin ? [NAV_ADMIN[0], NAV_ADMIN[1], NAV_ADMIN[4], NAV_ADMIN[5], NAV_ADMIN[10]] : [NAV_CORISTA[0], NAV_CORISTA[1], NAV_CORISTA[2], NAV_CORISTA[3]];
+  var mobileNav = isAdmin ? [NAV_ADMIN[0], NAV_ADMIN[1], NAV_ADMIN[2], NAV_ADMIN[4], NAV_ADMIN[5]] : [NAV_CORISTA[0], NAV_CORISTA[1], NAV_CORISTA[2], NAV_CORISTA[3]];
   return /*#__PURE__*/React.createElement("div", {
     style: {
       display: "flex",
