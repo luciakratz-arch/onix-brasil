@@ -644,7 +644,7 @@ function PlayerModal(_ref3) {
           })
         ),
         hasLetra && React.createElement("div", {
-          style: { flex: canSplit && showSplit ? 1 : "none", minHeight: 0, padding: "18px 22px", background: "#1A1D23", overflowY: "auto", maxHeight: canSplit && showSplit ? "100%" : (isMobile ? 280 : 350), borderLeft: canSplit && showSplit && !isMobile ? "1px solid #333" : "none", borderTop: canSplit && showSplit && isMobile ? "1px solid #333" : "none" }
+          style: { flex: canSplit && showSplit ? 1 : "none", minHeight: 0, padding: "18px 22px", background: "#1A1D23", overflowY: "auto", maxHeight: canSplit && showSplit ? "100%" : (!hasMedia ? "100%" : (isMobile ? 280 : 350)), borderLeft: canSplit && showSplit && !isMobile ? "1px solid #333" : "none", borderTop: canSplit && showSplit && isMobile ? "1px solid #333" : "none" }
         },
           React.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 } },
             React.createElement("span", { style: { fontSize: 11, color: "#888", textTransform: "uppercase", letterSpacing: 1 } }, "Letra"),
