@@ -507,11 +507,68 @@ function PlayerModal(_ref3) {
     title = _ref3.title,
     onClose = _ref3.onClose,
     letra = _ref3.letra,
-    naipes = _ref3.naipes;
+    naipes = _ref3.naipes,
+    songId = _ref3.songId;
   if (!url) return null;
   var _useState_split = React.useState(false),
     showSplit = _useState_split[0],
     setShowSplit = _useState_split[1];
+  var _useState_letraEdit = React.useState(letra || ""),
+    letraEdit = _useState_letraEdit[0],
+    setLetraEdit = _useState_letraEdit[1];
+  var _useState_letraMode = React.useState("view"),
+    letraMode = _useState_letraMode[0],
+    setLetraMode = _useState_letraMode[1];
+  var _useState_letraSaving = React.useState(false),
+    letraSaving = _useState_letraSaving[0],
+    setLetraSaving = _useState_letraSaving[1];
+  var _useState_letraMsg = React.useState(""),
+    letraMsg = _useState_letraMsg[0],
+    setLetraMsg = _useState_letraMsg[1];
+  var letraRef = React.useRef(null);
+
+  function insertFormat(before, after) {
+    var ta = letraRef.current;
+    if (!ta) return;
+    var start = ta.selectionStart, end = ta.selectionEnd;
+    var sel = letraEdit.substring(start, end);
+    var newVal = letraEdit.substring(0, start) + before + sel + after + letraEdit.substring(end);
+    setLetraEdit(newVal);
+    setTimeout(function() {
+      ta.focus();
+      ta.setSelectionRange(start + before.length, end + before.length);
+    }, 10);
+  }
+
+  function salvarLetra() {
+    if (!songId) return;
+    setLetraSaving(true);
+    db.collection("onix_songs").doc(songId).update({ letra: letraEdit, updatedAt: firebase.firestore.FieldValue.serverTimestamp() })
+      .then(function() {
+        setLetraSaving(false);
+        setLetraMode("view");
+        setLetraMsg("✅ Salvo!");
+        setTimeout(function() { setLetraMsg(""); }, 2500);
+      })
+      .catch(function() {
+        setLetraSaving(false);
+        setLetraMsg("❌ Erro ao salvar");
+      });
+  }
+
+  function renderLetraFormatada(txt) {
+    if (!txt) return null;
+    var lines = txt.split("\n");
+    return lines.map(function(line, li) {
+      var parts = line.split(/(\*\*[^*]+\*\*|_[^_]+_)/g);
+      var rendered = parts.map(function(p, i) {
+        if (/^\*\*(.+)\*\*$/.test(p)) return React.createElement("strong", { key: i }, p.slice(2, -2));
+        if (/^_(.+)_$/.test(p)) return React.createElement("em", { key: i }, p.slice(1, -1));
+        return p;
+      });
+      return React.createElement("div", { key: li, style: { minHeight: "1.85em" } }, rendered);
+    });
+  }
   function getEmbedUrl(url) {
     var ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
     if (ytMatch) return { type: "youtube", embed: "https://www.youtube.com/embed/" + ytMatch[1] + "?autoplay=1" };
@@ -589,10 +646,48 @@ function PlayerModal(_ref3) {
         hasLetra && React.createElement("div", {
           style: { flex: canSplit && showSplit ? 1 : "none", minHeight: 0, padding: "18px 22px", background: "#1A1D23", overflowY: "auto", maxHeight: canSplit && showSplit ? "100%" : (isMobile ? 280 : 350), borderLeft: canSplit && showSplit && !isMobile ? "1px solid #333" : "none", borderTop: canSplit && showSplit && isMobile ? "1px solid #333" : "none" }
         },
-          React.createElement("div", { style: { fontSize: 11, color: "#888", textTransform: "uppercase", letterSpacing: 1, marginBottom: 10 } }, "Letra"),
-          React.createElement("pre", {
-            style: { fontSize: 14, color: "#EEE", lineHeight: 1.85, fontFamily: "inherit", whiteSpace: "pre-wrap", margin: 0 }
-          }, letra)
+          React.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 } },
+            React.createElement("span", { style: { fontSize: 11, color: "#888", textTransform: "uppercase", letterSpacing: 1 } }, "Letra"),
+            letraMsg ? React.createElement("span", { style: { fontSize: 12, color: "#aaa" } }, letraMsg) : null,
+            songId ? React.createElement("div", { style: { display: "flex", gap: 6 } },
+              letraMode === "view"
+                ? React.createElement("button", {
+                    onClick: function() { setLetraEdit(letra || ""); setLetraMode("edit"); },
+                    style: { background: "rgba(255,255,255,0.08)", border: "none", borderRadius: 6, padding: "3px 10px", color: "#ccc", fontSize: 11, cursor: "pointer", fontFamily: "inherit" }
+                  }, "✏️ Editar")
+                : React.createElement(React.Fragment, null,
+                    React.createElement("button", {
+                      onClick: function() { insertFormat("**", "**"); },
+                      title: "Negrito",
+                      style: { background: "rgba(255,255,255,0.1)", border: "none", borderRadius: 6, padding: "3px 8px", color: "#fff", fontSize: 12, fontWeight: 700, cursor: "pointer" }
+                    }, "N"),
+                    React.createElement("button", {
+                      onClick: function() { insertFormat("_", "_"); },
+                      title: "Itálico",
+                      style: { background: "rgba(255,255,255,0.1)", border: "none", borderRadius: 6, padding: "3px 8px", color: "#ccc", fontSize: 12, fontStyle: "italic", cursor: "pointer" }
+                    }, "I"),
+                    React.createElement("button", {
+                      onClick: salvarLetra,
+                      disabled: letraSaving,
+                      style: { background: "#4A0080", border: "none", borderRadius: 6, padding: "3px 10px", color: "#fff", fontSize: 11, fontWeight: 700, cursor: "pointer", fontFamily: "inherit" }
+                    }, letraSaving ? "Salvando..." : "✓ Salvar"),
+                    React.createElement("button", {
+                      onClick: function() { setLetraMode("view"); },
+                      style: { background: "rgba(255,255,255,0.06)", border: "none", borderRadius: 6, padding: "3px 8px", color: "#aaa", fontSize: 11, cursor: "pointer" }
+                    }, "Cancelar")
+                  )
+            ) : null
+          ),
+          letraMode === "edit"
+            ? React.createElement("textarea", {
+                ref: letraRef,
+                value: letraEdit,
+                onChange: function(e) { setLetraEdit(e.target.value); },
+                style: { width: "100%", minHeight: 220, background: "#111", border: "1px solid #444", borderRadius: 8, color: "#EEE", fontSize: 14, lineHeight: 1.85, fontFamily: "inherit", padding: "10px 12px", resize: "vertical", boxSizing: "border-box" }
+              })
+            : React.createElement("div", {
+                style: { fontSize: 14, color: "#EEE", lineHeight: 1.85 }
+              }, renderLetraFormatada(letraEdit || letra || ""))
         ),
         !hasMedia && !hasLetra && naipes && null,
         naipes && React.createElement("div", {
@@ -5170,7 +5265,8 @@ function Repertorio(_ref16) {
     var label = _ref17.label,
       icon = _ref17.icon,
       url = _ref17.url,
-      letra = _ref17.letra;
+      letra = _ref17.letra,
+      songId = _ref17.songId;
     if (!url) return null;
     return /*#__PURE__*/React.createElement("button", {
       onClick: function onClick(e) {
@@ -5178,7 +5274,8 @@ function Repertorio(_ref16) {
         setPlayer({
           url: url,
           title: label,
-          letra: letra || null
+          letra: letra || null,
+          songId: songId || null
         });
       },
       style: {
@@ -5370,17 +5467,20 @@ function Repertorio(_ref16) {
       label: s.title || "\xC1udio Original",
       icon: "\uD83C\uDFB5",
       url: s.audioOriginal,
-      letra: s.letra
+      letra: s.letra,
+      songId: s.id
     }), /*#__PURE__*/React.createElement(MaterialBadge, {
       label: (s.title ? s.title + " — " : "") + "Arranjo",
       icon: "\uD83C\uDFB5",
       url: s.audioArranjo,
-      letra: s.letra
+      letra: s.letra,
+      songId: s.id
     }), /*#__PURE__*/React.createElement(MaterialBadge, {
       label: (s.title ? s.title + " — " : "") + "Playback",
       icon: "\uD83C\uDFA7",
       url: s.playback,
-      letra: s.letra
+      letra: s.letra,
+      songId: s.id
     }), temNaipes(s) && /*#__PURE__*/React.createElement("button", {
       onClick: function onClick(e) {
         e.stopPropagation();
@@ -5419,7 +5519,8 @@ function Repertorio(_ref16) {
         setPlayer({
           url: "letra",
           title: s.title,
-          letra: s.letra
+          letra: s.letra,
+          songId: s.id
         });
       },
       style: {
