@@ -31,7 +31,7 @@
 </head>
 <body>
     <div id="root"></div>
-    <script src="app.js?v=17"></script>
+    <script src="app.js?v=18"></script>
 
     <!-- Modal PWA -->
     <div id="modal-pwa" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:99999;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px);">
@@ -115,9 +115,13 @@
     })();
     </script>
 
-    <!-- Backup Firestore -->
+    <!-- Backup Firestore — visível apenas para admin no desktop -->
     <script>
     (function(){
+      // Só exibe em tela grande (desktop/tablet largo) — mobile não vê
+      var isDesktop = window.innerWidth >= 769;
+      if(!isDesktop) return;
+
       var COLS=["onix_acessos","onix_avisos","onix_config","onix_confirmacoes","onix_estudos","onix_events","onix_financeiro","onix_frequencias","onix_members","onix_noticias","onix_pagamentos","onix_relatorios_historico","onix_sessoes_checkin","onix_songs"];
       function p2(x){return x<10?"0"+x:""+x;}
       window.fazerBackupCoral=function(){
@@ -128,7 +132,7 @@
           return db.collection(c).get().then(function(snap){
             var docs={};snap.forEach(function(d){docs[d.id]=d.data();});
             bk.colecoes[c]=docs;
-          }).catch(function(){bk.colecoes[c]={_erro:"erro"};}); 
+          }).catch(function(){bk.colecoes[c]={_erro:"erro"};});
         })).then(function(){
           var blob=new Blob([JSON.stringify(bk,null,2)],{type:"application/json"});
           var url=URL.createObjectURL(blob);
@@ -139,11 +143,31 @@
           if(btn){btn.disabled=false;btn.textContent="💾 Backup";}
         });
       };
+
+      // Cria o botão mas só exibe quando o app confirmar que o usuário é admin
       var b=document.createElement("button");
-      b.id="btnBackupCoral";b.textContent="💾 Backup";
-      b.style.cssText="position:fixed;bottom:12px;right:12px;z-index:9999;background:#4A0080;color:#fff;border:none;border-radius:18px;padding:7px 14px;font-size:12px;font-family:Inter,sans-serif;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.25);opacity:0.85;";
+      b.id="btnBackupCoral";
+      b.textContent="💾 Backup";
+      b.style.cssText="display:none;position:fixed;bottom:12px;right:12px;z-index:9999;background:#4A0080;color:#fff;border:none;border-radius:18px;padding:7px 14px;font-size:12px;font-family:Inter,sans-serif;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.25);opacity:0.85;";
       b.onclick=window.fazerBackupCoral;
       document.body.appendChild(b);
+
+      // Fica verificando o localStorage onde o app.js salva o usuário logado
+      // Mostra o botão só se for admin
+      var _checkAdmin = setInterval(function(){
+        try {
+          var raw = localStorage.getItem('onix_user');
+          if(!raw) return;
+          var u = JSON.parse(raw);
+          var btn = document.getElementById('btnBackupCoral');
+          if(!btn) return;
+          if(u && u.isAdmin === true) {
+            btn.style.display = 'block';
+          } else {
+            btn.style.display = 'none';
+          }
+        } catch(e) {}
+      }, 1000);
     })();
     </script>
 </body>
