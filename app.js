@@ -602,8 +602,8 @@ function PlayerModal(_ref3) {
       },
         React.createElement("button", {
           onClick: onClose,
-          style: { background: "rgba(255,255,255,0.08)", border: "none", borderRadius: 8, width: 34, height: 34, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }
-        }, React.createElement(Icon, { name: "arrow-left", size: 16, color: "#fff" })),
+          style: { background: "rgba(255,255,255,0.12)", border: "none", borderRadius: 8, width: 36, height: 36, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, fontSize: 18, color: "#fff", fontWeight: 700 }
+        }, "←"),
         React.createElement("div", {
           style: { fontSize: 13, fontWeight: 600, color: "#fff", flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }
         }, title || "Reproduzindo"),
