@@ -5169,14 +5169,16 @@ function Repertorio(_ref16) {
   function MaterialBadge(_ref17) {
     var label = _ref17.label,
       icon = _ref17.icon,
-      url = _ref17.url;
+      url = _ref17.url,
+      letra = _ref17.letra;
     if (!url) return null;
     return /*#__PURE__*/React.createElement("button", {
       onClick: function onClick(e) {
         e.stopPropagation();
         setPlayer({
           url: url,
-          title: label
+          title: label,
+          letra: letra || null
         });
       },
       style: {
@@ -5365,17 +5367,20 @@ function Repertorio(_ref16) {
       icon: "\uD83C\uDFBC",
       url: s.partitura
     }), /*#__PURE__*/React.createElement(MaterialBadge, {
-      label: "\xC1udio Original",
+      label: s.title || "\xC1udio Original",
       icon: "\uD83C\uDFB5",
-      url: s.audioOriginal
+      url: s.audioOriginal,
+      letra: s.letra
     }), /*#__PURE__*/React.createElement(MaterialBadge, {
-      label: "Arranjo",
+      label: (s.title ? s.title + " — " : "") + "Arranjo",
       icon: "\uD83C\uDFB5",
-      url: s.audioArranjo
+      url: s.audioArranjo,
+      letra: s.letra
     }), /*#__PURE__*/React.createElement(MaterialBadge, {
-      label: "Playback",
+      label: (s.title ? s.title + " — " : "") + "Playback",
       icon: "\uD83C\uDFA7",
-      url: s.playback
+      url: s.playback,
+      letra: s.letra
     }), temNaipes(s) && /*#__PURE__*/React.createElement("button", {
       onClick: function onClick(e) {
         e.stopPropagation();
