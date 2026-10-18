@@ -31,6 +31,34 @@ var firebaseConfig = {
 };
 if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
 var db = firebase.firestore();
+// ── TAMANHO DAS LETRAS + TELAS ESTREITAS (acessibilidade 60+) ────────────────
+var __FS = 1;
+try { __FS = parseFloat(localStorage.getItem("app_fs")) || 1; } catch (e) {}
+if (__FS < 1 || __FS > 2) __FS = 1;
+window.__FS = __FS;
+var __ce = React.createElement;
+React.createElement = function (t, p) {
+  if (p && p.style && typeof t === "string") {
+    var st = p.style, mudou = false, novo = {};
+    var __fsAtual = window.__FS || 1;
+    if (__fsAtual !== 1 && typeof st.fontSize === "number") {
+      novo.fontSize = Math.round(st.fontSize * __fsAtual * 10) / 10;
+      mudou = true;
+    }
+    if (st.display === "grid" && typeof st.gridTemplateColumns === "string" && window.innerWidth < 700) {
+      var gtc = st.gridTemplateColumns;
+      if (/\d+px/.test(gtc) && gtc.indexOf("minmax") < 0 && gtc.split(" ").length >= 3) {
+        novo.gridTemplateColumns = "1fr 1fr"; mudou = true;
+      } else if (/^\d+px \d*\.?\d*fr$/.test(gtc.trim()) && parseInt(gtc, 10) >= 200) {
+        novo.gridTemplateColumns = "1fr"; mudou = true;
+      }
+    }
+    if (mudou) {
+      arguments[1] = Object.assign({}, p, { style: Object.assign({}, st, novo) });
+    }
+  }
+  return __ce.apply(React, arguments);
+};
 var COR = "#5B2D8E";
 var COR_FUNDO = "#F3EEF9";
 var LOGO_URL = "https://raw.githubusercontent.com/luciakratz-arch/onix-brasil/main/onix-logo.png";
@@ -124,12 +152,13 @@ function useConfig() {
 var Icon = function Icon(_ref) {
   var name = _ref.name,
     _ref$size = _ref.size,
-    size = _ref$size === void 0 ? 16 : _ref$size,
+    size = (_ref$size === void 0 ? 16 : _ref$size) * Math.min(window.__FS || 1, 1.5),
     color = _ref.color;
   useEffect(function () {
     if (window.lucide) window.lucide.createIcons();
-  }, [name]);
+  }, [name, size]);
   return /*#__PURE__*/React.createElement("i", {
+    key: name + "-" + size,
     "data-lucide": name,
     style: {
       width: size,
@@ -595,7 +624,7 @@ function PlayerModal(_ref3) {
     onClick: function(e) { e.target === e.currentTarget && onClose(); }
   },
     React.createElement("div", {
-      style: { width: "100%", maxWidth: canSplit && showSplit ? "100%" : 860, margin: "0 auto", background: "#1A1D23", borderRadius: isMobile ? 0 : 16, overflow: "hidden", display: "flex", flexDirection: "column", height: isMobile ? "100%" : "auto", maxHeight: "96vh", marginTop: isMobile ? 0 : "2vh", boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }
+      style: { width: "100%", maxWidth: 860, margin: "0 auto", background: "#1A1D23", borderRadius: isMobile ? 0 : 16, overflow: "hidden", display: "flex", flexDirection: "column", height: isMobile ? "100%" : (canSplit ? "90vh" : "auto"), maxHeight: isMobile ? "100%" : "90vh", marginTop: isMobile ? 0 : "5vh", boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }
     },
       React.createElement("div", {
         style: { display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 16px", borderBottom: "1px solid #333", gap: 8, flexShrink: 0 }
@@ -607,25 +636,20 @@ function PlayerModal(_ref3) {
         React.createElement("div", {
           style: { fontSize: 13, fontWeight: 600, color: "#fff", flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }
         }, title || "Reproduzindo"),
-        canSplit && React.createElement("button", {
-          onClick: function() { setShowSplit(!showSplit); },
-          title: showSplit ? "Ver separado" : "Ver letra e música juntos",
-          style: { background: showSplit ? "rgba(201,162,39,0.25)" : "rgba(255,255,255,0.08)", border: "none", borderRadius: 8, padding: "6px 10px", cursor: "pointer", display: "flex", alignItems: "center", gap: 5, color: "#fff", fontSize: 12, fontWeight: 600, flexShrink: 0 }
-        }, React.createElement(Icon, { name: "columns", size: 14, color: "#fff" }), !isMobile && " Dividir"),
         React.createElement("button", {
           onClick: onClose,
           style: { background: "rgba(255,255,255,0.08)", border: "none", borderRadius: 8, width: 34, height: 34, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }
         }, React.createElement(Icon, { name: "x", size: 16, color: "#fff" }))
       ),
       React.createElement("div", {
-        style: { display: "flex", flexDirection: canSplit && showSplit ? (isMobile ? "column" : "row") : "column", flex: 1, overflow: "hidden", minHeight: 0 }
+        style: { display: "flex", flexDirection: "column", flex: 1, overflow: "hidden", minHeight: 0 }
       },
         hasMedia && React.createElement("div", {
-          style: { flex: 1, minHeight: 0, overflow: "hidden", background: "#000" }
+          style: { flex: canSplit ? "3 1 0%" : (hasLetra ? "0 0 auto" : 1), minHeight: 0, overflow: "hidden", background: "#000" }
         },
           (type === "youtube" || type === "iframe") && React.createElement("iframe", {
             src: embed,
-            style: { width: "100%", height: "100%", minHeight: canSplit && showSplit ? (isMobile ? 220 : 400) : (isMobile ? 220 : 450), border: "none", display: "block" },
+            style: { width: "100%", height: canSplit ? "100%" : (isMobile ? 220 : 450), minHeight: 0, border: "none", display: "block" },
             allow: "autoplay; fullscreen", allowFullScreen: true, title: title
           }),
           type === "audio" && React.createElement("div", {
@@ -640,11 +664,11 @@ function PlayerModal(_ref3) {
             React.createElement("img", { src: embed, alt: title, style: { maxWidth: "100%", maxHeight: 400, objectFit: "contain", borderRadius: 8 } })
           ),
           type === "pdf" && React.createElement("iframe", {
-            src: embed, style: { width: "100%", height: isMobile ? 400 : 500, border: "none", display: "block" }, title: title
+            src: embed, style: { width: "100%", height: canSplit ? "100%" : (isMobile ? 400 : 500), border: "none", display: "block" }, title: title
           })
         ),
         hasLetra && React.createElement("div", {
-          style: { flex: canSplit && showSplit ? 1 : "none", minHeight: 0, padding: "18px 22px", background: "#1A1D23", overflowY: "auto", maxHeight: canSplit && showSplit ? "100%" : (!hasMedia ? "100%" : (isMobile ? 280 : 350)), borderLeft: canSplit && showSplit && !isMobile ? "1px solid #333" : "none", borderTop: canSplit && showSplit && isMobile ? "1px solid #333" : "none" }
+          style: { flex: canSplit ? "7 1 0%" : 1, minHeight: 0, padding: "18px 22px", background: "#1A1D23", overflowY: "auto", borderTop: canSplit ? "1px solid #333" : "none" }
         },
           React.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 } },
             React.createElement("span", { style: { fontSize: 11, color: "#888", textTransform: "uppercase", letterSpacing: 1 } }, "Letra"),
@@ -14605,6 +14629,53 @@ function App() {
   var _useConfig = useConfig(),
     config = _useConfig.config,
     save = _useConfig.save;
+  var _fsState = useState(0),
+    setFsTick = _fsState[1];
+  useEffect(function () {
+    window.__setFS = function (v) {
+      window.__FS = v;
+      try { localStorage.setItem("app_fs", String(v)); } catch (e) {}
+      setFsTick(function (t) { return t + 1; });
+    };
+    return function () { window.__setFS = null; };
+  }, []);
+  var _maisState = useState(false),
+    maisAberto = _maisState[0],
+    setMaisAberto = _maisState[1];
+  useEffect(function () {
+    var el = document.getElementById("fs-ctl");
+    if (el) el.style.display = maisAberto ? "none" : "";
+    return function () {
+      var e2 = document.getElementById("fs-ctl");
+      if (e2) e2.style.display = "";
+    };
+  }, [maisAberto]);
+  var homeTab = user && user.isAdmin ? "painel" : user && user.role === "rh" ? "rh_dashboard" : "inicio";
+  var _navRef = React.useRef({ pop: false });
+  useEffect(function () {
+    function onPop(e) {
+      var t = e.state && e.state.zt;
+      _navRef.current.pop = true;
+      setTab(t || homeTab);
+    }
+    window.addEventListener("popstate", onPop);
+    return function () {
+      window.removeEventListener("popstate", onPop);
+    };
+  }, [homeTab]);
+  useEffect(function () {
+    if (_navRef.current.pop) {
+      _navRef.current.pop = false;
+      return;
+    }
+    if (tab !== homeTab) {
+      try { window.history.pushState({ zt: tab }, ""); } catch (e) {}
+    }
+  }, [tab]);
+  function voltar() {
+    if (window.history.state && window.history.state.zt) window.history.back();
+    else setTab(homeTab);
+  }
   useEffect(function () {
     var unsub = db.collection("onix_members").onSnapshot(function (snap) {
       return setMembers(snap.docs.map(function (d) {
@@ -14717,7 +14788,8 @@ function App() {
       config: config
     })
   };
-  var mobileNav = isAdmin ? [NAV_ADMIN[0], NAV_ADMIN[1], NAV_ADMIN[2], NAV_ADMIN[4], NAV_ADMIN[5]] : [NAV_CORISTA[0], NAV_CORISTA[1], NAV_CORISTA[2], NAV_CORISTA[3]];
+  var temMais = isAdmin;
+  var mobileNav = isAdmin ? [NAV_ADMIN[0], NAV_ADMIN[1], NAV_ADMIN[2], NAV_ADMIN[4]] : [NAV_CORISTA[0], NAV_CORISTA[1], NAV_CORISTA[2], NAV_CORISTA[3]];
   return /*#__PURE__*/React.createElement("div", {
     style: {
       display: "flex",
@@ -14906,7 +14978,24 @@ function App() {
       alignItems: "center",
       gap: 10
     }
-  }, /*#__PURE__*/React.createElement("div", {
+  }, tab !== homeTab && /*#__PURE__*/React.createElement("button", {
+    onClick: voltar,
+    "aria-label": "Voltar",
+    style: {
+      width: 44,
+      height: 44,
+      borderRadius: "50%",
+      border: "1px solid rgba(255,255,255,0.5)",
+      background: "rgba(0,0,0,0.2)",
+      color: "#FFFFFF",
+      fontSize: 22,
+      fontWeight: 700,
+      cursor: "pointer",
+      fontFamily: "inherit",
+      flexShrink: 0,
+      lineHeight: 1
+    }
+  }, "\u2190"), /*#__PURE__*/React.createElement("div", {
     style: {
       width: 32,
       height: 32,
@@ -14969,11 +15058,11 @@ function App() {
       zIndex: 150
     },
     className: "nav-mobile"
-  }, mobileNav.map(function (item) {
+  }, mobileNav.concat(temMais ? [{ key: "__mais", label: "Mais", icon: "menu" }] : []).map(function (item) {
     return /*#__PURE__*/React.createElement("button", {
       key: item.key,
       onClick: function onClick() {
-        return setTab(item.key);
+        return item.key === "__mais" ? setMaisAberto(true) : setTab(item.key);
       },
       style: {
         flex: 1,
@@ -14999,6 +15088,95 @@ function App() {
       size: 18,
       color: tab === item.key ? cor : "#CCC"
     }), item.label);
-  })));
+  })), maisAberto && /*#__PURE__*/React.createElement("div", {
+    onClick: function onClick() {
+      return setMaisAberto(false);
+    },
+    style: {
+      position: "fixed",
+      inset: 0,
+      background: "rgba(0,0,0,0.6)",
+      zIndex: 10000,
+      display: "flex",
+      alignItems: "flex-end",
+      justifyContent: "center"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    onClick: function onClick(e) {
+      return e.stopPropagation();
+    },
+    style: {
+      width: "100%",
+      maxWidth: 520,
+      maxHeight: "85vh",
+      overflowY: "auto",
+      background: "#FFFFFF",
+      borderRadius: "20px 20px 0 0",
+      padding: "16px 16px 24px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: 14
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 18,
+      fontWeight: 700,
+      color: "#1A1D23"
+    }
+  }, "Menu"), /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return setMaisAberto(false);
+    },
+    style: {
+      width: 44,
+      height: 44,
+      borderRadius: "50%",
+      border: "1px solid #DDD",
+      background: "#F5F5F5",
+      color: "#1A1D23",
+      fontSize: 20,
+      cursor: "pointer",
+      fontFamily: "inherit"
+    }
+  }, "\u2715")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr",
+      gap: 10
+    }
+  }, navItems.map(function (item) {
+    var ativo = tab === item.key;
+    return /*#__PURE__*/React.createElement("button", {
+      key: item.key,
+      onClick: function onClick() {
+        setTab(item.key);
+        setMaisAberto(false);
+      },
+      style: {
+        display: "flex",
+        alignItems: "center",
+        gap: 10,
+        padding: "14px 12px",
+        minHeight: 56,
+        borderRadius: 12,
+        border: "1px solid " + (ativo ? cor : "#DDD"),
+        background: ativo ? cor : "#FFFFFF",
+        color: ativo ? "#FFFFFF" : "#1A1D23",
+        fontSize: 15,
+        fontWeight: 700,
+        cursor: "pointer",
+        fontFamily: "inherit",
+        textAlign: "left"
+      }
+    }, /*#__PURE__*/React.createElement(Icon, {
+      name: item.icon,
+      size: 20,
+      color: ativo ? "#FFFFFF" : cor
+    }), item.label);
+  })))));
 }
 ReactDOM.render(React.createElement(App), document.getElementById("root"));
