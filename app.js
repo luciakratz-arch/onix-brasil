@@ -547,9 +547,6 @@ function PlayerModal(_ref3) {
     naipes = _ref3.naipes,
     songId = _ref3.songId;
   if (!url) return null;
-  var _useState_split = React.useState(false),
-    showSplit = _useState_split[0],
-    setShowSplit = _useState_split[1];
   var _useState_letraEdit = React.useState(letra || ""),
     letraEdit = _useState_letraEdit[0],
     setLetraEdit = _useState_letraEdit[1];
@@ -632,7 +629,7 @@ function PlayerModal(_ref3) {
     onClick: function(e) { e.target === e.currentTarget && onClose(); }
   },
     React.createElement("div", {
-      style: { width: "100%", maxWidth: 860, margin: "0 auto", background: "#1A1D23", borderRadius: isMobile ? 0 : 16, overflow: "hidden", display: "flex", flexDirection: "column", height: isMobile ? "100%" : (canSplit ? "90vh" : "auto"), maxHeight: isMobile ? "100%" : "90vh", marginTop: isMobile ? 0 : "5vh", boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }
+      style: { width: "100%", maxWidth: 800, margin: "0 auto", background: "#1A1D23", borderRadius: isMobile ? 0 : 16, overflow: "hidden", display: "flex", flexDirection: "column", height: isMobile ? "100%" : (canSplit ? "90vh" : "auto"), maxHeight: isMobile ? "100%" : "90vh", marginTop: isMobile ? 0 : "5vh", boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }
     },
       React.createElement("div", {
         style: { display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 16px", borderBottom: "1px solid #333", gap: 8, flexShrink: 0 }
@@ -653,7 +650,7 @@ function PlayerModal(_ref3) {
         style: { display: "flex", flexDirection: "column", flex: 1, overflow: "hidden", minHeight: 0 }
       },
         hasMedia && React.createElement("div", {
-          style: { flex: canSplit ? "3 1 0%" : (hasLetra ? "0 0 auto" : 1), minHeight: 0, overflow: "hidden", background: "#000" }
+          style: { flex: canSplit ? "0 0 30%" : (hasLetra ? "0 0 auto" : 1), minHeight: 0, overflow: "hidden", background: "#000" }
         },
           (type === "youtube" || type === "iframe") && React.createElement("iframe", {
             src: embed,
@@ -676,7 +673,7 @@ function PlayerModal(_ref3) {
           })
         ),
         hasLetra && React.createElement("div", {
-          style: { flex: canSplit ? "7 1 0%" : 1, minHeight: 0, padding: "18px 22px", background: "#1A1D23", overflowY: "auto", borderTop: canSplit ? "1px solid #333" : "none" }
+          style: { flex: canSplit ? "0 0 70%" : 1, minHeight: 0, padding: "18px 22px", background: "#1A1D23", overflowY: "auto", borderTop: canSplit ? "1px solid #333" : "none" }
         },
           React.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 } },
             React.createElement("span", { style: { fontSize: 11, color: "#888", textTransform: "uppercase", letterSpacing: 1 } }, "Letra"),
