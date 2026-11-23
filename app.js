@@ -539,6 +539,14 @@ function CadastroPublico(_ref2) {
 }
 
 // ── PLAYER MODAL UNIVERSAL ────────────────────────────────────────────────────
+function getSaveErrorMessage(error) {
+  var code = error && error.code;
+  if (code === "permission-denied") return "Sem permissão para salvar. Entre como administradora.";
+  if (code === "unavailable" || code === "deadline-exceeded") return "Falha de conexão. Confira a internet e tente novamente.";
+  if (code === "not-found") return "O item não foi encontrado. Atualize a página e tente novamente.";
+  return "Não foi possível salvar" + (code ? " (" + code + ")" : "") + ".";
+}
+
 function PlayerModal(_ref3) {
   var url = _ref3.url,
     title = _ref3.title,
@@ -550,6 +558,9 @@ function PlayerModal(_ref3) {
   var _useState_letraEdit = React.useState(letra || ""),
     letraEdit = _useState_letraEdit[0],
     setLetraEdit = _useState_letraEdit[1];
+  var _useState_letraSalva = React.useState(letra || ""),
+    letraSalva = _useState_letraSalva[0],
+    setLetraSalva = _useState_letraSalva[1];
   var _useState_letraMode = React.useState("view"),
     letraMode = _useState_letraMode[0],
     setLetraMode = _useState_letraMode[1];
@@ -575,18 +586,25 @@ function PlayerModal(_ref3) {
   }
 
   function salvarLetra() {
-    if (!songId) return;
+    if (!songId) {
+      setLetraMsg("❌ Não foi possível identificar a música.");
+      return;
+    }
     setLetraSaving(true);
+    setLetraMsg("");
     db.collection("onix_songs").doc(songId).update({ letra: letraEdit, updatedAt: firebase.firestore.FieldValue.serverTimestamp() })
       .then(function() {
         setLetraSaving(false);
+        setLetraSalva(letraEdit);
+        setLetraEdit(letraEdit);
         setLetraMode("view");
         setLetraMsg("✅ Salvo!");
         setTimeout(function() { setLetraMsg(""); }, 2500);
       })
-      .catch(function() {
+      .catch(function(error) {
+        console.error("[PlayerModal] Falha ao salvar letra:", error);
         setLetraSaving(false);
-        setLetraMsg("❌ Erro ao salvar");
+        setLetraMsg("❌ " + getSaveErrorMessage(error));
       });
   }
 
@@ -681,7 +699,7 @@ function PlayerModal(_ref3) {
             songId ? React.createElement("div", { style: { display: "flex", gap: 6 } },
               letraMode === "view"
                 ? React.createElement("button", {
-                    onClick: function() { setLetraEdit(letra || ""); setLetraMode("edit"); },
+                    onClick: function() { setLetraEdit(letraSalva); setLetraMode("edit"); },
                     style: { background: "rgba(255,255,255,0.08)", border: "none", borderRadius: 6, padding: "3px 10px", color: "#ccc", fontSize: 11, cursor: "pointer", fontFamily: "inherit" }
                   }, "✏️ Editar")
                 : React.createElement(React.Fragment, null,
@@ -701,7 +719,7 @@ function PlayerModal(_ref3) {
                       style: { background: "#4A0080", border: "none", borderRadius: 6, padding: "3px 10px", color: "#fff", fontSize: 11, fontWeight: 700, cursor: "pointer", fontFamily: "inherit" }
                     }, letraSaving ? "Salvando..." : "✓ Salvar"),
                     React.createElement("button", {
-                      onClick: function() { setLetraMode("view"); },
+                      onClick: function() { setLetraEdit(letraSalva); setLetraMode("view"); },
                       style: { background: "rgba(255,255,255,0.06)", border: "none", borderRadius: 6, padding: "3px 8px", color: "#aaa", fontSize: 11, cursor: "pointer" }
                     }, "Cancelar")
                   )
@@ -716,7 +734,7 @@ function PlayerModal(_ref3) {
               })
             : React.createElement("div", {
                 style: { fontSize: 14, color: "#EEE", lineHeight: 1.85 }
-              }, renderLetraFormatada(letraEdit || letra || ""))
+              }, renderLetraFormatada(letraSalva))
         ),
         !hasMedia && !hasLetra && naipes && null,
         naipes && React.createElement("div", {
@@ -4710,7 +4728,11 @@ function ModalMusica(_ref15) {
     categorias = _useState90[0],
     setCategorias = _useState90[1];
   function salvar() {
-    return _salvar5.apply(this, arguments);
+    return _salvar5.apply(this, arguments).catch(function(error) {
+      console.error("[ModalMusica] Falha ao salvar música:", error);
+      setSalvando(false);
+      setErro(getSaveErrorMessage(error));
+    });
   }
   function _salvar5() {
     _salvar5 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee10() {
@@ -5651,7 +5673,11 @@ function ModalEstudo(_ref18) {
     erro = _useState104[0],
     setErro = _useState104[1];
   function salvar() {
-    return _salvar6.apply(this, arguments);
+    return _salvar6.apply(this, arguments).catch(function(error) {
+      console.error("[ModalEstudo] Falha ao salvar material:", error);
+      setSalvando(false);
+      setErro(getSaveErrorMessage(error));
+    });
   }
   function _salvar6() {
     _salvar6 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee12() {
@@ -8665,6 +8691,158 @@ function CheckinPublico(_ref41) {
     }
   }, "Nenhum corista encontrado.")));
 }
+// ── CHAMADA POR LISTA (a diretoria marca quem faltou) ─────────────────────────
+// Todos começam como PRESENTES; basta tocar em quem faltou. Ao salvar, cada presente ganha um registro em "frequencias"
+// (igual ao do check-in por QR, com origem "lista") e quem foi marcado como faltou fica sem registro.
+function ChamadaLista(props) {
+  var evento = props.evento,
+    frequencias = props.frequencias,
+    cor = props.cor,
+    card = props.card;
+  var _cl = useCollection("members");
+  var membros = _cl.data || [];
+  var _aberta = useState(false);
+  var aberta = _aberta[0], setAberta = _aberta[1];
+  var _aus = useState({});
+  var ausentes = _aus[0], setAusentes = _aus[1];
+  var _salv = useState(false);
+  var salvando = _salv[0], setSalvando = _salv[1];
+  var _msg = useState("");
+  var msgCh = _msg[0], setMsgCh = _msg[1];
+  var _bus = useState("");
+  var buscaCh = _bus[0], setBuscaCh = _bus[1];
+  var ativos = membros.filter(function (m) {
+    return m.active !== false && m.name;
+  }).sort(function (a, b) {
+    var va = a.voice || "zzz", vb = b.voice || "zzz";
+    if (va !== vb) return va > vb ? 1 : -1;
+    return String(a.name).localeCompare(String(b.name), "pt-BR");
+  });
+  function abrir() {
+    // Se já existem presenças (por QR ou por uma chamada anterior), quem não tem registro começa como "faltou".
+    var novo = {};
+    if (frequencias.length > 0) {
+      ativos.forEach(function (m) {
+        var tem = frequencias.some(function (f) {
+          return f.membroId === m.id;
+        });
+        if (!tem) novo[m.id] = true;
+      });
+    }
+    setAusentes(novo);
+    setMsgCh("");
+    setBuscaCh("");
+    setAberta(true);
+  }
+  function alternar(id) {
+    setAusentes(function (a) {
+      var n = Object.assign({}, a);
+      if (n[id]) delete n[id];else n[id] = true;
+      return n;
+    });
+  }
+  function todosPresentes() {
+    setAusentes({});
+  }
+  var totalAus = ativos.filter(function (m) {
+    return ausentes[m.id];
+  }).length;
+  var totalPres = ativos.length - totalAus;
+  function salvar() {
+    if (!evento) return;
+    var criar = [], apagar = [];
+    ativos.forEach(function (m) {
+      var existente = frequencias.filter(function (f) {
+        return f.membroId === m.id;
+      });
+      if (ausentes[m.id]) {
+        existente.forEach(function (f) {
+          apagar.push(f);
+        });
+      } else if (existente.length === 0) {
+        criar.push(m);
+      }
+    });
+    if (apagar.length > 0 && !window.confirm("Você marcou como FALTA " + apagar.length + " corista(s) que já tinham presença registrada neste evento (por QR ou por uma chamada anterior). Isso apaga a presença deles. Continuar?")) return;
+    if (!window.confirm("Salvar a chamada de \"" + (evento.title || "evento") + "\"?\n\nPresentes: " + totalPres + "\nFaltas: " + totalAus)) return;
+    setSalvando(true);
+    setMsgCh("");
+    var lote = db.batch();
+    criar.forEach(function (m) {
+      var ref = db.collection("frequencias").doc();
+      lote.set(ref, {
+        sessaoId: "lista-" + evento.id,
+        eventoId: evento.id,
+        eventoTitulo: evento.title || "",
+        eventoData: evento.date || "",
+        membroId: m.id,
+        membroNome: m.name,
+        naipe: m.voice || "",
+        dataHora: firebase.firestore.FieldValue.serverTimestamp(),
+        data: evento.date || "",
+        origem: "lista"
+      });
+    });
+    apagar.forEach(function (f) {
+      lote.delete(db.collection("frequencias").doc(f.id));
+    });
+    lote.commit().then(function () {
+      setSalvando(false);
+      setMsgCh("Chamada salva: " + totalPres + " presente(s) e " + totalAus + " falta(s).");
+      setAberta(false);
+    }).catch(function (e) {
+      setSalvando(false);
+      setMsgCh("Não foi possível salvar a chamada: " + (e && e.message ? e.message : "tente de novo."));
+    });
+  }
+  if (!evento) return null;
+  var termo = buscaCh.trim().toLowerCase();
+  var grupos = [];
+  ativos.forEach(function (m) {
+    if (termo && String(m.name).toLowerCase().indexOf(termo) < 0) return;
+    var nome = m.voice || "Sem naipe";
+    var g = grupos.filter(function (x) {
+      return x.nome === nome;
+    })[0];
+    if (!g) {
+      g = { nome: nome, lista: [] };
+      grupos.push(g);
+    }
+    g.lista.push(m);
+  });
+  return React.createElement("div", { style: card },
+    React.createElement("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: aberta ? 12 : 0 } },
+      React.createElement("div", null,
+        React.createElement("div", { style: { fontSize: 14, fontWeight: 700, color: "#1A1D23" } }, "Chamada por lista"),
+        React.createElement("div", { style: { fontSize: 12, color: "#888", marginTop: 2 } }, "Todos começam como presentes: toque só em quem faltou.")),
+      !aberta && React.createElement("button", { onClick: abrir, style: { padding: "10px 16px", background: cor, color: "#fff", border: "none", borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "inherit" } }, "Fazer a chamada")),
+    msgCh && React.createElement("div", { style: { fontSize: 13, color: msgCh.indexOf("Não foi") === 0 ? "#B91C1C" : "#166534", marginTop: 10 } }, msgCh),
+    aberta && React.createElement("div", null,
+      React.createElement("div", { style: { display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", marginBottom: 10 } },
+        React.createElement("input", { value: buscaCh, onChange: function (e) { setBuscaCh(e.target.value); }, placeholder: "Buscar corista...", style: { padding: "9px 12px", border: "1px solid #E8E0E0", borderRadius: 10, fontSize: 13, outline: "none", fontFamily: "inherit", flex: 1, minWidth: 160 } }),
+        React.createElement("span", { style: { fontSize: 13, color: "#166534", fontWeight: 700 } }, totalPres + " presentes"),
+        React.createElement("span", { style: { fontSize: 13, color: "#B91C1C", fontWeight: 700 } }, totalAus + " faltas")),
+      grupos.map(function (g) {
+        return React.createElement("div", { key: g.nome, style: { marginBottom: 10 } },
+          React.createElement("div", { style: { fontSize: 11, fontWeight: 700, color: cor, textTransform: "uppercase", letterSpacing: 1, margin: "6px 0" } }, g.nome),
+          g.lista.map(function (m) {
+            var faltou = !!ausentes[m.id];
+            return React.createElement("button", {
+              key: m.id,
+              onClick: function () { alternar(m.id); },
+              style: { display: "flex", width: "100%", justifyContent: "space-between", alignItems: "center", padding: "11px 12px", marginBottom: 4, border: "1px solid " + (faltou ? "#FCA5A5" : "#E5E7EB"), background: faltou ? "#FEF2F2" : "#fff", borderRadius: 10, cursor: "pointer", fontFamily: "inherit", textAlign: "left" }
+            },
+              React.createElement("span", { style: { fontSize: 14, color: "#1A1D23", textDecoration: faltou ? "line-through" : "none" } }, m.name),
+              React.createElement("span", { style: { fontSize: 12, fontWeight: 700, color: faltou ? "#B91C1C" : "#166534" } }, faltou ? "Faltou" : "Presente"));
+          }));
+      }),
+      ativos.length === 0 && React.createElement("div", { style: { fontSize: 13, color: "#AAA", padding: "10px 0" } }, "Nenhum corista ativo cadastrado."),
+      React.createElement("div", { style: { display: "flex", gap: 8, flexWrap: "wrap", marginTop: 12 } },
+        React.createElement("button", { onClick: salvar, disabled: salvando, style: { padding: "11px 18px", background: cor, color: "#fff", border: "none", borderRadius: 10, fontSize: 14, fontWeight: 700, cursor: salvando ? "default" : "pointer", opacity: salvando ? 0.6 : 1, fontFamily: "inherit" } }, salvando ? "Salvando..." : "Salvar a chamada"),
+        React.createElement("button", { onClick: todosPresentes, style: { padding: "11px 14px", background: "#F3F4F6", color: "#374151", border: "1px solid #E5E7EB", borderRadius: 10, fontSize: 13, cursor: "pointer", fontFamily: "inherit" } }, "Todos presentes"),
+        React.createElement("button", { onClick: function () { setAberta(false); }, style: { padding: "11px 14px", background: "#fff", color: "#6B7280", border: "1px solid #E5E7EB", borderRadius: 10, fontSize: 13, cursor: "pointer", fontFamily: "inherit" } }, "Fechar"))));
+}
+
 function Frequencia(_ref42) {
   var config = _ref42.config;
   var _useCollection16 = useCollection("onix_events", "date"),
@@ -9109,7 +9287,7 @@ function Frequencia(_ref42) {
       fontSize: 13,
       marginTop: 4
     }
-  }, "Para gerenciar sess\xF5es QR de check-in de presen\xE7a"))), eventoSel && /*#__PURE__*/React.createElement("div", {
+  }, "Para gerenciar sess\xF5es QR de check-in de presen\xE7a"))), eventoSel && eventoAtual && React.createElement(ChamadaLista, { evento: eventoAtual, frequencias: frequencias, cor: cor, card: card }), eventoSel && /*#__PURE__*/React.createElement("div", {
     style: card
   }, /*#__PURE__*/React.createElement("div", {
     style: {
