@@ -8699,7 +8699,7 @@ function ChamadaLista(props) {
     frequencias = props.frequencias,
     cor = props.cor,
     card = props.card;
-  var _cl = useCollection("members");
+  var _cl = useCollection("onix_members");
   var membros = _cl.data || [];
   var _aberta = useState(false);
   var aberta = _aberta[0], setAberta = _aberta[1];
@@ -8769,7 +8769,7 @@ function ChamadaLista(props) {
     setMsgCh("");
     var lote = db.batch();
     criar.forEach(function (m) {
-      var ref = db.collection("frequencias").doc();
+      var ref = db.collection("onix_frequencias").doc();
       lote.set(ref, {
         sessaoId: "lista-" + evento.id,
         eventoId: evento.id,
@@ -8784,7 +8784,7 @@ function ChamadaLista(props) {
       });
     });
     apagar.forEach(function (f) {
-      lote.delete(db.collection("frequencias").doc(f.id));
+      lote.delete(db.collection("onix_frequencias").doc(f.id));
     });
     lote.commit().then(function () {
       setSalvando(false);
